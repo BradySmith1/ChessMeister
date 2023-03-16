@@ -1,9 +1,11 @@
 /**
- * Enumeration fil;e to represent the color of the chess game.
+ * Enumeration file to represent the color of the chess game.
  *
- * @author Zach Eanes
+ * @author Zach Eanes (100%)
  */
 
 package enums;
 public enum GameColor {
+    Black,
+    White;
 }
