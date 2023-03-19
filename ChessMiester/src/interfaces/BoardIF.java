@@ -2,6 +2,7 @@ package interfaces;
 
 import enums.Files;
 import enums.Rank;
+import model.Piece;
 
 /**
  * This interface defines the basic functionality of a game board object.
@@ -62,5 +63,4 @@ public interface BoardIF{
      * @return the PieceIF object at the specified column and row.
      */
     public PieceIF getPiece(int col, char row);
-
 }
