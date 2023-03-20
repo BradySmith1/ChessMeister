@@ -1,12 +1,13 @@
 package model;
 
 import enums.ChessPieceType;
+import enums.GameColor;
 import interfaces.PieceIF;
 
 /**
  * This class represents a chess piece.
  */
-public class Piece implements PieceIF {
+public class Piece extends BlackAndWhite implements PieceIF {
 
     /**
      * The type of the piece.
@@ -17,7 +18,8 @@ public class Piece implements PieceIF {
      * Creates a new piece of the specified type.
      * @param type the type of the piece.
      */
-    public Piece(ChessPieceType type) {
+    public Piece(ChessPieceType type, GameColor color) {
+        super(color);
         this.type = type;
     }
 

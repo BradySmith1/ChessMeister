@@ -1,5 +1,6 @@
 package model;
 
+import enums.GameColor;
 import interfaces.PieceIF;
 import interfaces.SquareIF;
 
@@ -7,7 +8,7 @@ import interfaces.SquareIF;
  * This class represents a square on a chess board. Each square can be cleared,
  * and can hold a piece or be empty.
  */
-public class Square implements SquareIF {
+public class Square extends BlackAndWhite implements SquareIF {
 
     /**
      * The piece that is currently on the square, if any.
@@ -22,7 +23,8 @@ public class Square implements SquareIF {
     /**
      * Creates a new square with no piece on it.
      */
-    public Square(Position position){
+    public Square(Position position, GameColor color){
+        super(color);
         piece = null;
         this.position = position;
     }
