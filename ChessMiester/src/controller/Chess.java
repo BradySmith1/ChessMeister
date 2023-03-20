@@ -1,5 +1,9 @@
 package controller;
 
+import enums.Files;
+import enums.Rank;
+import interfaces.BoardIF;
+
 public class Chess {
 
     public Chess() {
@@ -22,7 +26,7 @@ public class Chess {
 
     }
 
-    public void move(File fromF, Rank fromR, File toF, Rank toR) {
+    public void move(Files fromF, Rank fromR, Files toF, Rank toR) {
 
     }
 }
