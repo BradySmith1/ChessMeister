@@ -16,17 +16,24 @@ public class BoardMonoCLI implements BoardStrategy {
     @Override
     public void draw(BoardIF board) {
         SquareIF[][] squares = board.getSquares();
-        System.out.println("   A   B   C   D   E   F   G   H  ");
+        System.out.println("      A       B       C       D       E       F       G       H");
         for(int height = 0; height < board.getHeight(); height++){
-            System.out.println("---------------------------------");
+            System.out.println("   ------- ------- ------- ------- ------- ------- ------- -------");
+            System.out.println("  |       |       |       |       |       |       |       |       |");
             for(int width = 0; width < board.getWidth(); width++){
+                if(width == 0){
+                    System.out.print((board.getHeight() - height) + " ");
+                }
                 if(squares[width][height].getPiece() != null){
-                    System.out.print("| " + squares[width][height].getPiece().getType().getLetter() + " ");
+                    System.out.print("|   " + squares[width][height].getPiece().getType().getLetter() + "   ");
                 } else {
-                    System.out.print("|   ");
+                    System.out.print("|       ");
                 }
             }
             System.out.println("|");
+            System.out.println("  |       |       |       |       |       |       |       |       |");
         }
+        System.out.println("   ------- ------- ------- ------- ------- ------- ------- -------");
+        System.out.println("      A       B       C       D       E       F       G       H");
     }
 }
