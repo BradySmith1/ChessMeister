@@ -6,16 +6,18 @@ import enums.Rank;
 import interfaces.BoardIF;
 import interfaces.BoardStrategy;
 import interfaces.PieceIF;
+import interfaces.SquareIF;
+import uicli.BoardMonoCLI;
 
 /**
  * This class represents a game board.
  */
-public class Board implements BoardIF, BoardStrategy {
+public class Board implements BoardIF {
 
     /**
      * The squares that make up the game board.
      */
-    private Square[][] squares;
+    private SquareIF[][] squares;
 
     /**
      * The width of the board in squares.
@@ -34,13 +36,19 @@ public class Board implements BoardIF, BoardStrategy {
 
     /**
     * Creates a new game board with the specified width and height.
-    * @param width the width of the board in squares.
-    * @param height the height of the board in squares.
     */
-    public Board(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public Board() {
+        this.width = 8;
+        this.height = 8;
         squares = new Square[width][height];
+        drawStrategy = new BoardMonoCLI();
+    }
+
+    public Board(BoardStrategy strategy){
+        this.width = 8;
+        this.height = 8;
+        squares = new Square[width][height];
+        drawStrategy = strategy;
     }
 
     /**
@@ -90,20 +98,11 @@ public class Board implements BoardIF, BoardStrategy {
     }
 
     /**
-     * draws a game board
+     * draws the state of the game board.
      */
     @Override
     public void draw() {
-        //need to figure out what is going on here
-    }
-
-    /**
-     * Draws the game board using the specified strategy.
-     * @param board the BoardIF object representing the game board to be drawn.
-     */
-    @Override
-    public void draw(BoardIF board) {
-
+        drawStrategy.draw(this);
     }
 
     /**
@@ -111,7 +110,7 @@ public class Board implements BoardIF, BoardStrategy {
      * @return a 2D array of SquareIF objects representing the squares on the board.
      */
     @Override
-    public Square[][] getSquares() {
+    public SquareIF[][] getSquares() {
         return squares;
     }
 
