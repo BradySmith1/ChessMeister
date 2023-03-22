@@ -3,15 +3,18 @@ package controller;
 import enums.Files;
 import enums.Rank;
 import interfaces.BoardIF;
+import model.Board;
 
 public class Chess {
 
-    public Chess() {
+    private BoardIF boardGame;
 
+    public Chess() {
+        this.boardGame = new Board();
     }
 
     public void newGame() {
-
+        
     }
 
     public void endGame() {
