@@ -6,6 +6,7 @@ import enums.Rank;
 
 /**
  * This class represents a position on the game board.
+ * @author Brady Smith %100
  */
 public class Position {
 

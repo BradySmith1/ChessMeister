@@ -6,8 +6,8 @@ import java.util.List;
 
 /**
  * This interface represents a chess piece.
- *
- * @author Zach Eanes (100%) TODO
+ * @author Brady Smith (75%)
+ * @author Zach Eanes (25%) TODO
  */
 public interface PieceIF {
 

@@ -1,17 +1,19 @@
 package model;
 
 import enums.GameColor;
+import interfaces.BlackAndWhiteIF;
 
 /**
  * This class represents a black and white piece.
  */
-public class BlackAndWhite {
+public class BlackAndWhite implements BlackAndWhiteIF {
 
     private GameColor color; /* The color of the piece. */
 
     /**
      * Creates a new piece of the specified color.
      * @param color the color of the piece.
+     * @author Brady Smith %100
      */
     public BlackAndWhite(GameColor color) {
         this.color = color;

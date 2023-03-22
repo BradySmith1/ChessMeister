@@ -8,6 +8,7 @@ import model.Square;
 
 /**
  * This class implements the BoardStrategy interface for a black and white command line interface.
+ * @author Brady Smith %100
  */
 public class BoardMonoCLI implements BoardStrategy {
 
@@ -34,13 +35,13 @@ public class BoardMonoCLI implements BoardStrategy {
                     System.out.print((board.getHeight() - height) + " ");
                 }
                 if(square.getPiece() != null){
-                    if(square.getColor() == GameColor.WHITE) {
+                    if(square.isWhite()) {
                         System.out.print("|   " + square.getPiece().getType().getLetter() + "   ");
                     }else{
                         System.out.print("|---" + square.getPiece().getType().getLetter() + "---");
                     }
                 } else {
-                    if(square.getColor() == GameColor.WHITE) {
+                    if(square.isWhite()) {
                         System.out.print("|       ");
                     }else{
                         System.out.print("|-------");

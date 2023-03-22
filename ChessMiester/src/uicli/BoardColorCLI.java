@@ -9,6 +9,7 @@ import model.Square;
 
 /**
  * This class implements the BoardStrategy interface for a color command line interface.
+ * @author Brady Smith %100
  */
 public class BoardColorCLI implements BoardStrategy {
 
@@ -33,7 +34,7 @@ public class BoardColorCLI implements BoardStrategy {
             for(int width = 0; width < board.getWidth(); width++){
                 Square square = (Square) squares[height][width];
                 if(square.getPiece() != null){
-                    if(((Piece) square.getPiece()).getColor() == GameColor.WHITE){
+                    if(((Piece) square.getPiece()).isWhite()){
                         unicode = WHITE;
                     } else {
                         unicode = BLACK;

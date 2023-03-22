@@ -12,6 +12,7 @@ import uicli.BoardMonoCLI;
 
 /**
  * This class represents a game board.
+ * @author Brady Smith %100
  */
 public class Board implements BoardIF {
 
