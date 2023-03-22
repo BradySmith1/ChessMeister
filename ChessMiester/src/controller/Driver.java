@@ -12,8 +12,8 @@ public class Driver {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in); /* scanner to read in player choice */
         String menu =
-                "Welcome to ChessMeister!\n" +
-                "Please make a selection as to what you would like to do:" +
+                "Welcome to ChessMeister!\n---------------------------------------------------------------\n" +
+                "Please make a selection as to what you would like to do:\n" +
                 "0 - Play Local Game Against another Player.\n" +
                 "(COMING SOON!) 1 - Play Local Game Against a Computer\n" +
                 "(COMING SOON!) 2 - Play Online Game Against another Player.\n\n" +
@@ -55,6 +55,19 @@ public class Driver {
     public void playLocalP(){
         //call new board and setup
 
-        setup(menuChoice);
+    }
+
+    /**
+     * This function is used to launch and go through a local game against a computer.
+     */
+    public void playLocalC(){
+        System.out.println("This feature is coming soon! Please choose another feature!");
+    }
+
+    /**
+     * This function is used to launch and go through an online game with another player.
+     */
+    public void playOnline(){
+        //init board
     }
 }
