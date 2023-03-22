@@ -8,6 +8,10 @@
 package controller;
 import java.util.Scanner;
 
+import model.Board;
+import uicli.BoardColorCLI;
+import uicli.BoardMonoCLI;
+
 public class Driver {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in); /* scanner to read in player choice */
