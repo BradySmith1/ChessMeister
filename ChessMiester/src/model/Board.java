@@ -79,13 +79,11 @@ public class Board implements BoardIF {
         //need 1 queen
         //need 1 king
         //need to figure out how to set up the board
-        GameColor color = GameColor.WHITE;
         for(int i = 0; i < width; i++) {
-            squares[1][i].setPiece(new Piece(ChessPieceType.Pawn, color));
-            squares[6][i].setPiece(new Piece(ChessPieceType.Pawn, color));
-            color = color == GameColor.WHITE ? GameColor.BLACK : GameColor.WHITE;
+            squares[1][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.WHITE));
+            squares[6][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.BLACK));
         }
-        color = GameColor.WHITE;
+        GameColor color = GameColor.WHITE;
         squares[0][0].setPiece(new Piece(ChessPieceType.Rook, color));
         squares[0][width-1].setPiece(new Piece(ChessPieceType.Rook, color));
         squares[0][1].setPiece(new Piece(ChessPieceType.Knight, color));

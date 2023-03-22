@@ -24,12 +24,6 @@ public interface PieceIF {
     public void setType(ChessPieceType type);
 
     /**
-     * Gets the color of the piece. Either "white" or "black".
-     * @return The color of the piece.
-     */
-    public String getColor();
-
-    /**
      * Returns a list of MovePositions that are valid & legal on the board.
      * @param board The game board that the piece moves on.
      * @return A list of valid MovePositions.
