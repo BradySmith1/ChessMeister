@@ -41,14 +41,14 @@ public class Board implements BoardIF {
     public Board() {
         this.width = 8;
         this.height = 8;
-        squares = new Square[width][height];
+        squares = new Square[height][width];
         drawStrategy = new BoardMonoCLI();
     }
 
     public Board(BoardStrategy strategy){
         this.width = 8;
         this.height = 8;
-        squares = new Square[width][height];
+        squares = new Square[height][width];
         drawStrategy = strategy;
     }
 
@@ -60,9 +60,10 @@ public class Board implements BoardIF {
         GameColor color = GameColor.WHITE;
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                squares[i][j] = new Square(new Position(Rank.values()[i], Files.values()[j]), color);
+                squares[i][j] = new Square(new Position(Rank.values()[j], Files.values()[i]), color);
                 color = color == GameColor.WHITE ? GameColor.BLACK : GameColor.WHITE;
             }
+            color = color == GameColor.WHITE ? GameColor.BLACK : GameColor.WHITE;
         }
     }
 
@@ -80,28 +81,28 @@ public class Board implements BoardIF {
         //need to figure out how to set up the board
         GameColor color = GameColor.WHITE;
         for(int i = 0; i < width; i++) {
-            squares[i][1].setPiece(new Piece(ChessPieceType.Pawn, color));
-            squares[i][6].setPiece(new Piece(ChessPieceType.Pawn, color));
+            squares[1][i].setPiece(new Piece(ChessPieceType.Pawn, color));
+            squares[6][i].setPiece(new Piece(ChessPieceType.Pawn, color));
             color = color == GameColor.WHITE ? GameColor.BLACK : GameColor.WHITE;
         }
         color = GameColor.WHITE;
         squares[0][0].setPiece(new Piece(ChessPieceType.Rook, color));
-        squares[width-1][0].setPiece(new Piece(ChessPieceType.Rook, color));
-        squares[1][0].setPiece(new Piece(ChessPieceType.Knight, color));
-        squares[width-2][0].setPiece(new Piece(ChessPieceType.Knight, color));
-        squares[2][0].setPiece(new Piece(ChessPieceType.Bishop, color));
-        squares[width-3][0].setPiece(new Piece(ChessPieceType.Bishop, color));
-        squares[3][0].setPiece(new Piece(ChessPieceType.Queen, color));
-        squares[4][0].setPiece(new Piece(ChessPieceType.King, color));
+        squares[0][width-1].setPiece(new Piece(ChessPieceType.Rook, color));
+        squares[0][1].setPiece(new Piece(ChessPieceType.Knight, color));
+        squares[0][width-2].setPiece(new Piece(ChessPieceType.Knight, color));
+        squares[0][2].setPiece(new Piece(ChessPieceType.Bishop, color));
+        squares[0][width-3].setPiece(new Piece(ChessPieceType.Bishop, color));
+        squares[0][3].setPiece(new Piece(ChessPieceType.Queen, color));
+        squares[0][4].setPiece(new Piece(ChessPieceType.King, color));
         color = GameColor.BLACK;
-        squares[0][height-1].setPiece(new Piece(ChessPieceType.Rook, color));
-        squares[width-1][height-1].setPiece(new Piece(ChessPieceType.Rook, color));
-        squares[1][height-1].setPiece(new Piece(ChessPieceType.Knight, color));
-        squares[width-2][height-1].setPiece(new Piece(ChessPieceType.Knight, color));
-        squares[2][height-1].setPiece(new Piece(ChessPieceType.Bishop, color));
-        squares[width-3][height-1].setPiece(new Piece(ChessPieceType.Bishop, color));
-        squares[3][height-1].setPiece(new Piece(ChessPieceType.Queen, color));
-        squares[4][height-1].setPiece(new Piece(ChessPieceType.King, color));
+        squares[height-1][0].setPiece(new Piece(ChessPieceType.Rook, color));
+        squares[height-1][width-1].setPiece(new Piece(ChessPieceType.Rook, color));
+        squares[height-1][1].setPiece(new Piece(ChessPieceType.Knight, color));
+        squares[height-1][width-2].setPiece(new Piece(ChessPieceType.Knight, color));
+        squares[height-1][2].setPiece(new Piece(ChessPieceType.Bishop, color));
+        squares[height-1][width-3].setPiece(new Piece(ChessPieceType.Bishop, color));
+        squares[height-1][3].setPiece(new Piece(ChessPieceType.Queen, color));
+        squares[height-1][4].setPiece(new Piece(ChessPieceType.King, color));
     }
 
     /**

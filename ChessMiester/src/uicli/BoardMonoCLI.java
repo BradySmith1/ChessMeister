@@ -4,6 +4,7 @@ import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.BoardStrategy;
 import interfaces.SquareIF;
+import model.Square;
 
 /**
  * This class implements the BoardStrategy interface for a black and white command line interface.
@@ -16,9 +17,8 @@ public class BoardMonoCLI implements BoardStrategy {
      */
     @Override
     public void draw(BoardIF board) {
-        GameColor color = GameColor.WHITE;
         SquareIF[][] squares = board.getSquares();
-        System.out.println("      A       B       C       D       E       F       G       H");
+        //System.out.println("      A       B       C       D       E       F       G       H");
         String line2 = "  |-------|       |-------|       |-------|       |-------|       |";
         String line1 = "  |       |-------|       |-------|       |-------|       |-------|";
         for(int height = 0; height < board.getHeight(); height++){
@@ -29,25 +29,24 @@ public class BoardMonoCLI implements BoardStrategy {
                 System.out.println(line2);
             }
             for(int width = 0; width < board.getWidth(); width++){
+                Square square = (Square) squares[height][width];
                 if(width == 0){
                     System.out.print((board.getHeight() - height) + " ");
                 }
-                if(squares[width][height].getPiece() != null){
-                    if(color == GameColor.WHITE) {
-                        System.out.print("|   " + squares[width][height].getPiece().getType().getLetter() + "   ");
+                if(square.getPiece() != null){
+                    if(square.getColor() == GameColor.WHITE) {
+                        System.out.print("|   " + square.getPiece().getType().getLetter() + "   ");
                     }else{
-                        System.out.print("|---" + squares[width][height].getPiece().getType().getLetter() + "---");
+                        System.out.print("|---" + square.getPiece().getType().getLetter() + "---");
                     }
                 } else {
-                    if(color == GameColor.WHITE) {
+                    if(square.getColor() == GameColor.WHITE) {
                         System.out.print("|       ");
                     }else{
                         System.out.print("|-------");
                     }
                 }
-                color = color == GameColor.WHITE ? GameColor.BLACK : GameColor.WHITE;
             }
-            color = color == GameColor.WHITE ? GameColor.BLACK : GameColor.WHITE;
             System.out.println("|");
             if(height % 2 == 0){
                 System.out.println(line1);
