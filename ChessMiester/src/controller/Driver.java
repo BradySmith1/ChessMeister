@@ -6,6 +6,7 @@
  */
 
 package controller;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import model.Board;
@@ -15,63 +16,37 @@ import uicli.BoardMonoCLI;
 public class Driver {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in); /* scanner to read in player choice */
+        System.out.println("   _____ _                   __  __      _     _            \n" +
+                           "  / ____| |                 |  \\/  |    (_)   | |           \n" +
+                           " | |    | |__   ___  ___ ___| \\  / | ___ _ ___| |_ ___ _ __ \n" +
+                           " | |    | '_ \\ / _ \\/ __/ __| |\\/| |/ _ \\ / __| __/ _ \\ '__|\n" +
+                           " | |____| | | |  __/\\__ \\__ \\ |  | |  __/ \\__ \\ ||  __/ |   \n" +
+                           "  \\_____|_| |_|\\___||___/___/_|  |_|\\___|_|___/\\__\\___|_|   \n");
         String menu =
                 "Welcome to ChessMeister!\n---------------------------------------------------------------\n" +
                 "Please make a selection as to what you would like to do:\n" +
-                "0 - Play Local Game Against another Player.\n" +
-                "(COMING SOON!) 1 - Play Local Game Against a Computer\n" +
-                "(COMING SOON!) 2 - Play Online Game Against another Player.\n\n" +
-                "(COMING SOON!) 3 - 4-Player Chess!";
+                "1 - Play Local Game Against another Player\n" +
+                "(COMING SOON!) 2 - Play Local Game Against a Computer\n" +
+                "(COMING SOON!) 3 - Play Online Game Against another Player\n" +
+                "(COMING SOON!) 4 - 4-Player Chess!\n" +
+                "0 - Exit Game\n--------------------------------------------------------------\n";
 
-        Integer menuChoice = null;
-        /* Validate that our menu choice is proper. */
-        while(menuChoice == null || menuChoice < 0 || menuChoice > 3){
-            try{
-                menuChoice = Integer.parseInt(scan.nextLine().strip());
-            } catch(NumberFormatException e){
-                System.out.println("Please enter a valid number choice (0-3).");
-                System.out.println("Enter another menu choice -> ");
+        int choice = 5;     //initialized to 5 so there is no option chosen or quitting the loop
+        Chess chess;    //initialization of the Chess class
+        while (choice != 0) {   //while user has not quit
+            System.out.println(menu);   //shows user menu options
+            try {
+                choice = scan.nextInt();
             }
-            if(menuChoice != null && (menuChoice < 0 || menuChoice > 3)){
-                System.out.println("Please enter a valid number choice (0-3).");
-                System.out.println("Enter another menu choice -> ");
+            catch (InputMismatchException e) {
+                System.out.println("\n" + e);
+            }
+            if (choice >= 1 && choice <= 4) {
+                chess = new Chess(choice);  //new game of chess based on the game type
+            } else if (choice != 0) {
+                System.out.println("\nPlease enter a valid number (0 - 4)\n");
+                scan.nextLine();    //consumes a \n so the scanner can use nextInt properly next loop
             }
         }
-
-        Chess chess = new Chess();
-    }
-
-    /**
-     * This method is to set-up and help launch into the selection of the game.
-     * @param choice int value to represent the choice
-     */
-    public void setup(int choice){
-        switch(choice){
-            case 0 -> this.playLocalP();
-            case 1 -> this.playLocalC();
-            case 2 -> this.playOnline();
-        }
-    }
-
-    /**
-     * This function is used to launch and go through a local game with another player.
-     */
-    public void playLocalP(){
-        //call new board and setup
-
-    }
-
-    /**
-     * This function is used to launch and go through a local game against a computer.
-     */
-    public void playLocalC(){
-        System.out.println("This feature is coming soon! Please choose another feature!");
-    }
-
-    /**
-     * This function is used to launch and go through an online game with another player.
-     */
-    public void playOnline(){
-        //init board
     }
 }
