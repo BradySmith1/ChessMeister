@@ -79,29 +79,28 @@ public class Board implements BoardIF {
         //need 2 bishops
         //need 1 queen
         //need 1 king
-        //need to figure out how to set up the board
         for(int i = 0; i < width; i++) {
             squares[1][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.WHITE));
             squares[6][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.BLACK));
         }
-        GameColor color = GameColor.WHITE;
-        squares[0][0].setPiece(new Piece(ChessPieceType.Rook, color));
-        squares[0][width-1].setPiece(new Piece(ChessPieceType.Rook, color));
-        squares[0][1].setPiece(new Piece(ChessPieceType.Knight, color));
-        squares[0][width-2].setPiece(new Piece(ChessPieceType.Knight, color));
-        squares[0][2].setPiece(new Piece(ChessPieceType.Bishop, color));
-        squares[0][width-3].setPiece(new Piece(ChessPieceType.Bishop, color));
-        squares[0][3].setPiece(new Piece(ChessPieceType.Queen, color));
-        squares[0][4].setPiece(new Piece(ChessPieceType.King, color));
-        color = GameColor.BLACK;
-        squares[height-1][0].setPiece(new Piece(ChessPieceType.Rook, color));
-        squares[height-1][width-1].setPiece(new Piece(ChessPieceType.Rook, color));
-        squares[height-1][1].setPiece(new Piece(ChessPieceType.Knight, color));
-        squares[height-1][width-2].setPiece(new Piece(ChessPieceType.Knight, color));
-        squares[height-1][2].setPiece(new Piece(ChessPieceType.Bishop, color));
-        squares[height-1][width-3].setPiece(new Piece(ChessPieceType.Bishop, color));
-        squares[height-1][3].setPiece(new Piece(ChessPieceType.Queen, color));
-        squares[height-1][4].setPiece(new Piece(ChessPieceType.King, color));
+        setPieces(GameColor.WHITE, 0);
+        setPieces(GameColor.BLACK, height-1);
+    }
+
+    /**
+     * Helpher method for setting up the pieces on the board
+     * @param color : the color of the pieces to set
+     * @param offset : the offset from the top of the board to set the pieces
+     */
+    private void setPieces(GameColor color, int offset){
+        squares[offset][0].setPiece(new Piece(ChessPieceType.Rook, color));
+        squares[offset][width-1].setPiece(new Piece(ChessPieceType.Rook, color));
+        squares[offset][1].setPiece(new Piece(ChessPieceType.Knight, color));
+        squares[offset][width-2].setPiece(new Piece(ChessPieceType.Knight, color));
+        squares[offset][2].setPiece(new Piece(ChessPieceType.Bishop, color));
+        squares[offset][width-3].setPiece(new Piece(ChessPieceType.Bishop, color));
+        squares[offset][3].setPiece(new Piece(ChessPieceType.Queen, color));
+        squares[offset][4].setPiece(new Piece(ChessPieceType.King, color));
     }
 
     /**
