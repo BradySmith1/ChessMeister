@@ -1,11 +1,12 @@
 package movements;
 
-import enums.Rank;
+import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
-import interfaces.SquareIF;
+import interfaces.PieceIF;
+import model.Piece;
 import model.Position;
-
+import model.Square;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +15,11 @@ public class QueenMovement implements MovementIF {
     /** Fields */
     private Position currentPosition;   // The current position of the piece.
 
-    private String color;   // The color of the piece.
+    private GameColor color;   // The color of the piece.
+
 
     /** Constructor */
-    public QueenMovement(Position currentPosition, String color) {
+    public QueenMovement(Position currentPosition, GameColor color) {
         this.currentPosition = currentPosition;
         this.color = color;
     }
@@ -25,7 +27,7 @@ public class QueenMovement implements MovementIF {
     /**
     * Gets the valid moves for the piece.
     *
-    * @param board
+    * @param board the board the piece is on.
     * @return the valid moves for the piece.
     */
     @Override
@@ -69,8 +71,13 @@ public class QueenMovement implements MovementIF {
         boolean moveSuccessful = false;
 
         // Check if the move is valid.
-        if (validMoves.contains(movePosition)) {
-            // Do logic
+        if(validMoves.contains(movePosition)){
+            // Set the boards new piece to the piece that is moving.
+            board.getSquares()[currentPosition.getRank().getIndex()]
+                              [currentPosition.getFile().getFileNum()].setPiece((PieceIF) this); // TODO could be bad cast
+
+            // Set the new local position of the piece.
+            this.setPosition(movePosition);
 
             // The move was successful.
             moveSuccessful = true;
@@ -131,25 +138,28 @@ public class QueenMovement implements MovementIF {
         int currentQueenFile = currentPosition.getFile().getFileNum();  // The file of the current square.
 
         // A boolean to determine if a piece has been encountered.
-        boolean pieceEncoutered = false;
+        boolean pieceEncountered = false;
 
         // Keep looping until a piece is encountered or the end of the board is reached.
-        while(!pieceEncoutered && currentQueenRank < board.getHeight()){
+        while(!pieceEncountered && currentQueenRank < board.getHeight()){
             // Get the square at the current rank and file.
-            SquareIF currentSquare = board.getSquares()[currentQueenRank][currentQueenFile];
+            Square currentSquare = (Square)board.getSquares()[currentQueenRank][currentQueenFile];
+
+            // Get the piece at the current square and cast the PieceIF to Piece.
+            Piece currentPiece = (Piece) currentSquare.getPiece();
 
             // If the square is empty, add it to the list of valid moves.
             if(currentSquare.getPiece() == null){
                 validVerticalMovesAbove.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if(!currentSquare.getPiece().getColor().equals(color)){
+            else if(!currentPiece.getColor().equals(this.color)){ // if piece is opposite color
                 validVerticalMovesAbove.add(currentSquare.getPosition());
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
             else {
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // Increment the rank.
             currentQueenRank++;
@@ -165,25 +175,28 @@ public class QueenMovement implements MovementIF {
         int currentQueenFile = currentPosition.getFile().getFileNum();  // The file of the current square.
 
         // A boolean to determine if a piece has been encountered.
-        boolean pieceEncoutered = false;
+        boolean pieceEncountered = false;
 
         // Keep looping until a piece is encountered or the end of the board is reached.
-        while(!pieceEncoutered && currentQueenRank < board.getHeight()){
+        while(!pieceEncountered && currentQueenRank < board.getHeight()){
             // Get the square at the current rank and file.
-            SquareIF currentSquare = board.getSquares()[currentQueenRank][currentQueenFile];
+            Square currentSquare = (Square)board.getSquares()[currentQueenRank][currentQueenFile];
+
+            // Get the piece at the current square and cast the PieceIF to Piece.
+            Piece currentPiece = (Piece) currentSquare.getPiece();
 
             // If the square is empty, add it to the list of valid moves.
             if(currentSquare.getPiece() == null){
                 validVerticalMovesBelow.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if(!currentSquare.getPiece().getColor().equals(color)){
+            else if(!currentPiece.getColor().equals(this.color)){ // if piece is opposite color
                 validVerticalMovesBelow.add(currentSquare.getPosition());
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
             else {
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // Increment the rank.
             currentQueenRank++;
@@ -200,25 +213,28 @@ public class QueenMovement implements MovementIF {
         int currentQueenFile = currentPosition.getFile().getFileNum() - 1;  // The file left of the current square.
 
         // A boolean to determine if a piece has been encountered.
-        boolean pieceEncoutered = false;
+        boolean pieceEncountered = false;
 
         // Keep looping until a piece is encountered or the end of the board is reached.
-        while(!pieceEncoutered && currentQueenFile >= 0){
+        while(!pieceEncountered && currentQueenFile >= 0){
             // Get the square at the current rank and file.
-            SquareIF currentSquare = board.getSquares()[currentQueenRank][currentQueenFile];
+            Square currentSquare = (Square)board.getSquares()[currentQueenRank][currentQueenFile];
+
+            // Get the piece at the current square and cast the PieceIF to Piece.
+            Piece currentPiece = (Piece) currentSquare.getPiece();
 
             // If the square is empty, add it to the list of valid moves.
             if(currentSquare.getPiece() == null){
                 validHorizontalMovesLeft.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if(!currentSquare.getPiece().getColor().equals(color)){
+            else if(!currentPiece.getColor().equals(this.color)){ // if piece is opposite color
                 validHorizontalMovesLeft.add(currentSquare.getPosition());
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
             else {
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // Decrement the file.
             currentQueenFile--;
@@ -235,25 +251,28 @@ public class QueenMovement implements MovementIF {
         int currentQueenFile = currentPosition.getFile().getFileNum() + 1;  // The file right of the current square.
 
         // A boolean to determine if a piece has been encountered.
-        boolean pieceEncoutered = false;
+        boolean pieceEncountered = false;
 
         // Keep looping until a piece is encountered or the end of the board is reached.
-        while(!pieceEncoutered && currentQueenFile < board.getWidth()){
+        while(!pieceEncountered && currentQueenFile < board.getWidth()){
             // Get the square at the current rank and file.
-            SquareIF currentSquare = board.getSquares()[currentQueenRank][currentQueenFile];
+            Square currentSquare = (Square)board.getSquares()[currentQueenRank][currentQueenFile];
+
+            // Get the piece at the current square and cast the PieceIF to Piece.
+            Piece currentPiece = (Piece) currentSquare.getPiece();
 
             // If the square is empty, add it to the list of valid moves.
             if(currentSquare.getPiece() == null){
                 validHorizontalMovesRight.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if(!currentSquare.getPiece().getColor().equals(color)){
+            else if(!currentPiece.getColor().equals(this.color)){ // if piece is opposite color
                 validHorizontalMovesRight.add(currentSquare.getPosition());
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
             else {
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // Increment the file.
             currentQueenFile++;
@@ -270,25 +289,28 @@ public class QueenMovement implements MovementIF {
         int currentQueenFile = currentPosition.getFile().getFileNum() - 1;  // The file left of the current square.
 
         // A boolean to determine if a piece has been encountered.
-        boolean pieceEncoutered = false;
+        boolean pieceEncountered = false;
 
         // Keep looping until a piece is encountered or the end of the board is reached.
-        while(!pieceEncoutered && currentQueenRank < board.getHeight() && currentQueenFile >= 0){
+        while(!pieceEncountered && currentQueenRank < board.getHeight() && currentQueenFile >= 0){
             // Get the square at the current rank and file.
-            SquareIF currentSquare = board.getSquares()[currentQueenRank][currentQueenFile];
+            Square currentSquare = (Square)board.getSquares()[currentQueenRank][currentQueenFile];
+
+            // Get the piece at the current square and cast the PieceIF to Piece.
+            Piece currentPiece = (Piece) currentSquare.getPiece();
 
             // If the square is empty, add it to the list of valid moves.
             if(currentSquare.getPiece() == null){
                 validDiagonalMovesUpLeft.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if(!currentSquare.getPiece().getColor().equals(color)){
+            else if(!currentPiece.getColor().equals(this.color)){ // if piece is opposite color
                 validDiagonalMovesUpLeft.add(currentSquare.getPosition());
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
             else {
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // Increment the rank.
             currentQueenRank++;
@@ -307,25 +329,28 @@ public class QueenMovement implements MovementIF {
         int currentQueenFile = currentPosition.getFile().getFileNum() + 1;  // The file right of the current square.
 
         // A boolean to determine if a piece has been encountered.
-        boolean pieceEncoutered = false;
+        boolean pieceEncountered = false;
 
         // Keep looping until a piece is encountered or the end of the board is reached.
-        while(!pieceEncoutered && currentQueenRank < board.getHeight() && currentQueenFile < board.getWidth()){
+        while(!pieceEncountered && currentQueenRank < board.getHeight() && currentQueenFile < board.getWidth()){
             // Get the square at the current rank and file.
-            SquareIF currentSquare = board.getSquares()[currentQueenRank][currentQueenFile];
+            Square currentSquare = (Square)board.getSquares()[currentQueenRank][currentQueenFile];
+
+            // Get the piece at the current square and cast the PieceIF to Piece.
+            Piece currentPiece = (Piece) currentSquare.getPiece();
 
             // If the square is empty, add it to the list of valid moves.
             if(currentSquare.getPiece() == null){
                 validDiagonalMovesUpRight.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if(!currentSquare.getPiece().getColor().equals(color)){
+            else if(!currentPiece.getColor().equals(this.color)){ // if piece is opposite color
                 validDiagonalMovesUpRight.add(currentSquare.getPosition());
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
             else {
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // Increment the rank.
             currentQueenRank++;
@@ -344,25 +369,28 @@ public class QueenMovement implements MovementIF {
         int currentQueenFile = currentPosition.getFile().getFileNum() - 1;  // The file left of the current square.
 
         // A boolean to determine if a piece has been encountered.
-        boolean pieceEncoutered = false;
+        boolean pieceEncountered = false;
 
         // Keep looping until a piece is encountered or the end of the board is reached.
-        while(!pieceEncoutered && currentQueenRank >= 0 && currentQueenFile >= 0){
+        while(!pieceEncountered && currentQueenRank >= 0 && currentQueenFile >= 0){
             // Get the square at the current rank and file.
-            SquareIF currentSquare = board.getSquares()[currentQueenRank][currentQueenFile];
+            Square currentSquare = (Square)board.getSquares()[currentQueenRank][currentQueenFile];
+
+            // Get the piece at the current square and cast the PieceIF to Piece.
+            Piece currentPiece = (Piece) currentSquare.getPiece();
 
             // If the square is empty, add it to the list of valid moves.
             if(currentSquare.getPiece() == null){
                 validDiagonalMovesDownLeft.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if(!currentSquare.getPiece().getColor().equals(color)){
+            else if(!currentPiece.getColor().equals(this.color)){ // if piece is opposite color
                 validDiagonalMovesDownLeft.add(currentSquare.getPosition());
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
             else {
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // Decrement the rank.
             currentQueenRank--;
@@ -381,25 +409,28 @@ public class QueenMovement implements MovementIF {
         int currentQueenFile = currentPosition.getFile().getFileNum() + 1;  // The file right of the current square.
 
         // A boolean to determine if a piece has been encountered.
-        boolean pieceEncoutered = false;
+        boolean pieceEncountered = false;
 
         // Keep looping until a piece is encountered or the end of the board is reached.
-        while(!pieceEncoutered && currentQueenRank >= 0 && currentQueenFile < board.getWidth()){
+        while(!pieceEncountered && currentQueenRank >= 0 && currentQueenFile < board.getWidth()){
             // Get the square at the current rank and file.
-            SquareIF currentSquare = board.getSquares()[currentQueenRank][currentQueenFile];
+            Square currentSquare = (Square)board.getSquares()[currentQueenRank][currentQueenFile];
+
+            // Get the piece at the current square and cast the PieceIF to Piece.
+            Piece currentPiece = (Piece) currentSquare.getPiece();
 
             // If the square is empty, add it to the list of valid moves.
-            if(currentSquare.getPiece() == null){
+            if(currentPiece == null){
                 validDiagonalMovesDownRight.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if(!currentSquare.getPiece().getColor().equals(color)){
+            else if(!currentPiece.getColor().equals(this.color)){ // if piece is opposite color
                 validDiagonalMovesDownRight.add(currentSquare.getPosition());
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
             else {
-                pieceEncoutered = true;
+                pieceEncountered = true;
             }
             // Decrement the rank.
             currentQueenRank--;
@@ -408,5 +439,37 @@ public class QueenMovement implements MovementIF {
         }
 
         return validDiagonalMovesDownRight; // Return the list of valid moves down and right of the Queen.
+    }
+
+    /**
+     * Sets the color of the Queen.
+     * @param color The color of the Queen.
+     */
+    public void setColor(GameColor color) {
+        this.color = color;
+    }
+
+    /**
+     * Gets the color of the Queen.
+     * @return The color of the Queen.
+     */
+    public GameColor getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the position of the Queen.
+     * @param position The position of the Queen.
+     */
+    public void setPosition(Position position) {
+        this.currentPosition = position;
+    }
+
+    /**
+     * Gets the position of the Queen.
+     * @return The position of the Queen.
+     */
+    public Position getPosition() {
+        return currentPosition;
     }
 }
