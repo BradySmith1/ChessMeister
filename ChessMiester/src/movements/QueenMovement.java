@@ -10,6 +10,10 @@ import model.Square;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents the movement of a Queen.
+ * @authors Kaushal Patel (70%), Zach Eanes (10%)
+ */
 public class QueenMovement implements MovementIF {
 
     /** Fields */
