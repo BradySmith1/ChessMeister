@@ -61,7 +61,7 @@ public class Board implements BoardIF {
         GameColor color = GameColor.WHITE;
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                squares[i][j] = new Square(new Position(Rank.values()[j], Files.values()[i]), color);
+                squares[i][j] = new Square(new Position(Rank.values()[(Rank.values().length - 1) - i], Files.values()[j]), color);
                 color = color == GameColor.WHITE ? GameColor.BLACK : GameColor.WHITE;
             }
             color = color == GameColor.WHITE ? GameColor.BLACK : GameColor.WHITE;
