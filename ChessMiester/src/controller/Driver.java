@@ -30,23 +30,26 @@ public class Driver {
                 "(COMING SOON!) 3 - Play Online Game Against another Player\n" +
                 "(COMING SOON!) 4 - 4-Player Chess!\n" +
                 "0 - Exit Game\n--------------------------------------------------------------\n";
-
+        String prompt = "Enter your menu choice here -> ";
         int choice = 5;     //initialized to 5 so there is no option chosen or quitting the loop
         Chess chess;    //initialization of the Chess class
         while (choice != 0) {   //while user has not quit
             System.out.println(menu);   //shows user menu options
+            System.out.print(prompt);
             try {
                 choice = scan.nextInt();
             }
             catch (InputMismatchException e) {
                 System.out.println("\n" + e);
             }
+            System.out.println();
             if (choice >= 1 && choice <= 4) {
                 chess = new Chess(choice);  //new game of chess based on the game type
             } else if (choice != 0) {
-                System.out.println("\nPlease enter a valid number (0 - 4)\n");
-                scan.nextLine();    //consumes a \n so the scanner can use nextInt properly next loop
+                System.out.println("Please enter a valid number (0 - 4)");
             }
+            System.out.println();
+            scan.nextLine();    //consumes a new line so that nextInt throwing an exception will not loop
         }
     }
 }
