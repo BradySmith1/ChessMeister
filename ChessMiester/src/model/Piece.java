@@ -9,9 +9,9 @@ import java.util.List;
 
 /**
  * This class represents a chess piece.
- * @author Brady Smith %100
+ * @author Brady Smith 100%
  */
-public class Piece extends BlackAndWhite implements PieceIF {
+public class Piece extends BlackAndWhite implements PieceIF{
 
     /**
      * The type of the piece.

@@ -4,6 +4,9 @@ import enums.Files;
 import enums.Rank;
 import interfaces.BoardIF;
 import model.Board;
+import model.Piece;
+import model.Position;
+import movements.QueenMovement;
 
 public class Chess {
 
