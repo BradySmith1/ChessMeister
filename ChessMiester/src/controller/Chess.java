@@ -6,7 +6,6 @@ import interfaces.BoardIF;
 import model.Board;
 import model.Piece;
 import model.Position;
-import movements.QueenMovement;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -122,4 +121,67 @@ public class Chess {
     public void saveGame(String file, BoardIF game) {
 
     }
+
+    public void move(Files fromF, Rank fromR, Files toF, Rank toR) {
+        // Get the piece at the from position.
+        Piece piece = (Piece) board.getPiece(fromR, fromF);
+
+        // Get the piece at the to position if any.
+        boolean hasPiece = board.getPiece(fromR, fromF) != null;   // True if there is a piece at the to position.
+
+        /**
+         * Create a copy of the board and attempt to move the piece to the to position on the copy.
+         * if the move was successful, but it puts your king in check then prompt the user to enter a new move. Revert to the original board.
+         *
+         *
+         * If the move was successful then set the board copy "to" position to the piece and clear the "from" position.
+         * If the move was successful but there was a capturable piece at the to position then store the piece in the player record of captured pieces.
+         *
+         * If we made the move and it was successful and doesn't put the king in check, then we copy the copied board to the actual board.
+         *
+         */
+
+        boolean success = piece.move(board, new Position(toR, toF));
+
+        if (success && hasPiece){ // A piece was captured and move is valid
+            // how do we want to store captured pieces in a record that can be displayed later on
+
+
+
+            board.getSquares()[toF.getFileNum()][toR.getIndex()].setPiece(piece);  // add piece to new location
+            board.getSquares()[fromF.getFileNum()][fromR.getIndex()].clear();  // remove piece from old location
+        }
+        else if (success){ // A piece was not captured and move is valid
+            board.getSquares()[toF.getFileNum()][toR.getIndex()].setPiece(piece);  // add piece to new location
+            board.getSquares()[fromF.getFileNum()][fromR.getIndex()].clear();  // remove piece from old location
+
+        }
+        else{ // Move is not valid
+            // Prompt user again for a new move, telling them the move was invalid
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Invalid move, please enter another >>>");
+
+
+        }
+    }
 }
+
+
+//  TODO GAME LOGIC IDEA
+//  1. Create a new board
+//  2. Create 2 new players : player 1 and player 2 (player 1 is white, player 2 is black)
+//  4. Create a new game
+//  5. Start the game (loop) : !gameOver
+//  6. Prompt the user for a move   // Keep track of whose turn it is
+//  7. Check if the move is valid
+//  8. If the move is valid, make the move // next player's turn
+//  9. Check if the move puts the king of the player who made the move in check
+//  10. If the move puts the king in check, prompt the user for a new move
+//  11. If the move does not put the king in check, check if the move puts the opponent's king in check
+//  12. If the move puts the opponent's king in check, check if the opponent's king is in checkmate
+//  13. If the opponent's king is in checkmate, end the game    gameOver = true
+//  14. If the opponent's king is not in checkmate, continue the game
+//  15. If the move does not put the opponent's king in check, continue the game
+//  16. If the move is not valid, prompt the user for a new move
+//  17. Repeat steps 6-16 until the game is over
+//  18. End the game
