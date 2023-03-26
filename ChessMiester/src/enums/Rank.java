@@ -6,14 +6,14 @@
 package enums;
 
 public enum Rank {
-    R1(1, 0),
-    R2(2, 1),
-    R3(3, 2),
-    R4(4, 3),
-    R5(5, 4),
-    R6(6, 5),
-    R7(7, 6),
-    R8(8, 7);
+    R1(1, 7),
+    R2(2, 6),
+    R3(3, 5),
+    R4(4, 4),
+    R5(5, 3),
+    R6(6, 2),
+    R7(7, 1),
+    R8(8, 0);
 
     public final int displayNum; /* Number to be displayed to users. */
     public final int index; /* Number used to index throughout chess. */

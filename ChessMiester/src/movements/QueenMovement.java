@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * This class represents the movement of a Queen.
- * @authors Kaushal Patel (70%), Zach Eanes (10%)
+ * @authors Kaushal Patel (70%), Zach Eanes (30%)
  */
 public class QueenMovement implements MovementIF {
 
