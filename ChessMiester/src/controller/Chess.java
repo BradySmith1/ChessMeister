@@ -11,9 +11,14 @@ import movements.QueenMovement;
 public class Chess {
 
     private BoardIF boardGame;
+    private static final int DEFAULT_GAME = 1;
 
     public Chess() {
-        this.boardGame = new Board();
+        this(DEFAULT_GAME);
+    }
+
+    public Chess(int gameType) {
+        System.out.println("Feature not yet finished");
     }
 
     public void newGame() {
