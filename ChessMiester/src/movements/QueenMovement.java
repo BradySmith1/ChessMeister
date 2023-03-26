@@ -175,7 +175,7 @@ public class QueenMovement implements MovementIF {
         // The valid moves for the Queen below her current position.
         List<Position> validVerticalMovesBelow = new ArrayList<>();
 
-        int currentQueenRank = currentPosition.getRank().getIndex() + 1;    // The rank above the current square.
+        int currentQueenRank = currentPosition.getRank().getIndex() - 1;    // The rank above the current square.
         int currentQueenFile = currentPosition.getFile().getFileNum();  // The file of the current square.
 
         // A boolean to determine if a piece has been encountered.
@@ -317,9 +317,9 @@ public class QueenMovement implements MovementIF {
                 pieceEncountered = true;
             }
             // Increment the rank.
-            currentQueenRank++;
+            currentQueenRank--;
             // Decrement the file.
-            currentQueenFile--;
+            currentQueenFile++;
         }
 
         return validDiagonalMovesUpLeft; // Return the list of valid moves up and left of the Queen.
@@ -393,7 +393,7 @@ public class QueenMovement implements MovementIF {
                 pieceEncountered = true;
             }
             // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
-            else {
+            else{
                 pieceEncountered = true;
             }
             // Decrement the rank.
@@ -437,9 +437,9 @@ public class QueenMovement implements MovementIF {
                 pieceEncountered = true;
             }
             // Decrement the rank.
-            currentQueenRank--;
+            currentQueenRank++;
             // Increment the file.
-            currentQueenFile++;
+            currentQueenFile--;
         }
 
         return validDiagonalMovesDownRight; // Return the list of valid moves down and right of the Queen.

@@ -21,9 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RookMovement implements MovementIF{
-    private Position currentPosition; // The current position of the piece
 
-    private GameColor color; // The color of the piece
+    /* The current position of the piece */
+    private Position currentPosition;
+
+    /* The color of the piece */
+    private GameColor color;
 
     /**
      * Constructor method for the RookMovement Class
@@ -123,7 +126,7 @@ public class RookMovement implements MovementIF{
     private List<Position> getVerticalMovesAbove(BoardIF board){
         List<Position> validUp = new ArrayList<>();
 
-        int currentRank = currentPosition.getRank().getIndex(); // Get the current rank of the piece
+        int currentRank = currentPosition.getRank().getIndex() + 1; // Get the current rank of the piece
         int currentFile = currentPosition.getFile().getFileNum(); // Get the current file of the piece
 
         boolean pieceHit = false; // Boolean to determine if a piece has been hit
@@ -157,7 +160,7 @@ public class RookMovement implements MovementIF{
     private List<Position> getVerticalMovesBelow(BoardIF board){
         List<Position> validDown = new ArrayList<>();
 
-        int currentRank = currentPosition.getRank().getIndex(); // Get current rank of piece
+        int currentRank = currentPosition.getRank().getIndex() - 1; // Get current rank of piece
         int currentFile = currentPosition.getFile().getFileNum(); // Get current file of piece
 
         boolean pieceHit = false; // Boolean to determine if a piece has been hit
@@ -192,7 +195,7 @@ public class RookMovement implements MovementIF{
         List<Position> validLeft = new ArrayList<>();
 
         int currentRank = currentPosition.getRank().getIndex(); // Get current rank of piece
-        int currentFile = currentPosition.getFile().getFileNum(); // Get current file of piece
+        int currentFile = currentPosition.getFile().getFileNum() - 1; // Get current file of piece
 
         boolean pieceHit = false; // Boolean to determine if a piece has been hit
 
@@ -226,7 +229,7 @@ public class RookMovement implements MovementIF{
         List<Position> validRight = new ArrayList<>();
 
         int currentRank = currentPosition.getRank().getIndex(); // Get current rank of piece
-        int currentFile = currentPosition.getFile().getFileNum(); // Get current file of piece
+        int currentFile = currentPosition.getFile().getFileNum() + 1; // Get current file of piece
 
         boolean pieceHit = false; // Boolean to determine if a piece has been hit
 
