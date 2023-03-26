@@ -40,10 +40,7 @@ public class Board implements BoardIF {
     * Creates a new game board with the specified width and height.
     */
     public Board() {
-        this.width = 8;
-        this.height = 8;
-        squares = new Square[height][width];
-        drawStrategy = new BoardMonoCLI();
+        this(new BoardMonoCLI());
     }
 
     public Board(BoardStrategy strategy){
@@ -51,6 +48,7 @@ public class Board implements BoardIF {
         this.height = 8;
         squares = new Square[height][width];
         drawStrategy = strategy;
+        this.initBoard();
     }
 
     /**
