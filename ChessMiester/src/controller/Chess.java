@@ -101,7 +101,14 @@ public class Chess {
         board.setup();
         board.draw();
         //loop for move logic.
-        while(true){
+        boolean gameOver = false;
+        while(!gameOver){
+            //player1.move();
+            //board.draw();
+            //player2.move();
+            //board.draw();
+            //check if game is over
+            //if(gameOver)
             endGame();
         }
     }
@@ -122,6 +129,7 @@ public class Chess {
 
     }
 
+    //move needs to be moved into the player object. This is just the code for when it is created.
     public void move(Files fromF, Rank fromR, Files toF, Rank toR) {
         // Get the piece at the from position.
         Piece piece = (Piece) board.getPiece(fromR, fromF);
