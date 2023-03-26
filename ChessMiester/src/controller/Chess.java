@@ -1,12 +1,7 @@
 package controller;
 
-import enums.Files;
-import enums.Rank;
 import interfaces.BoardIF;
 import model.Board;
-import model.Piece;
-import model.Position;
-import movements.QueenMovement;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
