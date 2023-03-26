@@ -1,6 +1,6 @@
 /**
  * Class to define the movements of a rook in a game of chess. This class does so
- * by looking through and finding all posible moves above, below, left, and right
+ * by looking through and finding all possible moves above, below, left, and right
  * of a given piece.
  *
  * @author Zach Eanes 100%
@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RookMovement implements MovementIF{
-    private Position currentPosition; // The current position of the piece.
+    private Position currentPosition; // The current position of the piece
 
-    private GameColor color; // The color of the piece.
+    private GameColor color; // The color of the piece
 
     /**
      * Constructor method for the RookMovement Class
