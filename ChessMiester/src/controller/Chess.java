@@ -149,8 +149,7 @@ public class Chess {
                 if(squares[i][j].getPiece() != null){
                     if(((Piece) squares[i][j].getPiece()).getColor() == player1.getColor()){
                         player1.addPiece(squares[i][j].getPiece());
-                    }
-                    else{
+                    }else{
                         player2.addPiece(squares[i][j].getPiece());
                     }
                 }
@@ -235,12 +234,12 @@ public class Chess {
 
         }
     }
-}
 
 
 public Files findValidFile() {
     System.out.println("Enter the file of the piece to move (A-H) >>>");
     scan.nextLine();
+    return null;
 }
 
 public Rank findValidRank() {
