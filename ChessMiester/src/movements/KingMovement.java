@@ -15,6 +15,7 @@ import model.Position;
 import model.Square;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class KingMovement implements MovementIF {
@@ -51,7 +52,9 @@ public class KingMovement implements MovementIF {
         validMoves.add(moveCheck(board, currentPosition, -1, -1));
         validMoves.add(moveCheck(board, currentPosition, 0, -1));
         validMoves.add(moveCheck(board, currentPosition, 1, -1));
-        return null;
+
+        validMoves.removeAll(Collections.singleton(null)); // remove all null values
+        return validMoves;
     }
 
     private Position moveCheck(BoardIF board, Position currentPosition, int rank, int file) {

@@ -77,10 +77,11 @@ public class Board implements BoardIF {
         //need 2 bishops
         //need 1 queen
         //need 1 king
+        /**
         for(int i = 0; i < width; i++) {
             squares[1][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.WHITE));
             squares[6][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.BLACK));
-        }
+        }*/
         setPieces(GameColor.WHITE, 0);
         setPieces(GameColor.BLACK, height-1);
     }
@@ -91,13 +92,13 @@ public class Board implements BoardIF {
      * @param offset : the offset from the top of the board to set the pieces
      */
     private void setPieces(GameColor color, int offset){
-        squares[offset][0].setPiece(new Piece(ChessPieceType.Rook, color));
-        squares[offset][width-1].setPiece(new Piece(ChessPieceType.Rook, color));
-        squares[offset][1].setPiece(new Piece(ChessPieceType.Knight, color));
-        squares[offset][width-2].setPiece(new Piece(ChessPieceType.Knight, color));
-        squares[offset][2].setPiece(new Piece(ChessPieceType.Bishop, color));
-        squares[offset][width-3].setPiece(new Piece(ChessPieceType.Bishop, color));
-        squares[offset][3].setPiece(new Piece(ChessPieceType.Queen, color));
+        //squares[offset][0].setPiece(new Piece(ChessPieceType.Rook, color));
+        //squares[offset][width-1].setPiece(new Piece(ChessPieceType.Rook, color));
+        //squares[offset][1].setPiece(new Piece(ChessPieceType.Knight, color));
+//        squares[offset][width-2].setPiece(new Piece(ChessPieceType.Knight, color));
+//        squares[offset][2].setPiece(new Piece(ChessPieceType.Bishop, color));
+//        squares[offset][width-3].setPiece(new Piece(ChessPieceType.Bishop, color));
+        //squares[offset][3].setPiece(new Piece(ChessPieceType.Queen, color));
         squares[offset][4].setPiece(new Piece(ChessPieceType.King, color));
     }
 
