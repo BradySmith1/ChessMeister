@@ -134,7 +134,7 @@ public class Chess {
             System.out.println("Where would you like to move to?");
             Files file2 = findValidFile();
             Rank rank2 = findValidRank();
-            move(playerWhite, file1, rank1, file2, rank2);
+            move(playerWhite, playerBlack, file1, rank1, file2, rank2);
             board.draw();
             System.out.println("Black's turn\nWhere would you like to move from?");
             file1 = findValidFile();
@@ -142,7 +142,7 @@ public class Chess {
             System.out.println("Where would you like to move to?");
             file2 = findValidFile();
             rank2 = findValidRank();
-            move(playerBlack, file2, rank2, file1, rank1);
+            move(playerBlack, playerBlack, file2, rank2, file1, rank1);
             board.draw();
             gameOver = true;
             endGame();
