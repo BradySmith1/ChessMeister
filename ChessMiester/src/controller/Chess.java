@@ -115,18 +115,18 @@ public class Chess {
         //clears the screen
         System.out.print("\033[H\033[2J");
         System.out.flush();
-        board = new Board();
-        board.setup();
-        board.draw();
+        board = new Board(); // create a new board to play on
+        board.setup(); // setup the board with pieces
+        board.draw(); // draw the board for users to see
         //loop for move logic.
         boolean gameOver = false;
         while(!gameOver){
-            //player1.move();
-            //board.draw();
-            //player2.move();
-            //board.draw();
+            //player1.move(); // allow player one to move
+            //board.draw();   // draw the board for users to see
+            //player2.move(); // allow player two to move
+            //board.draw();   // draw the board for users to see
             //check if game is over
-            //if(gameOver)
+            //if(gameOver) // check to see if conditions have been met to end game
             endGame();
         }
     }
