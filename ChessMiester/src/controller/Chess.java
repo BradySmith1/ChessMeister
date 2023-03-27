@@ -210,10 +210,11 @@ public class Chess {
         Piece piece = (Piece) board.getPiece(fromR, fromF);
 
         if (currentPlayer.getPieces().contains(piece)){
-            // True if there is a piece at the to position.
+            // True if there is a piece at the to position
             boolean hasPiece = board.getPiece(toR, toF) != null;
 
-            boolean success = piece.move(board, new Position(toR, toF));
+            // True if the "to" position is a valid move for the piece
+            boolean success = piece.getValidMoves(board).contains(new Position(toR, toF));
 
             if(success && hasPiece){ // A piece was captured and move is valid
                 // Add the captured piece to the player's list of captured pieces.
