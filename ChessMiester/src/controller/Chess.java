@@ -111,6 +111,7 @@ public class Chess {
             player1 = new Player(GameColor.WHITE);
             player2 = new Player(GameColor.BLACK);
         }
+        scan.nextLine(); //consumes a new line so that nextInt throwing an exception will not loop
         //clears the screen
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -291,12 +292,19 @@ public class Chess {
         System.out.println("Enter the rank of the location (1-8) >>> ");
         String input = scan.nextLine();
         Rank newRank = null;
-
         boolean valid = false; // boolean to see if input is valid
-
         while(!valid){
             try{
-                newRank = Rank.valueOf(input);
+                Rank[] ranks = Rank.values(); // get all the ranks
+                for(Rank r : ranks){
+                    if(r.getDisplayNum() == Integer.parseInt(input)){
+                        newRank = r;
+                        break;
+                    }
+                }
+                if(newRank == null){
+                    throw new IllegalArgumentException();
+                }
                 valid = true;
             }catch(IllegalArgumentException e){
                 System.out.println("Invalid rank, please enter another (1-8) >>> ");
