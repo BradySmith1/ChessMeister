@@ -17,9 +17,12 @@ import java.util.List;
 public class QueenMovement implements MovementIF {
 
     /** Fields */
-    private Position currentPosition;   // The current position of the piece.
 
-    private GameColor color;   // The color of the piece.
+    /** The current position of the piece. */
+    private Position currentPosition;
+
+    /** The color of the piece. */
+    private GameColor color;
 
 
     /** Constructor */
@@ -289,8 +292,8 @@ public class QueenMovement implements MovementIF {
         // The valid moves for the Queen to the up and left of her current position.
         List<Position> validDiagonalMovesUpLeft = new ArrayList<>();
 
-        int currentQueenRank = currentPosition.getRank().getIndex() + 1;    // The rank above the current square.
-        int currentQueenFile = currentPosition.getFile().getFileNum() - 1;  // The file left of the current square.
+        int currentQueenRank = currentPosition.getRank().getIndex() - 1;    // The rank above the current square.
+        int currentQueenFile = currentPosition.getFile().getFileNum() + 1;  // The file left of the current square.
 
         // A boolean to determine if a piece has been encountered.
         boolean pieceEncountered = false;
@@ -409,8 +412,8 @@ public class QueenMovement implements MovementIF {
         // The valid moves for the Queen to the down and right of her current position.
         List<Position> validDiagonalMovesDownRight = new ArrayList<>();
 
-        int currentQueenRank = currentPosition.getRank().getIndex() - 1;    // The rank below the current square.
-        int currentQueenFile = currentPosition.getFile().getFileNum() + 1;  // The file right of the current square.
+        int currentQueenRank = currentPosition.getRank().getIndex() + 1;    // The rank below the current square.
+        int currentQueenFile = currentPosition.getFile().getFileNum() - 1;  // The file right of the current square.
 
         // A boolean to determine if a piece has been encountered.
         boolean pieceEncountered = false;
