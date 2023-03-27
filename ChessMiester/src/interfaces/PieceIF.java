@@ -28,7 +28,7 @@ public interface PieceIF {
      * @param board The game board that the piece moves on.
      * @return A list of valid MovePositions.
      */
-    public List<Position> getValidMoves(BoardIF board);
+    public List<Position> getValidMoves(BoardIF board, Position currentPosition);
 
     /**
      * Moves the piece to the selected movePosition if it is a valid/legal move.

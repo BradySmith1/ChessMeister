@@ -3,7 +3,9 @@ package model;
 import enums.ChessPieceType;
 import enums.GameColor;
 import interfaces.BoardIF;
+import interfaces.MovementIF;
 import interfaces.PieceIF;
+import movements.*;
 
 import java.util.List;
 
@@ -18,7 +20,8 @@ public class Piece extends BlackAndWhite implements PieceIF{
      */
     private ChessPieceType type;
 
-    private Position location;
+
+    private MovementIF moveType;
 
     /**
      * Creates a new piece of the specified type.
@@ -27,6 +30,18 @@ public class Piece extends BlackAndWhite implements PieceIF{
     public Piece(ChessPieceType type, GameColor color) {
         super(color);
         this.type = type;
+        moveTypeFactory();
+    }
+
+    private void moveTypeFactory() {
+        switch (type) {
+            case King -> moveType = new KingMovement(getColor());
+            case Pawn -> moveType = new PawnMovement(getColor());
+            case Rook -> moveType = new RookMovement(getColor());
+            case Queen -> moveType = new QueenMovement(getColor());
+            case Bishop -> moveType = new BishopMovement(getColor());
+            case Knight -> moveType = new KnightMovement(getColor());
+        }
     }
 
     /**
@@ -48,8 +63,8 @@ public class Piece extends BlackAndWhite implements PieceIF{
     }
 
     @Override
-    public List<Position> getValidMoves(BoardIF board) {
-        return null;
+    public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
+        return this.moveType.getValidMoves(board, currentPosition);
     }
 
     @Override

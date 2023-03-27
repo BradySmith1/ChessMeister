@@ -10,19 +10,13 @@ package movements;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
-import interfaces.PieceIF;
 import model.Piece;
 import model.Position;
 import model.Square;
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BishopMovement implements MovementIF{
-
-    /* The current position of the piece */
-    private Position currentPosition;
 
     /* The color of the piece */
     private GameColor color;
@@ -30,36 +24,10 @@ public class BishopMovement implements MovementIF{
     /**
      * Constructor method for the BishopMovement class
      *
-     * @param currentPosition The current position of the piece
      * @param color The color of the piece
      */
-    public BishopMovement(Position currentPosition, GameColor color) {
-        this.currentPosition = currentPosition;
+    public BishopMovement(GameColor color) {
         this.color = color;
-    }
-
-    /**
-     * Moves the piece to the specified position.
-     *
-     * @param board The board the piece is on
-     * @param movePosition The position to move the piece toa
-     */
-    @Override
-    public boolean move(BoardIF board, Position movePosition) {
-        List<Position> validMoves = getValidMoves(board); // Gets the valid moves for the piece
-
-        boolean moveSuccessful = false; // Whether the move was successful or not
-
-        // Checks if the move is valid
-        if(validMoves.contains(movePosition)){
-            board.getSquares()[movePosition.getRank().getIndex()]
-                              [movePosition.getFile().getFileNum()].setPiece((PieceIF) this);
-
-            this.setPosition(movePosition); // Sets the position of the piece to the new position
-
-            moveSuccessful = true; // Sets the move to successful
-        }
-        return moveSuccessful;
     }
 
     /**
@@ -68,20 +36,20 @@ public class BishopMovement implements MovementIF{
     * @return the valid moves for the piece
     */
     @Override
-    public List<Position> getValidMoves(BoardIF board) {
+    public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
         List<Position> validMoves = new ArrayList<>(); // The list of valid moves
 
         // Checks the diagonal up and to the right
-        List<Position> validMovesUpRight = getValidMovesUpRight(board);
+        List<Position> validMovesUpRight = getValidMovesUpRight(board, currentPosition);
 
         // Checks the diagonal up and to the left
-        List<Position> validMovesUpLeft = getValidMovesUpLeft(board);
+        List<Position> validMovesUpLeft = getValidMovesUpLeft(board, currentPosition);
 
         // Checks the diagonal down and to the right
-        List<Position> validMovesDownRight = getValidMovesDownRight(board);
+        List<Position> validMovesDownRight = getValidMovesDownRight(board, currentPosition);
 
         // Checks the diagonal down and to the left
-        List<Position> validMovesDownLeft = getValidMovesDownLeft(board);
+        List<Position> validMovesDownLeft = getValidMovesDownLeft(board, currentPosition);
 
         // Adds all the valid moves to the list of valid moves
         validMoves.addAll(validMovesUpRight);
@@ -97,7 +65,7 @@ public class BishopMovement implements MovementIF{
      * @param board the board the piece is on
      * @return the valid moves for the piece in the diagonal up and to the right
      */
-    private List<Position> getValidMovesUpRight(BoardIF board){
+    private List<Position> getValidMovesUpRight(BoardIF board, Position currentPosition){
         // Valid moves for bishop to move up and to the right
         List<Position> validMovesUpRight = new ArrayList<>();
 
@@ -133,7 +101,7 @@ public class BishopMovement implements MovementIF{
      * @param board the board the piece is on
      * @return the valid moves for the piece in the diagonal up and to the left
      */
-    private List<Position> getValidMovesUpLeft(BoardIF board) {
+    private List<Position> getValidMovesUpLeft(BoardIF board, Position currentPosition) {
         // Valid moves for bishop to move up and to the left
         List<Position> validMovesUpLeft = new ArrayList<>();
 
@@ -167,7 +135,7 @@ public class BishopMovement implements MovementIF{
      * @param board the board the piece is on
      * @return the valid moves for the piece in the diagonal down and to the right
      */
-    private List<Position> getValidMovesDownRight(BoardIF board){
+    private List<Position> getValidMovesDownRight(BoardIF board, Position currentPosition){
         // Valid moves for bishop to move down and to the right
         List<Position> validMovesDownRight = new ArrayList<>();
 
@@ -201,7 +169,7 @@ public class BishopMovement implements MovementIF{
      * @param board the board the piece is on
      * @return the valid moves for the piece in the diagonal down and to the left
      */
-    private List<Position> getValidMovesDownLeft(BoardIF board){
+    private List<Position> getValidMovesDownLeft(BoardIF board, Position currentPosition){
         // valid moves for the bishop to move down and to the left
         List<Position> validMovesDownLeft = new ArrayList<>();
 
@@ -231,18 +199,6 @@ public class BishopMovement implements MovementIF{
         }
         return validMovesDownLeft; // return valid moves
     }
-
-    /**
-     * Getter method for the position of the piece
-     * @return the position of the piece
-     */
-    public Position getPosition() {return currentPosition;}
-
-    /**
-     * Setter method for the position of the piece
-     * @param position the position to set the piece to
-     */
-    public void setPosition(Position position) {currentPosition = position;}
 
     /**
      * Getter method for the color of the piece
