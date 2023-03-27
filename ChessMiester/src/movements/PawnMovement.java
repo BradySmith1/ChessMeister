@@ -15,7 +15,8 @@ import java.util.List;
  * @author Kaushal Patel (100%)
  */
 public class PawnMovement implements MovementIF {
-    /** Fields */
+    /* Fields */
+
     /** The color of the piece. */
     private GameColor color;
 
@@ -38,7 +39,7 @@ public class PawnMovement implements MovementIF {
     /**
      * Gets the valid moves for the piece.
      *
-     * @param board
+     * @param board the board the piece is on.
      * @return the valid moves for the piece.
      */
     @Override
@@ -148,7 +149,7 @@ public class PawnMovement implements MovementIF {
         List<Position> validMoves = new ArrayList<>();
 
         // Get the rank of the pawn.
-        int rankAbove = currentPosition.getRank().getIndex() + this.direction;
+        int rankAbove = currentPosition.getRank().getIndex() + (2 * this.direction);
 
         // Get the file of the pawn.
         int currentFile = currentPosition.getFile().getFileNum();

@@ -293,7 +293,7 @@ public class Chess {
      * @return new file for the piece to be moved to
      */
     public Files findValidFile() {
-        System.out.println("Enter the file of the location (A-H) >>> ");
+        System.out.print("Enter the file of the location (A-H) >>> ");
         String input = scan.nextLine();
         input = input.toUpperCase(); // make sure the input is uppercase
 
@@ -305,7 +305,7 @@ public class Chess {
                 newFile = Files.valueOf(input);
                 valid = true;
             }catch(IllegalArgumentException e) { //if a bad input is given, prompt for another
-                System.out.println("Invalid File, enter another (A-H) >>> ");
+                System.out.print("Invalid File, enter another (A-H) >>> ");
                 input = scan.nextLine();
             }
         }
@@ -317,7 +317,7 @@ public class Chess {
      * @return new rank for the piece to be moved to
      */
     public Rank findValidRank() {
-        System.out.println("Enter the rank of the location (1-8) >>> ");
+        System.out.print("Enter the rank of the location (1-8) >>> ");
         String input = scan.nextLine();
         Rank newRank = null;
         boolean valid = false; // boolean to see if input is valid
@@ -335,7 +335,7 @@ public class Chess {
                 }
                 valid = true;
             }catch(IllegalArgumentException e){
-                System.out.println("Invalid rank, please enter another (1-8) >>> ");
+                System.out.print("Invalid rank, please enter another (1-8) >>> ");
                 input = scan.nextLine();
             }
         }
