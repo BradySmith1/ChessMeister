@@ -203,7 +203,6 @@ public class Chess {
      * @param game board state to be saved in later
      */
     public void saveGame(String file, BoardIF game) {
-        return null;
     }
 
     /**

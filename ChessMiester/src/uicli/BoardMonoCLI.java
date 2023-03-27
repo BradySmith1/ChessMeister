@@ -4,6 +4,7 @@ import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.BoardStrategy;
 import interfaces.SquareIF;
+import model.Piece;
 import model.Square;
 
 /**
@@ -35,10 +36,16 @@ public class BoardMonoCLI implements BoardStrategy {
                     System.out.print((board.getHeight() - height) + " ");
                 }
                 if(square.getPiece() != null){
-                    if(square.isWhite()) {
-                        System.out.print("|   " + square.getPiece().getType().getLetter() + "   ");
+                    String pieceString = String.valueOf(square.getPiece().getType().getLetter());
+                    if(((Piece) square.getPiece()).getColor() == GameColor.WHITE){
+                        pieceString += "_W";
                     }else{
-                        System.out.print("|---" + square.getPiece().getType().getLetter() + "---");
+                        pieceString += "_B";
+                    }
+                    if(square.isWhite()) {
+                        System.out.print("|  " + pieceString + "  ");
+                    }else{
+                        System.out.print("|--" + pieceString + "--");
                     }
                 } else {
                     if(square.isWhite()) {
