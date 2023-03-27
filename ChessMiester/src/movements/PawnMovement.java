@@ -25,13 +25,14 @@ public class PawnMovement implements MovementIF {
     /** The direction the pawn is moving. */
     private int direction;
 
+
     /** Constructors */
-    public PawnMovement(GameColor color, int direction) {
+    public PawnMovement(GameColor color) {
         this.color = color;
         this.isFirstMove = true;
 
-        // Set the direction of the pawn. 1 for white, -1 for black.
-        this.direction = direction;
+        /** The direction the pawn is moving. */
+        this.direction = color == GameColor.WHITE ? 1 : -1;
     }
 
     /**
