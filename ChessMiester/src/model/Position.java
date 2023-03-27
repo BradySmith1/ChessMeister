@@ -42,8 +42,19 @@ public class Position {
      * Function to check if two positions are the same.
      * @return true if the position is valid, false otherwise.
      */
-    public boolean isEqual(Position p) {
-        return this.r == p.r && this.f == p.f;
+    @Override
+    public boolean equals(Object o) {
+        boolean isEqual = false;
+        if (this == o) {
+            isEqual = true;
+        }
+        else if (o instanceof Position){
+            Position p = (Position) o;
+            if (this.r == p.r && this.f == p.f) {
+                isEqual = true;
+            }
+        }
+        return isEqual;
     }
     /**
      * Gets the rank of the position.

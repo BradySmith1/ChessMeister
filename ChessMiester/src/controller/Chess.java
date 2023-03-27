@@ -240,12 +240,7 @@ public class Chess {
             List<Position> moves = piece.getValidMoves(board, new Position(fromR, fromF));
             Position to = new Position(toR, toF); // position to move to
             boolean success = false; // initialize to false
-
-            for(Position p : moves){ // iterate through list of possible moves
-                if(p.isEqual(to)){ // see if position of move is in the list of possible moves
-                    success = true; // update success to true
-                }
-            }
+            success = moves.contains(to);
             //boolean success = piece.getValidMoves(board, new Position(fromR, fromF)).contains(new Position(toR, toF));
 
             if(success && hasPiece){ // A piece was captured and move is valid
