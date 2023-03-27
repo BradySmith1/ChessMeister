@@ -3,11 +3,9 @@ package movements;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
-import interfaces.PieceIF;
 import model.Piece;
 import model.Position;
 import model.Square;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,10 +16,6 @@ import java.util.List;
  */
 public class PawnMovement implements MovementIF {
     /** Fields */
-
-    /** The current position of the piece. */
-    private Position currentPosition;
-
     /** The color of the piece. */
     private GameColor color;
 
@@ -29,8 +23,7 @@ public class PawnMovement implements MovementIF {
     private boolean isFirstMove;
 
     /** Constructors */
-    public PawnMovement(Position currentPosition, GameColor color) {
-        this.currentPosition = currentPosition;
+    public PawnMovement(GameColor color) {
         this.color = color;
         this.isFirstMove = true;
     }
@@ -42,17 +35,17 @@ public class PawnMovement implements MovementIF {
      * @return the valid moves for the piece.
      */
     @Override
-    public List<Position> getValidMoves(BoardIF board) {
+    public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
         // Get the valid moves for the pawn.
         List<Position> validMoves = new ArrayList<>();
 
         // Get all the valid moves for the pawn if it is the first move.
         if (isFirstMove) {
             // Get the valid moves for the pawn if it is the first move.
-            validMoves.addAll(getValidMovesForFirstMove(board));
+            validMoves.addAll(getValidMovesForFirstMove(board, currentPosition));
         } else {
             // Get the valid moves for the pawn if it is not the first move.
-            validMoves.addAll(getValidMovesForNonFirstMove(board));
+            validMoves.addAll(getValidMovesForNonFirstMove(board, currentPosition));
         }
 
         return validMoves;
@@ -64,7 +57,7 @@ public class PawnMovement implements MovementIF {
      * @param board the board the piece is on.
      * @return the valid moves for the pawn if it is not the first move.
      */
-    private Collection<? extends Position> getValidMovesForNonFirstMove(BoardIF board) {
+    private Collection<? extends Position> getValidMovesForNonFirstMove(BoardIF board, Position currentPosition) {
         // The valid moves for the pawn if it is not the first move.
         List<Position> validMoves = new ArrayList<>();
 
@@ -143,7 +136,7 @@ public class PawnMovement implements MovementIF {
      * @param board the board the piece is on.
      * @return the valid moves for the pawn if it is the first move.
      */
-    private Collection<? extends Position> getValidMovesForFirstMove(BoardIF board) {
+    private Collection<? extends Position> getValidMovesForFirstMove(BoardIF board, Position currentPosition) {
         // The valid moves for the pawn if it is not the first move.
         List<Position> validMoves = new ArrayList<>();
 
@@ -216,36 +209,11 @@ public class PawnMovement implements MovementIF {
         return validMoves;
     }
 
-    /**
-     * Moves the piece to the specified position.
-     *
-     * @param board the board the piece is on.
-     * @param movePosition the position to move the piece to.
-     * @return true if the move was successful.
-     */
-    @Override
-    public boolean move(BoardIF board, Position movePosition) {
-        // Get the valid moves for the Pawn.
-        List<Position> validMoves = getValidMoves(board);
-
-        // The move was not successful by default
-        boolean moveSuccessful = false;
-
-        // Check if the move is valid.
-        if (validMoves.contains(movePosition)){
-            board.getSquares()[currentPosition.getRank().getIndex()]
-                    [currentPosition.getFile().getFileNum()].setPiece((PieceIF) this);
-
-            // Set the new local position of the piece.
-            this.setPosition(movePosition);
-
-            // The move was successful.
-            moveSuccessful = true;
-        }
-        return moveSuccessful;
+    public GameColor getColor() {
+        return color;
     }
 
-    private void setPosition(Position position) {
-        this.currentPosition = position;
+    public void setColor(GameColor color) {
+        this.color = color;
     }
 }

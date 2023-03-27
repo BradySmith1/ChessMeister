@@ -12,7 +12,6 @@ package movements;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
-import interfaces.PieceIF;
 import model.Piece;
 import model.Position;
 import model.Square;
@@ -22,42 +21,16 @@ import java.util.List;
 
 public class RookMovement implements MovementIF{
 
-    /* The current position of the piece */
-    private Position currentPosition;
-
     /* The color of the piece */
     private GameColor color;
 
     /**
      * Constructor method for the RookMovement Class
-     * @param currentPosition the current position of the piece
+     *
      * @param color the color of the piece
      */
-    public RookMovement(Position currentPosition, GameColor color) {
-        this.currentPosition = new Position();
+    public RookMovement(GameColor color) {
         this.color = color;
-    }
-
-    /**
-     * Moves the rook to a specified position on the board
-     *
-     * @param board the board the piece is on
-     * @param movePosition the position to move the piece to
-     * @return boolean where true if the move was successful, false otherwise
-     */
-    public boolean move(BoardIF board, Position movePosition) {
-        List<Position> valid = getValidMoves(board); // Get the valid moves for the piece
-
-        boolean success = false; // Move unsuccessful by default.
-
-        if(valid.contains(movePosition)) { // If the move is valid
-            // Set board square to rook.
-            board.getSquares()[currentPosition.getRank().getIndex()]
-                              [currentPosition.getFile().getFileNum()].setPiece((PieceIF) this);
-            this.setPosition(movePosition); // Set the position of the piece
-            success = true; // Move successful
-        }
-        return success; // Return the success of the move
     }
 
     /**
@@ -66,14 +39,14 @@ public class RookMovement implements MovementIF{
      * @return the valid moves for the piece
      */
     @Override
-    public List<Position> getValidMoves(BoardIF board) {
+    public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
         List<Position> validMoves = new ArrayList<>();
 
         // Get the vertical movements for the rook.
-        List<Position> validVertical = getVerticalMoves(board);
+        List<Position> validVertical = getVerticalMoves(board, currentPosition);
 
         // Get the horizontal movements for the rook.
-        List<Position> validHorizontal = getHorizontalMoves(board);
+        List<Position> validHorizontal = getHorizontalMoves(board, currentPosition);
 
         // Add the vertical and horizontal moves to the valid moves list.
         validMoves.addAll(validVertical);
@@ -88,11 +61,11 @@ public class RookMovement implements MovementIF{
      * @param board the board the piece is on
      * @return the valid vertical moves for the rook
      */
-    private List<Position> getVerticalMoves(BoardIF board){
+    private List<Position> getVerticalMoves(BoardIF board, Position currentPosition){
         List<Position> validVertical = new ArrayList<>();
 
-        List<Position> validUp = getVerticalMovesAbove(board); // Get valid moves above piece
-        List<Position> validDown = getVerticalMovesBelow(board); // Get valid moves below piece
+        List<Position> validUp = getVerticalMovesAbove(board, currentPosition); // Get valid moves above piece
+        List<Position> validDown = getVerticalMovesBelow(board, currentPosition); // Get valid moves below piece
 
         validVertical.addAll(validUp); // Add the valid moves above to the valid moves list
         validVertical.addAll(validDown);
@@ -106,11 +79,11 @@ public class RookMovement implements MovementIF{
      * @param board the board the piece is on
      * @return the valid horizontal moves for the rook
      */
-    private List<Position> getHorizontalMoves(BoardIF board){
+    private List<Position> getHorizontalMoves(BoardIF board, Position currentPosition){
         List<Position> validHorizontal = new ArrayList<>();
 
-        List<Position> validLeft = getHorizontalMovesLeft(board); // Get valid moves left of piece
-        List<Position> validRight = getHorizontalMovesRight(board); // Get valid moves right of piece
+        List<Position> validLeft = getHorizontalMovesLeft(board, currentPosition); // Get valid moves left of piece
+        List<Position> validRight = getHorizontalMovesRight(board, currentPosition); // Get valid moves right of piece
 
         validHorizontal.addAll(validLeft); // Add the valid moves left to the valid moves list
         validHorizontal.addAll(validRight);
@@ -123,7 +96,7 @@ public class RookMovement implements MovementIF{
      * @param board board the piece is on
      * @return valid set of moves above the rook
      */
-    private List<Position> getVerticalMovesAbove(BoardIF board){
+    private List<Position> getVerticalMovesAbove(BoardIF board, Position currentPosition){
         List<Position> validUp = new ArrayList<>();
 
         int currentRank = currentPosition.getRank().getIndex() + 1; // Get the current rank of the piece
@@ -157,7 +130,7 @@ public class RookMovement implements MovementIF{
      * @param board board the piece is on
      * @return valid set of moves below the rook
      */
-    private List<Position> getVerticalMovesBelow(BoardIF board){
+    private List<Position> getVerticalMovesBelow(BoardIF board, Position currentPosition){
         List<Position> validDown = new ArrayList<>();
 
         int currentRank = currentPosition.getRank().getIndex() - 1; // Get current rank of piece
@@ -191,7 +164,7 @@ public class RookMovement implements MovementIF{
      * @param board board the piece is on
      * @return valid set of moves left of the rook
      */
-    private List<Position> getHorizontalMovesLeft(BoardIF board) {
+    private List<Position> getHorizontalMovesLeft(BoardIF board, Position currentPosition) {
         List<Position> validLeft = new ArrayList<>();
 
         int currentRank = currentPosition.getRank().getIndex(); // Get current rank of piece
@@ -225,7 +198,7 @@ public class RookMovement implements MovementIF{
      * @param board board the piece is on
      * @return valid set of moves right of the rook
      */
-    private List<Position> getHorizontalMovesRight(BoardIF board){
+    private List<Position> getHorizontalMovesRight(BoardIF board, Position currentPosition){
         List<Position> validRight = new ArrayList<>();
 
         int currentRank = currentPosition.getRank().getIndex(); // Get current rank of piece
@@ -268,22 +241,5 @@ public class RookMovement implements MovementIF{
      */
     public GameColor getColor() {
         return this.color;
-    }
-
-
-    /**
-     * Setter method for the position of the rook
-     * @param position position to set the rook to
-     */
-    public void setPosition(Position position) {
-        this.currentPosition = position;
-    }
-
-    /**
-     * Getter method for the position of the rook
-     * @return position of the rook
-     */
-    public Position getPosition() {
-        return this.currentPosition;
     }
 }
