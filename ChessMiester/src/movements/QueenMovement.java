@@ -109,14 +109,14 @@ public class QueenMovement implements MovementIF {
         // The valid moves for the Queen above her current position.
         List<Position> validVerticalMovesAbove = new ArrayList<>();
 
-        int currentQueenRank = currentPosition.getRank().getIndex() + 1;    // The rank above the current square.
+        int currentQueenRank = currentPosition.getRank().getIndex() - 1;    // The rank above the current square.
         int currentQueenFile = currentPosition.getFile().getFileNum();  // The file of the current square.
 
         // A boolean to determine if a piece has been encountered.
         boolean pieceEncountered = false;
 
         // Keep looping until a piece is encountered or the end of the board is reached.
-        while (!pieceEncountered && currentQueenRank < board.getHeight()) {
+        while (!pieceEncountered && currentQueenRank >= 0) {
             // Get the square at the current rank and file.
             Square currentSquare = (Square) board.getSquares()[currentQueenRank][currentQueenFile];
 
@@ -137,7 +137,7 @@ public class QueenMovement implements MovementIF {
                 pieceEncountered = true;
             }
             // Increment the rank.
-            currentQueenRank++;
+            currentQueenRank--;
         }
         return validVerticalMovesAbove; // Return the list of valid moves above the Queen.
     }
@@ -146,7 +146,7 @@ public class QueenMovement implements MovementIF {
         // The valid moves for the Queen below her current position.
         List<Position> validVerticalMovesBelow = new ArrayList<>();
 
-        int currentQueenRank = currentPosition.getRank().getIndex() - 1;    // The rank above the current square.
+        int currentQueenRank = currentPosition.getRank().getIndex() + 1;    // The rank above the current square.
         int currentQueenFile = currentPosition.getFile().getFileNum();  // The file of the current square.
 
         // A boolean to determine if a piece has been encountered.
@@ -260,8 +260,8 @@ public class QueenMovement implements MovementIF {
         // The valid moves for the Queen to the up and left of her current position.
         List<Position> validDiagonalMovesUpLeft = new ArrayList<>();
 
-        int currentQueenRank = currentPosition.getRank().getIndex() - 1;    // The rank above the current square.
-        int currentQueenFile = currentPosition.getFile().getFileNum() + 1;  // The file left of the current square.
+        int currentQueenRank = currentPosition.getRank().getIndex() + 1;    // The rank above the current square.
+        int currentQueenFile = currentPosition.getFile().getFileNum() - 1;  // The file left of the current square.
 
         // A boolean to determine if a piece has been encountered.
         boolean pieceEncountered = false;
@@ -288,9 +288,9 @@ public class QueenMovement implements MovementIF {
                 pieceEncountered = true;
             }
             // Increment the rank.
-            currentQueenRank--;
+            currentQueenRank++;
             // Decrement the file.
-            currentQueenFile++;
+            currentQueenFile--;
         }
 
         return validDiagonalMovesUpLeft; // Return the list of valid moves up and left of the Queen.
@@ -380,8 +380,8 @@ public class QueenMovement implements MovementIF {
         // The valid moves for the Queen to the down and right of her current position.
         List<Position> validDiagonalMovesDownRight = new ArrayList<>();
 
-        int currentQueenRank = currentPosition.getRank().getIndex() + 1;    // The rank below the current square.
-        int currentQueenFile = currentPosition.getFile().getFileNum() - 1;  // The file right of the current square.
+        int currentQueenRank = currentPosition.getRank().getIndex() - 1;    // The rank below the current square.
+        int currentQueenFile = currentPosition.getFile().getFileNum() + 1;  // The file right of the current square.
 
         // A boolean to determine if a piece has been encountered.
         boolean pieceEncountered = false;
@@ -408,9 +408,9 @@ public class QueenMovement implements MovementIF {
                 pieceEncountered = true;
             }
             // Decrement the rank.
-            currentQueenRank++;
+            currentQueenRank--;
             // Increment the file.
-            currentQueenFile--;
+            currentQueenFile++;
         }
 
         return validDiagonalMovesDownRight; // Return the list of valid moves down and right of the Queen.

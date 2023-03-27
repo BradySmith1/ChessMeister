@@ -53,7 +53,7 @@ public class KingMovement implements MovementIF {
         validMoves.add(moveCheck(board, currentPosition, 0, -1));
         validMoves.add(moveCheck(board, currentPosition, 1, -1));
 
-        validMoves.removeAll(Collections.singleton(null));
+        validMoves.removeAll(Collections.singleton(null)); // remove all null values
         return validMoves;
     }
 
