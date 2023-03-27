@@ -21,6 +21,7 @@ import model.Position;
 import player.Player;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Chess {
@@ -134,27 +135,40 @@ public class Chess {
         }
     }
 
+    /**
+     *  This function is the basic game loop used for a game of chess to actually happen.
+     * @param playerWhite player playing as white
+     * @param playerBlack player playing as black
+     */
     public void play(PlayerIF playerWhite, PlayerIF playerBlack){
         boolean gameOver = false;
+        Files file1, file2;
+        Rank rank1, rank2;
         while(!gameOver){
             System.out.println("White's turn\nWhere would you like to move from?");
-            Files file1 = findValidFile();
-            Rank rank1 = findValidRank();
-            System.out.println("Where would you like to move to?");
-            Files file2 = findValidFile();
-            Rank rank2 = findValidRank();
-            move(playerWhite, playerBlack, file1, rank1, file2, rank2);
+            boolean moveValid = false;
+            while(!moveValid){
+                file1 = findValidFile();
+                rank1 = findValidRank();
+                System.out.println("Where would you like to move to?");
+                file2 = findValidFile();
+                rank2 = findValidRank();
+                moveValid = move(playerWhite, playerBlack, file1, rank1, file2, rank2);
+            }
             board.draw();
             System.out.println("Black's turn\nWhere would you like to move from?");
-            file1 = findValidFile();
-            rank1 = findValidRank();
-            System.out.println("Where would you like to move to?");
-            file2 = findValidFile();
-            rank2 = findValidRank();
-            move(playerBlack, playerBlack, file2, rank2, file1, rank1);
+            moveValid = false;
+            while(!moveValid){
+                file1 = findValidFile();
+                rank1 = findValidRank();
+                System.out.println("Where would you like to move to?");
+                file2 = findValidFile();
+                rank2 = findValidRank();
+                moveValid = move(playerBlack, playerWhite, file1, rank1, file2, rank2);
+            }
             board.draw();
-            gameOver = true;
-            endGame();
+            //gameOver = true;
+            //endGame();
         }
     }
 
@@ -203,6 +217,7 @@ public class Chess {
      * @param game board state to be saved in later
      */
     public void saveGame(String file, BoardIF game) {
+
     }
 
     /**
@@ -212,21 +227,31 @@ public class Chess {
      * @param toF   File placement of where the piece will go
      * @param toR   Rank placement of where the piece will go
      */
-    //move needs to be moved into the player object. This is just the code for when it is created.
-    public void move(PlayerIF currentPlayer, PlayerIF otherPlayer, Files fromF, Rank fromR, Files toF, Rank toR) {
+    public boolean move(PlayerIF currentPlayer, PlayerIF otherPlayer, Files fromF, Rank fromR, Files toF, Rank toR){
+        boolean moveMade = false; // initialize to false
         // Get the piece at the current/"from" position.
         Piece piece = (Piece) board.getPiece(fromR, fromF);
 
-        if (currentPlayer.getPieces().contains(piece)){
+        if(currentPlayer.getPieces().contains(piece)){
             // True if there is a piece at the to position
             boolean hasPiece = board.getPiece(toR, toF) != null;
 
-            // True if the "to" position is a valid move for the piece
-            boolean success = piece.getValidMoves(board).contains(new Position(toR, toF));
+            // list of possible moves
+            List<Position> moves = piece.getValidMoves(board, new Position(fromR, fromF));
+            Position to = new Position(toR, toF); // position to move to
+            boolean success = false; // initialize to false
+
+            for(Position p : moves){
+                if(p.isEqual(to)){
+                    success = true;
+                }
+            }
+            //boolean success = piece.getValidMoves(board, new Position(fromR, fromF)).contains(new Position(toR, toF));
 
             if(success && hasPiece){ // A piece was captured and move is valid
                 // Add the captured piece to the player's list of captured pieces.
                 currentPlayer.addCapturedPiece(board.getPiece(toR, toF));
+
 
                 // Remove the captured piece from the player's list of pieces. TODO
                 otherPlayer.getPieces().remove(piece);
@@ -239,6 +264,8 @@ public class Chess {
 
                 // Clear the "from" position.
                 board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
+
+                moveMade = true; // move was successful
             }
             else if(success && !hasPiece){ // No piece was captured and move is valid
                 // Move the piece to the "to" position.
@@ -246,6 +273,8 @@ public class Chess {
 
                 // Clear the "from" position.
                 board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
+
+                moveMade = true; // move was successful
             }
             else{
                 System.out.println("Invalid move.");
@@ -255,17 +284,7 @@ public class Chess {
             System.out.println("You cannot move that piece because it is not yours.");
         }
 
-        /**
-         * Create a copy of the board and attempt to move the piece to the to position on the copy.
-         * if the move was successful, but it puts your king in check then prompt the user to enter a new move. Revert to the original board.
-         *
-         *
-         * If the move was successful then set the board copy "to" position to the piece and clear the "from" position.
-         * If the move was successful but there was a capturable piece at the to position then store the piece in the player record of captured pieces.
-         *
-         * If we made the move and it was successful and doesn't put the king in check, then we copy the copied board to the actual board.
-         *
-         */
+        return moveMade; // return whether or not the move was successful
     }
 
 
@@ -276,7 +295,9 @@ public class Chess {
     public Files findValidFile() {
         System.out.println("Enter the file of the location (A-H) >>> ");
         String input = scan.nextLine();
-        Files newFile = null;
+        input = input.toUpperCase(); // make sure the input is uppercase
+
+        Files newFile = null; // file to be returned
 
         boolean valid = false; // boolean to see if input is valid
         while(!valid){ // loop until a valid input is given be the user
