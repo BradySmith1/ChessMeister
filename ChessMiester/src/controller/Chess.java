@@ -12,8 +12,10 @@ import java.util.Scanner;
 
 public class Chess {
 
+    /* Board the game will be played on. */
     private BoardIF board;
 
+    /* Scanner to read user input from terminal. */
     private Scanner scan;
 
     //private Player player1;
@@ -22,9 +24,13 @@ public class Chess {
 
 
     public Chess() {
-        scan = new Scanner(System.in); /* scanner to read in player choice */
+        scan = new Scanner(System.in); // open scanner for user input
     }
 
+    /**
+     * This function is used in order to prompt a main menu for the user and read 
+     * input from the user themselves. 
+     */
     public void mainMenu() {
         System.out.println("   _____ _                   __  __      _     _            \n" +
                 "  / ____| |                 |  \\/  |    (_)   | |           \n" +
@@ -73,12 +79,16 @@ public class Chess {
                     break;
             }
             System.out.println();
-            scan.nextLine();    //consumes a new line so that nextInt throwing an exception will not loop
+            scan.nextLine(); //consumes a new line so nextInt throwing an exception will not loop
         }
     }
 
-
-    public void newGame() {
+    /**
+     * This function is responsible for initializing and starting a new game. 
+     * Handles the logic needed from the board class in order to display and make
+     * changes to a chess board.
+     */
+    public void newGame(){
         System.out.println("Player one color: (1) White or (2) Black");
         int color = scan.nextInt();
         if (color == 1) {
@@ -113,20 +123,31 @@ public class Chess {
         }
     }
 
+    /**
+     * This function is used to end a game and bring the user back to the main menu. 
+     * This does so by displaying a message to the user letting them know the game has ended.
+     */
     public void endGame() {
-        System.out.println("The game should be over now.\nreturning to main menu.");
+        System.out.println("The game should be over now.\nReturning to main menu.");
         //clears the screen
         System.out.print("\033[H\033[2J");
         System.out.flush();
         this.mainMenu();
     }
 
+    /**
+     * INCOMPLETE. This function will allow the user to choose a game to load in and play,
+     * resuming from whenever it last ended. 
+     */
     public BoardIF loadGame(String file) {
         return null;
     }
 
+    /**
+     * INCOMPLETE. This function will all the user to save a game to be resumed later.
+     */
     public void saveGame(String file, BoardIF game) {
-
+        return null;
     }
 
     //move needs to be moved into the player object. This is just the code for when it is created.
