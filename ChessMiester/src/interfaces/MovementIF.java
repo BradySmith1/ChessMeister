@@ -9,11 +9,7 @@ import java.util.List;
  * @version 1.0
  */
 public interface MovementIF {
-    /**
-     * Gets the valid moves for the piece.
-     * @return the valid moves for the piece.
-     */
-    List<Position> getValidMoves(BoardIF board);
+    List<Position> getValidMoves(BoardIF board, Position currentPosition);
 
     /**
      * Moves the piece to the specified position.
@@ -21,5 +17,4 @@ public interface MovementIF {
      * @param movePosition the position to move the piece to.
      * @return true if the move was successful.
      */
-    boolean move(BoardIF board, Position movePosition);
 }
