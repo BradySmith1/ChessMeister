@@ -1,11 +1,15 @@
 package controller;
 
 import enums.Files;
+import enums.GameColor;
 import enums.Rank;
 import interfaces.BoardIF;
+import interfaces.PlayerIF;
+import interfaces.SquareIF;
 import model.Board;
 import model.Piece;
 import model.Position;
+import player.Player;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -16,9 +20,9 @@ public class Chess {
 
     private Scanner scan;
 
-    //private Player player1;
+    private Player player1;
 
-    //private Player player2;
+    private Player player2;
 
 
     public Chess() {
@@ -66,7 +70,8 @@ public class Chess {
                     System.out.println("This feature is coming soon!");
                     break;
                 case 0:
-                    endGame();
+                    scan.close();
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Please enter a valid number (0 - 4)");
@@ -81,18 +86,20 @@ public class Chess {
     public void newGame() {
         System.out.println("Player one color: (1) White or (2) Black");
         int color = scan.nextInt();
-        if (color == 1) {
-            //player1 = new Player(GameColor.WHITE);
-            //player2 = new Player(GameColor.BLACK);
+        if(color == 1){ // user selects white
+            player1 = new Player(GameColor.WHITE);
+            player2 = new Player(GameColor.BLACK);
+            assignPieces();
         }
-        else if (color == 2) {
-            //player1 = new Player(GameColor.BLACK);
-            //player2 = new Player(GameColor.WHITE);
+        else if(color == 2){ // user selects black
+            player1= new Player(GameColor.BLACK);
+            player2 = new Player(GameColor.WHITE);
+            assignPieces();
         }
         else {
             System.out.println("Invalid input. Defaulting to white.");
-            //player1 = new Player(GameColor.WHITE);
-            //player2 = new Player(GameColor.BLACK);
+            player1 = new Player(GameColor.WHITE);
+            player2 = new Player(GameColor.BLACK);
         }
         //clears the screen
         System.out.print("\033[H\033[2J");
@@ -110,6 +117,35 @@ public class Chess {
             //check if game is over
             //if(gameOver)
             endGame();
+        }
+    }
+
+    public void play(PlayerIF playerWhite, PlayerIF playerBlack){
+        //player1.move(); //allow player one to move
+        //board.draw();
+        //player2.move();
+        //board.draw();
+        //check if game is over
+        //if(gameOver)
+        endGame();
+    }
+
+    /**
+     * This function is used to assign pieces to each user.
+     */
+    private void assignPieces(){
+        SquareIF[][] squares = board.getSquares();
+        for (int i = 0; i < board.getWidth(); i++) {
+            for (int j = 0; j < board.getHeight(); j++) {
+                if(squares[i][j].getPiece() != null){
+                    if(((Piece) squares[i][j].getPiece()).getColor() == player1.getColor()){
+                        player1.addPiece(squares[i][j].getPiece());
+                    }
+                    else{
+                        player2.addPiece(squares[i][j].getPiece());
+                    }
+                }
+            }
         }
     }
 

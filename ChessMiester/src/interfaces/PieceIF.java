@@ -39,12 +39,6 @@ public interface PieceIF {
     public boolean move(BoardIF board, Position movePosition);
 
     /**
-     * Gets the piece's location on the board.
-     * @return The rank and file of the piece's position.
-     */
-    public Position getLocation();
-
-    /**
      * Gets the status of the piece in the sense of if it is captured or not.
      * @return True if the piece has been captured, false otherwise.
      */
