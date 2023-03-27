@@ -105,7 +105,7 @@ public class Chess {
      * and handle basic logic to loop through a game itself.
      */
     public void newGame() {
-        System.out.print("Player one choose color: (1) White or (2) Black >>> ");
+        System.out.println("Player one choose color: (1) White or (2) Black >>>");
         int color = scan.nextInt();
         if(color == 1){ // user selects white
             player1 = new Player(GameColor.WHITE);
@@ -136,7 +136,7 @@ public class Chess {
     }
 
     /**
-     * This function is the basic game loop used for a game of chess to actually happen.
+     *  This function is the basic game loop used for a game of chess to actually happen.
      * @param playerWhite player playing as white
      * @param playerBlack player playing as black
      */
@@ -150,7 +150,7 @@ public class Chess {
             while(!moveValid){
                 file1 = findValidFile();
                 rank1 = findValidRank();
-                System.out.println("\nWhere would you like to move to?");
+                System.out.println("Where would you like to move to?");
                 file2 = findValidFile();
                 rank2 = findValidRank();
                 moveValid = move(playerWhite, playerBlack, file1, rank1, file2, rank2);
@@ -161,7 +161,7 @@ public class Chess {
             while(!moveValid){
                 file1 = findValidFile();
                 rank1 = findValidRank();
-                System.out.println("\nWhere would you like to move to?");
+                System.out.println("Where would you like to move to?");
                 file2 = findValidFile();
                 rank2 = findValidRank();
                 moveValid = move(playerBlack, playerWhite, file1, rank1, file2, rank2);
@@ -240,12 +240,9 @@ public class Chess {
             List<Position> moves = piece.getValidMoves(board, new Position(fromR, fromF));
             Position to = new Position(toR, toF); // position to move to
             boolean success = false; // initialize to false
+            success = moves.contains(to);
+            //boolean success = piece.getValidMoves(board, new Position(fromR, fromF)).contains(new Position(toR, toF));
 
-            for(Position p : moves){ // iterate through list of possible moves
-                if(p.isEqual(to)){ // see if position of move is in the list of possible moves
-                    success = true; // update success to true
-                }
-            }
             if(success && hasPiece){ // A piece was captured and move is valid
                 // Add the captured piece to the player's list of captured pieces.
                 currentPlayer.addCapturedPiece(board.getPiece(toR, toF));
