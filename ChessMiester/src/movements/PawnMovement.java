@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * This class represents the movement of a pawn.
- * @author Kaushal Patel
+ * @author Kaushal Patel (100%)
  */
 public class PawnMovement implements MovementIF {
     /** Fields */

@@ -203,7 +203,6 @@ public class Chess {
      * @param game board state to be saved in later
      */
     public void saveGame(String file, BoardIF game) {
-        return null;
     }
 
     /**
@@ -277,7 +276,9 @@ public class Chess {
     public Files findValidFile() {
         System.out.println("Enter the file of the location (A-H) >>> ");
         String input = scan.nextLine();
-        Files newFile = null;
+        input = input.toUpperCase(); // make sure the input is uppercase
+
+        Files newFile = null; // file to be returned
 
         boolean valid = false; // boolean to see if input is valid
         while(!valid){ // loop until a valid input is given be the user
