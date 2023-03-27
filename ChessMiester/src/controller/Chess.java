@@ -1,19 +1,16 @@
-/**
- * This file represents the necessary game logic loop needed for a game of chess to be played.
- * Includes methods to create a main menu and read player input, launch a new game, save/load
- * games (coming later) and many other crucial operations.
- *
- * @authors Brady Smith (25%), Zach Eanes (40%), Colton Brooks (35%)
- */
-
 package controller;
 
 import enums.Files;
+import enums.GameColor;
 import enums.Rank;
+import enums.Files;
 import interfaces.BoardIF;
+import interfaces.PlayerIF;
+import interfaces.SquareIF;
 import model.Board;
 import model.Piece;
 import model.Position;
+import player.Player;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -23,21 +20,23 @@ public class Chess {
     /* Board the game will be played on. */
     private BoardIF board;
 
-    /* Scanner to read user input from terminal. */
+    /* Scanner used to read user input. */
     private Scanner scan;
 
-    //private Player player1;
+    private Player player1;
 
-    //private Player player2;
+    private Player player2;
 
-
+    /**
+     * Constructor method for the chess class. Initializes a scanner to be used.
+     */
     public Chess() {
-        scan = new Scanner(System.in); // open scanner for user input
+        scan = new Scanner(System.in); /* scanner to read in player choice */
     }
 
     /**
-     * This function is used in order to prompt a main menu for the user and read 
-     * input from the user themselves. 
+     * This function is used to display a main menu to the user. Here, we take user input
+     * and decide what to be done next in processing.
      */
     public void mainMenu() {
         System.out.println("   _____ _                   __  __      _     _            \n" +
@@ -80,87 +79,124 @@ public class Chess {
                     System.out.println("This feature is coming soon!");
                     break;
                 case 0:
-                    endGame();
+                    scan.close();
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Please enter a valid number (0 - 4)");
                     break;
             }
             System.out.println();
-            scan.nextLine(); //consumes a new line so nextInt throwing an exception will not loop
+            scan.nextLine();    //consumes a new line so that nextInt throwing an exception will not loop
         }
     }
 
     /**
-     * This function is responsible for initializing and starting a new game. 
-     * Handles the logic needed from the board class in order to display and make
-     * changes to a chess board.
+     * This function is used to begin a new game. Allows player to choose color to play,
+     * and handle basic logic to loop through a game itself.
      */
-    public void newGame(){
-        System.out.println("Player one color: (1) White or (2) Black");
+    public void newGame() {
+        System.out.println("Player one choose color: (1) White or (2) Black >>>");
         int color = scan.nextInt();
-        if (color == 1) {
-            //player1 = new Player(GameColor.WHITE);
-            //player2 = new Player(GameColor.BLACK);
+        if(color == 1){ // user selects white
+            player1 = new Player(GameColor.WHITE);
+            player2 = new Player(GameColor.BLACK);
+            assignPieces();
         }
-        else if (color == 2) {
-            //player1 = new Player(GameColor.BLACK);
-            //player2 = new Player(GameColor.WHITE);
+        else if(color == 2){ // user selects black
+            player1= new Player(GameColor.BLACK);
+            player2 = new Player(GameColor.WHITE);
+            assignPieces();
         }
-        else {
+        else{ // set default whenever user input is invalid
             System.out.println("Invalid input. Defaulting to white.");
-            //player1 = new Player(GameColor.WHITE);
-            //player2 = new Player(GameColor.BLACK);
+            player1 = new Player(GameColor.WHITE);
+            player2 = new Player(GameColor.BLACK);
         }
         //clears the screen
         System.out.print("\033[H\033[2J");
         System.out.flush();
-        board = new Board(); // create a new board to play on
-        board.setup(); // setup the board with pieces
-        board.draw(); // draw the board for users to see
+        board = new Board(); //create new board to play game on
+        board.setup(); // initialize board
+        assignPieces(); // assign pieces to player
+        board.draw();  // printout the board for users to see
         //loop for move logic.
         boolean gameOver = false;
-        while(!gameOver){
-            //player1.move(); // allow player one to move
-            //board.draw();   // draw the board for users to see
-            //player2.move(); // allow player two to move
-            //board.draw();   // draw the board for users to see
-            //check if game is over
-            //if(gameOver) // check to see if conditions have been met to end game
-            endGame();
+        if(player1.getColor() == GameColor.WHITE){
+            play(player1, player2);
+        }else{
+            play(player2, player1);
+        }
+    }
+
+    public void play(PlayerIF playerWhite, PlayerIF playerBlack){
+        //player1.move(); //allow player one to move
+        //board.draw();
+        //player2.move();
+        //board.draw();
+        //check if game is over
+        //if(gameOver)
+        endGame();
+    }
+
+    /**
+     * This function is used to assign pieces to each user.
+     */
+    private void assignPieces(){
+        SquareIF[][] squares = board.getSquares();
+        for (int i = 0; i < board.getWidth(); i++) {
+            for (int j = 0; j < board.getHeight(); j++) {
+                if(squares[i][j].getPiece() != null){
+                    if(((Piece) squares[i][j].getPiece()).getColor() == player1.getColor()){
+                        player1.addPiece(squares[i][j].getPiece());
+                    }else{
+                        player2.addPiece(squares[i][j].getPiece());
+                    }
+                }
+            }
         }
     }
 
     /**
-     * This function is used to end a game and bring the user back to the main menu. 
-     * This does so by displaying a message to the user letting them know the game has ended.
+     * This function is used to end processing and display to the user that the game
+     * has come to an end.
      */
     public void endGame() {
         System.out.println("The game should be over now.\nReturning to main menu.");
         //clears the screen
         System.out.print("\033[H\033[2J");
-        System.out.flush();
+        System.out.flush(); //clear the terminal
         this.mainMenu();
     }
 
     /**
-     * INCOMPLETE. This function will allow the user to choose a game to load in and play,
-     * resuming from whenever it last ended. 
+     * This function allows the user to load in a game that was saved from earlier.
+     * @param file name of the file that holds the game logic to be loaded in later
+     * @return     the board to continue playing the chess game on
      */
     public BoardIF loadGame(String file) {
         return null;
     }
 
     /**
-     * INCOMPLETE. This function will all the user to save a game to be resumed later.
+     * This function allows the user to save a game that can be resumed later.
+     * @param file name of the file to save the game to
+     * @param game board state to be saved in later
      */
     public void saveGame(String file, BoardIF game) {
-        return null;
+
     }
 
+    /**
+     * This is the function responsible for allowing the pieces to be moved.
+     * @param fromF File placement of where the piece is currently at
+     * @param fromR Rank placement of where the piece is currently at
+     * @param toF   File placement of where the piece will go
+     * @param toR   Rank placement of where the piece will go
+     */
     //move needs to be moved into the player object. This is just the code for when it is created.
     public void move(Files fromF, Rank fromR, Files toF, Rank toR) {
-        // Get the piece at the from position.
+        // Get the piece at the current/"from" position.
         Piece piece = (Piece) board.getPiece(fromR, fromF);
 
         // Get the piece at the to position if any.
@@ -180,15 +216,13 @@ public class Chess {
 
         boolean success = piece.move(board, new Position(toR, toF));
 
-        if (success && hasPiece){ // A piece was captured and move is valid
+        if(success && hasPiece){ // A piece was captured and move is valid
             // how do we want to store captured pieces in a record that can be displayed later on
-
-
 
             board.getSquares()[toF.getFileNum()][toR.getIndex()].setPiece(piece);  // add piece to new location
             board.getSquares()[fromF.getFileNum()][fromR.getIndex()].clear();  // remove piece from old location
         }
-        else if (success){ // A piece was not captured and move is valid
+        else if(success){ // A piece was not captured and move is valid
             board.getSquares()[toF.getFileNum()][toR.getIndex()].setPiece(piece);  // add piece to new location
             board.getSquares()[fromF.getFileNum()][fromR.getIndex()].clear();  // remove piece from old location
 
@@ -198,9 +232,20 @@ public class Chess {
             Scanner scan = new Scanner(System.in);
             System.out.println("Invalid move, please enter another >>>");
 
-
         }
     }
+
+
+public Files findValidFile() {
+    System.out.println("Enter the file of the piece to move (A-H) >>>");
+    scan.nextLine();
+    return null;
+}
+
+public Rank findValidRank() {
+    return null;
+}
+
 }
 
 
