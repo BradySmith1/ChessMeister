@@ -33,6 +33,9 @@ public class Piece extends BlackAndWhite implements PieceIF{
         moveTypeFactory();
     }
 
+    /**
+     * Defines the piece typing based on the type of the piece.
+     */
     private void moveTypeFactory() {
         switch (type) {
             case King -> moveType = new KingMovement(getColor());
