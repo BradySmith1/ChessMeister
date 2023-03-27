@@ -105,7 +105,7 @@ public class Chess {
      * and handle basic logic to loop through a game itself.
      */
     public void newGame() {
-        System.out.println("Player one choose color: (1) White or (2) Black >>>");
+        System.out.print("Player one choose color: (1) White or (2) Black >>> ");
         int color = scan.nextInt();
         if(color == 1){ // user selects white
             player1 = new Player(GameColor.WHITE);
@@ -136,7 +136,7 @@ public class Chess {
     }
 
     /**
-     *  This function is the basic game loop used for a game of chess to actually happen.
+     * This function is the basic game loop used for a game of chess to actually happen.
      * @param playerWhite player playing as white
      * @param playerBlack player playing as black
      */
@@ -150,7 +150,7 @@ public class Chess {
             while(!moveValid){
                 file1 = findValidFile();
                 rank1 = findValidRank();
-                System.out.println("Where would you like to move to?");
+                System.out.println("\nWhere would you like to move to?");
                 file2 = findValidFile();
                 rank2 = findValidRank();
                 moveValid = move(playerWhite, playerBlack, file1, rank1, file2, rank2);
@@ -161,7 +161,7 @@ public class Chess {
             while(!moveValid){
                 file1 = findValidFile();
                 rank1 = findValidRank();
-                System.out.println("Where would you like to move to?");
+                System.out.println("\nWhere would you like to move to?");
                 file2 = findValidFile();
                 rank2 = findValidRank();
                 moveValid = move(playerBlack, playerWhite, file1, rank1, file2, rank2);
@@ -246,8 +246,6 @@ public class Chess {
                     success = true; // update success to true
                 }
             }
-            //boolean success = piece.getValidMoves(board, new Position(fromR, fromF)).contains(new Position(toR, toF));
-
             if(success && hasPiece){ // A piece was captured and move is valid
                 // Add the captured piece to the player's list of captured pieces.
                 currentPlayer.addCapturedPiece(board.getPiece(toR, toF));
@@ -293,7 +291,7 @@ public class Chess {
      * @return new file for the piece to be moved to
      */
     public Files findValidFile() {
-        System.out.println("Enter the file of the location (A-H) >>> ");
+        System.out.print("Enter the file of the location (A-H) >>> ");
         String input = scan.nextLine();
         input = input.toUpperCase(); // make sure the input is uppercase
 
@@ -305,7 +303,7 @@ public class Chess {
                 newFile = Files.valueOf(input);
                 valid = true;
             }catch(IllegalArgumentException e) { //if a bad input is given, prompt for another
-                System.out.println("Invalid File, enter another (A-H) >>> ");
+                System.out.print("Invalid File, enter another (A-H) >>> ");
                 input = scan.nextLine();
             }
         }
@@ -317,7 +315,7 @@ public class Chess {
      * @return new rank for the piece to be moved to
      */
     public Rank findValidRank() {
-        System.out.println("Enter the rank of the location (1-8) >>> ");
+        System.out.print("Enter the rank of the location (1-8) >>> ");
         String input = scan.nextLine();
         Rank newRank = null;
         boolean valid = false; // boolean to see if input is valid
@@ -335,7 +333,7 @@ public class Chess {
                 }
                 valid = true;
             }catch(IllegalArgumentException e){
-                System.out.println("Invalid rank, please enter another (1-8) >>> ");
+                System.out.print("Invalid rank, please enter another (1-8) >>> ");
                 input = scan.nextLine();
             }
         }
