@@ -24,6 +24,8 @@ public class RookMovement implements MovementIF{
     /* The color of the piece */
     private GameColor color;
 
+    private int direction;
+
     /**
      * Constructor method for the RookMovement Class
      *
@@ -31,6 +33,7 @@ public class RookMovement implements MovementIF{
      */
     public RookMovement(GameColor color) {
         this.color = color;
+        this.direction = color == GameColor.WHITE ? 1 : -1;
     }
 
     /**
@@ -92,11 +95,11 @@ public class RookMovement implements MovementIF{
     }
 
     /**
-     * Gets the valid moves above the rook
+     * Gets the valid moves below the rook
      * @param board board the piece is on
-     * @return valid set of moves above the rook
+     * @return valid set of moves below the rook
      */
-    private List<Position> getVerticalMovesAbove(BoardIF board, Position currentPosition){
+    private List<Position> getVerticalMovesBelow(BoardIF board, Position currentPosition){
         List<Position> validUp = new ArrayList<>();
 
         int currentRank = currentPosition.getRank().getIndex() + 1; // Get the current rank of the piece
@@ -126,11 +129,11 @@ public class RookMovement implements MovementIF{
     }
 
     /**
-     * Gets the valid moves below the rook
+     * Gets the valid moves above the rook
      * @param board board the piece is on
-     * @return valid set of moves below the rook
+     * @return valid set of moves above the rook
      */
-    private List<Position> getVerticalMovesBelow(BoardIF board, Position currentPosition){
+    private List<Position> getVerticalMovesAbove(BoardIF board, Position currentPosition){
         List<Position> validDown = new ArrayList<>();
 
         int currentRank = currentPosition.getRank().getIndex() - 1; // Get current rank of piece
@@ -154,7 +157,8 @@ public class RookMovement implements MovementIF{
             else{
                 pieceHit = true;
             }
-            currentRank--; // Increment the rank of the piece
+
+            currentRank--;
         }
         return validDown;
     }
@@ -189,6 +193,8 @@ public class RookMovement implements MovementIF{
             else{
                 pieceHit = true;
             }
+
+            currentFile--; // Decrement the file of the piece
         }
         return validLeft; // return the valid moves
     }
