@@ -51,16 +51,6 @@ public class Piece extends BlackAndWhite implements PieceIF{
     }
 
     @Override
-    public boolean move(BoardIF board, Position movePosition) {
-        return false;
-    }
-
-    @Override
-    public Position getLocation() {
-        return null;
-    }
-
-    @Override
     public boolean isCaptured() {
         return false;
     }

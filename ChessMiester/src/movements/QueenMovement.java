@@ -79,10 +79,6 @@ public class QueenMovement implements MovementIF {
 
         // Check if the move is valid.
         if(validMoves.contains(movePosition)){
-            // Set the boards new piece to the piece that is moving.
-            board.getSquares()[currentPosition.getRank().getIndex()]
-                              [currentPosition.getFile().getFileNum()].setPiece((PieceIF) this); // TODO could be bad cast
-
             // Set the new local position of the piece.
             this.setPosition(movePosition);
 

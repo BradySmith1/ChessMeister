@@ -31,20 +31,6 @@ public interface PieceIF {
     public List<Position> getValidMoves(BoardIF board);
 
     /**
-     * Moves the piece to the selected movePosition if it is a valid/legal move.
-     * @param board The game board that the piece moves on.
-     * @param movePosition The Rank and File position of the move to be made.
-     * @return True if the move is valid and was completed, false otherwise.
-     */
-    public boolean move(BoardIF board, Position movePosition);
-
-    /**
-     * Gets the piece's location on the board.
-     * @return The rank and file of the piece's position.
-     */
-    public Position getLocation();
-
-    /**
      * Gets the status of the piece in the sense of if it is captured or not.
      * @return True if the piece has been captured, false otherwise.
      */
