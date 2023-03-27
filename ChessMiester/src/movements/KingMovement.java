@@ -54,7 +54,8 @@ public class KingMovement implements MovementIF {
         int currentFile = currentPosition.getFile().getFileNum(); //current file of piece
 
         //check for knight move up 1, right 2
-        if (currentRank + rank < board.getHeight() && currentFile + file < board.getWidth()) {
+        if (currentRank + rank < board.getHeight() && currentFile + file < board.getWidth() &&
+            currentRank + rank >= 0 && currentFile + file >= 0){
             //get the square of the move and the piece in the square
             Square currentSquare = (Square) board.getSquares()[currentRank + rank][currentFile + file];
             Piece currentPiece = (Piece) currentSquare.getPiece();

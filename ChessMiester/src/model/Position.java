@@ -39,6 +39,13 @@ public class Position {
     }
 
     /**
+     * Function to check if two positions are the same.
+     * @return true if the position is valid, false otherwise.
+     */
+    public boolean isEqual(Position p) {
+        return this.r == p.r && this.f == p.f;
+    }
+    /**
      * Gets the rank of the position.
      * @return the rank of the position.
      */
