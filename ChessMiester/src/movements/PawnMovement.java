@@ -22,10 +22,16 @@ public class PawnMovement implements MovementIF {
     /** If this is the first move of the piece. */
     private boolean isFirstMove;
 
+    /** The direction the pawn is moving. */
+    private int direction;
+
     /** Constructors */
-    public PawnMovement(GameColor color) {
+    public PawnMovement(GameColor color, int direction) {
         this.color = color;
         this.isFirstMove = true;
+
+        // Set the direction of the pawn. 1 for white, -1 for black.
+        this.direction = direction;
     }
 
     /**
@@ -62,7 +68,7 @@ public class PawnMovement implements MovementIF {
         List<Position> validMoves = new ArrayList<>();
 
         // Get the rank of the pawn.
-        int rankAbove = currentPosition.getRank().getIndex() + 1;
+        int rankAbove = currentPosition.getRank().getIndex() + this.direction;
 
         // Get the file of the pawn.
         int currentFile = currentPosition.getFile().getFileNum();
@@ -141,7 +147,7 @@ public class PawnMovement implements MovementIF {
         List<Position> validMoves = new ArrayList<>();
 
         // Get the rank of the pawn.
-        int rankAbove = currentPosition.getRank().getIndex() + 2;
+        int rankAbove = currentPosition.getRank().getIndex() + this.direction;
 
         // Get the file of the pawn.
         int currentFile = currentPosition.getFile().getFileNum();
