@@ -205,16 +205,46 @@ public class Chess {
      * @param toR   Rank placement of where the piece will go
      */
     //move needs to be moved into the player object. This is just the code for when it is created.
-<<<<<<< Updated upstream
-    public void move(PlayerIF player, Files fromF, Rank fromR, Files toF, Rank toR) {
-=======
-    public void move(Files fromF, Rank fromR, Files toF, Rank toR, PlayerIF player) {
->>>>>>> Stashed changes
+    public void move(PlayerIF currentPlayer, PlayerIF otherPlayer, Files fromF, Rank fromR, Files toF, Rank toR) {
         // Get the piece at the current/"from" position.
         Piece piece = (Piece) board.getPiece(fromR, fromF);
 
-        // Get the piece at the to position if any.
-        boolean hasPiece = board.getPiece(fromR, fromF) != null;   // True if there is a piece at the to position.
+        if (currentPlayer.getPieces().contains(piece)){
+            // True if there is a piece at the to position.
+            boolean hasPiece = board.getPiece(toR, toF) != null;
+
+            boolean success = piece.move(board, new Position(toR, toF));
+
+            if(success && hasPiece){ // A piece was captured and move is valid
+                // Add the captured piece to the player's list of captured pieces.
+                currentPlayer.addCapturedPiece(board.getPiece(toR, toF));
+
+                // Remove the captured piece from the player's list of pieces. TODO
+                otherPlayer.getPieces().remove(piece);
+
+                // Clear the piece at the "to" position.
+                this.board.getSquares()[toR.getIndex()][toF.getFileNum()].clear();
+
+                // Move the piece to the "to" position.
+                this.board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(piece);
+
+                // Clear the "from" position.
+                board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
+            }
+            else if(success && !hasPiece){ // No piece was captured and move is valid
+                // Move the piece to the "to" position.
+                board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(piece);
+
+                // Clear the "from" position.
+                board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
+            }
+            else{
+                System.out.println("Invalid move.");
+            }
+        }
+        else{
+            System.out.println("You cannot move that piece because it is not yours.");
+        }
 
         /**
          * Create a copy of the board and attempt to move the piece to the to position on the copy.
@@ -227,24 +257,6 @@ public class Chess {
          * If we made the move and it was successful and doesn't put the king in check, then we copy the copied board to the actual board.
          *
          */
-        boolean success = player.move();
-        if(success && hasPiece){ // A piece was captured and move is valid
-            // how do we want to store captured pieces in a record that can be displayed later on
-
-            board.getSquares()[toF.getFileNum()][toR.getIndex()].setPiece(piece);  // add piece to new location
-            board.getSquares()[fromF.getFileNum()][fromR.getIndex()].clear();  // remove piece from old location
-        }
-        else if(success){ // A piece was not captured and move is valid
-            board.getSquares()[toF.getFileNum()][toR.getIndex()].setPiece(piece);  // add piece to new location
-            board.getSquares()[fromF.getFileNum()][fromR.getIndex()].clear();  // remove piece from old location
-
-        }
-        else{ // Move is not valid
-            // Prompt user again for a new move, telling them the move was invalid
-            Scanner scan = new Scanner(System.in);
-            System.out.println("Invalid move, please enter another >>> ");
-
-        }
     }
 
 
