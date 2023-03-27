@@ -1,8 +1,7 @@
 /**
  * Simple driver for the Chess game.
  *
- * @author Zach Eanes (30%)
- * @author Colton Brooks (70%)
+ * @author Brady Smith (100%)
  */
 
 package controller;

@@ -1,3 +1,11 @@
+/**
+ * This file represents the necessary game logic loop needed for a game of chess to be played.
+ * Includes methods to create a main menu and read player input, launch a new game, save/load
+ * games (coming later) and many other crucial operations.
+ *
+ * @authors Brady Smith (25%), Zach Eanes (40%), Colton Brooks (35%)
+ */
+
 package controller;
 
 import enums.Files;
