@@ -54,7 +54,7 @@ public class Chess {
                         "(COMING SOON!) 4 - 4-Player Chess!\n" +
                         "0 - Exit Game\n--------------------------------------------------------------\n";
         String prompt = "Enter your menu choice here -> ";
-        int choice = 999;     //initialized to 5 so there is no option chosen or quitting the loop
+        int choice = 999;     //initialized to 999 so there is no option chosen or quitting the loop
         while (choice != 0) {   //while user has not quit
             System.out.println(menu);   //shows user menu options
             System.out.print(prompt);
@@ -205,7 +205,11 @@ public class Chess {
      * @param toR   Rank placement of where the piece will go
      */
     //move needs to be moved into the player object. This is just the code for when it is created.
+<<<<<<< Updated upstream
     public void move(PlayerIF player, Files fromF, Rank fromR, Files toF, Rank toR) {
+=======
+    public void move(Files fromF, Rank fromR, Files toF, Rank toR, PlayerIF player) {
+>>>>>>> Stashed changes
         // Get the piece at the current/"from" position.
         Piece piece = (Piece) board.getPiece(fromR, fromF);
 
@@ -238,22 +242,56 @@ public class Chess {
         else{ // Move is not valid
             // Prompt user again for a new move, telling them the move was invalid
             Scanner scan = new Scanner(System.in);
-            System.out.println("Invalid move, please enter another >>>");
+            System.out.println("Invalid move, please enter another >>> ");
 
         }
     }
 
 
-public Files findValidFile() {
-    System.out.println("Enter the file of the piece to move (A-H) >>>");
-    scan.nextLine();
-    return null;
-}
+    /**
+     * This function checks to see if the user gave a valid file for the piece movement.
+     * @return new file for the piece to be moved to
+     */
+    public Files findValidFile() {
+        System.out.println("Enter the file of the location (A-H) >>> ");
+        String input = scan.nextLine();
+        Files newFile = null;
 
-public Rank findValidRank() {
-    return null;
-}
+        boolean valid = false; // boolean to see if input is valid
+        while(!valid){ // loop until a valid input is given be the user
+            try {
+                newFile = Files.valueOf(input);
+                valid = true;
+            }catch(IllegalArgumentException e) { //if a bad input is given, prompt for another
+                System.out.println("Invalid File, enter another (A-H) >>> ");
+                input = scan.nextLine();
+            }
+        }
+        return newFile;
+    }
 
+    /**
+     * This function checks to see if the user gave a valid rank for the piece movement.
+     * @return new rank for the piece to be moved to
+     */
+    public Rank findValidRank() {
+        System.out.println("Enter the rank of the location (1-8) >>> ");
+        String input = scan.nextLine();
+        Rank newRank = null;
+
+        boolean valid = false; // boolean to see if input is valid
+
+        while(!valid){
+            try{
+                newRank = Rank.valueOf(input);
+                valid = true;
+            }catch(IllegalArgumentException e){
+                System.out.println("Invalid rank, please enter another (1-8) >>> ");
+                input = scan.nextLine();
+            }
+        }
+        return newRank;
+    }
 }
 
 
