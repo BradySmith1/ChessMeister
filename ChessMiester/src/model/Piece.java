@@ -18,8 +18,6 @@ public class Piece extends BlackAndWhite implements PieceIF{
      */
     private ChessPieceType type;
 
-    private Position location;
-
     /**
      * Creates a new piece of the specified type.
      * @param type the type of the piece.
@@ -50,11 +48,6 @@ public class Piece extends BlackAndWhite implements PieceIF{
     @Override
     public List<Position> getValidMoves(BoardIF board) {
         return null;
-    }
-
-    @Override
-    public boolean move(BoardIF board, Position movePosition) {
-        return false;
     }
 
     @Override

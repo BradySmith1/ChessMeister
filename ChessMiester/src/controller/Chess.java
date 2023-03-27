@@ -101,12 +101,10 @@ public class Chess {
         if(color == 1){ // user selects white
             player1 = new Player(GameColor.WHITE);
             player2 = new Player(GameColor.BLACK);
-            assignPieces();
         }
         else if(color == 2){ // user selects black
             player1= new Player(GameColor.BLACK);
             player2 = new Player(GameColor.WHITE);
-            assignPieces();
         }
         else{ // set default whenever user input is invalid
             System.out.println("Invalid input. Defaulting to white.");
@@ -120,8 +118,6 @@ public class Chess {
         board.setup(); // initialize board
         assignPieces(); // assign pieces to player
         board.draw();  // printout the board for users to see
-        //loop for move logic.
-        boolean gameOver = false;
         if(player1.getColor() == GameColor.WHITE){
             play(player1, player2);
         }else{
@@ -130,13 +126,27 @@ public class Chess {
     }
 
     public void play(PlayerIF playerWhite, PlayerIF playerBlack){
-        //player1.move(); //allow player one to move
-        //board.draw();
-        //player2.move();
-        //board.draw();
-        //check if game is over
-        //if(gameOver)
-        endGame();
+        boolean gameOver = false;
+        while(!gameOver){
+            System.out.println("White's turn\nWhere would you like to move from?");
+            Files file1 = findValidFile();
+            Rank rank1 = findValidRank();
+            System.out.println("Where would you like to move to?");
+            Files file2 = findValidFile();
+            Rank rank2 = findValidRank();
+            move(playerWhite, file1, rank1, file2, rank2);
+            board.draw();
+            System.out.println("Black's turn\nWhere would you like to move from?");
+            file1 = findValidFile();
+            rank1 = findValidRank();
+            System.out.println("Where would you like to move to?");
+            file2 = findValidFile();
+            rank2 = findValidRank();
+            move(playerBlack, file2, rank2, file1, rank1);
+            board.draw();
+            gameOver = true;
+            endGame();
+        }
     }
 
     /**
@@ -195,7 +205,7 @@ public class Chess {
      * @param toR   Rank placement of where the piece will go
      */
     //move needs to be moved into the player object. This is just the code for when it is created.
-    public void move(Files fromF, Rank fromR, Files toF, Rank toR) {
+    public void move(PlayerIF player, Files fromF, Rank fromR, Files toF, Rank toR) {
         // Get the piece at the current/"from" position.
         Piece piece = (Piece) board.getPiece(fromR, fromF);
 
@@ -213,9 +223,7 @@ public class Chess {
          * If we made the move and it was successful and doesn't put the king in check, then we copy the copied board to the actual board.
          *
          */
-
-        boolean success = piece.move(board, new Position(toR, toF));
-
+        boolean success = player.move();
         if(success && hasPiece){ // A piece was captured and move is valid
             // how do we want to store captured pieces in a record that can be displayed later on
 
