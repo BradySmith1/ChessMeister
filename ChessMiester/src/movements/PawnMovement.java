@@ -14,6 +14,7 @@ import model.Position;
 import model.Square;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -42,185 +43,58 @@ public class PawnMovement implements MovementIF{
         this.direction = color == GameColor.WHITE ? 1 : -1;
     }
 
-    /**
-     * Gets the valid moves for the piece.
-     *
-     * @param board the board the piece is on.
-     * @return the valid moves for the piece.
-     */
-    @Override
+    private Position moveCheck(BoardIF board, Position currentPosition, int rank, int file) {
+
+        Position movePossible = null; // move starts are nonexistent
+
+        int currentRank = currentPosition.getRank().getIndex(); // current rank of piece
+        int currentFile = currentPosition.getFile().getFileNum(); //current file of piece
+
+        //check for knight move up 1, right 2
+        if (currentRank + rank < board.getHeight() && currentFile + file < board.getWidth() &&
+                currentRank + rank >= 0 && currentFile + file >= 0){
+            //get the square of the move and the piece in the square
+            Square currentSquare = (Square) board.getSquares()[currentRank + rank][currentFile + file];
+            Piece currentPiece = (Piece) currentSquare.getPiece();
+            //check if there is an empty square or an enemy piece
+            if (currentPiece == null || !currentPiece.getColor().equals(this.color)) {
+                //the move is possible so add it
+                movePossible = currentSquare.getPosition();
+            }
+        }
+        return movePossible; // return the result of if a move is possible
+    }
+
     public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
-        // Get the valid moves for the pawn.
-        List<Position> validMoves = new ArrayList<>();
 
-        // Get all the valid moves for the pawn if it is the first move.
+        List<Position> validMoves = new ArrayList<>();
+        validMoves.add(moveCheck(board, currentPosition, direction, 0));
         if (isFirstMove) {
-            // Get the valid moves for the pawn if it is the first move.
-            validMoves.addAll(getValidMovesForFirstMove(board, currentPosition));
+            validMoves.add(moveCheck(board, currentPosition, direction * 2, 0));
             isFirstMove = false;
-        } else {
-            // Get the valid moves for the pawn if it is not the first move.
-            validMoves.addAll(getValidMovesForNonFirstMove(board, currentPosition));
         }
-
+        validMoves.addAll(pieceDiagonalCheck(board, currentPosition));
+        validMoves.removeAll(Collections.singleton(null));
         return validMoves;
     }
 
-    /**
-     * Gets the valid moves for the pawn if it is not the first move.
-     *
-     * @param board the board the piece is on.
-     * @return the valid moves for the pawn if it is not the first move.
-     */
-    private Collection<? extends Position> getValidMovesForNonFirstMove(BoardIF board, Position currentPosition) {
-        // The valid moves for the pawn if it is not the first move.
+    private List<Position> pieceDiagonalCheck(BoardIF board, Position currentPosition) {
         List<Position> validMoves = new ArrayList<>();
-
-        // Get the rank of the pawn.
-        int rankAbove = currentPosition.getRank().getIndex() + this.direction;
-
-        // Get the file of the pawn.
-        int currentFile = currentPosition.getFile().getFileNum();
-
-        // Pawn above the board.
-        if(rankAbove < board.getHeight()){
-            // Get the square above the pawn.
-            Square squareAbove = (Square) board.getSquares()[rankAbove][currentFile];
-
-            // Get the piece on the square above the pawn.
-            Piece pieceAbove = (Piece) squareAbove.getPiece();
-
-            // If there is no piece on the square above the pawn.
-            if (pieceAbove == null) {
-                // Add the position of the square above the pawn to the valid moves.
-                validMoves.add(squareAbove.getPosition());
-            }
-            // If there is an opposite piece on the square above the pawn.
-            else if (!pieceAbove.getColor().equals(this.color)) {
-                validMoves.add(squareAbove.getPosition());
+        int forward = currentPosition.getRank().getIndex() + direction;
+        int right = currentPosition.getFile().getFileNum() + 1;
+        int left = currentPosition.getFile().getFileNum() - 1;
+        if (left >= 0) {
+            Square aheadLeft = (Square) board.getSquares()[forward][left];
+            if (aheadLeft.getPiece() != null && !aheadLeft.getColor().equals(this.color)) {
+                validMoves.add(moveCheck(board, currentPosition, direction, -1));
             }
         }
-
-        // Pawn top right of the board.
-        if(rankAbove < board.getHeight() && currentFile + 1 < board.getWidth()){
-            // Get the square top right of the pawn.
-            Square squareTopRight = (Square) board.getSquares()[rankAbove][currentFile + 1];
-
-            // Get the piece on the square top right of the pawn.
-            Piece pieceTopRight = (Piece) squareTopRight.getPiece();
-
-            // If the square is empty, add it to the valid moves.
-            if (squareTopRight.getPiece() == null) {
-                validMoves.add(squareTopRight.getPosition());
-            }
-            // If there is an opposite piece on the square top right of the pawn.
-            else if (!pieceTopRight.getColor().equals(this.color)) {
-                validMoves.add(squareTopRight.getPosition());
+        if (right < board.getWidth()) {
+            Square aheadRight = (Square) board.getSquares()[forward][right];
+            if (aheadRight.getPiece() != null && !aheadRight.getColor().equals(this.color)) {
+                validMoves.add(moveCheck(board, currentPosition, direction, 1));
             }
         }
-
-        // Pawn top left of the board.
-        if(rankAbove < board.getHeight() && currentFile - 1 >= board.getWidth()){
-            // Get the square top left of the pawn.
-            Square squareTopLeft = (Square) board.getSquares()[rankAbove][currentFile - 1];
-
-            // Get the piece on the square top left of the pawn.
-            Piece pieceTopLeft = (Piece) squareTopLeft.getPiece();
-
-            // If there is an opposite piece on the square top left of the pawn.
-            if (pieceTopLeft != null && !pieceTopLeft.getColor().equals(this.color)) {
-                validMoves.add(squareTopLeft.getPosition());
-            }
-
-            // If the square is empty, add it to the valid moves.
-            if (squareTopLeft.getPiece() == null) {
-                validMoves.add(squareTopLeft.getPosition());
-            }
-            // If there is an opposite piece on the square top right of the pawn.
-            else if (!pieceTopLeft.getColor().equals(this.color)) {
-                validMoves.add(squareTopLeft.getPosition());
-            }
-        }
-        // Return the valid moves.
-        return validMoves;
-    }
-
-    /**
-     * Gets the valid moves for the pawn if it is the first move.
-     *
-     * @param board the board the piece is on.
-     * @return the valid moves for the pawn if it is the first move.
-     */
-    private Collection<? extends Position> getValidMovesForFirstMove(BoardIF board, Position currentPosition) {
-        // The valid moves for the pawn if it is not the first move.
-        List<Position> validMoves = new ArrayList<>();
-
-        // Get the rank of the pawn.
-        int rankAbove = currentPosition.getRank().getIndex() + (2 * this.direction);
-
-        // Get the file of the pawn.
-        int currentFile = currentPosition.getFile().getFileNum();
-
-        // Pawn above the board.
-        if(rankAbove < board.getHeight()){
-            // Get the square above the pawn.
-            Square squareAbove = (Square) board.getSquares()[rankAbove][currentFile];
-
-            // Get the piece on the square above the pawn.
-            Piece pieceAbove = (Piece) squareAbove.getPiece();
-
-            // If there is no piece on the square above the pawn.
-            if (pieceAbove == null) {
-                // Add the position of the square above the pawn to the valid moves.
-                validMoves.add(squareAbove.getPosition());
-            }
-            // If there is an opposite piece on the square above the pawn.
-            else if (!pieceAbove.getColor().equals(this.color)) {
-                validMoves.add(squareAbove.getPosition());
-            }
-        }
-
-        // Pawn top right of the board.
-        if(rankAbove - 1 < board.getHeight() && currentFile + 1 < board.getWidth()){
-            // Get the square top right of the pawn.
-            Square squareTopRight = (Square) board.getSquares()[rankAbove - 1][currentFile + 1];
-
-            // Get the piece on the square top right of the pawn.
-            Piece pieceTopRight = (Piece) squareTopRight.getPiece();
-
-            // If the square is empty, add it to the valid moves.
-            if (squareTopRight.getPiece() == null) {
-                validMoves.add(squareTopRight.getPosition());
-            }
-            // If there is an opposite piece on the square top right of the pawn.
-            else if (!pieceTopRight.getColor().equals(this.color)) {
-                validMoves.add(squareTopRight.getPosition());
-            }
-        }
-
-        // Pawn top left of the board.
-        if(rankAbove - 1 < board.getHeight() && currentFile - 1 >= board.getWidth()){
-            // Get the square top left of the pawn.
-            Square squareTopLeft = (Square) board.getSquares()[rankAbove - 1][currentFile -1];
-
-            // Get the piece on the square top left of the pawn.
-            Piece pieceTopLeft = (Piece) squareTopLeft.getPiece();
-
-            // If there is an opposite piece on the square top left of the pawn.
-            if (pieceTopLeft != null && !pieceTopLeft.getColor().equals(this.color)) {
-                validMoves.add(squareTopLeft.getPosition());
-            }
-
-            // If the square is empty, add it to the valid moves.
-            if (squareTopLeft.getPiece() == null) {
-                validMoves.add(squareTopLeft.getPosition());
-            }
-            // If there is an opposite piece on the square top right of the pawn.
-            else if (!pieceTopLeft.getColor().equals(this.color)) {
-                validMoves.add(squareTopLeft.getPosition());
-            }
-        }
-        // Return the valid moves.
         return validMoves;
     }
 
