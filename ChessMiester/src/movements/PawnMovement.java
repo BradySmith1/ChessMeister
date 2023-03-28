@@ -1,7 +1,7 @@
 /**
  * This class represents the movement of a pawn.
  *
- * @author Kaushal Patel (100%)
+ * @author Kaushal Patel (75%), Colton Brooks (20%), Zach Eanes (5%)
  * @version 1.0
  */
 package movements;
