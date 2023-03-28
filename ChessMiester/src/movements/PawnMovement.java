@@ -71,7 +71,7 @@ public class PawnMovement implements MovementIF{
         validMoves.add(moveCheck(board, currentPosition, direction, 0));
         if (isFirstMove) {
             validMoves.add(moveCheck(board, currentPosition, direction * 2, 0));
-            isFirstMove = false;
+            //isFirstMove = false;
         }
         validMoves.addAll(pieceDiagonalCheck(board, currentPosition));
         validMoves.removeAll(Collections.singleton(null));
@@ -112,5 +112,12 @@ public class PawnMovement implements MovementIF{
      */
     public void setColor(GameColor color) {
         this.color = color;
+    }
+
+    /**
+     * Changes boolean if this is the first move of the piece occurs.
+     */
+    public void setFirstMove(){
+        this.isFirstMove = false;
     }
 }
