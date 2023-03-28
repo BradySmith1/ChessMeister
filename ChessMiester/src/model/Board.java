@@ -87,19 +87,19 @@ public class Board implements BoardIF {
     }
 
     /**
-     * Helper method for setting up the pieces on the board
+     * Helpher method for setting up the pieces on the board
      * @param color : the color of the pieces to set
      * @param offset : the offset from the top of the board to set the pieces
      */
     private void setPieces(GameColor color, int offset){
-        //squares[offset][0].setPiece(new Piece(ChessPieceType.Rook, color));
-        //squares[offset][width-1].setPiece(new Piece(ChessPieceType.Rook, color));
-        //squares[offset][1].setPiece(new Piece(ChessPieceType.Knight, color));
-//        squares[offset][width-2].setPiece(new Piece(ChessPieceType.Knight, color));
-//        squares[offset][2].setPiece(new Piece(ChessPieceType.Bishop, color));
-//        squares[offset][width-3].setPiece(new Piece(ChessPieceType.Bishop, color));
-        //squares[offset][3].setPiece(new Piece(ChessPieceType.Queen, color));
-//        squares[offset][4].setPiece(new Piece(ChessPieceType.King, color));
+        squares[offset][0].setPiece(new Piece(ChessPieceType.Rook, color));
+        squares[offset][width-1].setPiece(new Piece(ChessPieceType.Rook, color));
+        squares[offset][1].setPiece(new Piece(ChessPieceType.Knight, color));
+        squares[offset][width-2].setPiece(new Piece(ChessPieceType.Knight, color));
+        squares[offset][2].setPiece(new Piece(ChessPieceType.Bishop, color));
+        squares[offset][width-3].setPiece(new Piece(ChessPieceType.Bishop, color));
+        squares[offset][3].setPiece(new Piece(ChessPieceType.Queen, color));
+        squares[offset][4].setPiece(new Piece(ChessPieceType.King, color));
     }
 
     /**
