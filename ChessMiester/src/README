@@ -1,0 +1,32 @@
+CS364: ChessMeister
+Team: B_Orange
+Authors: Brady Smith, Kaushal Patel, Zachary Eanes, and Colton Brooks.
+
+DESCRIPTION:
+This is a basic implementation of Chess, done through the command line. The board
+itself is printed to the terminal, user input is taken in through command line, and
+we are able to use the basic functions of chess. For this version, we have created a 
+basic display of the board, and gave the user basic interactions in order to 
+move pieces based on if the move itself is valid or not. User's will have a collection
+of taken pieces displayed as well, making sure that the user is full caught up. 
+
+PIECES: 
+K - King
+Q - Queen
+R - Rook
+N - Knight
+B - Bishop
+P - Pawn
+
+HOW TO RUN:
+In order to run this program, create a new configuration in IntelliJ and set the
+build and run to Java Azul and target file as ./controller/Driver.java. Then,
+you're able to run the program and play chess.
+
+HOW TO PLAY:
+In order to play this game, the user will be prompted to enter in a move. The user will enter
+the file and rank of the piece they want to move, following by the file and rank of the
+destination. The user will then be told if the move is valid or not, and if it is valid, the
+board is updated and the next player's turn begins. This is repeated for right now until the
+program is exited. We have not implemented a checkmate, stalemate, or draw yet, so the game will
+continue until the user exits the program.
