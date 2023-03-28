@@ -12,18 +12,15 @@ import enums.Rank;
 
 public class Position {
 
-    /**
-     * The rank of the position.
-     */
+    /** The rank of the position. */
     private Rank r;
 
-    /**
-     * The file of the position.
-     */
+    /** The file of the position. */
     private Files f;
 
     /**
      * Creates a new position with the specified rank and file.
+     *
      * @param r the rank of the position.
      * @param f the file of the position.
      */
@@ -42,6 +39,8 @@ public class Position {
 
     /**
      * Function to check if two positions are the same.
+     *
+     * @param o the object to compare to
      * @return true if the position is valid, false otherwise.
      */
     @Override
@@ -60,6 +59,7 @@ public class Position {
     }
     /**
      * Gets the rank of the position.
+     *
      * @return the rank of the position.
      */
     public Rank getRank() {
@@ -68,6 +68,7 @@ public class Position {
 
     /**
      * Gets the file of the position.
+     *
      * @return the file of the position.
      */
     public Files getFile() {
@@ -76,6 +77,7 @@ public class Position {
 
     /**
      * Sets the rank of the position.
+     *
      * @param r the rank of the position.
      */
     public void setRank(Rank r) {
@@ -84,6 +86,7 @@ public class Position {
 
     /**
      * Sets the file of the position.
+     *
      * @param f the file of the position.
      */
     public void setFile(Files f) {

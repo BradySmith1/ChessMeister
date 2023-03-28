@@ -16,12 +16,14 @@ public interface SquareIF {
 
     /**
      * Sets a piece on the square.
+     *
      * @return The piece that was previously on the square, if any.
      */
     public PieceIF setPiece(PieceIF piece);
 
     /**
      * Returns the piece that is currently on the square, if any.
+     *
      * @return The piece on the square, or null if the square is empty.
      */
     public PieceIF getPiece();

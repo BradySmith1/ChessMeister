@@ -30,10 +30,4 @@ public interface PieceIF {
      * @return A list of valid MovePositions.
      */
     public List<Position> getValidMoves(BoardIF board, Position currentPosition);
-
-    /**
-     * Gets the status of the piece in the sense of if it is captured or not.
-     * @return True if the piece has been captured, false otherwise.
-     */
-    public boolean isCaptured();
 }

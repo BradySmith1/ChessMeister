@@ -7,7 +7,7 @@
 package enums;
 
 public enum Rank {
-    R1(1, 7),
+    R1(1, 7), /* Represents the different places on a chess board. */
     R2(2, 6),
     R3(3, 5),
     R4(4, 4),
