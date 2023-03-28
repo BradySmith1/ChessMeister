@@ -155,7 +155,7 @@ public class Chess {
                 rank2 = findValidRank();
                 moveValid = move(playerWhite, playerBlack, file1, rank1, file2, rank2);
             }
-            board.draw();
+            this.display();
             System.out.println("Black's turn\nWhere would you like to move from?");
             moveValid = false;
             while(!moveValid){
@@ -166,7 +166,9 @@ public class Chess {
                 rank2 = findValidRank();
                 moveValid = move(playerBlack, playerWhite, file1, rank1, file2, rank2);
             }
+            player1.displayCapturedPieces();
             board.draw();
+            player2.displayCapturedPieces();
             //gameOver = true;
             //endGame();
         }
@@ -335,6 +337,17 @@ public class Chess {
             }
         }
         return newRank;
+    }
+
+    /**
+     * Function used to display current state of the board and captured pieces.
+     */
+    public void display(){
+        player1.displayCapturedPieces();
+        System.out.println();
+        board.draw();
+        System.out.println();
+        player2.displayCapturedPieces();
     }
 }
 

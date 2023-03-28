@@ -18,7 +18,7 @@ public class BoardMonoCLI implements BoardStrategy {
      * @param board the BoardIF object representing the game board to be drawn.
      */
     @Override
-    public void draw(BoardIF board) {
+    public void draw(BoardIF board){
         SquareIF[][] squares = board.getSquares();
         //System.out.println("      A       B       C       D       E       F       G       H");
         String line2 = "  |-------|       |-------|       |-------|       |-------|       |";
