@@ -447,12 +447,12 @@ public class QueenMovement extends BlackAndWhite implements MovementIF {// The c
             if (currentSquare.getPiece() == null) {
                 validDiagonalMovesDownLeft.add(currentSquare.getPosition());
             }
-            // If the square is occupied by a piece of the opposite color, add it to list of valid moves.
+            // If square is occupied by a piece of opposite color, add it to list of valid moves
             else if (!currentPiece.getColor().equals(getColor())) { // if piece is opposite color
                 validDiagonalMovesDownLeft.add(currentSquare.getPosition());
                 pieceEncountered = true;
             }
-            // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
+            // If square occupied by a piece of same color, do not add it to list of valid moves
             else {
                 pieceEncountered = true;
             }
@@ -462,7 +462,7 @@ public class QueenMovement extends BlackAndWhite implements MovementIF {// The c
             currentQueenFile--;
         }
 
-        return validDiagonalMovesDownLeft; // Return the list of valid moves down and left of the Queen.
+        return validDiagonalMovesDownLeft; //return list of valid moves down and left of Queen
     }
 
     /**
@@ -486,7 +486,7 @@ public class QueenMovement extends BlackAndWhite implements MovementIF {// The c
         boolean pieceEncountered = false;
 
         // Keep looping until a piece is encountered or the end of the board is reached.
-        while (!pieceEncountered && currentQueenRank >= 0 && currentQueenFile < board.getWidth()) {
+        while (!pieceEncountered && currentQueenRank >= 0 && currentQueenFile < board.getWidth()){
             // Get the square at the current rank and file.
             Square currentSquare = (Square) board.getSquares()[currentQueenRank][currentQueenFile];
 
