@@ -2,7 +2,7 @@
  * This class represents a position on the game board, which is represented
  * by the rank and file.
  *
- * @author Brady Smith (100%)
+ * @author Brady Smith (95%), Colton Brooks (5%)
  * @version 1.0
  */
 package model;
