@@ -96,7 +96,7 @@ public class Chess {
                     break;
             }
             System.out.println();
-            scan.nextLine();    //consumes a new line so that nextInt throwing an exception will not loop
+            scan.nextLine();//consumes a new line so nextInt throwing an exception will not loop
         }
     }
 
@@ -120,7 +120,7 @@ public class Chess {
             player1 = new Player(GameColor.WHITE);
             player2 = new Player(GameColor.BLACK);
         }
-        scan.nextLine(); //consumes a new line so that nextInt throwing an exception will not loop
+        scan.nextLine(); //consumes a new line so nextInt throwing an exception will not loop
         //clears the screen
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -229,7 +229,8 @@ public class Chess {
      * @param toF   File placement of where the piece will go
      * @param toR   Rank placement of where the piece will go
      */
-    public boolean move(PlayerIF currentPlayer, PlayerIF otherPlayer, Files fromF, Rank fromR, Files toF, Rank toR){
+    public boolean move(PlayerIF currentPlayer, PlayerIF otherPlayer, Files fromF,
+                        Rank fromR, Files toF, Rank toR){
         boolean moveMade = false; // initialize to false
         // Get the piece at the current/"from" position.
         Piece piece = (Piece) board.getPiece(fromR, fromF);
@@ -242,8 +243,7 @@ public class Chess {
             List<Position> moves = piece.getValidMoves(board, new Position(fromR, fromF));
             Position to = new Position(toR, toF); // position to move to
             boolean success = false; // initialize to false
-            success = moves.contains(to);
-            //boolean success = piece.getValidMoves(board, new Position(fromR, fromF)).contains(new Position(toR, toF));
+            success = moves.contains(to); // check if where user wants to move is a valid move
 
             if(success && hasPiece){ // A piece was captured and move is valid
                 // Add the captured piece to the player's list of captured pieces.
@@ -343,30 +343,10 @@ public class Chess {
      * Function used to display current state of the board and captured pieces.
      */
     public void display(){
-        player1.displayCapturedPieces();
-        System.out.println();
-        board.draw();
-        System.out.println();
-        player2.displayCapturedPieces();
+        player1.displayCapturedPieces(); //display captured pieces for player 1
+        System.out.println(); // line printed for formatting
+        board.draw(); // display the board
+        System.out.println(); // line printed for formatting
+        player2.displayCapturedPieces(); // display captured pieces for player 2
     }
 }
-
-
-//  TODO GAME LOGIC IDEA
-//  1. Create a new board
-//  2. Create 2 new players : player 1 and player 2 (player 1 is white, player 2 is black)
-//  4. Create a new game
-//  5. Start the game (loop) : !gameOver
-//  6. Prompt the user for a move   // Keep track of whose turn it is
-//  7. Check if the move is valid
-//  8. If the move is valid, make the move // next player's turn
-//  9. Check if the move puts the king of the player who made the move in check
-//  10. If the move puts the king in check, prompt the user for a new move
-//  11. If the move does not put the king in check, check if the move puts the opponent's king in check
-//  12. If the move puts the opponent's king in check, check if the opponent's king is in checkmate
-//  13. If the opponent's king is in checkmate, end the game    gameOver = true
-//  14. If the opponent's king is not in checkmate, continue the game
-//  15. If the move does not put the opponent's king in check, continue the game
-//  16. If the move is not valid, prompt the user for a new move
-//  17. Repeat steps 6-16 until the game is over
-//  18. End the game
