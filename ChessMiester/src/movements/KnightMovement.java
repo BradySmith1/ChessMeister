@@ -19,12 +19,13 @@ import java.util.List;
 
 public class KnightMovement implements MovementIF {
 
-    private GameColor color; // The color of the piece
+    /** The color of the piece. */
+    private GameColor color;
 
     /**
      * Constructor method for the KnightMovement Class
      *
-     * @param color           the color of the piece
+     * @param color the color of the piece
      */
     public KnightMovement(GameColor color) {
 

@@ -20,12 +20,13 @@ import java.util.List;
 
 public class KingMovement implements MovementIF {
 
+    /** The color of the piece. */
     private GameColor color;
 
     /**
      * Constructor method for the KingMovement Class
      *
-     * @param color           the color of the piece
+     * @param color the color of the piece
      */
     public KingMovement(GameColor color) {
         this.color = color;
@@ -34,8 +35,8 @@ public class KingMovement implements MovementIF {
     /**
      * Gets the valid moves for the piece.
      *
-     * @param board
-     * @param currentPosition
+     * @param board the board the piece is on.
+     * @param currentPosition the current position of the piece.
      * @return the valid moves for the piece.
      */
     @Override
@@ -53,7 +54,7 @@ public class KingMovement implements MovementIF {
         validMoves.add(moveCheck(board, currentPosition, 0, -1));
         validMoves.add(moveCheck(board, currentPosition, 1, -1));
 
-        validMoves.removeAll(Collections.singleton(null));
+        validMoves.removeAll(Collections.singleton(null)); // remove all null values
         return validMoves;
     }
 
@@ -68,7 +69,8 @@ public class KingMovement implements MovementIF {
         if (currentRank + rank < board.getHeight() && currentFile + file < board.getWidth() &&
             currentRank + rank >= 0 && currentFile + file >= 0){
             //get the square of the move and the piece in the square
-            Square currentSquare = (Square) board.getSquares()[currentRank + rank][currentFile + file];
+            Square currentSquare = (Square) board.getSquares()[currentRank + rank]
+                    [currentFile + file];
             Piece currentPiece = (Piece) currentSquare.getPiece();
             //check if there is an empty square or an enemy piece
             if (currentPiece == null || !currentPiece.getColor().equals(this.color)) {

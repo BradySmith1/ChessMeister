@@ -25,10 +25,16 @@ public class PawnMovement implements MovementIF {
     private boolean isFirstMove;
 
     /** The direction the pawn is moving. */
-    private final int direction;
+    private int direction;
 
 
     /** Constructors */
+
+    /**
+     * Constructor method for the PawnMovement Class.
+     *
+     * @param color the color of the piece.
+     */
     public PawnMovement(GameColor color) {
         this.color = color;
         this.isFirstMove = true;
@@ -92,10 +98,18 @@ public class PawnMovement implements MovementIF {
         return validMoves;
     }
 
+    /**
+     * Gets the game color of the piece.
+     * @return  the game color of the piece.
+     */
     public GameColor getColor() {
         return color;
     }
 
+    /**
+     * Sets the game color of the piece.
+     * @param color the game color of the piece.
+     */
     public void setColor(GameColor color) {
         this.color = color;
     }

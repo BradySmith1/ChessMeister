@@ -77,6 +77,7 @@ public class Board implements BoardIF {
         //need 2 bishops
         //need 1 queen
         //need 1 king
+
         for(int i = 0; i < width; i++) {
             squares[1][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.WHITE));
             squares[6][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.BLACK));

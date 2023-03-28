@@ -3,14 +3,13 @@ package player;
 import interfaces.PlayerIF;
 import enums.GameColor;
 import interfaces.PieceIF;
-import model.Piece;
 
 import java.util.ArrayList;
 
 public class Player implements PlayerIF{
-    private GameColor color;
-    private ArrayList<PieceIF> pieces;
-    private ArrayList<PieceIF> capturedPieces;
+    private GameColor color;    // The color of the player
+    private ArrayList<PieceIF> pieces;  // The pieces the player has
+    private ArrayList<PieceIF> capturedPieces;  // The pieces the player has captured
 
     public Player(GameColor color) {
         this.color = color;
@@ -43,6 +42,15 @@ public class Player implements PlayerIF{
         this.capturedPieces.add(piece);
     }
 
+    /**
+     * Method to display the pieces that the player has captured.
+     */
+    public void displayCapturedPieces(){
+        System.out.print(this.getColor().toString() + " captured pieces: ");
+        for(PieceIF piece : capturedPieces){
+            System.out.print(piece.getType().getLetter() + " ");
+        }
+    }
     /**
      * Getter method for the players game color.
      * @return color of the current player

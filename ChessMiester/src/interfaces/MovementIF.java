@@ -9,12 +9,11 @@ import java.util.List;
  * @version 1.0
  */
 public interface MovementIF {
+    /**
+     * Returns a list of MovePositions that are valid & legal on the board.
+     * @param board The game board that the piece moves on.
+     * @return A list of valid MovePositions.
+     */
     List<Position> getValidMoves(BoardIF board, Position currentPosition);
 
-    /**
-     * Moves the piece to the specified position.
-     * @param board the board the piece is on.
-     * @param movePosition the position to move the piece to.
-     * @return true if the move was successful.
-     */
 }
