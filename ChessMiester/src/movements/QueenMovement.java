@@ -9,6 +9,7 @@ package movements;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
+import model.BlackAndWhite;
 import model.Piece;
 import model.Position;
 import model.Square;
@@ -16,11 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class QueenMovement implements MovementIF {
-
-    /* Color of the piece */
-    private GameColor color;   // The color of the piece.
-
+public class QueenMovement extends BlackAndWhite implements MovementIF {// The color of the piece.
 
     /**
      * Constructor method for the QueenMovement class.
@@ -28,7 +25,7 @@ public class QueenMovement implements MovementIF {
      * @param color the color of the piece.
      */
     public QueenMovement(GameColor color) {
-        this.color = color;
+        super(color);
     }
 
     /**
@@ -155,7 +152,7 @@ public class QueenMovement implements MovementIF {
                 validVerticalMovesAbove.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if (!currentPiece.getColor().equals(this.color)) { // if piece is opposite color
+            else if (!currentPiece.getColor().equals(getColor())) { // if piece is opposite color
                 validVerticalMovesAbove.add(currentSquare.getPosition());
                 pieceEncountered = true;
             }
@@ -198,7 +195,7 @@ public class QueenMovement implements MovementIF {
                 validVerticalMovesBelow.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if (!currentPiece.getColor().equals(this.color)) { // if piece is opposite color
+            else if (!currentPiece.getColor().equals(getColor())) { // if piece is opposite color
                 validVerticalMovesBelow.add(currentSquare.getPosition());
                 pieceEncountered = true;
             }
@@ -242,7 +239,7 @@ public class QueenMovement implements MovementIF {
                 validHorizontalMovesLeft.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if (!currentPiece.getColor().equals(this.color)) { // if piece is opposite color
+            else if (!currentPiece.getColor().equals(getColor())) { // if piece is opposite color
                 validHorizontalMovesLeft.add(currentSquare.getPosition());
                 pieceEncountered = true;
             }
@@ -287,7 +284,7 @@ public class QueenMovement implements MovementIF {
                 validHorizontalMovesRight.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if (!currentPiece.getColor().equals(this.color)) { // if piece is opposite color
+            else if (!currentPiece.getColor().equals(getColor())) { // if piece is opposite color
                 validHorizontalMovesRight.add(currentSquare.getPosition());
                 pieceEncountered = true;
             }
@@ -333,7 +330,7 @@ public class QueenMovement implements MovementIF {
                 validDiagonalMovesUpLeft.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if (!currentPiece.getColor().equals(this.color)) { // if piece is opposite color
+            else if (!currentPiece.getColor().equals(getColor())) { // if piece is opposite color
                 validDiagonalMovesUpLeft.add(currentSquare.getPosition());
                 pieceEncountered = true;
             }
@@ -381,7 +378,7 @@ public class QueenMovement implements MovementIF {
                 validDiagonalMovesUpRight.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if (!currentPiece.getColor().equals(this.color)) { // if piece is opposite color
+            else if (!currentPiece.getColor().equals(getColor())) { // if piece is opposite color
                 validDiagonalMovesUpRight.add(currentSquare.getPosition());
                 pieceEncountered = true;
             }
@@ -429,7 +426,7 @@ public class QueenMovement implements MovementIF {
                 validDiagonalMovesDownLeft.add(currentSquare.getPosition());
             }
             // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if (!currentPiece.getColor().equals(this.color)) { // if piece is opposite color
+            else if (!currentPiece.getColor().equals(getColor())) { // if piece is opposite color
                 validDiagonalMovesDownLeft.add(currentSquare.getPosition());
                 pieceEncountered = true;
             }
@@ -480,7 +477,7 @@ public class QueenMovement implements MovementIF {
             }
             // If the square is occupied by a piece of the opposite color,
             // add it to the list of valid moves.
-            else if (!currentPiece.getColor().equals(this.color)) {
+            else if (!currentPiece.getColor().equals(getColor())) {
                 validDiagonalMovesDownRight.add(currentSquare.getPosition());
                 pieceEncountered = true;
             }
@@ -497,23 +494,5 @@ public class QueenMovement implements MovementIF {
 
         // Return the list of valid moves down and right of the Queen.
         return validDiagonalMovesDownRight;
-    }
-
-    /**
-     * Sets the color of the Queen.
-     *
-     * @param color The color of the Queen.
-     */
-    public void setColor(GameColor color) {
-        this.color = color;
-    }
-
-    /**
-     * Gets the color of the Queen.
-     *
-     * @return The color of the Queen.
-     */
-    public GameColor getColor() {
-        return color;
     }
 }

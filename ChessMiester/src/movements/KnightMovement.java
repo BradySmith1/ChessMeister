@@ -9,6 +9,7 @@ package movements;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
+import model.BlackAndWhite;
 import model.Piece;
 import model.Position;
 import model.Square;
@@ -17,10 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class KnightMovement implements MovementIF {
-
-    /** The color of the piece. */
-    private GameColor color;
+public class KnightMovement extends BlackAndWhite implements MovementIF {
 
     /**
      * Constructor method for the KnightMovement Class
@@ -28,7 +26,7 @@ public class KnightMovement implements MovementIF {
      * @param color the color of the piece
      */
     public KnightMovement(GameColor color) {
-        this.color = color;
+        super(color);
     }
 
     /**
@@ -83,23 +81,11 @@ public class KnightMovement implements MovementIF {
                                                               [currentFile + file];
             Piece currentPiece = (Piece) currentSquare.getPiece();
             //check if there is an empty square or an enemy piece
-            if (currentPiece == null || !currentPiece.getColor().equals(this.color)) {
+            if (currentPiece == null || !currentPiece.getColor().equals(getColor())) {
                 //the move is possible so add it
                 movePossible = currentSquare.getPosition();
             }
         }
         return movePossible; // return the result of if a move is possible
     }
-
-    /**
-     * Getter method for the color of the piece
-     * @return the color of the piece
-     */
-    public GameColor getColor() {return color;}
-
-    /**
-     * Setter method for the color of the piece
-     * @param color the color to set the piece to
-     */
-    public void setColor(GameColor color) {this.color = color;}
 }

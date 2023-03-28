@@ -12,6 +12,7 @@ package movements;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
+import model.BlackAndWhite;
 import model.Piece;
 import model.Position;
 import model.Square;
@@ -19,13 +20,7 @@ import model.Square;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RookMovement implements MovementIF{
-
-    /* The color of the piece */
-    private GameColor color;
-
-    /* The direction the rook is moving */
-    private int direction;
+public class RookMovement extends BlackAndWhite implements MovementIF{
 
     /**
      * Constructor method for the RookMovement Class
@@ -33,8 +28,7 @@ public class RookMovement implements MovementIF{
      * @param color the color of the piece
      */
     public RookMovement(GameColor color) {
-        this.color = color;
-        this.direction = color == GameColor.WHITE ? 1 : -1;
+        super(color);
     }
 
     /**
@@ -123,7 +117,7 @@ public class RookMovement implements MovementIF{
             if(currSquare.getPiece() == null){ // Square is empty
                 validUp.add(currSquare.getPosition());
             }
-            else if(!currPiece.getColor().equals(this.color)){ // Square has an enemy piece
+            else if(!currPiece.getColor().equals(getColor())){ // Square has an enemy piece
                 validUp.add(currSquare.getPosition());
                 pieceHit = true; // we hit a piece, so we can't move any further
             }
@@ -159,7 +153,7 @@ public class RookMovement implements MovementIF{
             if(currSquare.getPiece() == null){ // Square is empty
                 validDown.add(currSquare.getPosition());
             }
-            else if(!currPiece.getColor().equals(this.color)){ // Square has an enemy piece
+            else if(!currPiece.getColor().equals(getColor())){ // Square has an enemy piece
                 validDown.add(currSquare.getPosition());
                 pieceHit = true; // we hit a piece, so we can't move any further
             }
@@ -197,7 +191,7 @@ public class RookMovement implements MovementIF{
             if(currSquare.getPiece() == null){ // Square is empty
                 validLeft.add(currSquare.getPosition());
             }
-            else if(!currPiece.getColor().equals(this.color)){ // Square has an enemy piece
+            else if(!currPiece.getColor().equals(getColor())){ // Square has an enemy piece
                 validLeft.add(currSquare.getPosition());
                 pieceHit = true; // we hit a piece, so we can't move any further
             }
@@ -235,7 +229,7 @@ public class RookMovement implements MovementIF{
             if(currSquare.getPiece() == null){ // Square is empty
                 validRight.add(currSquare.getPosition());
             }
-            else if(!currPiece.getColor().equals(this.color)){ // Square has an enemy piece
+            else if(!currPiece.getColor().equals(getColor())){ // Square has an enemy piece
                 validRight.add(currSquare.getPosition());
                 pieceHit = true; // we hit a piece, so we can't move any further
             }
@@ -245,20 +239,5 @@ public class RookMovement implements MovementIF{
             currentFile++; // Increment the file of the piece
         }
         return validRight; // return the valid moves
-    }
-    /**
-     * Setter method for the color of the rook
-     * @param color color to set the rook to.
-     */
-    public void setColor(GameColor color) {
-        this.color = color;
-    }
-
-    /**
-     * Getter method for the color of the rook
-     * @return color of the rook.
-     */
-    public GameColor getColor() {
-        return this.color;
     }
 }

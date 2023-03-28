@@ -27,6 +27,7 @@ public class BlackAndWhite implements BlackAndWhiteIF {
      *
      * @return the color of the piece.
      */
+    @Override
     public GameColor getColor() {
         return color;
     }
@@ -45,6 +46,7 @@ public class BlackAndWhite implements BlackAndWhiteIF {
      *
      * @return true if the piece is black.
      */
+    @Override
     public boolean isBlack() {
         return color == GameColor.BLACK;
     }
@@ -54,6 +56,7 @@ public class BlackAndWhite implements BlackAndWhiteIF {
      *
      * @return true if the piece is white.
      */
+    @Override
     public boolean isWhite() {
         return color == GameColor.WHITE;
     }

@@ -10,16 +10,14 @@ package movements;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
+import model.BlackAndWhite;
 import model.Piece;
 import model.Position;
 import model.Square;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BishopMovement implements MovementIF{
-
-    /* The color of the piece */
-    private GameColor color;
+public class BishopMovement extends BlackAndWhite implements MovementIF{
 
     /**
      * Constructor method for the BishopMovement class
@@ -27,7 +25,7 @@ public class BishopMovement implements MovementIF{
      * @param color The color of the piece
      */
     public BishopMovement(GameColor color) {
-        this.color = color;
+        super(color);
     }
 
     /**
@@ -87,7 +85,7 @@ public class BishopMovement implements MovementIF{
             if(currSquare.getPiece() == null){ // if the square is empty
                 validMovesUpRight.add(currSquare.getPosition());
             }
-            else if(!currPiece.getColor().equals(this.color)){ // if the piece is an enemy piece
+            else if(!currPiece.getColor().equals(getColor())){ // if the piece is an enemy piece
                 validMovesUpRight.add(currSquare.getPosition());
                 pieceHit = true; // set pieceHit to true
             }
@@ -124,7 +122,7 @@ public class BishopMovement implements MovementIF{
 
             if (currSquare.getPiece() == null) { // if the square is empty
                 validMovesUpLeft.add(currSquare.getPosition());
-            } else if (!currPiece.getColor().equals(this.color)) { // if the piece is an enemy piece
+            } else if (!currPiece.getColor().equals(getColor())) { // if the piece is an enemy piece
                 validMovesUpLeft.add(currSquare.getPosition());
                 pieceHit = true; // set pieceHit to true
             } else { // if the piece is a friendly piece
@@ -160,7 +158,7 @@ public class BishopMovement implements MovementIF{
 
             if (currSquare.getPiece() == null) { // if the square is empty
                 validMovesDownRight.add(currSquare.getPosition());
-            } else if (!currPiece.getColor().equals(this.color)) { // if the piece is an enemy piece
+            } else if (!currPiece.getColor().equals(getColor())) { // if the piece is an enemy piece
                 validMovesDownRight.add(currSquare.getPosition());
                 pieceHit = true; // set pieceHit to true
             } else { // if the piece is a friendly piece
@@ -197,7 +195,7 @@ public class BishopMovement implements MovementIF{
             if(currSquare.getPiece() == null){ // if the square is empty
                 validMovesDownLeft.add(currSquare.getPosition());
             }
-            else if(!currPiece.getColor().equals(this.color)){ // if the piece is an enemy piece
+            else if(!currPiece.getColor().equals(getColor())){ // if the piece is an enemy piece
                 validMovesDownLeft.add(currSquare.getPosition());
                 pieceHit = true; // set pieceHit to true
             }
@@ -209,18 +207,4 @@ public class BishopMovement implements MovementIF{
         }
         return validMovesDownLeft; // return valid moves
     }
-
-    /**
-     * Getter method for the color of the piece
-     *
-     * @return the color of the piece
-     */
-    public GameColor getColor() {return color;}
-
-    /**
-     * Setter method for the color of the piece
-     *
-     * @param color the color to set the piece to
-     */
-    public void setColor(GameColor color) {this.color = color;}
 }

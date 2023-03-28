@@ -48,4 +48,10 @@ public interface PlayerIF {
      */
     public void addPiece(PieceIF piece);
 
+    /**
+     * Removes a piece from the player's set of pieces.
+     * @return : The piece that was removed.
+     */
+    public GameColor getColor();
+
 }
