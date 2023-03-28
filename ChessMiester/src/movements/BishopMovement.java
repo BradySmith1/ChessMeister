@@ -122,7 +122,7 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
             if (currSquare.getPiece() == null) { // if the square is empty
                 validMovesUpLeft.add(currSquare.getPosition());
-            } else if (!currPiece.getColor().equals(getColor())) { // if the piece is an enemy piece
+            } else if (!currPiece.getColor().equals(getColor())) {
                 validMovesUpLeft.add(currSquare.getPosition());
                 pieceHit = true; // set pieceHit to true
             } else { // if the piece is a friendly piece
@@ -158,7 +158,7 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
             if (currSquare.getPiece() == null) { // if the square is empty
                 validMovesDownRight.add(currSquare.getPosition());
-            } else if (!currPiece.getColor().equals(getColor())) { // if the piece is an enemy piece
+            } else if (!currPiece.getColor().equals(getColor())) { // if the piece is enemy piece
                 validMovesDownRight.add(currSquare.getPosition());
                 pieceHit = true; // set pieceHit to true
             } else { // if the piece is a friendly piece
