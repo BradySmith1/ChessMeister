@@ -14,9 +14,14 @@ import interfaces.PieceIF;
 import java.util.ArrayList;
 
 public class Player implements PlayerIF{
-    private GameColor color;    /* The color of the player */
-    private ArrayList<PieceIF> pieces;  /* The pieces the player has */
-    private ArrayList<PieceIF> capturedPieces;  /* The pieces the player has captured */
+    /** The color of the player */
+    private GameColor color;
+
+    /** The pieces the player has */
+    private ArrayList<PieceIF> pieces;
+
+    /** The pieces the player has captured */
+    private ArrayList<PieceIF> capturedPieces;
 
     /**
      * Constructor method for the Player class.

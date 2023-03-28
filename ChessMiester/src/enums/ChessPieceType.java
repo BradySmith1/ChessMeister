@@ -7,12 +7,12 @@
 package enums;
 
 public enum ChessPieceType {
-    King('K', "King"),
-    Queen('Q', "Queen"),
-    Rook('R', "Rook"),
-    Bishop('B', "Bishop"),
-    Knight('N', "Knight"),
-    Pawn('P', "Pawn");
+    King('K', "King"), /* Used to represent the King piece. */
+    Queen('Q', "Queen"), /* Used to represent the Queen piece. */
+    Rook('R', "Rook"), /* Used to represent the Rook piece. */
+    Bishop('B', "Bishop"), /* Used to represent the Bishop piece. */
+    Knight('N', "Knight"), /* Used to represent the Knight piece. */
+    Pawn('P', "Pawn"); /* Used to represent the Pawn piece. */
 
     public final char letter; /* Used to represent letter for piece. */
     public final String type; /* Used to represent type name of piece. */

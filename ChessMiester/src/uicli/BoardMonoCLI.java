@@ -17,6 +17,7 @@ public class BoardMonoCLI implements BoardStrategy {
 
     /**
      * Draws the game board using the specified strategy.
+     *
      * @param board the BoardIF object representing the game board to be drawn.
      */
     @Override
@@ -29,7 +30,8 @@ public class BoardMonoCLI implements BoardStrategy {
 
         // Print the board.
         for(int height = 0; height < board.getHeight(); height++){
-            System.out.println("   ------- ------- ------- ------- ------- ------- ------- -------");
+            System.out.println("   ------- ------- ------- ------- " +
+                               "------- ------- ------- -------");
             if(height % 2 == 0){
                 System.out.println(line1);
             } else {

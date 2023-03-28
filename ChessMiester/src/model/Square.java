@@ -13,18 +13,17 @@ import interfaces.SquareIF;
 
 public class Square extends BlackAndWhite implements SquareIF {
 
-    /**
-     * The piece that is currently on the square, if any.
-     */
+    /** The piece that is currently on the square, if any. */
     private Position position;
 
-    /**
-     * The piece that is currently on the square, if any.
-     */
+    /** The piece that is currently on the square, if any. */
     private PieceIF piece;
 
     /**
-     * Creates a new square with no piece on it.
+     * Constructor that creates a new square with no piece on it.
+     *
+     * @param position The position of the square
+     * @param color    The color of the square
      */
     public Square(Position position, GameColor color){
         super(color);
@@ -40,6 +39,8 @@ public class Square extends BlackAndWhite implements SquareIF {
 
     /**
      * Sets a piece on the square.
+     *
+     * @param piece The piece to set on the square.
      * @return The piece that was previously on the square, if any.
      */
     @Override
@@ -50,6 +51,7 @@ public class Square extends BlackAndWhite implements SquareIF {
 
     /**
      * Returns the piece that is currently on the square, if any.
+     *
      * @return The piece on the square, or null if the square is empty.
      */
     @Override
@@ -57,12 +59,14 @@ public class Square extends BlackAndWhite implements SquareIF {
 
     /**
      * Returns the position of the square.
+     *
      * @return The position of the square.
      */
     public Position getPosition(){return position;}
 
     /**
      * Sets the position of the square.
+     *
      * @param position The position of the square.
      */
     public void setPosition(Position position){this.position = position;}

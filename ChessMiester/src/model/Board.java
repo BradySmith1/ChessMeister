@@ -18,33 +18,31 @@ import uicli.BoardMonoCLI;
 
 public class Board implements BoardIF {
 
-    /**
-     * The squares that make up the game board.
-     */
+    /** The squares that make up the game board. */
     private SquareIF[][] squares;
 
-    /**
-     * The width of the board in squares.
-     */
+    /** The width of the board in squares. */
     private int width;
 
-    /**
-     * The height of the board in squares.
-     */
+    /** The height of the board in squares. */
     private int height;
 
-    /**
-     * The strategy used to draw the board.
-     */
+    /** The strategy used to draw the board. */
     private BoardStrategy drawStrategy;
 
     /**
-    * Creates a new game board with the specified width and height.
-    */
+     * Constructor method that creates a new game board with the specified
+     * width and height.
+     */
     public Board() {
         this(new BoardMonoCLI());
     }
 
+    /**
+     * Constructor method that creates a new game board with the specified strategy.
+     *
+     * @param strategy : the strategy to use to draw the board
+     */
     public Board(BoardStrategy strategy){
         this.width = 8;
         this.height = 8;
@@ -54,7 +52,7 @@ public class Board implements BoardIF {
     }
 
     /**
-    * Initializes the game board.
+    * Method that initializes the game board.
     */
     @Override
     public void initBoard() {
@@ -69,7 +67,7 @@ public class Board implements BoardIF {
     }
 
     /**
-    * Sets up the initial state of the game board.
+    * Method that sets up the initial state of the game board.
     */
     @Override
     public void setup() {
@@ -89,9 +87,10 @@ public class Board implements BoardIF {
     }
 
     /**
-     * Helpher method for setting up the pieces on the board
-     * @param color : the color of the pieces to set
-     * @param offset : the offset from the top of the board to set the pieces
+     * Helper method for setting up the pieces on the board
+     *
+     * @param color  the color of the pieces to set
+     * @param offset the offset from the top of the board to set the pieces
      */
     private void setPieces(GameColor color, int offset){
         squares[offset][0].setPiece(new Piece(ChessPieceType.Rook, color));
@@ -105,7 +104,7 @@ public class Board implements BoardIF {
     }
 
     /**
-     * draws the state of the game board.
+     * Method that draws the state of the game board.
      */
     @Override
     public void draw() {
@@ -114,6 +113,7 @@ public class Board implements BoardIF {
 
     /**
      * Returns a 2D array of squares on the game board.
+     *
      * @return a 2D array of SquareIF objects representing the squares on the board.
      */
     @Override
@@ -123,6 +123,7 @@ public class Board implements BoardIF {
 
     /**
      * Sets the drawing strategy for the game board.
+     *
      * @param d the BoardStrategy object that defines the drawing strategy to use.
      */
     @Override
@@ -132,6 +133,7 @@ public class Board implements BoardIF {
 
     /**
      * Returns the width of the game board.
+     *
      * @return the width of the game board in squares.
      */
     @Override
@@ -141,6 +143,7 @@ public class Board implements BoardIF {
 
     /**
      * Returns the height of the game board.
+     *
      * @return the height of the game board in squares.
      */
     @Override
@@ -150,6 +153,7 @@ public class Board implements BoardIF {
 
     /**
      * Returns the piece at the specified rank and file on the game board.
+     *
      * @param r the rank of the piece.
      * @param f the file of the piece.
      * @return the PieceIF object at the specified rank and file.

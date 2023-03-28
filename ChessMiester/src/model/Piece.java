@@ -17,16 +17,15 @@ import java.util.List;
 
 public class Piece extends BlackAndWhite implements PieceIF{
 
-    /**
-     * The type of the piece.
-     */
+    /** The type of the piece. */
     private ChessPieceType type;
 
-
+    /** The movement type of the piece. */
     private MovementIF moveType;
 
     /**
      * Creates a new piece of the specified type.
+     *
      * @param type the type of the piece.
      */
     public Piece(ChessPieceType type, GameColor color) {
@@ -51,6 +50,7 @@ public class Piece extends BlackAndWhite implements PieceIF{
 
     /**
      * Gets the type of the piece.
+     *
      * @return the type of the piece.
      */
     @Override
@@ -60,6 +60,7 @@ public class Piece extends BlackAndWhite implements PieceIF{
 
     /**
      * Sets the type of the piece.
+     *
      * @param type the type of the piece.
      */
     @Override
@@ -67,13 +68,15 @@ public class Piece extends BlackAndWhite implements PieceIF{
         this.type = type;
     }
 
+    /**
+     * Method that gets the valid moves for the piece.
+     *
+     * @param board           The game board that the piece moves on.
+     * @param currentPosition The current position of the piece.
+     * @return a list of valid moves for the piece.
+     */
     @Override
     public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
         return this.moveType.getValidMoves(board, currentPosition);
-    }
-
-    @Override
-    public boolean isCaptured() {
-        return false;
     }
 }

@@ -1,5 +1,5 @@
 CS364: ChessMeister
-
+Team: B_Orange
 Authors: Brady Smith, Kaushal Patel, Zachary Eanes, and Colton Brooks.
 
 DESCRIPTION:
@@ -19,7 +19,12 @@ B - Bishop
 P - Pawn
 
 HOW TO RUN:
-TODO
+In order to run this program,
 
 HOW TO PLAY:
-TODO
+In order to play this game, the user will be prompted to enter in a move. The user will enter
+the file and rank of the piece they want to move, following by the file and rank of the
+destination. The user will then be told if the move is valid or not, and if it is valid, the
+board is updated and the next player's turn begins. This is repeated for right now until the
+program is exited. We have not implemented a checkmate, stalemate, or draw yet, so the game will
+continue until the user exits the program.

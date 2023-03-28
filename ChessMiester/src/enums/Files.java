@@ -6,7 +6,7 @@
  */
 package enums;
 public enum Files {
-    A('a', 0),
+    A('a', 0), /* Represents the different positions on a chess board. */
     B('b', 1),
     C('c', 2),
     D('d', 3),

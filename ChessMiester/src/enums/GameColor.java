@@ -7,8 +7,8 @@
 
 package enums;
 public enum GameColor {
-    BLACK,
-    WHITE;
+    BLACK, /* Represents the color black. */
+    WHITE; /* Represents the color white. */
 
     /**
      * Method to display the color of the current player as a string.
