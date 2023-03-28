@@ -8,7 +8,6 @@ package interfaces;
 
 import enums.Files;
 import enums.Rank;
-import model.Piece;
 
 public interface BoardIF{
 
