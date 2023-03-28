@@ -1,7 +1,7 @@
 /**
  * This class represents the movement of a Queen.
  *
- * @authors Kaushal Patel (70%), Zach Eanes (30%)
+ * @authors Kaushal Patel (65%), Zach Eanes (20%), Colton Brooks (15%)
  * @version 1.0
  */
 package movements;

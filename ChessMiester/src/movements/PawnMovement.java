@@ -1,7 +1,7 @@
 /**
  * This class represents the movement of a pawn.
  *
- * @author Kaushal Patel (75%), Colton Brooks (20%), Zach Eanes (5%)
+ * @author Kaushal Patel (60%), Colton Brooks (30%), Zach Eanes (10%)
  * @version 1.0
  */
 package movements;
@@ -14,7 +14,6 @@ import model.Piece;
 import model.Position;
 import model.Square;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

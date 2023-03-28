@@ -3,7 +3,7 @@
  * by looking through and finding all possible moves above, below, left, and right
  * of a given piece.
  *
- * @author Zach Eanes 100%
+ * @author Zach Eanes (85%), Colton Brooks (15%)
  * @version 1.0
  */
 
