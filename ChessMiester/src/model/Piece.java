@@ -1,7 +1,7 @@
 /**
  * This class represents a chess piece that can be placed on a game board.
  *
- * @author Brady Smith 100%
+ * @author Brady Smith 80%, Colton Brooks (20%)
  * @version 1.0
  */
 package model;
