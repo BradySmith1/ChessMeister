@@ -47,7 +47,7 @@ public class Player implements PlayerIF{
      * Method to display the pieces that the player has captured.
      */
     public void displayCapturedPieces(){
-        System.out.println(this.getColor().toString() + " captured pieces: ");
+        System.out.print(this.getColor().toString() + " captured pieces: ");
         for(PieceIF piece : capturedPieces){
             System.out.print(piece.getType().getLetter() + " ");
         }
