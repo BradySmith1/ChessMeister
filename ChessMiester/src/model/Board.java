@@ -1,3 +1,9 @@
+/**
+ * This class represents a game board that can be used for a chess game.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0
+ */
 package model;
 
 import enums.ChessPieceType;
@@ -10,10 +16,6 @@ import interfaces.PieceIF;
 import interfaces.SquareIF;
 import uicli.BoardMonoCLI;
 
-/**
- * This class represents a game board.
- * @author Brady Smith %100
- */
 public class Board implements BoardIF {
 
     /**

@@ -24,6 +24,7 @@ public class RookMovement implements MovementIF{
     /* The color of the piece */
     private GameColor color;
 
+    /* The direction the rook is moving */
     private int direction;
 
     /**
@@ -38,7 +39,9 @@ public class RookMovement implements MovementIF{
 
     /**
      * Gets the valid moves for the piece
-     * @param board the board the piece is on
+     *
+     * @param board           the board the piece is on
+     * @param currentPosition the current position of the piece
      * @return the valid moves for the piece
      */
     @Override
@@ -61,7 +64,8 @@ public class RookMovement implements MovementIF{
     /**
      * Gets the vertical moves for the rook from the current position
      *
-     * @param board the board the piece is on
+     * @param board           the board the piece is on
+     * @param currentPosition the current position of the piece
      * @return the valid vertical moves for the rook
      */
     private List<Position> getVerticalMoves(BoardIF board, Position currentPosition){
@@ -79,7 +83,8 @@ public class RookMovement implements MovementIF{
     /**
      * Gets the horizontal moves for the rook from the current position
      *
-     * @param board the board the piece is on
+     * @param board           the board the piece is on
+     * @param currentPosition the current position of the piece
      * @return the valid horizontal moves for the rook
      */
     private List<Position> getHorizontalMoves(BoardIF board, Position currentPosition){
@@ -96,7 +101,9 @@ public class RookMovement implements MovementIF{
 
     /**
      * Gets the valid moves below the rook
-     * @param board board the piece is on
+     *
+     * @param board           board the piece is on
+     * @param currentPosition current position of the piece
      * @return valid set of moves below the rook
      */
     private List<Position> getVerticalMovesBelow(BoardIF board, Position currentPosition){
@@ -130,7 +137,9 @@ public class RookMovement implements MovementIF{
 
     /**
      * Gets the valid moves above the rook
-     * @param board board the piece is on
+     *
+     * @param board           board the piece is on
+     * @param currentPosition current position of the piece
      * @return valid set of moves above the rook
      */
     private List<Position> getVerticalMovesAbove(BoardIF board, Position currentPosition){
@@ -165,7 +174,9 @@ public class RookMovement implements MovementIF{
 
     /**
      * Gets the valid moves left of the rook
-     * @param board board the piece is on
+     *
+     * @param board           board the piece is on
+     * @param currentPosition current position of the piece
      * @return valid set of moves left of the rook
      */
     private List<Position> getHorizontalMovesLeft(BoardIF board, Position currentPosition) {
@@ -201,7 +212,9 @@ public class RookMovement implements MovementIF{
 
     /**
      * Gets the valid moves to the right of the rook
-     * @param board board the piece is on
+     *
+     * @param board           board the piece is on
+     * @param currentPosition current position of the piece
      * @return valid set of moves right of the rook
      */
     private List<Position> getHorizontalMovesRight(BoardIF board, Position currentPosition){

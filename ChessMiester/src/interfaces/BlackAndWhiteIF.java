@@ -1,3 +1,9 @@
+/**
+ * This interface represents a piece that can be black or white.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0
+ */
 package interfaces;
 
 import enums.GameColor;

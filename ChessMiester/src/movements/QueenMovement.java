@@ -1,3 +1,9 @@
+/**
+ * This class represents the movement of a Queen.
+ *
+ * @authors Kaushal Patel (70%), Zach Eanes (30%)
+ * @version 1.0
+ */
 package movements;
 
 import enums.GameColor;
@@ -9,29 +15,27 @@ import model.Square;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class represents the movement of a Queen.
- * @authors Kaushal Patel (70%), Zach Eanes (30%)
- */
+
 public class QueenMovement implements MovementIF {
 
-    /**
-     * Fields
-     */
+    /* Color of the piece */
     private GameColor color;   // The color of the piece.
 
 
     /**
-     * Constructor
+     * Constructor method for the QueenMovement class.
+     *
+     * @param color the color of the piece.
      */
     public QueenMovement(GameColor color) {
         this.color = color;
     }
 
     /**
-     * Gets the valid moves for the piece.
+     * Function that gets the valid moves for the Queen.
      *
-     * @param board the board the piece is on.
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
      * @return the valid moves for the piece.
      */
     @Override
@@ -62,7 +66,8 @@ public class QueenMovement implements MovementIF {
     /**
      * Gets the vertical moves for the Queen from her current position.
      *
-     * @param board the board the piece is on.
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
      * @return the vertical moves for the Queen.
      */
     private List<Position> getVerticalMoves(BoardIF board, Position currentPosition) {
@@ -77,6 +82,13 @@ public class QueenMovement implements MovementIF {
         return validVerticalMoves;
     }
 
+    /**
+     * Gets the horizontal moves for the Queen from her current position.
+     *
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
+     * @return the horizontal moves for the Queen.
+     */
     private List<Position> getHorizontalMoves(BoardIF board, Position currentPosition) {
         List<Position> validHorizontalMoves = new ArrayList<>();
 
@@ -89,6 +101,13 @@ public class QueenMovement implements MovementIF {
         return validHorizontalMoves;
     }
 
+    /**
+     * Gets the diagonal moves for the Queen from her current position.
+     *
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
+     * @return the diagonal moves for the Queen.
+     */
     private List<Position> getDiagonalMoves(BoardIF board, Position currentPosition) {
         List<Position> validDiagonalMoves = new ArrayList<>();
 
@@ -104,6 +123,14 @@ public class QueenMovement implements MovementIF {
 
         return validDiagonalMoves;
     }
+
+    /**
+     * Gets the diagonal moves for the Queen from her current position in the up-left direction.
+     *
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
+     * @return the diagonal moves for the Queen in the up-left direction.
+     */
 
     private List<Position> getVerticalMovesAbove(BoardIF board, Position currentPosition) {
         // The valid moves for the Queen above her current position.
@@ -142,6 +169,12 @@ public class QueenMovement implements MovementIF {
         return validVerticalMovesAbove; // Return the list of valid moves above the Queen.
     }
 
+    /**
+     * Gets the vertical moves for the Queen from her current position in the down direction.
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
+     * @return the vertical moves for the Queen in the down direction.
+     */
     private List<Position> getVerticalMovesBelow(BoardIF board, Position currentPosition) {
         // The valid moves for the Queen below her current position.
         List<Position> validVerticalMovesBelow = new ArrayList<>();
@@ -180,6 +213,12 @@ public class QueenMovement implements MovementIF {
 
     }
 
+    /**
+     * Gets the horizontal moves for the Queen from her current position in the left direction.
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
+     * @return the horizontal moves for the Queen in the left direction.
+     */
     private List<Position> getHorizontalMovesLeft(BoardIF board, Position currentPosition) {
         // The valid moves for the Queen to the left of her current position.
         List<Position> validHorizontalMovesLeft = new ArrayList<>();
@@ -218,6 +257,13 @@ public class QueenMovement implements MovementIF {
         return validHorizontalMovesLeft; // Return the list of valid moves to the left of the Queen.
     }
 
+    /**
+     * Gets the horizontal moves for the Queen from her current position in the right direction.
+     *
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
+     * @return the horizontal moves for the Queen in the right direction.
+     */
     private List<Position> getHorizontalMovesRight(BoardIF board, Position currentPosition) {
         // The valid moves for the Queen to the right of her current position.
         List<Position> validHorizontalMovesRight = new ArrayList<>();
@@ -256,6 +302,14 @@ public class QueenMovement implements MovementIF {
         return validHorizontalMovesRight; // Return the list of valid moves to the right of the Queen.
     }
 
+    /**
+     * Gets the diagonal moves for the Queen from her current position in the up and
+     * left direction.
+     *
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
+     * @return the diagonal moves for the Queen in the up and left direction.
+     */
     private List<Position> getDiagonalMovesUpLeft(BoardIF board, Position currentPosition) {
         // The valid moves for the Queen to the up and left of her current position.
         List<Position> validDiagonalMovesUpLeft = new ArrayList<>();
@@ -296,6 +350,14 @@ public class QueenMovement implements MovementIF {
         return validDiagonalMovesUpLeft; // Return the list of valid moves up and left of the Queen.
     }
 
+    /**
+     * Gets the diagonal moves for the Queen from her current position in the up and
+     * right direction.
+     *
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
+     * @return the diagonal moves for the Queen in the up and right direction.
+     */
     private List<Position> getDiagonalMovesUpRight(BoardIF board, Position currentPosition) {
         // The valid moves for the Queen to the up and right of her current position.
         List<Position> validDiagonalMovesUpRight = new ArrayList<>();
@@ -336,6 +398,14 @@ public class QueenMovement implements MovementIF {
         return validDiagonalMovesUpRight; // Return the list of valid moves up and right of the Queen.
     }
 
+    /**
+     * Gets the diagonal moves for the Queen from her current position in the down
+     * and left direction.
+     *
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
+     * @return the diagonal moves for the Queen in the down and left direction.
+     */
     private List<Position> getDiagonalMovesDownLeft(BoardIF board, Position currentPosition) {
         // The valid moves for the Queen to the down and left of her current position.
         List<Position> validDiagonalMovesDownLeft = new ArrayList<>();
@@ -376,6 +446,14 @@ public class QueenMovement implements MovementIF {
         return validDiagonalMovesDownLeft; // Return the list of valid moves down and left of the Queen.
     }
 
+    /**
+     * Gets the diagonal moves for the Queen from her current position in the down and
+     * to the right direction.
+     *
+     * @param board           the board the piece is on.
+     * @param currentPosition the current position of the piece.
+     * @return the diagonal moves for the Queen in the down and right direction.
+     */
     private List<Position> getDiagonalMovesDownRight(BoardIF board, Position currentPosition) {
         // The valid moves for the Queen to the down and right of her current position.
         List<Position> validDiagonalMovesDownRight = new ArrayList<>();

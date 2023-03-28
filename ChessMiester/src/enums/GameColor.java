@@ -2,6 +2,7 @@
  * Enumeration file to represent the color of the chess game.
  *
  * @author Zach Eanes (100%)
+ * @version 1.0
  */
 
 package enums;

@@ -1,14 +1,16 @@
+/**
+ * This class represents a square on a chess board. Each square can be cleared,
+ * and can hold a piece or be empty.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0
+ */
 package model;
 
 import enums.GameColor;
 import interfaces.PieceIF;
 import interfaces.SquareIF;
 
-/**
- * This class represents a square on a chess board. Each square can be cleared,
- * and can hold a piece or be empty.
- * @author Brady Smith 100%
- */
 public class Square extends BlackAndWhite implements SquareIF {
 
     /**

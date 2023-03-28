@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class KingMovement implements MovementIF {
+public class KingMovement implements MovementIF{
 
     /** The color of the piece. */
     private GameColor color;
@@ -35,7 +35,7 @@ public class KingMovement implements MovementIF {
     /**
      * Gets the valid moves for the piece.
      *
-     * @param board the board the piece is on.
+     * @param board           the board the piece is on.
      * @param currentPosition the current position of the piece.
      * @return the valid moves for the piece.
      */
@@ -58,6 +58,15 @@ public class KingMovement implements MovementIF {
         return validMoves;
     }
 
+    /**
+     * Checks to see if the movement to the square is valid.
+     *
+     * @param board           the board the piece is on
+     * @param currentPosition the current position of the piece
+     * @param rank            the rank to move to
+     * @param file            the file to move to
+     * @return the position of the move if it is valid, null otherwise
+     */
     private Position moveCheck(BoardIF board, Position currentPosition, int rank, int file) {
 
         Position movePossible = null; // move starts are nonexistent
@@ -83,14 +92,15 @@ public class KingMovement implements MovementIF {
 
     /**
      * Getter method for the color of the piece
+     *
      * @return the color of the piece
      */
     public GameColor getColor() {return color;}
 
     /**
      * Setter method for the color of the piece
+     *
      * @param color the color to set the piece to
      */
     public void setColor(GameColor color) {this.color = color;}
-
 }

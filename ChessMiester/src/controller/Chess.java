@@ -3,15 +3,16 @@
  * Includes methods to create a main menu and read player input, launch a new game, save/load
  * games (coming later) and many other crucial operations.
  *
- * @authors Brady Smith (25%), Zach Eanes (40%), Colton Brooks (35%)
+ * @authors Brady Smith (25%), Zach Eanes (25%), Kaushal Patel (25%), and Colton Brooks (25%)
+ * @version 1.0
  */
-
+/* Package for the program. */
 package controller;
 
+/* Imports for our things in the program. */
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
-import enums.Files;
 import interfaces.BoardIF;
 import interfaces.PlayerIF;
 import interfaces.SquareIF;
@@ -20,6 +21,7 @@ import model.Piece;
 import model.Position;
 import player.Player;
 
+/* Imports for the program. */
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -32,8 +34,10 @@ public class Chess {
     /* Scanner used to read user input. */
     private Scanner scan;
 
+    /* Player 1 object for the game. */
     private Player player1;
 
+    /* Player 2 object for the game. */
     private Player player2;
 
     /**
@@ -61,9 +65,10 @@ public class Chess {
                         "(COMING SOON!) 2 - Play Local Game Against a Computer\n" +
                         "(COMING SOON!) 3 - Play Online Game Against another Player\n" +
                         "(COMING SOON!) 4 - 4-Player Chess!\n" +
-                        "0 - Exit Game\n--------------------------------------------------------------\n";
+                        "0 - Exit Game\n-----------------------------------------" +
+                        "---------------------\n";
         String prompt = "Enter your menu choice here -> ";
-        int choice = 999;     //initialized to 999 so there is no option chosen or quitting the loop
+        int choice = 999;     //initialized to 999 so there is no option chosen or quitting loop
         while (choice != 0) {   //while user has not quit
             System.out.println(menu);   //shows user menu options
             System.out.print(prompt);
@@ -169,7 +174,7 @@ public class Chess {
             player1.displayCapturedPieces();
             board.draw();
             player2.displayCapturedPieces();
-            //gameOver = true;
+            //gameOver = true; //condition to end processing added later on
             //endGame();
         }
     }

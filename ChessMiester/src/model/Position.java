@@ -1,13 +1,15 @@
+/**
+ * This class represents a position on the game board, which is represented
+ * by the rank and file.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0
+ */
 package model;
 
 import enums.Files;
 import enums.Rank;
 
-
-/**
- * This class represents a position on the game board.
- * @author Brady Smith %100
- */
 public class Position {
 
     /**

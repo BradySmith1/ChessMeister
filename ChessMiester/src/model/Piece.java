@@ -1,3 +1,9 @@
+/**
+ * This class represents a chess piece that can be placed on a game board.
+ *
+ * @author Brady Smith 100%
+ * @version 1.0
+ */
 package model;
 
 import enums.ChessPieceType;
@@ -9,10 +15,6 @@ import movements.*;
 
 import java.util.List;
 
-/**
- * This class represents a chess piece.
- * @author Brady Smith 100%
- */
 public class Piece extends BlackAndWhite implements PieceIF{
 
     /**

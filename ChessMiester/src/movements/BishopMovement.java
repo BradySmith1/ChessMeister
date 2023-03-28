@@ -31,10 +31,12 @@ public class BishopMovement implements MovementIF{
     }
 
     /**
-    * Gets the valid moves for the piece
-    * @param board the board the piece is on
-    * @return the valid moves for the piece
-    */
+     * Gets the valid moves for the piece
+     *
+     * @param board the board the piece is on
+     * @param currentPosition the current position of the piece
+     * @return the valid moves for the piece
+     */
     @Override
     public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
         List<Position> validMoves = new ArrayList<>(); // The list of valid moves
@@ -62,7 +64,9 @@ public class BishopMovement implements MovementIF{
 
     /**
      * Gets the valid moves for the piece in the diagonal up and to the right
-     * @param board the board the piece is on
+     *
+     * @param board           the board the piece is on
+     * @param currentPosition the current position of the piece
      * @return the valid moves for the piece in the diagonal up and to the right
      */
     private List<Position> getValidMovesUpRight(BoardIF board, Position currentPosition){
@@ -98,7 +102,9 @@ public class BishopMovement implements MovementIF{
 
     /**
      * Gets the valid moves for the piece in the diagonal up and to the left
-     * @param board the board the piece is on
+     *
+     * @param board           the board the piece is on
+     * @param currentPosition the current position of the piece
      * @return the valid moves for the piece in the diagonal up and to the left
      */
     private List<Position> getValidMovesUpLeft(BoardIF board, Position currentPosition) {
@@ -132,7 +138,9 @@ public class BishopMovement implements MovementIF{
 
     /**
      * Gets the valid moves for the piece in the diagonal down and to the right
-     * @param board the board the piece is on
+     *
+     * @param board           the board the piece is on
+     * @param currentPosition the current position of the piece
      * @return the valid moves for the piece in the diagonal down and to the right
      */
     private List<Position> getValidMovesDownRight(BoardIF board, Position currentPosition){
@@ -166,7 +174,9 @@ public class BishopMovement implements MovementIF{
 
     /**
      * Gets the valid moves for the piece in the diagonal down and to the left
-     * @param board the board the piece is on
+     *
+     * @param board           the board the piece is on
+     * @param currentPosition the current position of the piece
      * @return the valid moves for the piece in the diagonal down and to the left
      */
     private List<Position> getValidMovesDownLeft(BoardIF board, Position currentPosition){
@@ -202,12 +212,14 @@ public class BishopMovement implements MovementIF{
 
     /**
      * Getter method for the color of the piece
+     *
      * @return the color of the piece
      */
     public GameColor getColor() {return color;}
 
     /**
      * Setter method for the color of the piece
+     *
      * @param color the color to set the piece to
      */
     public void setColor(GameColor color) {this.color = color;}

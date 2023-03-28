@@ -28,14 +28,14 @@ public class KnightMovement implements MovementIF {
      * @param color the color of the piece
      */
     public KnightMovement(GameColor color) {
-
         this.color = color;
     }
 
     /**
      * Gets the valid moves for the piece.
      *
-     * @param board the board the piece is on
+     * @param board           the board the piece is on
+     * @param currentPosition the current position of the piece
      * @return the valid moves for the piece.
      */
     @Override
@@ -63,6 +63,7 @@ public class KnightMovement implements MovementIF {
      * Function to check if a specified move is possible for a knight.
      *
      * @param board board the piece is on
+     * @param currentPosition current position of the piece
      * @param rank  difference in rank for the piece to be changed
      * @param file  difference in file for the piece to be changed
      * @return position of a move if it's deemed valid

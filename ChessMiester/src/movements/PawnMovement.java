@@ -1,3 +1,9 @@
+/**
+ * This class represents the movement of a pawn.
+ *
+ * @author Kaushal Patel (100%)
+ * @version 1.0
+ */
 package movements;
 
 import enums.GameColor;
@@ -10,11 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * This class represents the movement of a pawn.
- * @author Kaushal Patel (100%)
- */
-public class PawnMovement implements MovementIF {
+
+public class PawnMovement implements MovementIF{
     /* Fields */
 
     /** The color of the piece. */
@@ -26,19 +29,16 @@ public class PawnMovement implements MovementIF {
     /** The direction the pawn is moving. */
     private int direction;
 
-
-    /** Constructors */
-
     /**
      * Constructor method for the PawnMovement Class.
      *
      * @param color the color of the piece.
      */
-    public PawnMovement(GameColor color) {
+    public PawnMovement(GameColor color){
         this.color = color;
         this.isFirstMove = true;
 
-        /** The direction the pawn is moving. */
+        /* The direction the pawn is moving. */
         this.direction = color == GameColor.WHITE ? 1 : -1;
     }
 

@@ -1,19 +1,22 @@
+/**
+ * This class represents a piece that can be either black or white.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0
+ */
 package model;
 
 import enums.GameColor;
 import interfaces.BlackAndWhiteIF;
 
-/**
- * This class represents a black and white piece.
- */
 public class BlackAndWhite implements BlackAndWhiteIF {
 
     private GameColor color; /* The color of the piece. */
 
     /**
-     * Creates a new piece of the specified color.
+     * Constructor method for the BlackAndWhite class.
+     *
      * @param color the color of the piece.
-     * @author Brady Smith %100
      */
     public BlackAndWhite(GameColor color) {
         this.color = color;
@@ -21,6 +24,7 @@ public class BlackAndWhite implements BlackAndWhiteIF {
 
     /**
      * Gets the color of the piece.
+     *
      * @return the color of the piece.
      */
     public GameColor getColor() {
@@ -29,6 +33,7 @@ public class BlackAndWhite implements BlackAndWhiteIF {
 
     /**
      * Sets the color of the piece.
+     *
      * @param color the color of the piece.
      */
     public void setColor(GameColor color) {
@@ -37,6 +42,7 @@ public class BlackAndWhite implements BlackAndWhiteIF {
 
     /**
      * Returns true if the piece is black.
+     *
      * @return true if the piece is black.
      */
     public boolean isBlack() {
@@ -45,6 +51,7 @@ public class BlackAndWhite implements BlackAndWhiteIF {
 
     /**
      * Returns true if the piece is white.
+     *
      * @return true if the piece is white.
      */
     public boolean isWhite() {
