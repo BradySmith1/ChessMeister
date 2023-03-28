@@ -19,7 +19,9 @@ B - Bishop
 P - Pawn
 
 HOW TO RUN:
-In order to run this program,
+In order to run this program, create a new configuration in IntelliJ and set the
+build and run to Java Azul and target file as ./controller/Driver.java. Then,
+you're able to run the program and play chess.
 
 HOW TO PLAY:
 In order to play this game, the user will be prompted to enter in a move. The user will enter
