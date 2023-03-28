@@ -13,8 +13,8 @@ import model.BlackAndWhite;
 import model.Piece;
 import model.Position;
 import model.Square;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

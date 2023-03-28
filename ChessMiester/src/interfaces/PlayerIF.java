@@ -8,7 +8,6 @@
 package interfaces;
 
 import enums.GameColor;
-import model.Piece;
 
 import java.util.ArrayList;
 
