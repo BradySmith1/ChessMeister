@@ -9,6 +9,7 @@ package movements;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
+import model.BlackAndWhite;
 import model.Piece;
 import model.Position;
 import model.Square;
@@ -18,11 +19,8 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class PawnMovement implements MovementIF{
+public class PawnMovement extends BlackAndWhite implements MovementIF{
     /* Fields */
-
-    /** The color of the piece. */
-    private GameColor color;
 
     /** If this is the first move of the piece. */
     private boolean isFirstMove;
@@ -36,7 +34,7 @@ public class PawnMovement implements MovementIF{
      * @param color the color of the piece.
      */
     public PawnMovement(GameColor color){
-        this.color = color;
+        super(color);
         this.isFirstMove = true;
 
         /* The direction the pawn is moving. */
@@ -57,7 +55,7 @@ public class PawnMovement implements MovementIF{
             Square currentSquare = (Square) board.getSquares()[currentRank + rank][currentFile + file];
             Piece currentPiece = (Piece) currentSquare.getPiece();
             //check if there is an empty square or an enemy piece
-            if (currentPiece == null || !currentPiece.getColor().equals(this.color)) {
+            if (currentPiece == null || !currentPiece.getColor().equals(getColor())) {
                 //the move is possible so add it
                 movePossible = currentSquare.getPosition();
             }
@@ -65,6 +63,7 @@ public class PawnMovement implements MovementIF{
         return movePossible; // return the result of if a move is possible
     }
 
+    @Override
     public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
 
         List<Position> validMoves = new ArrayList<>();
@@ -85,32 +84,16 @@ public class PawnMovement implements MovementIF{
         int left = currentPosition.getFile().getFileNum() - 1;
         if (left >= 0) {
             Square aheadLeft = (Square) board.getSquares()[forward][left];
-            if (aheadLeft.getPiece() != null && !aheadLeft.getColor().equals(this.color)) {
+            if (aheadLeft.getPiece() != null && !aheadLeft.getColor().equals(getColor())) {
                 validMoves.add(moveCheck(board, currentPosition, direction, -1));
             }
         }
         if (right < board.getWidth()) {
             Square aheadRight = (Square) board.getSquares()[forward][right];
-            if (aheadRight.getPiece() != null && !aheadRight.getColor().equals(this.color)) {
+            if (aheadRight.getPiece() != null && !aheadRight.getColor().equals(getColor())) {
                 validMoves.add(moveCheck(board, currentPosition, direction, 1));
             }
         }
         return validMoves;
-    }
-
-    /**
-     * Gets the game color of the piece.
-     * @return  the game color of the piece.
-     */
-    public GameColor getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the game color of the piece.
-     * @param color the game color of the piece.
-     */
-    public void setColor(GameColor color) {
-        this.color = color;
     }
 }

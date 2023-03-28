@@ -93,6 +93,7 @@ public class Player implements PlayerIF{
      *
      * @return color of the current player
      */
+    @Override
     public GameColor getColor(){
         return this.color;
     }
