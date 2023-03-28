@@ -19,10 +19,13 @@ public class BoardMonoCLI implements BoardStrategy {
      */
     @Override
     public void draw(BoardIF board) {
+        // Get the squares from the board.
         SquareIF[][] squares = board.getSquares();
         //System.out.println("      A       B       C       D       E       F       G       H");
         String line2 = "  |-------|       |-------|       |-------|       |-------|       |";
         String line1 = "  |       |-------|       |-------|       |-------|       |-------|";
+
+        // Print the board.
         for(int height = 0; height < board.getHeight(); height++){
             System.out.println("   ------- ------- ------- ------- ------- ------- ------- -------");
             if(height % 2 == 0){
@@ -30,8 +33,10 @@ public class BoardMonoCLI implements BoardStrategy {
             } else {
                 System.out.println(line2);
             }
+            // Print the pieces.
             for(int width = 0; width < board.getWidth(); width++){
                 Square square = (Square) squares[height][width];
+                // Print the rank numbers.
                 if(width == 0){
                     System.out.print((board.getHeight() - height) + " ");
                 }

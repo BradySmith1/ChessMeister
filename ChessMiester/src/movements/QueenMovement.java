@@ -380,8 +380,10 @@ public class QueenMovement implements MovementIF {
         // The valid moves for the Queen to the down and right of her current position.
         List<Position> validDiagonalMovesDownRight = new ArrayList<>();
 
-        int currentQueenRank = currentPosition.getRank().getIndex() - 1;    // The rank below the current square.
-        int currentQueenFile = currentPosition.getFile().getFileNum() + 1;  // The file right of the current square.
+        // The rank below the current square.
+        int currentQueenRank = currentPosition.getRank().getIndex() - 1;
+        // The file right of the current square.
+        int currentQueenFile = currentPosition.getFile().getFileNum() + 1;
 
         // A boolean to determine if a piece has been encountered.
         boolean pieceEncountered = false;
@@ -398,12 +400,14 @@ public class QueenMovement implements MovementIF {
             if (currentPiece == null) {
                 validDiagonalMovesDownRight.add(currentSquare.getPosition());
             }
-            // If the square is occupied by a piece of the opposite color, add it to the list of valid moves.
-            else if (!currentPiece.getColor().equals(this.color)) { // if piece is opposite color
+            // If the square is occupied by a piece of the opposite color,
+            // add it to the list of valid moves.
+            else if (!currentPiece.getColor().equals(this.color)) {
                 validDiagonalMovesDownRight.add(currentSquare.getPosition());
                 pieceEncountered = true;
             }
-            // If the square is occupied by a piece of the same color, do not add it to the list of valid moves.
+            // If the square is occupied by a piece of the same color,
+            // do not add it to the list of valid moves.
             else {
                 pieceEncountered = true;
             }
@@ -413,7 +417,8 @@ public class QueenMovement implements MovementIF {
             currentQueenFile++;
         }
 
-        return validDiagonalMovesDownRight; // Return the list of valid moves down and right of the Queen.
+        // Return the list of valid moves down and right of the Queen.
+        return validDiagonalMovesDownRight;
     }
 
     /**

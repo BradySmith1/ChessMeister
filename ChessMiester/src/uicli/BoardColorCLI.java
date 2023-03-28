@@ -28,18 +28,24 @@ public class BoardColorCLI implements BoardStrategy {
         String background = WHITE_BACK;
         String letters = "     A      B      C      D      E      F      G      H";
         int number = 8;
+        //draws the board
         SquareIF[][] squares = board.getSquares();
+
+        //draws the board
         for(int height = 0; height < board.getHeight(); height++){
             System.out.print(number + " ");
+            //draws the squares
             for(int width = 0; width < board.getWidth(); width++){
                 Square square = (Square) squares[height][width];
+                //draws the piece
                 if(square.getPiece() != null){
                     if(((Piece) square.getPiece()).isWhite()){
                         unicode = WHITE;
                     } else {
                         unicode = BLACK;
                     }
-                    System.out.print(unicode + background + "   " + square.getPiece().getType().getLetter() + "   ");
+                    System.out.print(unicode + background + "   " +
+                            square.getPiece().getType().getLetter() + "   ");
                 }else{
                     System.out.print(background + "       ");
                 }

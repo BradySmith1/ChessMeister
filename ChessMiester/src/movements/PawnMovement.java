@@ -28,6 +28,12 @@ public class PawnMovement implements MovementIF {
 
 
     /** Constructors */
+
+    /**
+     * Constructor method for the PawnMovement Class.
+     *
+     * @param color the color of the piece.
+     */
     public PawnMovement(GameColor color) {
         this.color = color;
         this.isFirstMove = true;
@@ -51,6 +57,7 @@ public class PawnMovement implements MovementIF {
         if (isFirstMove) {
             // Get the valid moves for the pawn if it is the first move.
             validMoves.addAll(getValidMovesForFirstMove(board, currentPosition));
+            isFirstMove = false;
         } else {
             // Get the valid moves for the pawn if it is not the first move.
             validMoves.addAll(getValidMovesForNonFirstMove(board, currentPosition));
@@ -217,10 +224,18 @@ public class PawnMovement implements MovementIF {
         return validMoves;
     }
 
+    /**
+     * Gets the game color of the piece.
+     * @return  the game color of the piece.
+     */
     public GameColor getColor() {
         return color;
     }
 
+    /**
+     * Sets the game color of the piece.
+     * @param color the game color of the piece.
+     */
     public void setColor(GameColor color) {
         this.color = color;
     }
