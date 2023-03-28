@@ -1,7 +1,7 @@
 /**
  * This class represents the movement of a pawn.
  *
- * @author Kaushal Patel (100%)
+ * @author Kaushal Patel (75%), Colton Brooks (20%), Zach Eanes (5%)
  * @version 1.0
  */
 package movements;
@@ -21,6 +21,9 @@ import java.util.List;
 
 public class PawnMovement extends BlackAndWhite implements MovementIF{
     /* Fields */
+
+    /** The color of the piece. */
+    private GameColor color;
 
     /** If this is the first move of the piece. */
     private boolean isFirstMove;
@@ -70,7 +73,6 @@ public class PawnMovement extends BlackAndWhite implements MovementIF{
         validMoves.add(moveCheck(board, currentPosition, direction, 0));
         if (isFirstMove) {
             validMoves.add(moveCheck(board, currentPosition, direction * 2, 0));
-            isFirstMove = false;
         }
         validMoves.addAll(pieceDiagonalCheck(board, currentPosition));
         validMoves.removeAll(Collections.singleton(null));
@@ -95,5 +97,28 @@ public class PawnMovement extends BlackAndWhite implements MovementIF{
             }
         }
         return validMoves;
+    }
+
+    /**
+     * Gets the game color of the piece.
+     * @return  the game color of the piece.
+     */
+    public GameColor getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the game color of the piece.
+     * @param color the game color of the piece.
+     */
+    public void setColor(GameColor color) {
+        this.color = color;
+    }
+
+    /**
+     * Changes boolean if this is the first move of the piece occurs.
+     */
+    public void setFirstMove(){
+        this.isFirstMove = false;
     }
 }

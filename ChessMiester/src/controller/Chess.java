@@ -10,6 +10,7 @@
 package controller;
 
 /* Imports for our things in the program. */
+import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
@@ -19,6 +20,7 @@ import interfaces.SquareIF;
 import model.Board;
 import model.Piece;
 import model.Position;
+import movements.PawnMovement;
 import player.Player;
 
 /* Imports for the program. */
@@ -117,7 +119,7 @@ public class Chess {
             player2 = new Player(GameColor.BLACK);
         }
         else if(color == 2){ // user selects black
-            player1= new Player(GameColor.BLACK);
+            player1 = new Player(GameColor.BLACK);
             player2 = new Player(GameColor.WHITE);
         }
         else{ // set default whenever user input is invalid
@@ -141,7 +143,7 @@ public class Chess {
     }
 
     /**
-     *  This function is the basic game loop used for a game of chess to actually happen.
+     * This function is the basic game loop used for a game of chess to actually happen.
      * @param playerWhite player playing as white
      * @param playerBlack player playing as black
      */
@@ -161,7 +163,7 @@ public class Chess {
                 moveValid = move(playerWhite, playerBlack, file1, rank1, file2, rank2);
             }
             this.display();
-            System.out.println("Black's turn\nWhere would you like to move from?");
+            System.out.println("\nBlack's turn\nWhere would you like to move from?");
             moveValid = false;
             while(!moveValid){
                 file1 = findValidFile();
@@ -267,6 +269,11 @@ public class Chess {
                 // Clear the "from" position.
                 board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
 
+
+                if((piece.getType() == ChessPieceType.Pawn)){ //check if piece is a pawn
+                    PawnMovement pawn = (PawnMovement) piece.getMoveType();
+                    pawn.setFirstMove(); // set first move for a pawn to false
+                }
                 moveMade = true; // move was successful
             }
             else if(success && !hasPiece){ // No piece was captured and move is valid
@@ -275,6 +282,11 @@ public class Chess {
 
                 // Clear the "from" position.
                 board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
+
+                if((piece.getType() == ChessPieceType.Pawn)){ //check if piece is a pawn
+                    PawnMovement pawn = (PawnMovement) piece.getMoveType();
+                    pawn.setFirstMove(); //set first move for a pawn to false
+                }
 
                 moveMade = true; // move was successful
             }

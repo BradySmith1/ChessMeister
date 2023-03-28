@@ -79,4 +79,13 @@ public class Piece extends BlackAndWhite implements PieceIF{
     public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
         return this.moveType.getValidMoves(board, currentPosition);
     }
+
+    /**
+     * Gets the movement type of the piece.
+     *
+     * @return the movement type of the piece.
+     */
+    public MovementIF getMoveType() {
+        return moveType;
+    }
 }
