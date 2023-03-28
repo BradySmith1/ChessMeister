@@ -28,7 +28,7 @@ public class BoardColorCLI implements BoardStrategy {
         String WHITE_BACK = "\u001b[47;1m";
         String unicode;
         String background = WHITE_BACK;
-        String letters = "     A      B      C      D      E      F      G      H";
+        String letters = "     A      B      C      D      E      F      G      H\n";
         int number = 8;
         //draws the board
         SquareIF[][] squares = board.getSquares();

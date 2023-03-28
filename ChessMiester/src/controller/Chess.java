@@ -15,6 +15,7 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 import interfaces.BoardIF;
+import interfaces.BoardStrategy;
 import interfaces.PlayerIF;
 import interfaces.SquareIF;
 import model.Board;
@@ -22,6 +23,8 @@ import model.Piece;
 import model.Position;
 import movements.PawnMovement;
 import player.Player;
+import uicli.BoardColorCLI;
+import uicli.BoardMonoCLI;
 
 /* Imports for the program. */
 import java.util.InputMismatchException;
@@ -67,11 +70,13 @@ public class Chess {
                         "(COMING SOON!) 2 - Play Local Game Against a Computer\n" +
                         "(COMING SOON!) 3 - Play Online Game Against another Player\n" +
                         "(COMING SOON!) 4 - 4-Player Chess!\n" +
+                        "5 - Switch to color/monochrome mode\n" +
                         "0 - Exit Game\n-----------------------------------------" +
                         "---------------------\n";
         String prompt = "Enter your menu choice here -> ";
-        int choice = 999;     //initialized to 999 so there is no option chosen or quitting loop
-        while (choice != 0) {   //while user has not quit
+        int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
+        String boardC = "Mono";
+        while (choice != 0) { //while user has not quit
             System.out.println(menu);   //shows user menu options
             System.out.print(prompt);
             try {
@@ -83,7 +88,7 @@ public class Chess {
             System.out.println();
             switch(choice) {
                 case 1:
-                    newGame();
+                    newGame(boardC);
                     break;
                 case 2:
                     System.out.println("This feature is coming soon!");
@@ -93,6 +98,14 @@ public class Chess {
                     break;
                 case 4:
                     System.out.println("This feature is coming soon!");
+                    break;
+                case 5:
+                    if(boardC.equals("Mono")){
+                        boardC = "Color";
+                    }else{
+                        boardC = "Mono";
+                    }
+                    System.out.println("Switching to " + boardC + " mode.");
                     break;
                 case 0:
                     scan.close();
@@ -111,7 +124,7 @@ public class Chess {
      * This function is used to begin a new game. Allows player to choose color to play,
      * and handle basic logic to loop through a game itself.
      */
-    public void newGame() {
+    public void newGame(String boardColor) {
         System.out.println("Player one choose color: (1) White or (2) Black >>>");
         int color = scan.nextInt();
         if(color == 1){ // user selects white
@@ -131,7 +144,13 @@ public class Chess {
         //clears the screen
         System.out.print("\033[H\033[2J");
         System.out.flush();
-        board = new Board(); //create new board to play game on
+        BoardStrategy boardC;
+        if(boardColor.equals("Mono")){
+            boardC = new BoardMonoCLI();
+        }else{
+            boardC = new BoardColorCLI();
+        }
+        board = new Board(boardC); //create new board to play game on
         board.setup(); // initialize board
         assignPieces(); // assign pieces to player
         board.draw();  // printout the board for users to see
