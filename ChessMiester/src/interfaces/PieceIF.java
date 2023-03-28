@@ -2,6 +2,7 @@
  * This interface represents a chess piece.
  *
  * @authors Brady Smith (75%), Zach Eanes (25%)
+ * @version 1.0
  */
 package interfaces;
 

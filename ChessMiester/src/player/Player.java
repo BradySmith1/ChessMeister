@@ -1,3 +1,10 @@
+/**
+ * This class represents a player in the game which holds a list of their pieces,
+ * list of pieces captured, and the color of the player themselves.
+ *
+ * @author Brady Smith (85%), Kaushal Patel (15%)
+ * @version 1.0
+ */
 package player;
 
 import interfaces.PlayerIF;
@@ -7,36 +14,66 @@ import interfaces.PieceIF;
 import java.util.ArrayList;
 
 public class Player implements PlayerIF{
-    private GameColor color;    // The color of the player
-    private ArrayList<PieceIF> pieces;  // The pieces the player has
-    private ArrayList<PieceIF> capturedPieces;  // The pieces the player has captured
+    private GameColor color;    /* The color of the player */
+    private ArrayList<PieceIF> pieces;  /* The pieces the player has */
+    private ArrayList<PieceIF> capturedPieces;  /* The pieces the player has captured */
 
+    /**
+     * Constructor method for the Player class.
+     *
+     * @param color The color of the player.
+     */
     public Player(GameColor color) {
         this.color = color;
         this.pieces = new ArrayList<>();
         this.capturedPieces = new ArrayList<>();
     }
 
+    /**
+     * Class that returns the color of the player.
+     *
+     * @return The color of the player.
+     */
     @Override
     public GameColor getPieceColor() {
         return this.color;
     }
 
+    /**
+     * Returns the list of pieces.
+     *
+     * @return
+     */
     @Override
     public ArrayList<PieceIF> getPieces() {
         return this.pieces;
     }
 
+    /**
+     * Returns the list of captured pieces.
+     *
+     * @return The list of captured pieces.
+     */
     @Override
     public ArrayList<PieceIF> getCapturedPieces(){
         return this.capturedPieces;
     }
 
+    /**
+     * Adds a piece to the list of user pieces.
+     *
+     * @param piece The piece to add.
+     */
     @Override
     public void addPiece(PieceIF piece) {
         this.pieces.add(piece);
     }
 
+    /**
+     * Adds a piece to the list of captured pieces.
+     *
+     * @param piece The piece to add.
+     */
     @Override
     public void addCapturedPiece(PieceIF piece){
         this.capturedPieces.add(piece);
@@ -53,6 +90,7 @@ public class Player implements PlayerIF{
     }
     /**
      * Getter method for the players game color.
+     *
      * @return color of the current player
      */
     public GameColor getColor(){

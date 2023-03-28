@@ -2,6 +2,7 @@
  * Enumeration class to represent the file types.
  *
  * @author Zach Eanes (100%)
+ * @version 1.0
  */
 package enums;
 public enum Files {

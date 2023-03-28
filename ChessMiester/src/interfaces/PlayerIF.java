@@ -3,6 +3,7 @@
  * pieces, and a set of captured pieces.
  *
  * @author Brady Smith 100%
+ * @version 1.0
  */
 package interfaces;
 
