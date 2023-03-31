@@ -24,13 +24,13 @@ public class BoardMonoCLI implements BoardStrategy {
     public void draw(BoardIF board) {
         // Get the squares from the board.
         SquareIF[][] squares = board.getSquares();
-        String line2 = "  |#######|       |#######|       |#######|       |#######|       |";
-        String line1 = "  |       |#######|       |#######|       |#######|       |#######|";
+        String line2 = "  | #######         #######         #######         #######         |";
+        String line1 = "  |         #######         #######         #######         ####### |";
 
+        System.out.println("   --------------------------------" +
+                "---------------------------------");
         // Print the board.
         for(int height = 0; height < board.getHeight(); height++){
-            //System.out.println("   ------- ------- ------- ------- " +
-                               //"------- ------- ------- -------");
             if(height % 2 == 0){
                 System.out.println(line1);
             } else {
@@ -41,7 +41,7 @@ public class BoardMonoCLI implements BoardStrategy {
                 Square square = (Square) squares[height][width];
                 // Print the rank numbers.
                 if(width == 0){
-                    System.out.print((board.getHeight() - height) + " ");
+                    System.out.print((board.getHeight() - height) + " | ");
                 }
                 if(square.getPiece() != null){
                     String pieceString = String.valueOf(square.getPiece().getType().getLetter());
@@ -51,15 +51,15 @@ public class BoardMonoCLI implements BoardStrategy {
                         pieceString += "_B";
                     }
                     if(square.isWhite()) {
-                        System.out.print("|  " + pieceString + "  ");
+                        System.out.print("  " + pieceString + "   ");
                     }else{
-                        System.out.print("|##" + pieceString + "##");
+                        System.out.print("##" + pieceString + "## ");
                     }
                 } else {
                     if(square.isWhite()) {
-                        System.out.print("|       ");
+                        System.out.print("        ");
                     }else{
-                        System.out.print("|#######");
+                        System.out.print("####### ");
                     }
                 }
             }
@@ -70,7 +70,7 @@ public class BoardMonoCLI implements BoardStrategy {
                 System.out.println(line2);
             }
         }
-        //System.out.println("   ------- ------- ------- ------- ------- ------- ------- -------");
+        System.out.println("   -----------------------------------------------------------------");
         System.out.println("      A       B       C       D       E       F       G       H");
     }
 }
