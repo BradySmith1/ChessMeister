@@ -14,6 +14,10 @@ import interfaces.PieceIF;
 import java.util.ArrayList;
 
 public class Player implements PlayerIF{
+
+    /** The name of the player */
+    private String name;
+
     /** The color of the player */
     private GameColor color;
 
@@ -59,7 +63,6 @@ public class Player implements PlayerIF{
      *
      * @return The list of captured pieces.
      */
-    @Override
     public ArrayList<PieceIF> getCapturedPieces(){
         return this.capturedPieces;
     }
@@ -87,6 +90,7 @@ public class Player implements PlayerIF{
     /**
      * Method to display the pieces that the player has captured.
      */
+    @Override
     public void displayCapturedPieces(){
         System.out.print("\n" + this.getColor().toString() + " captured pieces: ");
         for(PieceIF piece : capturedPieces){
@@ -102,5 +106,21 @@ public class Player implements PlayerIF{
     @Override
     public GameColor getColor(){
         return this.color;
+    }
+
+    /**
+     * Getter method for the players name.
+     * @return : name of the player
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Setter method for the players name.
+     * @param name : name of the player
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

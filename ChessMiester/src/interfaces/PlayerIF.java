@@ -31,7 +31,7 @@ public interface PlayerIF {
      *
      * @return The pieces that the player has captured.
      */
-    public ArrayList<PieceIF> getCapturedPieces();
+    public void displayCapturedPieces();
 
     /**
      * Adds a piece to the player's set of captured pieces.
@@ -52,5 +52,17 @@ public interface PlayerIF {
      * @return : The piece that was removed.
      */
     public GameColor getColor();
+
+    /**
+     * Returns the name of the player.
+     * @return : The name of the player.
+     */
+    public String getName();
+
+    /**
+     * Sets the name of the player.
+     * @param name : The name of the player.
+     */
+    public void setName(String name);
 
 }

@@ -1,10 +1,9 @@
 package uicli;
 
-import interfaces.MainMenuIF;
-
+import interfaces.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+//TODO: add javadoc
 public class MainMenuCLI implements MainMenuIF {
 
     private Scanner scan;
@@ -13,10 +12,30 @@ public class MainMenuCLI implements MainMenuIF {
 
     private String[] menuOptions;
 
-    private MainMenuIF option;
+    private PlayIF play;
+
+    private SettingsIF settings;
+
+    private DefinePlayersIF definePlayers;
+
+    private RulesIF rules;
+
+    private LoadGameIF loadGame;
+
 
     public MainMenuCLI(){
         scan = new Scanner(System.in);
+        rules = new RulesCLI(scan);//zach needs to do
+        definePlayers = new DefinePlayersCLI(scan);//done
+        settings = new SettingsCLI(scan);//done
+        loadGame = new LoadGameCLI();
+        play = new PlayChessCLI(scan, settings.getBoardColor(), definePlayers.getPlayer1(),
+                definePlayers.getPlayer2());//need to finish
+        this.menuOptions = new String[7];
+        populateMenu();
+    }
+
+    private void populateMenu(){
         this.menuTitle = """
                    _____ _                   __  __      _     _           \s
                   / ____| |                 |  \\/  |    (_)   | |          \s
@@ -25,11 +44,6 @@ public class MainMenuCLI implements MainMenuIF {
                  | |____| | | |  __/\\__ \\__ \\ |  | |  __/ \\__ \\ ||  __/ |  \s
                   \\_____|_| |_|\\___||___/___/_|  |_|\\___|_|___/\\__\\___|_|  \s
                 """;
-        this.menuOptions = new String[7];
-        populateMenu();
-    }
-
-    private void populateMenu(){
         menuOptions[0] = "1: Play Chess\n";
         menuOptions[1] = "2: View Rules\n";
         menuOptions[2] = "3: Define Players\n";
@@ -51,10 +65,6 @@ public class MainMenuCLI implements MainMenuIF {
                 menuOptions[5] +
                 "\n-----------------------------------------" +
                 "---------------------\n";
-        promptUser(menu);
-    }
-
-    private void promptUser(String menu) {
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
         String prompt = "Enter your menu choice here -> ";
         while (choice != 0) { //while user has not quit
@@ -69,19 +79,19 @@ public class MainMenuCLI implements MainMenuIF {
             System.out.println();
             switch(choice) {
                 case 1:
-                    option = new PlayChessCLI();
+                    play.show();
                     break;
                 case 2:
-                    option = new RulesCLI();
+                    rules.show();
                     break;
                 case 3:
-                    option = new DefinePlayersCLI();
+                    definePlayers.show();
                     break;
                 case 4:
-                    option = new SettingsCLI();
+                    settings.show();
                     break;
                 case 5:
-                    option = new LoadGameCLI();
+                    loadGame.show();
                     break;
                 case 0:
                     scan.close();
@@ -90,9 +100,6 @@ public class MainMenuCLI implements MainMenuIF {
                 default:
                     System.out.println("Please enter a valid number (0 - 5)");
                     break;
-            }
-            if(option != null){
-                option.show();
             }
             System.out.println();
             scan.nextLine();//consumes a new line so nextInt throwing an exception will not loop
