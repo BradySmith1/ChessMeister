@@ -18,8 +18,7 @@ public class MainMenuCLI implements MainMenuIF {
 
     private DefinePlayersIF definePlayers;
 
-    private RulesIF rules;
-
+    private RulePageIF rules;
     private LoadGameIF loadGame;
 
 
