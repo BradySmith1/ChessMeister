@@ -1,7 +1,7 @@
 /* Package for the program. */
 package controller;
 
-/* Imports for our things in the program. */
+/* Imports for our program. */
 import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
@@ -17,8 +17,6 @@ import movements.PawnMovement;
 import player.Player;
 import uicli.BoardColorCLI;
 import uicli.BoardMonoCLI;
-
-/* Imports for the program. */
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
