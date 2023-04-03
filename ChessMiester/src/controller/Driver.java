@@ -6,9 +6,11 @@
 
 package controller;
 
+import uicli.MainMenuCLI;
+
 public class Driver {
     public static void main(String[] args){
         Chess chess = new Chess();
-        chess.mainMenu();
+        chess.go();
     }
 }

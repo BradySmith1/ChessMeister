@@ -14,10 +14,7 @@ import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
-import interfaces.BoardIF;
-import interfaces.BoardStrategy;
-import interfaces.PlayerIF;
-import interfaces.SquareIF;
+import interfaces.*;
 import model.Board;
 import model.Piece;
 import model.Position;
@@ -25,9 +22,9 @@ import movements.PawnMovement;
 import player.Player;
 import uicli.BoardColorCLI;
 import uicli.BoardMonoCLI;
+import uicli.MainMenuCLI;
 
 /* Imports for the program. */
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,79 +42,22 @@ public class Chess {
     /* Player 2 object for the game. */
     private Player player2;
 
+    private MainMenuIF menu;
+
     /**
      * Constructor method for the chess class. Initializes a scanner to be used.
      */
     public Chess() {
-        scan = new Scanner(System.in); /* scanner to read in player choice */
+        this.scan = new Scanner(System.in); /* scanner to read in player choice */
     }
 
     /**
      * This function is used to display a main menu to the user. Here, we take user input
      * and decide what to be done next in processing.
      */
-    public void mainMenu() {
-        System.out.println("   _____ _                   __  __      _     _            \n" +
-                "  / ____| |                 |  \\/  |    (_)   | |           \n" +
-                " | |    | |__   ___  ___ ___| \\  / | ___ _ ___| |_ ___ _ __ \n" +
-                " | |    | '_ \\ / _ \\/ __/ __| |\\/| |/ _ \\ / __| __/ _ \\ '__|\n" +
-                " | |____| | | |  __/\\__ \\__ \\ |  | |  __/ \\__ \\ ||  __/ |   \n" +
-                "  \\_____|_| |_|\\___||___/___/_|  |_|\\___|_|___/\\__\\___|_|   \n");
-        String menu =
-                "---------------------------------------------------------------\n" +
-                        "Please make a selection as to what you would like to do:\n" +
-                        "1 - Play Local Game Against another Player\n" +
-                        "(COMING SOON!) 2 - Play Local Game Against a Computer\n" +
-                        "(COMING SOON!) 3 - Play Online Game Against another Player\n" +
-                        "(COMING SOON!) 4 - 4-Player Chess!\n" +
-                        "5 - Switch to color/monochrome mode\n" +
-                        "0 - Exit Game\n-----------------------------------------" +
-                        "---------------------\n";
-        String prompt = "Enter your menu choice here -> ";
-        int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
-        String boardC = "Mono";
-        while (choice != 0) { //while user has not quit
-            System.out.println(menu);   //shows user menu options
-            System.out.print(prompt);
-            try {
-                choice = scan.nextInt();
-            }
-            catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number (0 - 4)");
-            }
-            System.out.println();
-            switch(choice) {
-                case 1:
-                    newGame(boardC);
-                    break;
-                case 2:
-                    System.out.println("This feature is coming soon!");
-                    break;
-                case 3:
-                    System.out.println("This feature is coming soon!");
-                    break;
-                case 4:
-                    System.out.println("This feature is coming soon!");
-                    break;
-                case 5:
-                    if(boardC.equals("Mono")){
-                        boardC = "Color";
-                    }else{
-                        boardC = "Mono";
-                    }
-                    System.out.println("Switching to " + boardC + " mode.");
-                    break;
-                case 0:
-                    scan.close();
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Please enter a valid number (0 - 4)");
-                    break;
-            }
-            System.out.println();
-            scan.nextLine();//consumes a new line so nextInt throwing an exception will not loop
-        }
+    public void go() {
+        this.menu = new MainMenuCLI();
+        menu.show();
     }
 
     /**
@@ -227,7 +167,7 @@ public class Chess {
         //clears the screen
         System.out.print("\033[H\033[2J");
         System.out.flush(); //clear the terminal
-        this.mainMenu();
+        this.go();
     }
 
     /**

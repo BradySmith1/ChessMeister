@@ -24,11 +24,11 @@ public class BoardMonoCLI implements BoardStrategy {
     public void draw(BoardIF board) {
         // Get the squares from the board.
         SquareIF[][] squares = board.getSquares();
-        String line2 = "  | #######         #######         #######         #######         |";
-        String line1 = "  |         #######         #######         #######         ####### |";
+        String line2 = "  | #########         #########         #########         #########         |";
+        String line1 = "  |          #########         #########         #########         #########|";
 
         System.out.println("   --------------------------------" +
-                "---------------------------------");
+                "-----------------------------------------");
         // Print the board.
         for(int height = 0; height < board.getHeight(); height++){
             if(height % 2 == 0){
@@ -51,15 +51,15 @@ public class BoardMonoCLI implements BoardStrategy {
                         pieceString += "_B";
                     }
                     if(square.isWhite()) {
-                        System.out.print("  " + pieceString + "   ");
+                        System.out.print("   " + pieceString + "   ");
                     }else{
-                        System.out.print("##" + pieceString + "## ");
+                        System.out.print("###" + pieceString + "###");
                     }
                 } else {
                     if(square.isWhite()) {
-                        System.out.print("        ");
+                        System.out.print("         ");
                     }else{
-                        System.out.print("####### ");
+                        System.out.print("#########");
                     }
                 }
             }
@@ -70,7 +70,7 @@ public class BoardMonoCLI implements BoardStrategy {
                 System.out.println(line2);
             }
         }
-        System.out.println("   -----------------------------------------------------------------");
-        System.out.println("      A       B       C       D       E       F       G       H");
+        System.out.println("   -------------------------------------------------------------------------");
+        System.out.println("        A        B        C        D        E        F        G        H");
     }
 }
