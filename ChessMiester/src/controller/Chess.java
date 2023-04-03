@@ -14,13 +14,11 @@ import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
-import interfaces.BoardIF;
-import interfaces.BoardStrategy;
-import interfaces.PlayerIF;
-import interfaces.SquareIF;
+import interfaces.*;
 import model.Board;
 import model.Piece;
 import model.Position;
+import movements.KingMovement;
 import movements.PawnMovement;
 import player.Player;
 import uicli.BoardColorCLI;
@@ -384,5 +382,45 @@ public class Chess {
         board.draw(); // display the board
         System.out.println(); // line printed for formatting
         player2.displayCapturedPieces(); // display captured pieces for player 2
+    }
+
+    /**
+     * This function checks to see if there is a check on the king.
+     * @param player player to check if their king is in check.
+     * @return true if the king is in check, false otherwise.
+     */
+    private boolean checkCondition(PlayerIF player){
+        boolean isCheck = false;
+        KingMovement king = (KingMovement) player.getKing();
+        List<Position> moves = king.getValidMoves(this.board, new Position(king.getRank(), king.getFile()));
+        for(Position pos : moves){
+            if(this.board.getPiece(pos.getRank(), pos.getFile()) != null){
+                if(this.board.getPiece(pos.getRank(), pos.getFile()).getType() == ChessPieceType.King){
+                    isCheck = true;
+                }
+            }
+        }
+        return isCheck;
+    }
+
+    /**
+     * This function checks to see if there is a checkmate on the king.
+     * @param player player to check if their king is in checkmate.
+     * @return true if the king is in checkmate, false otherwise.
+     */
+    private boolean checkmateCondition(PlayerIF player){
+        // If the king isn't in check, then there is no checkmate.
+        boolean checkmate = checkCondition(player); // True if the king is in check, false otherwise.
+
+        // If the king is in check, then check to see if there is checkmate.
+        if(checkmate){
+            KingMovement king = (KingMovement) player.getKing();
+            List<Position> moves = king.getValidMoves(this.board, new Position(king.getRank(), king.getFile()));
+            if (moves.isEmpty())
+            {
+                checkmate = true;
+            }
+        }
+        return checkmate;
     }
 }
