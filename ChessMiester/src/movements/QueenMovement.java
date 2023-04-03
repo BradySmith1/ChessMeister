@@ -1,9 +1,3 @@
-/**
- * This class represents the movement of a Queen.
- *
- * @authors Kaushal Patel (65%), Zach Eanes (20%), Colton Brooks (15%)
- * @version 1.0
- */
 package movements;
 
 import enums.GameColor;
@@ -16,7 +10,12 @@ import model.Square;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This class represents the movement of a Queen.
+ *
+ * @authors Kaushal Patel (65%), Zach Eanes (20%), Colton Brooks (15%)
+ * @version 1.0
+ */
 public class QueenMovement extends BlackAndWhite implements MovementIF {// The color of the piece.
 
     /**
@@ -174,6 +173,7 @@ public class QueenMovement extends BlackAndWhite implements MovementIF {// The c
 
     /**
      * Gets the vertical moves for the Queen from her current position in the down direction.
+     *
      * @param board           the board the piece is on.
      * @param currentPosition the current position of the piece.
      * @return the vertical moves for the Queen in the down direction.
@@ -220,11 +220,12 @@ public class QueenMovement extends BlackAndWhite implements MovementIF {// The c
 
     /**
      * Gets the horizontal moves for the Queen from her current position in the left direction.
+     *
      * @param board           the board the piece is on.
      * @param currentPosition the current position of the piece.
      * @return the horizontal moves for the Queen in the left direction.
      */
-    private List<Position> getHorizontalMovesLeft(BoardIF board, Position currentPosition) {
+    private List<Position> getHorizontalMovesLeft(BoardIF board, Position currentPosition){
         // The valid moves for the Queen to the left of her current position.
         List<Position> validHorizontalMovesLeft = new ArrayList<>();
 

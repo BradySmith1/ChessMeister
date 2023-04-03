@@ -1,10 +1,3 @@
-/**
- * This class represents a player in the game which holds a list of their pieces,
- * list of pieces captured, and the color of the player themselves.
- *
- * @author Brady Smith (85%), Kaushal Patel (15%)
- * @version 1.0
- */
 package player;
 
 import interfaces.PlayerIF;
@@ -13,6 +6,13 @@ import interfaces.PieceIF;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents a player in the game which holds a list of their pieces,
+ * list of pieces captured, and the color of the player themselves.
+ *
+ * @author Brady Smith (85%), Kaushal Patel (15%)
+ * @version 1.0
+ */
 public class Player implements PlayerIF{
     /** The color of the player */
     private GameColor color;
@@ -45,9 +45,9 @@ public class Player implements PlayerIF{
     }
 
     /**
-     * Returns the list of pieces.
+     * Returns the list of the player's pieces.
      *
-     * @return
+     * @return The list of player's pieces.
      */
     @Override
     public ArrayList<PieceIF> getPieces() {
@@ -94,6 +94,7 @@ public class Player implements PlayerIF{
         }
         System.out.print("\n");
     }
+
     /**
      * Getter method for the players game color.
      *

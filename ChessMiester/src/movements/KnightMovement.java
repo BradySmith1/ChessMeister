@@ -1,11 +1,5 @@
-/**
- * Class to define the movements of a knight in a game of chess. This class does so
- * by finding the valid moves for a knight on a chess board in all diagonal directions.
- *
- * @author Colton Brooks (100%)
- * @version 1.0
- */
 package movements;
+
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
@@ -13,11 +7,17 @@ import model.BlackAndWhite;
 import model.Piece;
 import model.Position;
 import model.Square;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class to define the movements of a knight in a game of chess. This class does so
+ * by finding the valid moves for a knight on a chess board in all diagonal directions.
+ *
+ * @author Colton Brooks (100%)
+ * @version 1.0
+ */
 public class KnightMovement extends BlackAndWhite implements MovementIF {
 
     /**

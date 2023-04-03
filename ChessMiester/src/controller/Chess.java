@@ -1,11 +1,3 @@
-/**
- * This file represents the necessary game logic loop needed for a game of chess to be played.
- * Includes methods to create a main menu and read player input, launch a new game, save/load
- * games (coming later) and many other crucial operations.
- *
- * @authors Brady Smith (25%), Zach Eanes (25%), Kaushal Patel (25%), and Colton Brooks (25%)
- * @version 1.0
- */
 /* Package for the program. */
 package controller;
 
@@ -31,6 +23,14 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This file represents the necessary game logic loop needed for a game of chess to be played.
+ * Includes methods to create a main menu and read player input, launch a new game, save/load
+ * games (coming later) and many other crucial operations.
+ *
+ * @author Brady Smith (25%), Zach Eanes (25%), Kaushal Patel (25%), and Colton Brooks (25%)
+ * @version 1.0
+ */
 public class Chess {
 
     /* Board the game will be played on. */
@@ -123,6 +123,8 @@ public class Chess {
     /**
      * This function is used to begin a new game. Allows player to choose color to play,
      * and handle basic logic to loop through a game itself.
+     *
+     * @param boardColor The color of the board to be used.
      */
     public void newGame(String boardColor) {
         System.out.println("Player one choose color: (1) White or (2) Black >>>");
@@ -163,6 +165,7 @@ public class Chess {
 
     /**
      * This function is the basic game loop used for a game of chess to actually happen.
+     *
      * @param playerWhite player playing as white
      * @param playerBlack player playing as black
      */
@@ -222,7 +225,7 @@ public class Chess {
      * This function is used to end processing and display to the user that the game
      * has come to an end.
      */
-    public void endGame() {
+    public void endGame(){
         System.out.println("The game should be over now.\nReturning to main menu.");
         //clears the screen
         System.out.print("\033[H\033[2J");
@@ -241,6 +244,7 @@ public class Chess {
 
     /**
      * This function allows the user to save a game that can be resumed later.
+     *
      * @param file name of the file to save the game to
      * @param game board state to be saved in later
      */
@@ -250,10 +254,13 @@ public class Chess {
 
     /**
      * This is the function responsible for allowing the pieces to be moved.
-     * @param fromF File placement of where the piece is currently at
-     * @param fromR Rank placement of where the piece is currently at
-     * @param toF   File placement of where the piece will go
-     * @param toR   Rank placement of where the piece will go
+     *
+     * @param currentPlayer player who is currently playing
+     * @param otherPlayer   player who is not currently playing
+     * @param fromF         File placement of where the piece is currently at
+     * @param fromR         Rank placement of where the piece is currently at
+     * @param toF           File placement of where the piece will go
+     * @param toR           Rank placement of where the piece will go
      */
     public boolean move(PlayerIF currentPlayer, PlayerIF otherPlayer, Files fromF,
                         Rank fromR, Files toF, Rank toR){
@@ -323,6 +330,7 @@ public class Chess {
 
     /**
      * This function checks to see if the user gave a valid file for the piece movement.
+     *
      * @return new file for the piece to be moved to
      */
     public Files findValidFile() {
@@ -347,6 +355,7 @@ public class Chess {
 
     /**
      * This function checks to see if the user gave a valid rank for the piece movement.
+     *
      * @return new rank for the piece to be moved to
      */
     public Rank findValidRank() {

@@ -1,9 +1,3 @@
-/**
- * This class represents the movement of a pawn.
- *
- * @author Kaushal Patel (60%), Colton Brooks (30%), Zach Eanes (10%)
- * @version 1.0
- */
 package movements;
 
 import enums.GameColor;
@@ -13,12 +7,17 @@ import model.BlackAndWhite;
 import model.Piece;
 import model.Position;
 import model.Square;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
+/**
+ * This class represents the movement of a pawn.
+ *
+ * @author Kaushal Patel (60%), Colton Brooks (30%), Zach Eanes (10%)
+ * @version 1.0
+ */
 public class PawnMovement extends BlackAndWhite implements MovementIF{
     /* Fields */
 
@@ -101,6 +100,7 @@ public class PawnMovement extends BlackAndWhite implements MovementIF{
 
     /**
      * Method to check a diagonal capture for a pawn
+     *
      * @param board             the board the piece is on
      * @param currentPosition   the current position of the piece
      * @return valid moves for a capture
@@ -132,7 +132,8 @@ public class PawnMovement extends BlackAndWhite implements MovementIF{
 
     /**
      * Gets the game color of the piece.
-     * @return  the game color of the piece.
+     *
+     * @return the game color of the piece.
      */
     public GameColor getColor() {
         return color;
@@ -140,6 +141,7 @@ public class PawnMovement extends BlackAndWhite implements MovementIF{
 
     /**
      * Sets the game color of the piece.
+     *
      * @param color the game color of the piece.
      */
     public void setColor(GameColor color) {

@@ -1,15 +1,15 @@
-/**
- * This interface represents a chess piece.
- *
- * @authors Brady Smith (75%), Zach Eanes (25%)
- * @version 1.0
- */
 package interfaces;
 
 import enums.ChessPieceType;
 import model.Position;
 import java.util.List;
 
+/**
+ * This interface represents a chess piece.
+ *
+ * @author Brady Smith (75%), Zach Eanes (25%)
+ * @version 1.0
+ */
 public interface PieceIF {
 
     /**

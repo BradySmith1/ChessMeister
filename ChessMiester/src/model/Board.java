@@ -1,9 +1,3 @@
-/**
- * This class represents a game board that can be used for a chess game.
- *
- * @author Brady Smith (100%)
- * @version 1.0
- */
 package model;
 
 import enums.ChessPieceType;
@@ -16,6 +10,12 @@ import interfaces.PieceIF;
 import interfaces.SquareIF;
 import uicli.BoardMonoCLI;
 
+/**
+ * This class represents a game board that can be used for a chess game.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0
+ */
 public class Board implements BoardIF {
 
     /** The squares that make up the game board. */
@@ -168,7 +168,7 @@ public class Board implements BoardIF {
      * Returns the piece at the specified column and row on the game board.
      * @param col the column of the piece.
      * @param row the row of the piece.
-     * @return the PieceIF object at the specified column and row.
+     * @return    the PieceIF object at the specified column and row.
      */
     @Override
     public PieceIF getPiece(int col, char row) {
