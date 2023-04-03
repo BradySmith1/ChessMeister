@@ -389,16 +389,19 @@ public class Chess {
      * @param player player to check if their king is in check.
      * @return true if the king is in check, false otherwise.
      */
-    private boolean checkCondition(PlayerIF player){
+    private boolean checkCondition(PlayerIF player, Position position){
         boolean isCheck = false;
-        KingMovement king = (KingMovement) player.getKing();
-        List<Position> moves = king.getValidMoves(this.board, new Position(king.getRank(), king.getFile()));
-        for(Position pos : moves){
-            if(this.board.getPiece(pos.getRank(), pos.getFile()) != null){
-                if(this.board.getPiece(pos.getRank(), pos.getFile()).getType() == ChessPieceType.King){
-                    isCheck = true;
-                }
-            }
+        //Position kingPos = player.getKing().getPosition(); TODO Pass this line into checkCondition when checking for check.
+
+        // Get the list of valid moves for all the enemy pieces on the board.
+        for (PieceIF piece : player.getPieces()){
+            // Cast the piece to a Piece object.
+            Piece p = (Piece) piece;
+            // Get the list of valid moves for the piece.
+            List<Position> validMoves = p.getValidMoves(board, piece.getPosition());
+
+            // Check to see if the king's position is in the list of valid moves.
+            if (validMoves.contains(position)) {isCheck = true;}
         }
         return isCheck;
     }
@@ -410,17 +413,64 @@ public class Chess {
      */
     private boolean checkmateCondition(PlayerIF player){
         // If the king isn't in check, then there is no checkmate.
-        boolean checkmate = checkCondition(player); // True if the king is in check, false otherwise.
+        boolean inCheck = checkCondition(player, player.getKing().getPosition()); // True if the king is in check, false otherwise.
+        boolean checkmate = false; // True if the king is in checkmate, false otherwise.
+        int checkCount = 0; // Number of checks on the king.
 
         // If the king is in check, then check to see if there is checkmate.
-        if(checkmate){
-            KingMovement king = (KingMovement) player.getKing();
-            List<Position> moves = king.getValidMoves(this.board, new Position(king.getRank(), king.getFile()));
-            if (moves.isEmpty())
-            {
+        if(inCheck){
+            // TODO
+            /**
+             * Steps:
+             * 1. Get the king of the player.
+             * 2. Get the list of valid moves for the king.
+             * 3. For each position in the list of valid moves, check to see if the king is in check.
+             * 4. If the king is not in check for any of the positions, then there is no checkmate.
+             */
+            // Get the king of the player.
+            Piece king = (Piece)player.getKing();
+
+            // Get the list of valid moves for the king.
+            List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition());
+
+            // For each position in the list of valid moves, check to see if the king is in check.
+            for(Position pos : kingValidMoves) {
+                // Call the checkCondition function to see if the king is in check if it is moved to the position.
+                if (checkCondition(player, pos)) {
+                    checkCount++;
+                }
+            }
+
+            // If the king is not in check for any of the positions, then there is no checkmate.
+            if (checkCount == kingValidMoves.size()) {
                 checkmate = true;
+            }
+
+            // TODO Check to see if any of the pieces can block the checkmate.
+            for (PieceIF piece : player.getPieces()) {
+                // Cast the piece to a Piece object.
+                Piece p = (Piece) piece;
+
+                // Get the list of valid moves for the piece.
+                List<Position> validMoves = p.getValidMoves(board, piece.getPosition());
+
+                // Emulate the move of the piece to each position in the list of valid moves.
+                // Check to see if there is a check.
             }
         }
         return checkmate;
+    }
+
+    private boolean drawCondition(PlayerIF player){
+        boolean draw = false;
+        // TODO
+        /**
+         * 1. Stalemate
+         * 2. Dead position
+         * 3. Mutual agreement
+         * 4. Threefold Repetition
+         * 5. Fifty move rule
+         */
+        return draw;
     }
 }

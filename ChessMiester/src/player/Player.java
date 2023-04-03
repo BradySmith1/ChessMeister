@@ -3,7 +3,7 @@
  * list of pieces captured, and the color of the player themselves.
  *
  * @author Brady Smith (85%), Kaushal Patel (15%)
- * @version 1.0
+ * @version 2.0
  */
 package player;
 
@@ -12,7 +12,6 @@ import interfaces.PlayerIF;
 import enums.GameColor;
 import interfaces.PieceIF;
 import model.Piece;
-import movements.KingMovement;
 
 import java.util.ArrayList;
 
