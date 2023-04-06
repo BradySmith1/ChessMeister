@@ -3,7 +3,6 @@ package uicli;
 import interfaces.RulesIF;
 import java.lang.StringBuilder;
 import java.util.Scanner;
-
 import model.Board;
 
 /**
@@ -12,6 +11,9 @@ import model.Board;
  * @author Zach Eanes (100%)
  */
 public class PawnMovesCLI implements RulesIF {
+    /**
+     * Displays the rules of a pawn in chess.
+     */
     @Override
     public void show() {
         StringBuilder str = new StringBuilder();
@@ -23,12 +25,12 @@ public class PawnMovesCLI implements RulesIF {
                           @@@@@@@@@@@@@@@@@                              \s
                            @@@@@@@@@@@@@@@                               \s
                                                                          \s
-                          @@@@@@@@@@@@@@@@@@        _____                \s
-                             ((((((((((.           |  __ \\              \s
-                             @@@@@@@@@@@           | |__) |_ ___      ___ __ \s
-                             @@@@@@@@@@@           |  ___/ _` \\ \\ /\\ / / '_ \\\s
-                            @@@@@@@@@@@@@          | |  | (_| |\\ V  V /| | | |   \s
-                           @@@@@@@@@@@@@@@,        |_|   \\__,_| \\_/\\_/ |_| |_|\s
+                          @@@@@@@@@@@@@@@@@@       _____                \s
+                             ((((((((((.          |  __ \\              \s
+                             @@@@@@@@@@@          | |__) |_ ___      ___ __ \s
+                             @@@@@@@@@@@          |  ___/ _` \\ \\ /\\ / / '_ \\\s
+                            @@@@@@@@@@@@@         | |  | (_| |\\ V  V /| | | |   \s
+                           @@@@@@@@@@@@@@@,       |_|   \\__,_| \\_/\\_/ |_| |_|\s
                          @@@@@@@@@@@@@@@@@@@                             \s
                                                                          \s
                       @@@@@@@@@@@@@@@@@@@@@@@@@                          \s
@@ -59,7 +61,7 @@ public class PawnMovesCLI implements RulesIF {
         System.out.println(str);
 
         /* wait for user to press any key to continue */
-        System.out.println("Whenever you're ready to try it out, press 'ENTER' to continue >>> ");
+        System.out.println("When you're ready to try the pawn, press 'ENTER' to continue >>> ");
         Scanner scan = new Scanner(System.in); // create scanner to read user input
         scan.nextLine(); // read line when user presses enter
 
