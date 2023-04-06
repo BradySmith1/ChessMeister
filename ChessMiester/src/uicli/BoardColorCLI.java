@@ -1,9 +1,4 @@
-/**
- * This class implements the BoardStrategy interface for a color command line interface.
- *
- * @author Brady Smith (100%)
- * @version 1.0
- */
+
 package uicli;
 
 import enums.GameColor;
@@ -13,6 +8,12 @@ import interfaces.SquareIF;
 import model.Piece;
 import model.Square;
 
+/**
+ * This class implements the BoardStrategy interface for a color command line interface.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0
+ */
 public class BoardColorCLI implements BoardStrategy {
 
     /**

@@ -9,6 +9,7 @@ import model.Board;
  * This class is responsible for displaying the rules of a knight in chess.
  *
  * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 2)
  */
 public class KnightMovesCLI implements RulesIF {
     /**
@@ -66,5 +67,8 @@ public class KnightMovesCLI implements RulesIF {
         Board board = new Board(); // create new board
         board.initBoard(); // initialize board w just a pawn
         board.draw();
+
+        /* TODO: draw board with a single knight for the user to interact with */
+
     }
 }

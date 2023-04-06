@@ -1,12 +1,19 @@
 package uicli;
 
 import interfaces.RulesIF;
-
 import java.util.Scanner;
 import model.Board;
-import uicli.RulesCLI;
 
+/**
+ * This class is responsible for explaining the setup of a chess board.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 2)
+ */
 public class BoardSetupCLI implements RulesIF {
+    /**
+     * Displays the rules of board setup in chess.
+     */
     @Override
     public void show() {
         /* create a new board */
@@ -35,8 +42,6 @@ public class BoardSetupCLI implements RulesIF {
                 
                 Board setup will always be the same at the beginning of a chess game, so don't\s
                 worry about having to learn but so much!\s\s
-                
-             
                 """);
 
         /* wait for user to press enter */
@@ -45,7 +50,7 @@ public class BoardSetupCLI implements RulesIF {
         scan.nextLine();
 
         /* return to rules menu */
-        RulesCLI rules = new RulesCLI();
+        RulesCLI rules = new RulesCLI(scan);
         rules.show();
     }
 }
