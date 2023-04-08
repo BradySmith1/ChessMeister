@@ -95,7 +95,7 @@ public class KingMovement extends BlackAndWhite implements MovementIF{
      * @param toR the rank the king is moving to
      * @return true if castling is possible, false if not
      */
-    /*
+/*
     public boolean canCastle(Files fromF, Rank fromR, Files toF, Ranks toR){
         // grab the king and rook piece from positions to save keystrokes
         KingMovement king = (KingMovement) board.getPiece(fromF, fromR);
@@ -116,17 +116,36 @@ public class KingMovement extends BlackAndWhite implements MovementIF{
             }
 
             // if king passes through check or a piece is there, castling cannot occur
-            while(fromF != toF){
-                if(check(new Position(fromF, fromR))){
-                    canCastle = false;
+            // check if king is moving to the right
+            if(fromF < toF){
+                while(fromF != toF){
+                    //check if king is ever put into check
+                    if(check(new Position(fromF, fromR))){
+                        canCastle = false;
+                    }
+                    //check if there is a piece in the way
+                    if(board.getPiece(fromF, fromR) != null){
+                        canCastle = false;
+                    }
+                    fromF++;
                 }
-                if(board.getPiece(fromF, fromR) != null){
-                    canCastle = false;
-                }
-                fromF++;
             }
+            // check if king is moving to the left
+            else{
+                while(fromF != toF){
+                    //check if king is ever put into check
+                    if(check(new Position(fromF, fromR))){
+                        canCastle = false;
+                    }
+                    //check if there is a piece in the way
+                    if(board.getPiece(fromF, fromR) != null){
+                        canCastle = false;
+                    }
+                    fromF--;
+                }
+            }
+        return canCastle; //true if castling is possible, false if not
         }
-        return canCastle;
-    }
- */
+*/
+
 }
