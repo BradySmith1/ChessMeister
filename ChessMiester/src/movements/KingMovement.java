@@ -83,7 +83,7 @@ public class KingMovement extends BlackAndWhite implements MovementIF{
      * This is the represent the possible logic that would be needed to implement castling.
      * I wanted to wait and see where to place it, but this method is essentially it.
      *
-     * Out side of this function, if statement in game logic to see if the pieces
+     * Outside of this function, if statement in game logic to see if the pieces
      * as "from" == king and "to" == rook, then call this method if true
      */
     /**
