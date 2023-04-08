@@ -57,4 +57,11 @@ public class RookMovement extends QueenMovement implements MovementIF{
      * to show a move has been made. Used for castling implementation.
      */
     public void setFirstMove() {this.isFirstMove = false;}
+
+    /**
+     * Method to be called to check if the rook has moved
+     *
+     * @return true if the rook has not moved, false if it has
+     */
+    public boolean getFirstMove(){return this.isFirstMove;}
 }
