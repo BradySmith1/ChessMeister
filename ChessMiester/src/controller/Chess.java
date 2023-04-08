@@ -244,7 +244,7 @@ public class Chess {
      * @param file name of the file to save the game to
      * @param game board state to be saved in later
      */
-    public void saveGame(String file, BoardIF game) {
+    public void saveGame(BoardIF game, String file) {
 
     }
 
@@ -316,7 +316,10 @@ public class Chess {
         else{
             System.out.println("You cannot move that piece because it is not yours.");
         }
-
+        if(moveMade) {
+            GameColor color = player1.getColor();
+            board.addMove(color, fromF, fromR, toF, toR);
+        }
         return moveMade; // return whether or not the move was successful
     }
 

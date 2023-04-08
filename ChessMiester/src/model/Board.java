@@ -16,6 +16,8 @@ import interfaces.PieceIF;
 import interfaces.SquareIF;
 import uicli.BoardMonoCLI;
 
+import java.util.ArrayList;
+
 public class Board implements BoardIF {
 
     /** The squares that make up the game board. */
@@ -29,6 +31,8 @@ public class Board implements BoardIF {
 
     /** The strategy used to draw the board. */
     private BoardStrategy drawStrategy;
+
+    private ArrayList<String> moves = new ArrayList<>();
 
     /**
      * Constructor method that creates a new game board with the specified
@@ -122,6 +126,10 @@ public class Board implements BoardIF {
         return squares;
     }
 
+    public void setSquares(SquareIF[][] squares) {
+        this.squares = squares;
+    }
+
     /**
      * Sets the drawing strategy for the game board.
      *
@@ -173,5 +181,17 @@ public class Board implements BoardIF {
     @Override
     public PieceIF getPiece(int col, char row) {
         return squares[col][row].getPiece();
+    }
+
+    public void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR) {
+        moves.add(color.toString().charAt(0) + ":" + fromF.getFileChar() + fromR.getIndex() +
+                "-" + toF.getFileChar() + toR.getIndex());
+    }
+    public ArrayList<String> getMoves() {
+        return moves;
+    }
+
+    public void setMoves(ArrayList<String> moves) {
+        this.moves = moves;
     }
 }

@@ -10,24 +10,24 @@ import enums.ChessPieceType;
 import model.Position;
 import java.util.List;
 
-public interface PieceIF {
+public interface PieceIF extends BlackAndWhiteIF{
 
     /**
      * Gets the type of the piece.
      * @return the type of the piece.
      */
-    public ChessPieceType getType();
+    ChessPieceType getType();
 
     /**
      * Sets the type of the piece.
      * @param type the type of the piece.
      */
-    public void setType(ChessPieceType type);
+    void setType(ChessPieceType type);
 
     /**
      * Returns a list of MovePositions that are valid & legal on the board.
      * @param board The game board that the piece moves on.
      * @return A list of valid MovePositions.
      */
-    public List<Position> getValidMoves(BoardIF board, Position currentPosition);
+    List<Position> getValidMoves(BoardIF board, Position currentPosition);
 }
