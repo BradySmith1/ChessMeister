@@ -1,12 +1,3 @@
-/**
- * Class to define the movements of a rook in a game of chess. This class does so
- * by looking through and finding all possible moves above, below, left, and right
- * of a given piece.
- *
- * @author Zach Eanes (85%), Colton Brooks (15%)
- * @version 1.0
- */
-
 package movements;
 
 import enums.GameColor;
@@ -17,8 +8,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class to define the movements of a rook in a game of chess. This class does so
+ * by looking through and finding all possible moves above, below, left, and right
+ * of a given piece.
+ *
+ * @author Zach Eanes (85%), Colton Brooks (15%)
+ * @version 1.0
+ */
 public class RookMovement extends QueenMovement implements MovementIF{
 
+    /* Boolean to check if the rook has moved; needed for castling implementation */
+    private boolean isFirstMove;
     /**
      * Constructor method for the RookMovement Class
      *
@@ -26,6 +27,7 @@ public class RookMovement extends QueenMovement implements MovementIF{
      */
     public RookMovement(GameColor color) {
         super(color);
+        this.isFirstMove = true;
     }
 
     /**
@@ -49,4 +51,10 @@ public class RookMovement extends QueenMovement implements MovementIF{
 
         return validMoves; // Return the valid moves.
     }
+
+    /**
+     * Method to be called whenever a rook makes its first move, changes isFirstMove to false
+     * to show a move has been made. Used for castling implementation.
+     */
+    public void setFirstMove() {this.isFirstMove = false;}
 }
