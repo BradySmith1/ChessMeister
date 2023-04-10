@@ -28,8 +28,6 @@ public class MainMenuCLI implements MainMenuIF {
         definePlayers = new DefinePlayersCLI(scan);//done
         settings = new SettingsCLI(scan);//done
         loadGame = new LoadGameCLI();
-        play = new PlayChessCLI(scan, settings.getBoardColor(), definePlayers.getPlayer1(),
-                definePlayers.getPlayer2());//need to finish
         this.menuOptions = new String[7];
         populateMenu();
     }
@@ -78,6 +76,8 @@ public class MainMenuCLI implements MainMenuIF {
             System.out.println();
             switch(choice) {
                 case 1:
+                    play = new PlayChessCLI(scan, settings.getBoardColor(), definePlayers.getPlayer1(),
+                            definePlayers.getPlayer2());//need to finish
                     play.show();
                     break;
                 case 2:

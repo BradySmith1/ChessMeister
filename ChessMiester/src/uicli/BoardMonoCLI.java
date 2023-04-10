@@ -39,7 +39,8 @@ public class BoardMonoCLI implements BoardStrategy {
                         System.out.print((board.getHeight() - height) + " | ");
                         first = false;
                     }
-                    printPiece(squares, height, width);
+                    Square square = (Square) squares[height][width];
+                    printPiece(square);
                 }
                 System.out.println("|");
                 printLine(height, 1);
@@ -57,7 +58,8 @@ public class BoardMonoCLI implements BoardStrategy {
                         System.out.print((board.getHeight() - height) + " | ");
                         first = false;
                     }
-                    printPiece(squares, height, width);
+                    Square square = (Square) squares[height][width];
+                    printPiece(square);
                 }
                 System.out.println("|");
                 printLine(height, 0);
@@ -77,8 +79,7 @@ public class BoardMonoCLI implements BoardStrategy {
         }
     }
 
-    private void printPiece(SquareIF[][] squares, int height, int width){
-        Square square = (Square) squares[height][width];
+    private void printPiece(Square square){
         // Print the rank numbers.
         if(square.getPiece() != null){
             String pieceString = String.valueOf(square.getPiece().getType().getLetter());
