@@ -6,6 +6,8 @@
  */
 package interfaces;
 
+import enums.GameColor;
+
 public interface BoardStrategy {
 
     /**
@@ -13,5 +15,5 @@ public interface BoardStrategy {
      *
      * @param board the BoardIF object representing the game board to be drawn.
      */
-    public void draw(BoardIF board);
+    public void draw(BoardIF board, GameColor color);
 }

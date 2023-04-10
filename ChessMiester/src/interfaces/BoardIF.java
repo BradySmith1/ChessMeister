@@ -7,6 +7,7 @@
 package interfaces;
 
 import enums.Files;
+import enums.GameColor;
 import enums.Rank;
 
 public interface BoardIF{
@@ -24,7 +25,7 @@ public interface BoardIF{
     /**
      * Draws the game board.
      */
-    public void draw();
+    public void draw(GameColor playerColor);
 
     /**
      * Returns a 2D array of squares on the game board.

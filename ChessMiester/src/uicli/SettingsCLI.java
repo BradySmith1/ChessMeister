@@ -27,34 +27,33 @@ public class SettingsCLI implements SettingsIF {
     }
 
     private void populateMenu() {
-        menuOptions[0] = "1: Set Mono board";
-        menuOptions[1] = "2: Set Color board";
-        menuOptions[2] = "3: Enable Undo";
-        menuOptions[3] = "4: Disable Undo";
-        menuOptions[4] = "5: Enable Show Moves";
-        menuOptions[5] = "6: Disable Show Moves";
+        menuOptions[0] = "1: Set Mono board\n";
+        menuOptions[1] = "2: Set Color board\n";
+        menuOptions[2] = "3: Enable Undo\n";
+        menuOptions[3] = "4: Disable Undo\n";
+        menuOptions[4] = "5: Enable Show Move\n";
+        menuOptions[5] = "6: Disable Show Moves\n";
         menuOptions[6] = "0: Main Menu";
-
     }
 
     @Override
     public void show() {
-        String menu = "Settings\n---------------------------------------------------------------\n" +
-                "Board: " + this.boardColor + "\n" +
-                "Undo is " + this.undo + "\n" +
-                "Show Moves is " + this.showMoves + "\n" +
-                menuOptions[0] +
-                menuOptions[1] +
-                menuOptions[2] +
-                menuOptions[3] +
-                menuOptions[4] +
-                menuOptions[5] +
-                menuOptions[6] +
-                "\n-----------------------------------------" +
-                "---------------------\n";
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
         String prompt = "Enter your menu choice here -> ";
         while (true) {//while user has not quit
+            String menu = "Settings\n---------------------------------------------------------------\n" +
+                    "Board: " + this.boardColor + "\n" +
+                    "Undo is " + this.undo + "\n" +
+                    "Show Moves is " + this.showMoves + "\n" +
+                    menuOptions[0] +
+                    menuOptions[1] +
+                    menuOptions[2] +
+                    menuOptions[3] +
+                    menuOptions[4] +
+                    menuOptions[5] +
+                    menuOptions[6] +
+                    "\n-----------------------------------------" +
+                    "---------------------\n";
             System.out.println(menu);   //shows user menu options
             System.out.print(prompt);
             try {

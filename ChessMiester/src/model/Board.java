@@ -108,8 +108,8 @@ public class Board implements BoardIF {
      * Method that draws the state of the game board.
      */
     @Override
-    public void draw() {
-        drawStrategy.draw(this);
+    public void draw(GameColor playerColor) {
+        drawStrategy.draw(this, playerColor);
     }
 
     /**
