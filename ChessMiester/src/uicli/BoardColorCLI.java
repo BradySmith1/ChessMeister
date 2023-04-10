@@ -21,7 +21,7 @@ public class BoardColorCLI implements BoardStrategy {
      * @param board the BoardIF object representing the game board to be drawn.
      */
     @Override
-    public void draw(BoardIF board) {
+    public void draw(BoardIF board, GameColor playerColor) {
         String BLACK = "\u001b[1m\u001b[33m"; //actually purple with bold
         String WHITE = "\u001b[1m\u001b[35m"; //actually yellow with bold
         String BLACK_BACK = "\u001b[40m";

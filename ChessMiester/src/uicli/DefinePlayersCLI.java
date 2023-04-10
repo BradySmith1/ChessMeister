@@ -36,12 +36,19 @@ public class DefinePlayersCLI implements DefinePlayersIF {
     public void show() {
         System.out.print("Players:\n--------------------------------------------------------" +
                 "-------\n");
-        System.out.print(menuOptions[0]);
-        String name = scan.nextLine();
-        player1.setName(name);
-        System.out.print("\n" + menuOptions[1]);
-        name = scan.nextLine();
-        player2.setName(name);
+        promptUser(0);
+        promptUser(1);
+    }
+
+    private void promptUser(int num){
+        System.out.print(menuOptions[num]);
+        String name = scan.next();
+        if(num == 0){
+            player1.setName(name);
+            scan.nextLine();
+        }else{
+            player2.setName(name);
+        }
     }
 
     @Override

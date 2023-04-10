@@ -2,6 +2,7 @@ package uicli;
 
 import enums.ChessPieceType;
 import enums.Files;
+import enums.GameColor;
 import enums.Rank;
 import interfaces.*;
 import model.Board;
@@ -12,7 +13,7 @@ import player.Player;
 import java.util.List;
 import java.util.Scanner;
 
-//TODO add javadoc
+//TODO add javadoc and fix the move method
 public class PlayChessCLI implements PlayIF {
 
     private Scanner scan;
@@ -79,7 +80,7 @@ public class PlayChessCLI implements PlayIF {
 
     @Override
     public void show() {
-        board.draw();  // printout the board for users to see
+        board.draw(GameColor.WHITE);  // printout the board for users to see
         String menu = "---------------------------------------------------------------\n" +
                 "Please make a selection as to what you would like to do:\n" +
                 menuOptions[0] +
@@ -116,7 +117,7 @@ public class PlayChessCLI implements PlayIF {
                 moveValid = move(player2, player1, file1, rank1, file2, rank2);
             }
             player1.displayCapturedPieces();
-            board.draw();
+            board.draw(GameColor.BLACK); //needs to be recreated so it draws the board according to the current players color.
             player2.displayCapturedPieces();
             //gameOver = true; //condition to end processing added later on
             //endGame();
@@ -257,7 +258,7 @@ public class PlayChessCLI implements PlayIF {
     public void display(){
         player1.displayCapturedPieces(); //display captured pieces for player 1
         System.out.println(); // line printed for formatting
-        board.draw(); // display the board
+        board.draw(GameColor.WHITE); // display the board
         System.out.println(); // line printed for formatting
         player2.displayCapturedPieces(); // display captured pieces for player 2
     }
