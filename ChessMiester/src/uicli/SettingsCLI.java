@@ -4,19 +4,25 @@ import interfaces.SettingsIF;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-//TODO : Documentation
+/**
+ * This class is the CLI implementation of the SettingsIF interface.
+ */
 public class SettingsCLI implements SettingsIF {
 
-    private Scanner scan;
+    private Scanner scan; /* Scanner object to read user input */
 
-    private String[] menuOptions;
+    private String[] menuOptions; /* Menu options */
 
-    private String boardColor;
+    private String boardColor; /* Board color */
 
-    private String undo;
+    private String undo; /* Undo option */
 
-    private String showMoves;
+    private String showMoves; /* Show moves option */
 
+    /**
+     * Constructor for the SettingsCLI class.
+     * @param scan Scanner object to read user input
+     */
     public SettingsCLI(Scanner scan) {
         this.boardColor = "Mono";
         this.undo = "on";
@@ -26,6 +32,9 @@ public class SettingsCLI implements SettingsIF {
         populateMenu();
     }
 
+    /**
+     * Populates the menu with the title and options.
+     */
     private void populateMenu() {
         menuOptions[0] = "1: Set Mono board\n";
         menuOptions[1] = "2: Set Color board\n";
@@ -36,6 +45,9 @@ public class SettingsCLI implements SettingsIF {
         menuOptions[6] = "0: Main Menu";
     }
 
+    /**
+     * Shows the settings page.
+     */
     @Override
     public void show() {
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
@@ -80,16 +92,28 @@ public class SettingsCLI implements SettingsIF {
         }
     }
 
+    /**
+     * Gets the board color.
+     * @return String board color
+     */
     @Override
     public String getBoardColor() {
         return boardColor;
     }
 
+    /**
+     * Gets the undo option.
+     * @return String undo option
+     */
     @Override
     public String getUndo() {
         return undo;
     }
 
+    /**
+     * Gets the show moves option.
+     * @return String show moves option
+     */
     @Override
     public String getShowMoves() {
         return showMoves;

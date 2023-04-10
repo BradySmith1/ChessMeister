@@ -9,6 +9,9 @@ package interfaces;
 import model.Position;
 import java.util.List;
 
+/**
+ * This interface represents a piece that can move.
+ */
 public interface MovementIF {
     /**
      * Returns a list of MovePositions that are valid & legal on the board.

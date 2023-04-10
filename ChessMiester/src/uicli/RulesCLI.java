@@ -7,19 +7,28 @@ import interfaces.RulesIF;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * This class is the main menu for the rules page.
+ */
 public class RulesCLI implements RulePageIF {
 
-    private String[] menuOptions;
+    private String[] menuOptions; /*options for the menu*/
 
-    private RulesIF rule;
+    private RulesIF rule; /*rule object*/
 
-    private Scanner scan;
+    private Scanner scan; /*scanner for user input*/
 
+    /**
+     * Constructor for the rules page.
+     */
     public RulesCLI(Scanner scan) {
         this.scan = scan;
         populateMenu();
     }
 
+    /**
+     * Populates the menu with the title and options.
+     */
     private void populateMenu() {
         menuOptions = new String[9];
         menuOptions[0] = "1: Board Setup\n";
@@ -33,6 +42,9 @@ public class RulesCLI implements RulePageIF {
         menuOptions[8] = "0: Main Menu\n";
     }
 
+    /**
+     * Shows the rules page.
+     */
     @Override
     public void show() {
         String menu = "View Rules\n---------------------------------------------------------------\n" +

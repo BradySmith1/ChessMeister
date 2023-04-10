@@ -8,17 +8,22 @@ import interfaces.PlayerIF;
 import player.Player;
 import java.util.Scanner;
 
-//TODO add javadoc
-
+/**
+ * This class implements the main menu dialog for the command line interface.
+ * @author Brady Smith 100%
+ */
 public class DefinePlayersCLI implements DefinePlayersIF {
 
-    private Scanner scan;
-    private String[] menuOptions;
+    private Scanner scan; /*scanner for user input*/
+    private String[] menuOptions; /*options for the menu*/
 
-    private PlayerIF player1;
+    private PlayerIF player1;  /*player 1*/
 
-    private PlayerIF player2;
+    private PlayerIF player2; /*player 2*/
 
+    /**
+     * Constructor for the main menu.
+     */
     public DefinePlayersCLI(Scanner scan) {
         this.scan = scan;
         player1 = new Player(GameColor.WHITE);
@@ -26,12 +31,18 @@ public class DefinePlayersCLI implements DefinePlayersIF {
         populateMenu();
     }
 
+    /**
+     * Populates the menu with the title and options.
+     */
     private void populateMenu() {
         menuOptions = new String[2];
         menuOptions[0] = "Enter player name 1: ";
         menuOptions[1] = "Enter player name 2: ";
     }
 
+    /**
+     * Displays the main menu.
+     */
     @Override
     public void show() {
         System.out.print("Players:\n--------------------------------------------------------" +
@@ -40,6 +51,10 @@ public class DefinePlayersCLI implements DefinePlayersIF {
         promptUser(1);
     }
 
+    /**
+     * Prompts the user for input.
+     * @param num the number of which player is being prompted.
+     */
     private void promptUser(int num){
         System.out.print(menuOptions[num]);
         String name = scan.next();
@@ -51,11 +66,19 @@ public class DefinePlayersCLI implements DefinePlayersIF {
         }
     }
 
+    /**
+     * Gets player 1.
+     * @return player 1.
+     */
     @Override
     public PlayerIF getPlayer1() {
         return player1;
     }
 
+    /**
+     * Gets player 2.
+     * @return player 2.
+     */
     @Override
     public PlayerIF getPlayer2() {
         return player2;

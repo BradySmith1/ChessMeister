@@ -13,21 +13,34 @@ import player.Player;
 import java.util.List;
 import java.util.Scanner;
 
-//TODO add javadoc and fix the move method
+//TODO fix the move method
+
+/**
+ * This class implements the PlayIF interface for a command line interface.
+ * @author Brady Smith (100%)
+ */
 public class PlayChessCLI implements PlayIF {
 
-    private Scanner scan;
+    private Scanner scan; /*scanner for user input*/
 
-    private String[] menuOptions;
+    private String[] menuOptions; /*options for the menu*/
 
-    private String boardColor;
+    private String boardColor;  /*color of the board*/
 
-    private PlayerIF player1;
+    private PlayerIF player1; /*player 1*/
 
-    private PlayerIF player2;
+    private PlayerIF player2; /*player 2*/
 
-    private Board board;
+    private Board board; /*board to play game on*/
 
+
+    /**
+     * Constructor for the main menu.
+     * @param scan scanner for user input
+     * @param boardColor color of the board
+     * @param player1 player 1
+     * @param player2 player 2
+     */
     public PlayChessCLI(Scanner scan, String boardColor, PlayerIF player1, PlayerIF player2) {
         this.scan = scan;
         this.boardColor = boardColor;
@@ -37,6 +50,9 @@ public class PlayChessCLI implements PlayIF {
         populateMenu();
     }
 
+    /**
+     * This function is used to initialize the board.
+     */
     private void initBoard() {
         BoardStrategy boardC;
         if(boardColor.equals("Mono")){
@@ -49,6 +65,9 @@ public class PlayChessCLI implements PlayIF {
         assignPieces(); // assign pieces to player
     }
 
+    /**
+     * Populates the menu with the title and options.
+     */
     private void populateMenu() {
         this.menuOptions = new String[6];
         menuOptions[0] = "1: Move\n";
@@ -78,6 +97,9 @@ public class PlayChessCLI implements PlayIF {
         }
     }
 
+    /**
+     * Displays the main menu.
+     */
     @Override
     public void show() {
         board.draw(GameColor.WHITE);  // printout the board for users to see

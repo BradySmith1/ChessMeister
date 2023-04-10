@@ -10,6 +10,10 @@ import enums.ChessPieceType;
 import model.Position;
 import java.util.List;
 
+/**
+ * This interface represents a chess piece.
+ * @author Brady Smith (75%), Colton Brooks (25%)
+ */
 public interface PieceIF {
 
     /**

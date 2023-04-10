@@ -10,6 +10,10 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 
+/**
+ * This interface defines the basic functionality of a game board object.
+ * @author Brady Smith (100%)
+ */
 public interface BoardIF{
 
     /**

@@ -13,6 +13,10 @@ import interfaces.SquareIF;
 import model.Piece;
 import model.Square;
 
+/**
+ * This class implements the BoardStrategy interface for a color command line interface.
+ * @author Brady Smith (100%)
+ */
 public class BoardColorCLI implements BoardStrategy {
 
     private final String BLACK = "\u001b[1m\u001b[33m"; //actually purple with bold

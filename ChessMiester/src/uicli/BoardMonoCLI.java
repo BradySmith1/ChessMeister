@@ -14,6 +14,10 @@ import model.Board;
 import model.Piece;
 import model.Square;
 
+/**
+ * This class implements the BoardStrategy interface for a black and white command line interface.
+ * @author Brady Smith (100%)
+ */
 public class BoardMonoCLI implements BoardStrategy {
 
     /**

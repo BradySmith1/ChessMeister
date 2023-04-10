@@ -3,25 +3,32 @@ package uicli;
 import interfaces.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-//TODO: add javadoc
+
+/**
+ * This class is the main menu for the command line version of the chess game.
+ * @author Brady Smith 100%
+ */
 public class MainMenuCLI implements MainMenuIF {
 
-    private Scanner scan;
+    private Scanner scan; /*scanner for user input*/
 
-    private String menuTitle;
+    private String menuTitle; /*title of the menu*/
 
-    private String[] menuOptions;
+    private String[] menuOptions; /*options for the menu*/
 
-    private PlayIF play;
+    private PlayIF play; /*play object*/
 
-    private SettingsIF settings;
+    private SettingsIF settings; /*settings object*/
 
-    private DefinePlayersIF definePlayers;
+    private DefinePlayersIF definePlayers; /*define players object*/
 
-    private RulePageIF rules;
-    private LoadGameIF loadGame;
+    private RulePageIF rules; /*rules object*/
+    private LoadGameIF loadGame; /*load game object*/
 
 
+    /**
+     * Constructor for the main menu.
+     */
     public MainMenuCLI(){
         scan = new Scanner(System.in);
         rules = new RulesCLI(scan);//zach needs to do
@@ -32,6 +39,9 @@ public class MainMenuCLI implements MainMenuIF {
         populateMenu();
     }
 
+    /**
+     * Populates the menu with the title and options.
+     */
     private void populateMenu(){
         this.menuTitle = """
                    _____ _                   __  __      _     _           \s
@@ -49,6 +59,9 @@ public class MainMenuCLI implements MainMenuIF {
         menuOptions[5] = "0: Quit";
     }
 
+    /**
+     * Shows the main menu.
+     */
     @Override
     public void show() {
         System.out.println(menuTitle);
