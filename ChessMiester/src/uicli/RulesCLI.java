@@ -35,7 +35,7 @@ public class RulesCLI implements RulePageIF {
 
     @Override
     public void show() {
-        String menu = "View Rules:---------------------------------------------------------------\n" +
+        String menu = "View Rules\n---------------------------------------------------------------\n" +
                 "Please make a selection as to what you would like to do:\n" +
                 menuOptions[0] +
                 menuOptions[1] +
