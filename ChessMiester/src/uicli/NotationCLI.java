@@ -16,6 +16,7 @@ public class NotationCLI implements RulesIF {
     @Override
     public void showRule() {
         Board board = new Board(); // create a new board
+        board.setDrawStrategy(new BoardColorCLI());
         board.draw(GameColor.WHITE); // draw the board for the player to see
 
         // display the rules of chess notation
@@ -29,7 +30,7 @@ public class NotationCLI implements RulesIF {
                 For example, the square in the bottom left corner of the board is 'a1', and \s
                 the square in the top right corner of the board is 'h8'.\s\s
                 
-                As seen in the above board, this implementation of vhess follows the algebraic \s
+                As seen in the above board, this implementation of chess follows the algebraic \s
                 notation system. To make a move, simply type the square that the piece is \s
                 currently on, followed by the square that the piece is moving to. The letters \s
                 and numbers are displayed throughout the entire course of the game, so you \s
