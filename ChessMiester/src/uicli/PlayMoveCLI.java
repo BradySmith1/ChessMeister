@@ -337,17 +337,63 @@ public class PlayMoveCLI implements PlayIF {
         return checkmate;
     }
 
-    private boolean drawCondition(PlayerIF player){
-        boolean draw = false;
-        // TODO
-        /**
-         * 1. Stalemate
-         * 2. Dead position
-         * 3. Mutual agreement
-         * 4. Threefold Repetition
-         * 5. Fifty move rule
-         */
-        return draw;
+    /**
+     * This method checks to see if there is a draw by
+     * 1) stalemate
+     * 2) threefold repetition
+     * 3) fifty move rule
+     * 4) agreement condition.
+     * @return true if there is a draw, false otherwise.
+     */
+    private boolean drawCondition(){
+        return stalemateCondition() || threefoldRepetitionCondition()
+                || fiftyMoveRule() || agreementCondition();
+    }
+
+    /**
+     * This method checks to see if there is a stalemate.
+     * @return true if there is a stalemate, false otherwise.
+     */
+    private boolean stalemateCondition() {
+        // A draw should be declared if either player is not in check but cannot make a move without putting themselves into Check.
+
+        // Write code to declare a draw under the stalemate condition.
+        boolean stalemate = false;
+
+    }
+
+    /**
+     * This method checks to see if there is a check by threefold repetition.
+     * @return true if there is a threefold repetition, false otherwise.
+     */
+    private boolean threefoldRepetitionCondition() {
+        // A draw should be declared if the same board presence has occurred three times in a row
+        boolean threefoldRepetition = false;
+
+        return threefoldRepetition;
+    }
+
+    /**
+     * This method checks to see if there is a check by fifty move rule.
+     * @return true if there is a fifty move rule, false otherwise.
+     */
+    private boolean fiftyMoveRule()
+    {
+        // A draw should be declared if a total of 50 moves (25 per player) has occurred and no piece has been captures and no pawn has been moved
+        boolean fiftyMoveRule = false;
+
+        return fiftyMoveRule;
+    }
+
+    /**
+     * This method checks to see if there is a check by agreement condition.
+     * @return  true if there is a agreement condition, false otherwise.
+     */
+    private boolean agreementCondition() {
+        // Both players agree to a draw.
+        boolean agreement = false;
+
+        return agreement;
     }
 
     /**
