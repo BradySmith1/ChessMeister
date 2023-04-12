@@ -1,5 +1,8 @@
+package controller;
+
 /**
  * Simple driver for the Chess game.
+ *
  * @author Brady Smith (100%)
  * @version 1.0
  */

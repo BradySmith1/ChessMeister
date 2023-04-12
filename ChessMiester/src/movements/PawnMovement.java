@@ -1,9 +1,3 @@
-/**
- * This class represents the movement of a pawn.
- *
- * @author Kaushal Patel (60%), Colton Brooks (30%), Zach Eanes (10%)
- * @version 1.0
- */
 package movements;
 
 import enums.GameColor;
@@ -15,6 +9,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+/**
+ * This class represents the movement of a pawn.
+ *
+ * @author Kaushal Patel (60%), Colton Brooks (30%), Zach Eanes (10%)
+ * @version 1.0
+ */
 public class PawnMovement extends BlackAndWhite implements MovementIF{
     /* Fields */
 

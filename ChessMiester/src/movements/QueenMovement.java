@@ -1,9 +1,3 @@
-/**
- * This class represents the movement of a Queen.
- *
- * @authors Kaushal Patel (65%), Zach Eanes (20%), Colton Brooks (15%)
- * @version 1.0
- */
 package movements;
 
 import enums.GameColor;
@@ -15,7 +9,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ * This class represents the movement of a Queen.
+ *
+ * @authors Kaushal Patel (65%), Zach Eanes (20%), Colton Brooks (15%)
+ * @version 1.0
+ */
 public class QueenMovement extends BlackAndWhite implements MovementIF {// The color of the piece.
 
     /**

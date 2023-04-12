@@ -1,11 +1,3 @@
-/**
- * This file represents the necessary game logic loop needed for a game of chess to be played.
- * Includes methods to create a main menu and read player input, launch a new game, save/load
- * games (coming later) and many other crucial operations.
- *
- * @authors Brady Smith (25%), Zach Eanes (25%), Kaushal Patel (25%), and Colton Brooks (25%)
- * @version 1.0
- */
 /* Package for the program. */
 package controller;
 
@@ -13,6 +5,14 @@ package controller;
 import interfaces.MainMenuIF;
 import uicli.MainMenuCLI;
 
+/**
+ * This file represents the necessary game logic loop needed for a game of chess to be played.
+ * Includes methods to create a main menu and read player input, launch a new game, save/load
+ * games (coming later) and many other crucial operations.
+ *
+ * @author Brady Smith (25%), Zach Eanes (25%), Kaushal Patel (25%), and Colton Brooks (25%)
+ * @version 1.0
+ */
 public class Chess {
 
     private MainMenuIF menu; /* main menu to display to user */
