@@ -264,7 +264,7 @@ public class PlayMoveCLI implements PlayIF {
             // Cast the piece to a Piece object.
             Piece p = (Piece) piece;
             // Get the list of valid moves for the piece.
-            List<Position> validMoves = p.getValidMoves(board, piece.getPosition());
+            List<Position> validMoves = p.getValidMoves(board, piece.getPosition(board));
 
             // Check to see if the king's position is in the list of valid moves.
             if (validMoves.contains(position)) {isCheck = true;}
@@ -360,7 +360,7 @@ public class PlayMoveCLI implements PlayIF {
         // Write java code to check for stalemate here.
         boolean stalemate = false;
 
-
+        return stalemate;
     }
 
     /**
