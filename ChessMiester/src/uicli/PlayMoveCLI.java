@@ -279,7 +279,7 @@ public class PlayMoveCLI implements PlayIF {
      */
     private boolean checkmateCondition(PlayerIF player){
         // If the king isn't in check, then there is no checkmate.
-        boolean inCheck = checkCondition(player, player.getKing().getPosition()); // True if the king is in check, false otherwise.
+        boolean inCheck = checkCondition(player, player.getKing().getPosition(board)); // True if the king is in check, false otherwise.
         boolean checkmate = false; // True if the king is in checkmate, false otherwise.
         int checkCount = 0; // Number of checks on the king.
 
@@ -297,7 +297,7 @@ public class PlayMoveCLI implements PlayIF {
             Piece king = (Piece)player.getKing();
 
             // Get the list of valid moves for the king.
-            List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition());
+            List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition(board));
 
             // For each position in the list of valid moves, check to see if the king is in check.
             for(Position pos : kingValidMoves) {
@@ -318,15 +318,15 @@ public class PlayMoveCLI implements PlayIF {
                 Piece p = (Piece) piece;
 
                 // Get the list of valid moves for the piece.
-                List<Position> validMoves = p.getValidMoves(board, piece.getPosition());
+                List<Position> validMoves = p.getValidMoves(board, piece.getPosition(board));
 
                 for (Position position : validMoves) {
                     // Emulate the move of the piece to each position in the list of valid moves.
                     // Check to see if there is a check.
 
-                    this.move(p.getPosition().getFile(), p.getPosition().getRank(), position.getFile(), position.getRank());
+                    this.move(p.getPosition(board).getFile(), p.getPosition(board).getRank(), position.getFile(), position.getRank());
 
-                    if (!this.checkCondition(player, king.getPosition())) {
+                    if (!this.checkCondition(player, king.getPosition(board))) {
                         UndoMove(); //Down
                         checkmate = false;
                     }
@@ -337,17 +337,64 @@ public class PlayMoveCLI implements PlayIF {
         return checkmate;
     }
 
-    private boolean drawCondition(PlayerIF player){
-        boolean draw = false;
-        // TODO
-        /**
-         * 1. Stalemate
-         * 2. Dead position
-         * 3. Mutual agreement
-         * 4. Threefold Repetition
-         * 5. Fifty move rule
-         */
-        return draw;
+    /**
+     * This method checks to see if there is a draw by
+     * 1) stalemate
+     * 2) threefold repetition
+     * 3) fifty move rule
+     * 4) agreement condition.
+     * @return true if there is a draw, false otherwise.
+     */
+    private boolean drawCondition(){
+        return stalemateCondition() || threefoldRepetitionCondition()
+                || fiftyMoveRule() || agreementCondition();
+    }
+
+    /**
+     * This method checks to see if there is a stalemate.
+     * @return true if there is a stalemate, false otherwise.
+     */
+    private boolean stalemateCondition() {
+        // A draw should be declared if either player is not in check but cannot make a move without putting themselves into Check.
+
+        // Write java code to check for stalemate here.
+        boolean stalemate = false;
+
+
+    }
+
+    /**
+     * This method checks to see if there is a check by threefold repetition.
+     * @return true if there is a threefold repetition, false otherwise.
+     */
+    private boolean threefoldRepetitionCondition() {
+        // A draw should be declared if the same board presence has occurred three times in a row
+        boolean threefoldRepetition = false;
+
+        return threefoldRepetition;
+    }
+
+    /**
+     * This method checks to see if there is a check by fifty move rule.
+     * @return true if there is a fifty move rule, false otherwise.
+     */
+    private boolean fiftyMoveRule()
+    {
+        // A draw should be declared if a total of 50 moves (25 per player) has occurred and no piece has been captures and no pawn has been moved
+        boolean fiftyMoveRule = false;
+
+        return fiftyMoveRule;
+    }
+
+    /**
+     * This method checks to see if there is a check by agreement condition.
+     * @return  true if there is a agreement condition, false otherwise.
+     */
+    private boolean agreementCondition() {
+        // Both players agree to a draw.
+        boolean agreement = false;
+
+        return agreement;
     }
 
     /**

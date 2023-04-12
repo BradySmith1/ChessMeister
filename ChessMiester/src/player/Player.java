@@ -132,14 +132,13 @@ public class Player implements PlayerIF{
      * @return The king of the player.
      */
     @Override
-    public MovementIF getKing() {
-        MovementIF king = null;
+    public PieceIF getKing() {
+        PieceIF p = null;
         for(PieceIF piece : pieces){
             if(piece.getType().getLetter() == 'K' && piece instanceof MovementIF){
-                Piece p = (Piece) piece;
-                king = p.getMoveType();
+                p = piece;
             }
         }
-        return king;
+        return p;
     }
 }
