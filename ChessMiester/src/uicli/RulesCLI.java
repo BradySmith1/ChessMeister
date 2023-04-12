@@ -8,7 +8,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * This class is the main menu for the rules page.
+ * This class is responsible for displaying all the possible options for rules
+ * in our implementation of chess.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 2)
  */
 public class RulesCLI implements RulePageIF {
 
@@ -32,13 +36,13 @@ public class RulesCLI implements RulePageIF {
     private void populateMenu() {
         menuOptions = new String[9];
         menuOptions[0] = "1: Board Setup\n";
-        menuOptions[1] = "2: King Moves\n";
-        menuOptions[2] = "3: Queen Moves\n";
-        menuOptions[3] = "4: Bishop Moves\n";
-        menuOptions[4] = "5: Knight Moves\n";
-        menuOptions[5] = "6: Rook Moves\n";
-        menuOptions[6] = "7: Pawn Moves\n";
-        menuOptions[7] = "8: Overview\n";
+        menuOptions[1] = "2: Understanding Notation\n";
+        menuOptions[2] = "3: King Moves\n";
+        menuOptions[3] = "4: Queen Moves\n";
+        menuOptions[4] = "5: Bishop Moves\n";
+        menuOptions[5] = "6: Knight Moves\n";
+        menuOptions[6] = "7: Rook Moves\n";
+        menuOptions[7] = "8: Pawn Moves\n";
         menuOptions[8] = "0: Main Menu\n";
     }
 
@@ -74,13 +78,13 @@ public class RulesCLI implements RulePageIF {
             System.out.println();
             switch (choice) {
                 case 1 -> rule = new BoardSetupCLI();
-                case 2 -> rule = new KingMovesCLI();
-                case 3 -> rule = new QueenMovesCLI();
-                case 4 -> rule = new BishopMovesCLI();
-                case 5 -> rule = new KnightMovesCLI();
-                case 6 -> rule = new RookMovesCLI();
-                case 7 -> rule = new PawnMovesCLI();
-                case 8 -> rule = new OverviewCLI();
+                case 2 -> rule = new NotationCLI();
+                case 3 -> rule = new KingMovesCLI();
+                case 4 -> rule = new QueenMovesCLI();
+                case 5 -> rule = new BishopMovesCLI();
+                case 6 -> rule = new KnightMovesCLI();
+                case 7 -> rule = new RookMovesCLI();
+                case 8 -> rule = new PawnMovesCLI();
                 case 0 -> {
                     return;
                 }
