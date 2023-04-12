@@ -454,8 +454,18 @@ public class Chess {
                 // Get the list of valid moves for the piece.
                 List<Position> validMoves = p.getValidMoves(board, piece.getPosition());
 
-                // Emulate the move of the piece to each position in the list of valid moves.
-                // Check to see if there is a check.
+                for (Position position : validMoves) {
+                    // Emulate the move of the piece to each position in the list of valid moves.
+                    // Check to see if there is a check.
+
+                    this.move(p.getPosition().getFile(), p.getPosition().getRank(), position.getFile(), position.getRank());
+
+                    if (!this.checkCondition(player, king.getPosition())) {
+                        UndoMove();
+                        checkmate = false;
+                    }
+                    UndoMove();
+                }
             }
         }
         return checkmate;
