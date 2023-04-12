@@ -12,7 +12,7 @@ import java.util.List;
  * @author Kaushal Patel (100%)
  * @version 1.0
  */
-public interface MovementIF {
+public interface MovementIF extends BlackAndWhiteIF{
     /**
      * Returns a list of MovePositions that are valid & legal on the board.
      *
