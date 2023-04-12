@@ -81,6 +81,24 @@ public class Piece extends BlackAndWhite implements PieceIF{
     }
 
     /**
+     * Gets the position of the piece on the board.
+     * @param board The board that the piece is on.
+     * @return the position of the piece on the board.
+     */
+    public Position getPosition(BoardIF board){
+        Position position = null;
+        Square[][] squares = (Square[][]) board.getSquares();
+        for(int i = 0; i < squares.length; i++) {
+            for (int j = 0; j < squares[i].length; j++) {
+                if (squares[i][j].getPiece() == this) {
+                    position = squares[i][j].getPosition();
+                }
+            }
+        }
+        return position;
+    }
+
+    /**
      * Gets the movement type of the piece.
      *
      * @return the movement type of the piece.
