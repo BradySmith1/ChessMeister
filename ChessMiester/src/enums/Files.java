@@ -1,11 +1,10 @@
-package enums;
-
 /**
  * Enumeration class to represent the file types.
  *
  * @author Zach Eanes (100%)
  * @version 1.0
  */
+package enums;
 public enum Files {
     A('a', 0), /* Represents the different positions on a chess board. */
     B('b', 1),

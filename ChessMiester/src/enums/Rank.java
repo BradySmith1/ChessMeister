@@ -1,11 +1,11 @@
-package enums;
-
 /**
  * Enumeration file to represent the rank in chess.
  *
  * @author Zach Eanes (100%)
  * @version 1.0
  */
+package enums;
+
 public enum Rank {
     R1(1, 7), /* Represents the different places on a chess board. */
     R2(2, 6),
