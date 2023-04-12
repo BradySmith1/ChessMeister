@@ -4,10 +4,7 @@ import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
-import interfaces.BoardIF;
-import interfaces.LoadSaveGameIF;
-import interfaces.PlayIF;
-import interfaces.PlayerIF;
+import interfaces.*;
 import model.Piece;
 import model.Position;
 import movements.PawnMovement;
@@ -251,6 +248,106 @@ public class PlayMoveCLI implements PlayIF {
         board.draw(GameColor.WHITE); // display the board
         System.out.println(); // line printed for formatting
         player2.displayCapturedPieces(); // display captured pieces for player 2
+    }
+
+    /**
+     * This function checks to see if there is a check on the king.
+     * @param player player to check if their king is in check.
+     * @return true if the king is in check, false otherwise.
+     */
+    private boolean checkCondition(PlayerIF player, Position position){
+        boolean isCheck = false;
+        //Position kingPos = player.getKing().getPosition(); TODO Pass this line into checkCondition when checking for check.
+
+        // Get the list of valid moves for all the enemy pieces on the board.
+        for (PieceIF piece : player.getPieces()){
+            // Cast the piece to a Piece object.
+            Piece p = (Piece) piece;
+            // Get the list of valid moves for the piece.
+            List<Position> validMoves = p.getValidMoves(board, piece.getPosition());
+
+            // Check to see if the king's position is in the list of valid moves.
+            if (validMoves.contains(position)) {isCheck = true;}
+        }
+        return isCheck;
+    }
+
+    /**
+     * This function checks to see if there is a checkmate on the king.
+     * @param player player to check if their king is in checkmate.
+     * @return true if the king is in checkmate, false otherwise.
+     */
+    private boolean checkmateCondition(PlayerIF player){
+        // If the king isn't in check, then there is no checkmate.
+        boolean inCheck = checkCondition(player, player.getKing().getPosition()); // True if the king is in check, false otherwise.
+        boolean checkmate = false; // True if the king is in checkmate, false otherwise.
+        int checkCount = 0; // Number of checks on the king.
+
+        // If the king is in check, then check to see if there is checkmate.
+        if(inCheck){
+            // TODO
+            /**
+             * Steps:
+             * 1. Get the king of the player.
+             * 2. Get the list of valid moves for the king.
+             * 3. For each position in the list of valid moves, check to see if the king is in check.
+             * 4. If the king is not in check for any of the positions, then there is no checkmate.
+             */
+            // Get the king of the player.
+            Piece king = (Piece)player.getKing();
+
+            // Get the list of valid moves for the king.
+            List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition());
+
+            // For each position in the list of valid moves, check to see if the king is in check.
+            for(Position pos : kingValidMoves) {
+                // Call the checkCondition function to see if the king is in check if it is moved to the position.
+                if (checkCondition(player, pos)) {
+                    checkCount++;
+                }
+            }
+
+            // If the king is not in check for any of the positions, then there is no checkmate.
+            if (checkCount == kingValidMoves.size()) {
+                checkmate = true;
+            }
+
+            // TODO Check to see if any of the pieces can block the checkmate.
+            for (PieceIF piece : player.getPieces()) {
+                // Cast the piece to a Piece object.
+                Piece p = (Piece) piece;
+
+                // Get the list of valid moves for the piece.
+                List<Position> validMoves = p.getValidMoves(board, piece.getPosition());
+
+                for (Position position : validMoves) {
+                    // Emulate the move of the piece to each position in the list of valid moves.
+                    // Check to see if there is a check.
+
+                    this.move(p.getPosition().getFile(), p.getPosition().getRank(), position.getFile(), position.getRank());
+
+                    if (!this.checkCondition(player, king.getPosition())) {
+                        UndoMove(); //Down
+                        checkmate = false;
+                    }
+                    UndoMove(); //Down
+                }
+            }
+        }
+        return checkmate;
+    }
+
+    private boolean drawCondition(PlayerIF player){
+        boolean draw = false;
+        // TODO
+        /**
+         * 1. Stalemate
+         * 2. Dead position
+         * 3. Mutual agreement
+         * 4. Threefold Repetition
+         * 5. Fifty move rule
+         */
+        return draw;
     }
 
     /**
