@@ -1,15 +1,16 @@
-package interfaces;
-
-import enums.GameColor;
-import movements.KingMovement;
-
-import java.util.ArrayList;
-
 /**
  * An interface for a player in a chess game. Each player has a color, a set of
  * pieces, and a set of captured pieces.
+ *
  * @author Brady Smith 100%
+ * @version 1.0
  */
+package interfaces;
+
+import enums.GameColor;
+
+import java.util.ArrayList;
+
 public interface PlayerIF {
     /**
      * Returns the color of the player.
@@ -30,7 +31,7 @@ public interface PlayerIF {
      *
      * @return The pieces that the player has captured.
      */
-    public void displayCapturedPieces();
+    public ArrayList<PieceIF> getCapturedPieces();
 
     /**
      * Adds a piece to the player's set of captured pieces.
@@ -52,21 +53,4 @@ public interface PlayerIF {
      */
     public GameColor getColor();
 
-    /**
-     * Returns the king of the player.
-     * @return : The king of the player.
-     */
-    PieceIF getKing();
-
-    /**
-     * Returns the name of the player.
-     * @return : The name of the player.
-     */
-    public String getName();
-
-    /**
-     * Sets the name of the player.
-     * @param name : The name of the player.
-     */
-    public void setName(String name);
 }
