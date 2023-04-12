@@ -9,7 +9,7 @@ import model.Board;
 import model.Piece;
 import model.Position;
 import movements.PawnMovement;
-import player.Player;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,7 +19,7 @@ import java.util.Scanner;
  * This class implements the PlayIF interface for a command line interface.
  * @author Brady Smith (100%)
  */
-public class PlayChessCLI implements PlayIF {
+public class NewGameCLI implements PlayIF {
 
     private Scanner scan; /*scanner for user input*/
 
@@ -33,6 +33,8 @@ public class PlayChessCLI implements PlayIF {
 
     private Board board; /*board to play game on*/
 
+    private PlayIF play; /*play object*/
+
 
     /**
      * Constructor for the main menu.
@@ -41,7 +43,7 @@ public class PlayChessCLI implements PlayIF {
      * @param player1 player 1
      * @param player2 player 2
      */
-    public PlayChessCLI(Scanner scan, String boardColor, PlayerIF player1, PlayerIF player2) {
+    public NewGameCLI(Scanner scan, String boardColor, PlayerIF player1, PlayerIF player2) {
         this.scan = scan;
         this.boardColor = boardColor;
         this.player1 = player1;

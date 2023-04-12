@@ -4,38 +4,33 @@ import interfaces.LoadSaveGameIF;
 
 import java.util.Scanner;
 
-
-/**
- * This class implements the load game dialog.
- */
-public class LoadGameCLI implements LoadSaveGameIF {
-
+public class SaveGameCLI implements LoadSaveGameIF {
     private Scanner scan; /* Scanner for user input */
 
     private String url; /* URL of the file to load */
 
     /**
-     * Constructor for the load game dialog.
+     * Constructor for the save game dialog.
      * @param scan Scanner for user input
      */
-    public LoadGameCLI(Scanner scan) {
+    public SaveGameCLI(Scanner scan) {
         this.scan = scan;
         this.url = "";
     }
 
     /**
-     * Displays the load game dialog.
+     * Displays the save game dialog.
      */
     @Override
     public void show() {
-        System.out.print("Load Game\n-------------------------------------" +
+        System.out.print("Save Game\n-------------------------------------" +
                 "--------------------------\nEnter file path:");
         this.url = scan.nextLine();
     }
 
     /**
-     * Returns the URL of the file to load.
-     * @return URL of the file to load
+     * Returns the URL of the file to save.
+     * @return URL of the file to save
      */
     public String getURL(){
         return this.url;

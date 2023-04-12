@@ -23,7 +23,7 @@ public class MainMenuCLI implements MainMenuIF {
     private DefinePlayersIF definePlayers; /*define players object*/
 
     private RulePageIF rules; /*rules object*/
-    private LoadGameIF loadGame; /*load game object*/
+    private LoadSaveGameIF loadGame; /*load game object*/
 
 
     /**
@@ -34,7 +34,7 @@ public class MainMenuCLI implements MainMenuIF {
         rules = new RulesCLI(scan);//zach needs to do
         definePlayers = new DefinePlayersCLI(scan);//done
         settings = new SettingsCLI(scan);//done
-        loadGame = new LoadGameCLI();
+        loadGame = new LoadGameCLI(scan);
         this.menuOptions = new String[7];
         populateMenu();
     }
@@ -89,7 +89,7 @@ public class MainMenuCLI implements MainMenuIF {
             System.out.println();
             switch(choice) {
                 case 1:
-                    play = new PlayChessCLI(scan, settings.getBoardColor(), definePlayers.getPlayer1(),
+                    play = new NewGameCLI(scan, settings.getBoardColor(), definePlayers.getPlayer1(),
                             definePlayers.getPlayer2());//need to finish
                     play.show();
                     break;
