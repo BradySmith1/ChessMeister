@@ -8,6 +8,7 @@
 package interfaces;
 
 import enums.GameColor;
+import model.Piece;
 import movements.KingMovement;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public interface PlayerIF {
      * Returns the king of the player.
      * @return : The king of the player.
      */
-    MovementIF getKing();
+    PieceIF getKing();
 
     /**
      * Returns the name of the player.

@@ -279,7 +279,7 @@ public class PlayMoveCLI implements PlayIF {
      */
     private boolean checkmateCondition(PlayerIF player){
         // If the king isn't in check, then there is no checkmate.
-        boolean inCheck = checkCondition(player, player.getKing().getPosition()); // True if the king is in check, false otherwise.
+        boolean inCheck = checkCondition(player, player.getKing().getPosition(board)); // True if the king is in check, false otherwise.
         boolean checkmate = false; // True if the king is in checkmate, false otherwise.
         int checkCount = 0; // Number of checks on the king.
 
@@ -297,7 +297,7 @@ public class PlayMoveCLI implements PlayIF {
             Piece king = (Piece)player.getKing();
 
             // Get the list of valid moves for the king.
-            List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition());
+            List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition(board));
 
             // For each position in the list of valid moves, check to see if the king is in check.
             for(Position pos : kingValidMoves) {
@@ -318,15 +318,15 @@ public class PlayMoveCLI implements PlayIF {
                 Piece p = (Piece) piece;
 
                 // Get the list of valid moves for the piece.
-                List<Position> validMoves = p.getValidMoves(board, piece.getPosition());
+                List<Position> validMoves = p.getValidMoves(board, piece.getPosition(board));
 
                 for (Position position : validMoves) {
                     // Emulate the move of the piece to each position in the list of valid moves.
                     // Check to see if there is a check.
 
-                    this.move(p.getPosition().getFile(), p.getPosition().getRank(), position.getFile(), position.getRank());
+                    this.move(p.getPosition(board).getFile(), p.getPosition(board).getRank(), position.getFile(), position.getRank());
 
-                    if (!this.checkCondition(player, king.getPosition())) {
+                    if (!this.checkCondition(player, king.getPosition(board))) {
                         UndoMove(); //Down
                         checkmate = false;
                     }
@@ -357,8 +357,9 @@ public class PlayMoveCLI implements PlayIF {
     private boolean stalemateCondition() {
         // A draw should be declared if either player is not in check but cannot make a move without putting themselves into Check.
 
-        // Write code to declare a draw under the stalemate condition.
+        // Write java code to check for stalemate here.
         boolean stalemate = false;
+
 
     }
 
