@@ -109,6 +109,10 @@ public class RulesCLI implements RulePageIF {
                     setRule(new PawnMovesCLI());
                     rule.showRule();
                     break;
+                case 12:
+                    setRule(new CheckRuleCLI());
+                    rule.showRule();
+                    break;
                 case 0:
                     return;
                 default:
