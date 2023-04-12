@@ -3,13 +3,15 @@
  * list of pieces captured, and the color of the player themselves.
  *
  * @author Brady Smith (85%), Kaushal Patel (15%)
- * @version 1.0
+ * @version 2.0
  */
 package player;
 
+import interfaces.MovementIF;
 import interfaces.PlayerIF;
 import enums.GameColor;
 import interfaces.PieceIF;
+import model.Piece;
 
 import java.util.ArrayList;
 
@@ -122,5 +124,21 @@ public class Player implements PlayerIF{
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Returns the king of the player.
+     * @return The king of the player.
+     */
+    @Override
+    public MovementIF getKing() {
+        MovementIF king = null;
+        for(PieceIF piece : pieces){
+            if(piece.getType().getLetter() == 'K' && piece instanceof MovementIF){
+                Piece p = (Piece) piece;
+                king = p.getMoveType();
+            }
+        }
+        return king;
     }
 }
