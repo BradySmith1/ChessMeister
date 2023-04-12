@@ -461,10 +461,10 @@ public class Chess {
                     this.move(p.getPosition().getFile(), p.getPosition().getRank(), position.getFile(), position.getRank());
 
                     if (!this.checkCondition(player, king.getPosition())) {
-                        UndoMove();
+                        UndoMove(); //Down
                         checkmate = false;
                     }
-                    UndoMove();
+                    UndoMove(); //Down
                 }
             }
         }
