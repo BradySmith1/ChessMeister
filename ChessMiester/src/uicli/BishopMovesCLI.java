@@ -4,6 +4,7 @@ import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
 import model.Board;
+import model.BoardSaverLoader;
 
 /**
  * This class is responsible for displaying the rules of a bishop in chess.
@@ -65,9 +66,8 @@ public class BishopMovesCLI implements RulesIF {
         Scanner scan = new Scanner(System.in); // create scanner to read user input
         scan.nextLine(); // read line when user presses enter
 
-        Board board = new Board(); // create new board
-        board.initBoard(); // initialize board w just a pawn
-        board.draw();
+        BoardSaverLoader loader = new BoardSaverLoader();
+        loader.loadGameFromFile("bishopTutorial");
         /* TODO: draw board with a single bishop for the user to interact with */
     }
 }
