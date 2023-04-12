@@ -7,20 +7,6 @@ import java.util.ArrayList;
 /**
  * An interface for a player in a chess game. Each player has a color, a set of
  * pieces, and a set of captured pieces.
- *
- * @author Brady Smith 100%
- * @version 1.0
- */
-package interfaces;
-
-import enums.GameColor;
-import movements.KingMovement;
-
-import java.util.ArrayList;
-
-/**
- * An interface for a player in a chess game. Each player has a color, a set of
- * pieces, and a set of captured pieces.
  * @author Brady Smith 100%
  */
 public interface PlayerIF {
