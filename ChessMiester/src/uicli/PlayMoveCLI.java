@@ -327,10 +327,10 @@ public class PlayMoveCLI implements PlayIF {
                     this.move(player, playerOther,p.getPosition(board).getFile(), p.getPosition(board).getRank(), position.getFile(), position.getRank());
 
                     if (!this.checkCondition(player, king.getPosition(board))) {
-                        UndoMove(); //Down
+                        //UndoMove(); //Down
                         checkmate = false;
                     }
-                    UndoMove(); //Down
+                    //UndoMove(); //Down
                 }
             }
         }

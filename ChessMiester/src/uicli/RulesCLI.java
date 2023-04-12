@@ -66,7 +66,7 @@ public class RulesCLI implements RulePageIF {
                 "---------------------\n";
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
         String prompt = "Enter your menu choice here -> ";
-        while (true) {//while user has not quit
+        while (choice != 0) {//while user has not quit
             System.out.println(menu);   //shows user menu options
             System.out.print(prompt);
             try {
@@ -77,18 +77,42 @@ public class RulesCLI implements RulePageIF {
             }
             System.out.println();
             switch (choice) {
-                case 1 -> rule = new BoardSetupCLI();
-                case 2 -> rule = new NotationCLI();
-                case 3 -> rule = new KingMovesCLI();
-                case 4 -> rule = new QueenMovesCLI();
-                case 5 -> rule = new BishopMovesCLI();
-                case 6 -> rule = new KnightMovesCLI();
-                case 7 -> rule = new RookMovesCLI();
-                case 8 -> rule = new PawnMovesCLI();
-                case 0 -> {
+                case 1:
+                    setRule(new BoardSetupCLI());
+                    rule.showRule();
+                    break;
+                case 2:
+                    setRule(new NotationCLI());
+                    rule.showRule();
+                    break;
+                case 3:
+                    setRule(new KingMovesCLI());
+                    rule.showRule();
+                    break;
+                case 4:
+                    setRule(new QueenMovesCLI());
+                    rule.showRule();
+                    break;
+                case 5:
+                    setRule(new BishopMovesCLI());
+                    rule.showRule();
+                    break;
+                case 6:
+                    setRule(new KnightMovesCLI());
+                    rule.showRule();
+                    break;
+                case 7:
+                    setRule(new RookMovesCLI());
+                    rule.showRule();
+                    break;
+                case 8:
+                    setRule(new PawnMovesCLI());
+                    rule.showRule();
+                    break;
+                case 0:
                     return;
-                }
-                default -> System.out.println("Please enter a valid number (0 - 6)");
+                default:
+                    System.out.println("Invalid Number. Please enter a valid number (0 - 6)");
             }
             System.out.println();
             scan.nextLine();//consumes a new line so nextInt throwing an exception will not loop
