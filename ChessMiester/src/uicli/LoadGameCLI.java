@@ -27,7 +27,7 @@ public class LoadGameCLI implements LoadSaveGameIF {
      * Displays the load game dialog.
      */
     @Override
-    public void show() {
+    public void showLoadSave() {
         System.out.print("Load Game\n-------------------------------------" +
                 "--------------------------\nEnter file path:");
         this.url = scan.nextLine();

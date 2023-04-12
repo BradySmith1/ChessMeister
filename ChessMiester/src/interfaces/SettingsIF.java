@@ -9,7 +9,7 @@ public interface SettingsIF {
     /**
      * Shows the settings menu and dialog
      */
-    public void show();
+    public void showSettings();
 
     /**
      * Gets the color of the board

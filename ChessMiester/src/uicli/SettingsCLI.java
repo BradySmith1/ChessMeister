@@ -49,7 +49,7 @@ public class SettingsCLI implements SettingsIF {
      * Shows the settings page.
      */
     @Override
-    public void show() {
+    public void showSettings() {
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
         String prompt = "Enter your menu choice here -> ";
         while (true) {//while user has not quit

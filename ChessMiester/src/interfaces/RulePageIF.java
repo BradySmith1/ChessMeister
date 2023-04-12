@@ -9,5 +9,5 @@ public interface RulePageIF {
     /**
      * Displays the rule page.
      */
-    public void show();
+    public void showRulesPage();
 }

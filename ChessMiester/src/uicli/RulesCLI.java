@@ -46,7 +46,7 @@ public class RulesCLI implements RulePageIF {
      * Shows the rules page.
      */
     @Override
-    public void show() {
+    public void showRulesPage() {
         String menu = "View Rules\n---------------------------------------------------------------\n" +
                 "Please make a selection as to what you would like to do:\n" +
                 menuOptions[0] +
@@ -89,5 +89,13 @@ public class RulesCLI implements RulePageIF {
             System.out.println();
             scan.nextLine();//consumes a new line so nextInt throwing an exception will not loop
         }
+    }
+
+    /**
+     * Gets the rule object.
+     * @return the rule object
+     */
+    public void setRule(RulesIF rule) {
+        this.rule = rule;
     }
 }

@@ -11,5 +11,5 @@ public interface MainMenuIF {
     /**
      * Draws the main menu using the specified strategy.
      */
-    public void show();
+    public void showMainMenu();
 }

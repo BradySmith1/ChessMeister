@@ -31,10 +31,10 @@ public class MainMenuCLI implements MainMenuIF {
      */
     public MainMenuCLI(){
         scan = new Scanner(System.in);
-        rules = new RulesCLI(scan);//zach needs to do
-        definePlayers = new DefinePlayersCLI(scan);//done
-        settings = new SettingsCLI(scan);//done
-        loadGame = new LoadGameCLI(scan);
+        setRules(new RulesCLI(scan));//zach needs to do
+        setDefinePlayers(new DefinePlayersCLI(scan));//done
+        setSettings(new SettingsCLI(scan));//done
+        setLoadGame(new LoadGameCLI(scan));//done
         this.menuOptions = new String[7];
         populateMenu();
     }
@@ -63,7 +63,7 @@ public class MainMenuCLI implements MainMenuIF {
      * Shows the main menu.
      */
     @Override
-    public void show() {
+    public void showMainMenu() {
         System.out.println(menuTitle);
         String menu = "---------------------------------------------------------------\n" +
                 "Please make a selection as to what you would like to do:\n" +
@@ -89,21 +89,22 @@ public class MainMenuCLI implements MainMenuIF {
             System.out.println();
             switch(choice) {
                 case 1:
-                    play = new NewGameCLI(scan, settings.getBoardColor(), definePlayers.getPlayer1(),
+                    play = new NewGameCLI(scan, settings.getBoardColor(), settings.getUndo(),
+                            settings.getShowMoves(), definePlayers.getPlayer1(),
                             definePlayers.getPlayer2());//need to finish
                     play.show();
                     break;
                 case 2:
-                    rules.show();
+                    rules.showRulesPage();
                     break;
                 case 3:
                     definePlayers.show();
                     break;
                 case 4:
-                    settings.show();
+                    settings.showSettings();
                     break;
                 case 5:
-                    loadGame.show();
+                    loadGame.showLoadSave();
                     break;
                 case 0:
                     scan.close();
@@ -117,4 +118,46 @@ public class MainMenuCLI implements MainMenuIF {
             scan.nextLine();//consumes a new line so nextInt throwing an exception will not loop
         }
     }
+
+    /**
+     * Sets the settings object.
+     * @param settings the settings object
+     */
+    public void setSettings(SettingsIF settings) {
+        this.settings = settings;
+    }
+
+    /**
+     * Sets the define players object.
+     * @param definePlayers the define players object
+     */
+    public void setDefinePlayers(DefinePlayersIF definePlayers) {
+        this.definePlayers = definePlayers;
+    }
+
+    /**
+     * Sets the rules object.
+     * @param rules the rules object
+     */
+    public void setRules(RulePageIF rules) {
+        this.rules = rules;
+    }
+
+    /**
+     * Sets the load game object.
+     * @param loadGame the load game object
+     */
+    public void setLoadGame(LoadSaveGameIF loadGame) {
+        this.loadGame = loadGame;
+    }
+
+    /**
+     * Sets the play object.
+     * @param play the play object
+     */
+    public void setPlay(PlayIF play) {
+        this.play = play;
+    }
+
+
 }

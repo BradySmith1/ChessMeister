@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class BoardSetupCLI implements RulesIF {
     @Override
-    public void show() {
+    public void showRule() {
 
     }
 }

@@ -22,7 +22,7 @@ public class SaveGameCLI implements LoadSaveGameIF {
      * Displays the save game dialog.
      */
     @Override
-    public void show() {
+    public void showLoadSave() {
         System.out.print("Save Game\n-------------------------------------" +
                 "--------------------------\nEnter file path:");
         this.url = scan.nextLine();

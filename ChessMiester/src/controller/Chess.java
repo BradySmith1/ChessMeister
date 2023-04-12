@@ -29,6 +29,6 @@ public class Chess {
      * and decide what to be done next in processing.
      */
     public void go() {;
-        menu.show();
+        menu.showMainMenu();
     }
 }

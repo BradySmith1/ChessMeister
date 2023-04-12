@@ -8,5 +8,5 @@ public interface LoadSaveGameIF {
     /**
      * Displays the load game dialog.
      */
-    public void show();
+    public void showLoadSave();
 }

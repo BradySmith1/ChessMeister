@@ -1,19 +1,9 @@
 package uicli;
 
-import enums.ChessPieceType;
-import enums.Files;
-import enums.GameColor;
-import enums.Rank;
 import interfaces.*;
 import model.Board;
 import model.Piece;
-import model.Position;
-import movements.PawnMovement;
-
-import java.util.List;
 import java.util.Scanner;
-
-//TODO fix the move method
 
 /**
  * This class implements the PlayIF interface for a command line interface.
@@ -23,7 +13,9 @@ public class NewGameCLI implements PlayIF {
 
     private Scanner scan; /*scanner for user input*/
 
-    private String[] menuOptions; /*options for the menu*/
+    private String undo; /*undo move*/
+
+    private String showMoves; /*show moves*/
 
     private String boardColor;  /*color of the board*/
 
@@ -43,13 +35,15 @@ public class NewGameCLI implements PlayIF {
      * @param player1 player 1
      * @param player2 player 2
      */
-    public NewGameCLI(Scanner scan, String boardColor, PlayerIF player1, PlayerIF player2) {
+    public NewGameCLI(Scanner scan, String boardColor, String undo, String showMoves, PlayerIF player1, PlayerIF player2) {
         this.scan = scan;
         this.boardColor = boardColor;
-        this.player1 = player1;
-        this.player2 = player2;
+        this.undo = undo;
+        this.showMoves = showMoves;
+        setPlayer1(player1);
+        setPlayer2(player2);
         initBoard();
-        populateMenu();
+        setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2));
     }
 
     /**
@@ -65,19 +59,6 @@ public class NewGameCLI implements PlayIF {
         board = new Board(boardC); //create new board to play game on
         board.setup(); // initialize board
         assignPieces(); // assign pieces to player
-    }
-
-    /**
-     * Populates the menu with the title and options.
-     */
-    private void populateMenu() {
-        this.menuOptions = new String[6];
-        menuOptions[0] = "1: Move\n";
-        menuOptions[1] = "2: Undo\n";
-        menuOptions[2] = "3: Redo\n";
-        menuOptions[3] = "4: Show Moves\n";
-        menuOptions[4] = "5: Save Game\n";
-        menuOptions[5] = "0: Conceded and exit game\n";
     }
 
 
@@ -104,186 +85,30 @@ public class NewGameCLI implements PlayIF {
      */
     @Override
     public void show() {
-        board.draw(GameColor.WHITE);  // printout the board for users to see
-        String menu = "---------------------------------------------------------------\n" +
-                "Please make a selection as to what you would like to do:\n" +
-                menuOptions[0] +
-                menuOptions[1] +
-                menuOptions[2] +
-                menuOptions[3] +
-                menuOptions[4] +
-                menuOptions[5] +
-                "\n-----------------------------------------" +
-                "---------------------\n";
-        boolean gameOver = false;
-        Files file1, file2;
-        Rank rank1, rank2;
-        while(!gameOver){
-            System.out.println("White's turn\nWhere would you like to move from?");
-            boolean moveValid = false;
-            while(!moveValid){
-                file1 = findValidFile();
-                rank1 = findValidRank();
-                System.out.println("Where would you like to move to?");
-                file2 = findValidFile();
-                rank2 = findValidRank();
-                moveValid = move(player1, player2, file1, rank1, file2, rank2);
-            }
-            this.display();
-            System.out.println("\nBlack's turn\nWhere would you like to move from?");
-            moveValid = false;
-            while(!moveValid){
-                file1 = findValidFile();
-                rank1 = findValidRank();
-                System.out.println("Where would you like to move to?");
-                file2 = findValidFile();
-                rank2 = findValidRank();
-                moveValid = move(player2, player1, file1, rank1, file2, rank2);
-            }
-            player1.displayCapturedPieces();
-            board.draw(GameColor.BLACK); //needs to be recreated so it draws the board according to the current players color.
-            player2.displayCapturedPieces();
-            //gameOver = true; //condition to end processing added later on
-            //endGame();
-        }
-
+        play.show();
     }
 
     /**
-     * This is the function responsible for allowing the pieces to be moved.
-     * @param fromF File placement of where the piece is currently at
-     * @param fromR Rank placement of where the piece is currently at
-     * @param toF   File placement of where the piece will go
-     * @param toR   Rank placement of where the piece will go
+     * This function is used to set the move ui for the game.
+     * @param play play object
      */
-    public boolean move(PlayerIF currentPlayer, PlayerIF otherPlayer, Files fromF,
-                        Rank fromR, Files toF, Rank toR){
-        boolean moveMade = false; // initialize to false
-        // Get the piece at the current/"from" position.
-        Piece piece = (Piece) board.getPiece(fromR, fromF);
-
-        if(currentPlayer.getPieces().contains(piece)){
-            // True if there is a piece at the to position
-            boolean hasPiece = board.getPiece(toR, toF) != null;
-
-            // list of possible moves
-            List<Position> moves = piece.getValidMoves(board, new Position(fromR, fromF));
-            Position to = new Position(toR, toF); // position to move to
-            boolean success = false; // initialize to false
-            success = moves.contains(to); // check if where user wants to move is a valid move
-
-            if(success && hasPiece){ // A piece was captured and move is valid
-                // Add the captured piece to the player's list of captured pieces.
-                currentPlayer.addCapturedPiece(board.getPiece(toR, toF));
-
-
-                // Remove the captured piece from the player's list of pieces. TODO
-                otherPlayer.getPieces().remove(piece);
-
-                // Clear the piece at the "to" position.
-                this.board.getSquares()[toR.getIndex()][toF.getFileNum()].clear();
-
-                // Move the piece to the "to" position.
-                this.board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(piece);
-
-                // Clear the "from" position.
-                board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
-
-
-                if((piece.getType() == ChessPieceType.Pawn)){ //check if piece is a pawn
-                    PawnMovement pawn = (PawnMovement) piece.getMoveType();
-                    pawn.setFirstMove(); // set first move for a pawn to false
-                }
-                moveMade = true; // move was successful
-            }
-            else if(success && !hasPiece){ // No piece was captured and move is valid
-                // Move the piece to the "to" position.
-                board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(piece);
-
-                // Clear the "from" position.
-                board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
-
-                if((piece.getType() == ChessPieceType.Pawn)){ //check if piece is a pawn
-                    PawnMovement pawn = (PawnMovement) piece.getMoveType();
-                    pawn.setFirstMove(); //set first move for a pawn to false
-                }
-
-                moveMade = true; // move was successful
-            }
-            else{
-                System.out.println("Invalid move.");
-            }
-        }
-        else{
-            System.out.println("You cannot move that piece because it is not yours.");
-        }
-
-        return moveMade; // return whether or not the move was successful
-    }
-
-
-    /**
-     * This function checks to see if the user gave a valid file for the piece movement.
-     * @return new file for the piece to be moved to
-     */
-    public Files findValidFile() {
-        System.out.print("Enter the file of the location (A-H) >>> ");
-        String input = scan.nextLine();
-        input = input.toUpperCase(); // make sure the input is uppercase
-
-        Files newFile = null; // file to be returned
-
-        boolean valid = false; // boolean to see if input is valid
-        while(!valid){ // loop until a valid input is given be the user
-            try {
-                newFile = Files.valueOf(input);
-                valid = true;
-            }catch(IllegalArgumentException e) { //if a bad input is given, prompt for another
-                System.out.print("Invalid File, enter another (A-H) >>> ");
-                input = scan.nextLine();
-            }
-        }
-        return newFile;
+    public void setPlay(PlayIF play){
+        this.play = play;
     }
 
     /**
-     * This function checks to see if the user gave a valid rank for the piece movement.
-     * @return new rank for the piece to be moved to
+     * This function is used to set the player 1.
+     * @param player1 player 1
      */
-    public Rank findValidRank() {
-        System.out.print("Enter the rank of the location (1-8) >>> ");
-        String input = scan.nextLine();
-        Rank newRank = null;
-        boolean valid = false; // boolean to see if input is valid
-        while(!valid){
-            try{
-                Rank[] ranks = Rank.values(); // get all the ranks
-                for(Rank r : ranks){
-                    if(r.getDisplayNum() == Integer.parseInt(input)){
-                        newRank = r;
-                        break;
-                    }
-                }
-                if(newRank == null){
-                    throw new IllegalArgumentException();
-                }
-                valid = true;
-            }catch(IllegalArgumentException e){
-                System.out.print("Invalid rank, please enter another (1-8) >>> ");
-                input = scan.nextLine();
-            }
-        }
-        return newRank;
+    public void setPlayer1(PlayerIF player1){
+        this.player1 = player1;
     }
 
     /**
-     * Function used to display current state of the board and captured pieces.
+     * This function is used to set the player 2.
+     * @param player2 player 2
      */
-    public void display(){
-        player1.displayCapturedPieces(); //display captured pieces for player 1
-        System.out.println(); // line printed for formatting
-        board.draw(GameColor.WHITE); // display the board
-        System.out.println(); // line printed for formatting
-        player2.displayCapturedPieces(); // display captured pieces for player 2
+    public void setPlayer2(PlayerIF player2) {
+        this.player2 = player2;
     }
 }

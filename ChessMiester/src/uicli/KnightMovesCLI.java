@@ -4,7 +4,7 @@ import interfaces.RulesIF;
 
 public class KnightMovesCLI implements RulesIF {
     @Override
-    public void show() {
+    public void showRule() {
 
     }
 }
