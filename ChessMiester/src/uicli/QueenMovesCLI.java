@@ -1,5 +1,6 @@
 package uicli;
 
+import enums.GameColor;
 import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
@@ -16,7 +17,7 @@ public class QueenMovesCLI implements RulesIF {
      * Displays the rules of a queen in chess.
      */
     @Override
-    public void show() {
+    public void showRule() {
         StringBuilder str = new StringBuilder();
 
         /* create cool, fancy ascii art */
@@ -70,7 +71,7 @@ public class QueenMovesCLI implements RulesIF {
 
         Board board = new Board(); // create new board
         board.initBoard(); // initialize board w just a pawn
-        board.draw();
+        board.draw(GameColor.WHITE);
 
         /* TODO: draw board with a single queen for the user to interact with */
 

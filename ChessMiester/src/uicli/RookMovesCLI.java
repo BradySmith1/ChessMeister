@@ -1,5 +1,6 @@
 package uicli;
 
+import enums.GameColor;
 import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
@@ -16,7 +17,7 @@ public class RookMovesCLI implements RulesIF {
      * Displays the rules of a rook in chess.
      */
     @Override
-    public void show() {
+    public void showRule() {
         StringBuilder str = new StringBuilder();
 
         /* create cool, fancy ascii art */
@@ -63,7 +64,7 @@ public class RookMovesCLI implements RulesIF {
 
         Board board = new Board(); // create new board
         board.initBoard(); // initialize board w just a pawn
-        board.draw();
+        board.draw(GameColor.WHITE);
 
         /* TODO: draw board with a single rook for the user to interact with */
 

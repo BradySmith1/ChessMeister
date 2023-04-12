@@ -17,7 +17,7 @@ public class BishopMovesCLI implements RulesIF {
      * Displays the rules of a bishop in chess.
      */
     @Override
-    public void show() {
+    public void showRule() {
         StringBuilder str = new StringBuilder();
         /* create cool, fancy ascii art */
         str.append("""

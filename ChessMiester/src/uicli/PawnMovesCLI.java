@@ -1,5 +1,6 @@
 package uicli;
 
+import enums.GameColor;
 import interfaces.RulesIF;
 import java.lang.StringBuilder;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ public class PawnMovesCLI implements RulesIF {
      * Displays the rules of a pawn in chess.
      */
     @Override
-    public void show() {
+    public void showRule() {
         StringBuilder str = new StringBuilder();
         /* create cool, fancy ascii art */
         str.append("""
@@ -68,7 +69,7 @@ public class PawnMovesCLI implements RulesIF {
 
         Board board = new Board(); // create new board
         board.initBoard(); // initialize board w just a pawn
-        board.draw();
+        board.draw(GameColor.WHITE);
 
         /* TODO: draw board with a single pawn for the user to interact with */
 

@@ -1,5 +1,6 @@
 package uicli;
 
+import enums.GameColor;
 import interfaces.RulesIF;
 import model.Board;
 /**
@@ -13,9 +14,9 @@ public class NotationCLI implements RulesIF {
      * Displays the rules of chess notation.
      */
     @Override
-    public void show() {
+    public void showRule() {
         Board board = new Board(); // create a new board
-        board.draw(); // draw the board for the player to see
+        board.draw(GameColor.WHITE); // draw the board for the player to see
 
         // display the rules of chess notation
         System.out.println("""
