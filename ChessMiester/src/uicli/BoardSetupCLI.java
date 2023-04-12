@@ -15,11 +15,7 @@ public class BoardSetupCLI implements RulesIF {
      * Displays the rules of board setup in chess.
      */
     @Override
-    public void show() {
-        /* create a new board */
-        Board board = new Board();
-        board.initBoard();
-        board.draw();
+    public void showRule() {
 
         /* explain the setup/layout of a chess board */
         System.out.println("""
@@ -48,9 +44,5 @@ public class BoardSetupCLI implements RulesIF {
         System.out.println("Press enter to whenever you're ready to return to the tutorial menu.");
         Scanner scan = new Scanner(System.in);
         scan.nextLine();
-
-        /* return to rules menu */
-        RulesCLI rules = new RulesCLI(scan);
-        rules.show();
     }
 }
