@@ -72,7 +72,7 @@ public class PlayMoveCLI implements PlayIF {
      */
     public void show() {
         board.draw(GameColor.WHITE);
-        String menu = "Play Chess\n---------------------------------------------------------------\n" +
+        String menu = "\nPlay Chess\n---------------------------------------------------------------\n" +
                 menuOptions[0] +
                 menuOptions[1] +
                 menuOptions[2] +
