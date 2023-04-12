@@ -9,10 +9,9 @@ package interfaces;
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
+import model.Board;
 
-import java.util.ArrayList;
-
-public interface BoardIF{
+public interface BoardIF {
 
     /**
      * Initializes the game board.
@@ -77,5 +76,11 @@ public interface BoardIF{
 
     void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR);
 
-    ArrayList<String> getMoves();
+    Board.BoardMemento createMemento();
+    
+    String getState();
+
+    void loadFromMemento(Board.BoardMemento boardMemento);
+
+    public record BoardMemento(String state) {}
 }
