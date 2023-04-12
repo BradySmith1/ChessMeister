@@ -1,9 +1,3 @@
-/**
- * This interface defines the basic functionality of a game board object.
- *
- * @author Brady Smith (100%)
- * @version 1.0
- */
 package interfaces;
 
 import enums.Files;
@@ -13,9 +7,11 @@ import model.Board;
 
 /**
  * This interface defines the basic functionality of a game board object.
+ *
  * @author Brady Smith (100%)
+ * @version 1.0
  */
-public interface BoardIF {
+public interface BoardIF{
 
     /**
      * Initializes the game board.

@@ -1,16 +1,11 @@
+package interfaces;
+
 /**
  * An interface for a square on a chess board. Each square can be cleared,
  * and can hold a piece or be empty.
  *
  * @author Brady Smith (100%)
  * @version 1.0
- */
-package interfaces;
-
-/**
- * An interface for a square on a chess board. Each square can be cleared,
- * and can hold a piece or be empty.
- * @author Brady Smith (100%)
  */
 public interface SquareIF {
 

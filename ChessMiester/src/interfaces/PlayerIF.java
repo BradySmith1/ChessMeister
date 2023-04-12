@@ -1,3 +1,9 @@
+package interfaces;
+
+import enums.GameColor;
+
+import java.util.ArrayList;
+
 /**
  * An interface for a player in a chess game. Each player has a color, a set of
  * pieces, and a set of captured pieces.

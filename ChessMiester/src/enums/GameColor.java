@@ -1,3 +1,5 @@
+package enums;
+
 /**
  * Enumeration file to represent the color of the chess game.
  *
@@ -5,7 +7,6 @@
  * @version 1.0
  */
 
-package enums;
 public enum GameColor {
     BLACK, /* Represents the color black. */
     WHITE; /* Represents the color white. */
