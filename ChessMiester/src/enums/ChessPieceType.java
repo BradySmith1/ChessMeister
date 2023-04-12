@@ -1,11 +1,11 @@
+package enums;
+
 /**
  * Enumeration class to represent the type of chess piece.
  *
  * @author Zach Eanes (100%)
  * @version 1.0
  */
-package enums;
-
 public enum ChessPieceType {
     King('K', "King"), /* Used to represent the King piece. */
     Queen('Q', "Queen"), /* Used to represent the Queen piece. */

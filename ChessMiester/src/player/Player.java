@@ -1,3 +1,13 @@
+package player;
+
+import interfaces.MovementIF;
+import interfaces.PlayerIF;
+import enums.GameColor;
+import interfaces.PieceIF;
+import model.Piece;
+
+import java.util.ArrayList;
+
 /**
  * This class represents a player in the game which holds a list of their pieces,
  * list of pieces captured, and the color of the player themselves.
@@ -5,15 +15,11 @@
  * @author Brady Smith (85%), Kaushal Patel (15%)
  * @version 1.0
  */
-package player;
-
-import interfaces.PlayerIF;
-import enums.GameColor;
-import interfaces.PieceIF;
-
-import java.util.ArrayList;
-
 public class Player implements PlayerIF{
+
+    /** The name of the player */
+    private String name;
+
     /** The color of the player */
     private GameColor color;
 
@@ -47,7 +53,7 @@ public class Player implements PlayerIF{
     /**
      * Returns the list of pieces.
      *
-     * @return
+     * @return The list of player's pieces.
      */
     @Override
     public ArrayList<PieceIF> getPieces() {
@@ -59,7 +65,6 @@ public class Player implements PlayerIF{
      *
      * @return The list of captured pieces.
      */
-    @Override
     public ArrayList<PieceIF> getCapturedPieces(){
         return this.capturedPieces;
     }
@@ -87,6 +92,7 @@ public class Player implements PlayerIF{
     /**
      * Method to display the pieces that the player has captured.
      */
+    @Override
     public void displayCapturedPieces(){
         System.out.print("\n" + this.getColor().toString() + " captured pieces: ");
         for(PieceIF piece : capturedPieces){
@@ -94,6 +100,7 @@ public class Player implements PlayerIF{
         }
         System.out.print("\n");
     }
+
     /**
      * Getter method for the players game color.
      *
@@ -102,5 +109,36 @@ public class Player implements PlayerIF{
     @Override
     public GameColor getColor(){
         return this.color;
+    }
+
+    /**
+     * Getter method for the players name.
+     * @return : name of the player
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Setter method for the players name.
+     * @param name : name of the player
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Returns the king of the player.
+     * @return The king of the player.
+     */
+    @Override
+    public PieceIF getKing() {
+        PieceIF p = null;
+        for(PieceIF piece : pieces){
+            if(piece.getType().getLetter() == 'K' && piece instanceof MovementIF){
+                p = piece;
+            }
+        }
+        return p;
     }
 }

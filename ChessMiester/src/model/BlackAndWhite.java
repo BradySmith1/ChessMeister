@@ -1,14 +1,14 @@
+package model;
+
+import enums.GameColor;
+import interfaces.BlackAndWhiteIF;
+
 /**
  * This class represents a piece that can be either black or white.
  *
  * @author Brady Smith (100%)
  * @version 1.0
  */
-package model;
-
-import enums.GameColor;
-import interfaces.BlackAndWhiteIF;
-
 public class BlackAndWhite implements BlackAndWhiteIF {
 
     private GameColor color; /* The color of the piece. */

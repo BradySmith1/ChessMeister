@@ -1,21 +1,19 @@
-/**
- * This class represents a game board that can be used for a chess game.
- *
- * @author Brady Smith (100%)
- * @version 1.0
- */
 package model;
 
 import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
-import interfaces.BoardIF;
-import interfaces.BoardStrategy;
-import interfaces.PieceIF;
-import interfaces.SquareIF;
+import interfaces.*;
+import movements.PawnMovement;
 import uicli.BoardMonoCLI;
 
+/**
+ * This class represents a game board that can be used for a chess game.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0
+ */
 public class Board implements BoardIF {
 
     /** The squares that make up the game board. */
@@ -29,6 +27,8 @@ public class Board implements BoardIF {
 
     /** The strategy used to draw the board. */
     private BoardStrategy drawStrategy;
+
+    private String state;
 
     /**
      * Constructor method that creates a new game board with the specified
@@ -87,6 +87,27 @@ public class Board implements BoardIF {
         setPieces(GameColor.BLACK, height-1);
     }
 
+    private void createState() {
+        StringBuilder stateBuilder = new StringBuilder("{");
+        for (int i = 0; i < getWidth(); i++) {
+            for (int j = 0; j < getHeight(); j++) {
+                Square square = ((Square) squares[i][j]);
+                if (square.getPiece() != null) {
+                    stateBuilder.append(square.getPosition().getFile());
+                    stateBuilder.append(square.getPosition().getRank());
+                    stateBuilder.append(":");
+                    stateBuilder.append(square.getPiece().getType());
+                    stateBuilder.append(square.getPiece().getColor());
+                    if(i != getWidth() - 1) {
+                        stateBuilder.append(",");
+                    }
+                }
+            }
+        }
+        stateBuilder.append("}#[]");
+        this.state = stateBuilder.toString();
+    }
+
     /**
      * Helper method for setting up the pieces on the board
      *
@@ -108,8 +129,8 @@ public class Board implements BoardIF {
      * Method that draws the state of the game board.
      */
     @Override
-    public void draw() {
-        drawStrategy.draw(this);
+    public void draw(GameColor playerColor) {
+        drawStrategy.draw(this, playerColor);
     }
 
     /**
@@ -168,10 +189,66 @@ public class Board implements BoardIF {
      * Returns the piece at the specified column and row on the game board.
      * @param col the column of the piece.
      * @param row the row of the piece.
-     * @return the PieceIF object at the specified column and row.
+     * @return    the PieceIF object at the specified column and row.
      */
     @Override
     public PieceIF getPiece(int col, char row) {
         return squares[col][row].getPiece();
     }
+    
+    public String getState() {
+        return this.state;
+    }
+
+    public void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR) {
+        StringBuilder stateBuilder = new StringBuilder(this.state);
+        stateBuilder.deleteCharAt(stateBuilder.length() - 1);
+        stateBuilder.append(color.toString().charAt(0));
+        stateBuilder.append(":");
+        stateBuilder.append(fromF.getFileChar());
+        stateBuilder.append(fromR.getIndex());
+        stateBuilder.append("-");
+        stateBuilder.append(toF.getFileChar());
+        stateBuilder.append(toR.getIndex());
+        stateBuilder.append("]");
+        this.state = stateBuilder.toString();
+    }
+
+    public BoardMemento createMemento() {
+        return new BoardMemento(this.state);
+    }
+
+    public void loadFromMemento(BoardMemento boardMemento) {
+        String[] contents = boardMemento.state().split("#");
+        String[] pieces = contents[0].substring(1, contents[0].length() - 2).split(",");
+        setPiecesFromMemento(pieces);
+        this.state = boardMemento.state();
+    }
+
+    private void setPiecesFromMemento(String[] pieces) {
+        for (String piece : pieces) {
+            Files newFile = Files.valueOf(String.valueOf(piece.charAt(0)).toLowerCase());
+            Rank newRank = Rank.valueOf(String.valueOf(piece.charAt(1)));
+            ChessPieceType type = ChessPieceType.valueOf(String.valueOf(piece.charAt(3)));
+            String colorCase = String.valueOf(piece.charAt(4));
+            GameColor color = null;
+            switch(colorCase) {
+                case "W" -> color = GameColor.WHITE;
+                case "B" -> color = GameColor.BLACK;
+            }
+            Piece pieceToInsert = new Piece(type, color);
+            squares[newFile.getFileNum()][newRank.getIndex()].setPiece(pieceToInsert);
+            if(type == ChessPieceType.Pawn) {
+                PawnMovement pawn = (PawnMovement) pieceToInsert.getMoveType();
+                if(color == GameColor.BLACK && newRank.getIndex() != squares[0].length - 2) {
+                    pawn.setFirstMove();
+                }
+                else if(color == GameColor.BLACK && newRank.getIndex() != 1) {
+                    pawn.setFirstMove();
+                }
+            }
+        }
+    }
+
+    public record BoardMemento(String state) {}
 }
