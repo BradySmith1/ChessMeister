@@ -19,9 +19,24 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
     public BoardIF loadGameFromFile(String fileName) {
         BoardIF board = new Board();
         board.initBoard();
-        Scanner scan = new Scanner("../saves/" + fileName + ".txt");
-        String contents = scan.nextLine();
-        scan.close();
+        FileReader reader = null; // initialize reader
+        String contents = ""; // initialize string for contents
+        String file = new File( "").getAbsolutePath(); //must be in chessmeister for this to work
+        file = file.concat("/src/model/saves/" + fileName + ".txt"); // concat file path
+
+        try {
+            reader = new FileReader(file); // open reader from the file path
+            Scanner scan = new Scanner(reader); // create scanner from reader
+            contents = scan.nextLine(); // grab contents
+            scan.close(); // close scanner
+        }
+        catch(FileNotFoundException e) {
+            System.out.println("File not found: " + e);
+
+        }
+        System.out.println(contents);
+
+        // establish memento and load from memento
         Board.BoardMemento boardMemento = new Board.BoardMemento(contents);
         board.loadFromMemento(boardMemento);
         return board;

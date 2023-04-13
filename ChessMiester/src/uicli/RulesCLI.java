@@ -37,13 +37,13 @@ public class RulesCLI implements RulePageIF {
         menuOptions = new String[10];
         menuOptions[0] = "1: Board Setup\n";
         menuOptions[1] = "2: Understanding Notation\n";
-        menuOptions[2] = "2: Board Organization\n";
-        menuOptions[3] = "3: King Moves\n";
-        menuOptions[4] = "4: Queen Moves\n";
-        menuOptions[5] = "5: Bishop Moves\n";
-        menuOptions[6] = "6: Knight Moves\n";
-        menuOptions[7] = "7: Rook Moves\n";
-        menuOptions[8] = "8: Pawn Moves\n";
+        menuOptions[2] = "3: Board Organization\n";
+        menuOptions[3] = "4: King Moves\n";
+        menuOptions[4] = "5: Queen Moves\n";
+        menuOptions[5] = "6: Bishop Moves\n";
+        menuOptions[6] = "7: Knight Moves\n";
+        menuOptions[7] = "8: Rook Moves\n";
+        menuOptions[8] = "9: Pawn Moves\n";
         menuOptions[9] = "0: Main Menu\n";
     }
 

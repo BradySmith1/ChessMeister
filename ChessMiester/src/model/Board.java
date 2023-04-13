@@ -220,25 +220,28 @@ public class Board implements BoardIF {
 
     public void loadFromMemento(BoardMemento boardMemento) {
         String[] contents = boardMemento.state().split("#");
-        String[] pieces = contents[0].substring(1, contents[0].length() - 2).split(",");
+        String[] pieces = contents[0].substring(1, contents[0].length() - 1).split(",");
         setPiecesFromMemento(pieces);
         this.state = boardMemento.state();
     }
 
     private void setPiecesFromMemento(String[] pieces) {
         for (String piece : pieces) {
-            Files newFile = Files.valueOf(String.valueOf(piece.charAt(0)).toLowerCase());
-            Rank newRank = Rank.valueOf(String.valueOf(piece.charAt(1)));
-            ChessPieceType type = ChessPieceType.valueOf(String.valueOf(piece.charAt(3)));
-            String colorCase = String.valueOf(piece.charAt(4));
+            Files newFile = Files.valueOf(String.valueOf(piece.charAt(0))); // get file
+            Rank newRank = Rank.valueOf("R" + piece.charAt(1)); // get rank
+            // identify piece type from provided letter
+            String type = ChessPieceType.identify(String.valueOf(piece.charAt(3)));
+            // get piece type from returned string
+            ChessPieceType pieceType = ChessPieceType.valueOf(type);
+            String colorCase = String.valueOf(piece.charAt(4)); //get color
             GameColor color = null;
-            switch(colorCase) {
+            switch(colorCase){
                 case "W" -> color = GameColor.WHITE;
                 case "B" -> color = GameColor.BLACK;
             }
-            Piece pieceToInsert = new Piece(type, color);
-            squares[newFile.getFileNum()][newRank.getIndex()].setPiece(pieceToInsert);
-            if(type == ChessPieceType.Pawn) {
+            Piece pieceToInsert = new Piece(pieceType, color); // make piece to place
+            squares[newRank.getIndex()][newFile.getFileNum()].setPiece(pieceToInsert); // place
+            if(pieceType == ChessPieceType.Pawn) {
                 PawnMovement pawn = (PawnMovement) pieceToInsert.getMoveType();
                 if(color == GameColor.BLACK && newRank.getIndex() != squares[0].length - 2) {
                     pawn.setFirstMove();

@@ -1,5 +1,6 @@
 package uicli;
 
+import enums.GameColor;
 import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
@@ -66,8 +67,11 @@ public class BishopMovesCLI implements RulesIF {
         Scanner scan = new Scanner(System.in); // create scanner to read user input
         scan.nextLine(); // read line when user presses enter
 
-        BoardSaverLoader loader = new BoardSaverLoader();
-        loader.loadGameFromFile("bishopTutorial");
-        /* TODO: draw board with a single bishop for the user to interact with */
+        BoardSaverLoader loader = new BoardSaverLoader(); // create loader to load board
+        Board board = (Board) loader.loadGameFromFile("bishopTutorial"); // load board for bishop
+        board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
+        board.draw(GameColor.WHITE);
+
+        /* TODO: game loop for user to play */
     }
 }
