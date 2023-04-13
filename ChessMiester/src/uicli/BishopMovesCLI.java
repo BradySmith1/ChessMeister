@@ -52,6 +52,7 @@ public class BishopMovesCLI implements RulesIF {
             """);
 
         str.append("""
+                
                 Bishops are considered to be one of the better piece in chess, and is why \s
                 a player is only provided with two of them. Bishops can move diagonally in any \s
                 direction, as long as there are no pieces in the way. Bishops can capture \s

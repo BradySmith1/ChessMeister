@@ -5,6 +5,7 @@ import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
 import model.Board;
+import model.BoardSaverLoader;
 
 /**
  * This class is responsible for displaying the rules of a rook in chess.
@@ -46,6 +47,7 @@ public class RookMovesCLI implements RulesIF {
                 """);
 
         str.append("""
+                
                 Rooks are considered to be one of the better pieces in chess, and is why \s
                 a player is only provided with two of them. Rooks can move horizontally or \s
                 vertically in any direction, as long as there are no pieces in the way. Rooks \s
@@ -62,11 +64,12 @@ public class RookMovesCLI implements RulesIF {
         Scanner scan = new Scanner(System.in); // create scanner to read user input
         scan.nextLine(); // read line when user presses enter
 
-        Board board = new Board(); // create new board
-        board.initBoard(); // initialize board w just a pawn
+        BoardSaverLoader loader = new BoardSaverLoader(); // create board loader
+        Board board = (Board) loader.loadGameFromFile("rookTutorial"); // load board from file
+        board.setDrawStrategy(new BoardColorCLI()); // make the game pretty :)
         board.draw(GameColor.WHITE);
 
-        /* TODO: draw board with a single rook for the user to interact with */
+        /* TODO: game loop */
 
     }
 }

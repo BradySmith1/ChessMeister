@@ -5,6 +5,7 @@ import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
 import model.Board;
+import model.BoardSaverLoader;
 
 /**
  * This class is responsible for displaying the rules of a knight in chess.
@@ -49,6 +50,7 @@ public class KnightMovesCLI implements RulesIF {
                    """);
 
         str.append("""
+                   
                    Knights are considered to be one of the better piece in chess, and is why \s
                    a player is only provided with two of them. Knights can move in an L shape, \s
                    as long as there are no pieces in the way. Knights can capture pieces by \s
@@ -65,8 +67,9 @@ public class KnightMovesCLI implements RulesIF {
         Scanner scan = new Scanner(System.in); // create scanner to read user input
         scan.nextLine(); // read line when user presses enter
 
-        Board board = new Board(); // create new board
-        board.initBoard(); // initialize board w just a pawn
+        BoardSaverLoader loader = new BoardSaverLoader(); // create board loader
+        Board board = (Board) loader.loadGameFromFile("knightTutorial"); // load board from file
+        board.setDrawStrategy(new BoardColorCLI()); // make the game pretty :)
         board.draw(GameColor.WHITE);
 
         /* TODO: draw board with a single knight for the user to interact with */

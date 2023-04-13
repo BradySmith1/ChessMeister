@@ -5,6 +5,7 @@ import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
 import model.Board;
+import model.BoardSaverLoader;
 
 /**
  * This class is responsible for displaying the rules of a queen in chess.
@@ -49,6 +50,7 @@ public class QueenMovesCLI implements RulesIF {
                    """);
 
         str.append("""
+                    
                     The queen is the most powerful piece in chess. The queen can move \s
                     in any direction, as long as there are no pieces in the way. The queen \s
                     can capture pieces by moving to the square that the opposing piece is on.\s\s
@@ -69,8 +71,9 @@ public class QueenMovesCLI implements RulesIF {
         Scanner scan = new Scanner(System.in); // create scanner to read user input
         scan.nextLine(); // read line when user presses enter
 
-        Board board = new Board(); // create new board
-        board.initBoard(); // initialize board w just a pawn
+        BoardSaverLoader loader = new BoardSaverLoader(); // create board loader
+        Board board = (Board) loader.loadGameFromFile("queenTutorial"); // load board from file
+        board.setDrawStrategy(new BoardColorCLI()); // make the game pretty :)
         board.draw(GameColor.WHITE);
 
         /* TODO: draw board with a single queen for the user to interact with */

@@ -39,7 +39,6 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
             System.out.println("File not found: " + e);
 
         }
-        System.out.println(contents);
 
         // establish memento and load from memento
         Board.BoardMemento boardMemento = new Board.BoardMemento(contents);
