@@ -7,6 +7,11 @@ import interfaces.BoardSaverLoaderIF;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * Class responsible for loading and saving chess games to and from .txt files.
+ *
+ * @author Colton Brooks (85%), Zach Eanes (15%)
+ */
 public class BoardSaverLoader implements BoardSaverLoaderIF {
 
     @Override
