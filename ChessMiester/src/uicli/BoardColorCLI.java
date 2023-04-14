@@ -5,6 +5,7 @@ import interfaces.BoardIF;
 import interfaces.BoardStrategy;
 import interfaces.SquareIF;
 import model.Piece;
+import model.Position;
 import model.Square;
 
 /**
@@ -36,6 +37,11 @@ public class BoardColorCLI implements BoardStrategy {
         }else{
             printBlack(board, squares, background);
         }
+    }
+
+    @Override
+    public void highlight(BoardIF board, Position[] highlighted, GameColor color) {
+
     }
 
     private void printWhite(BoardIF board, SquareIF[][] squares, String background) {
