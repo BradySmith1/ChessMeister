@@ -1,11 +1,8 @@
 package uicli;
 
-import enums.GameColor;
 import interfaces.RulesIF;
-import java.util.Scanner;
+import interfaces.TutorialIF;
 import java.lang.StringBuilder;
-import model.Board;
-import model.BoardSaverLoader;
 
 /**
  * This class is responsible for displaying the rules of a knight in chess.
@@ -13,7 +10,7 @@ import model.BoardSaverLoader;
  * @author Zach Eanes (100%)
  * @version 1.0 (done in sprint 2)
  */
-public class KnightMovesCLI implements RulesIF {
+public class KnightMovesCLI implements RulesIF, TutorialIF {
     /**
      * Displays the rules of a knight in chess.
      */
@@ -50,29 +47,24 @@ public class KnightMovesCLI implements RulesIF {
                    """);
 
         str.append("""
-                   
-                   Knights are considered to be one of the better piece in chess, and is why \s
-                   a player is only provided with two of them. Knights can move in an L shape, \s
-                   as long as there are no pieces in the way. Knights can capture pieces by \s
-                   moving to the square that the opposing piece is on.\s\s
-                   
-                   Now that the rules have been explained, let's try it out!\s\s
-                   """);
+                                   
+                Knights are considered to be one of the better piece in chess, and is why \s
+                a player is only provided with two of them. Knights can move in an L shape, \s
+                as long as there are no pieces in the way. Knights can capture pieces by \s
+                moving to the square that the opposing piece is on.\s\s
+                                   
+                Now that the rules have been explained, let's try it out!\s\s
+                """);
 
         /* print out the rules */
         System.out.println(str);
-
-        /* wait for user to press any key to continue */
-        System.out.println("When you're ready to try the knight, press 'ENTER' to continue >>> ");
-        Scanner scan = new Scanner(System.in); // create scanner to read user input
-        scan.nextLine(); // read line when user presses enter
-
-        BoardSaverLoader loader = new BoardSaverLoader(); // create board loader
-        Board board = (Board) loader.loadGameFromFile("knightTutorial"); // load board from file
-        board.setDrawStrategy(new BoardColorCLI()); // make the game pretty :)
-        board.draw(GameColor.WHITE);
-
-        /* TODO: draw board with a single knight for the user to interact with */
-
     }
+
+    /**
+     * This method returns the name of the file used to load in a game for knights.
+     *
+     * @return the name of the file used to load in a game for knights
+     */
+    @Override
+    public String getFileName() { return "knightTutorial"; }
 }
