@@ -5,6 +5,7 @@ import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
 import model.Board;
+import model.BoardSaverLoader;
 
 /**
  * This class is responsible for displaying the rules of a king in chess.
@@ -39,8 +40,8 @@ public class KingMovesCLI implements RulesIF {
              .@@@@@@@        |  < | | '_ \\ / _` |\s
              #@@@@@@@.       | . \\| | | | | (_| |\s
              @@@@@@@@@       |_|\\_\\_|_| |_|\\__, |\s
-           .@@@@@@@@@@@                      __/ |\s
-          /@@@@@@@@@@@@@                    |___/\s
+           .@@@@@@@@@@@                     __/ |\s
+          /@@@@@@@@@@@@@                   |___/\s
          /@@@@@@@@@@@@@@@\s
         *@@@@@@@@@@@@@@@@@\s
        @@@@@@@@@@@@@@@@@@@@#\s
@@ -49,6 +50,7 @@ public class KingMovesCLI implements RulesIF {
                """);
 
     str.append("""
+            
             Kings are the most important piece in chess, and is why a player is only \s
             provided with one of them. Kings can move one square in any direction, \s
             as long as there are no pieces in the way. Kings can capture pieces by \s
@@ -70,8 +72,9 @@ public class KingMovesCLI implements RulesIF {
         Scanner scan = new Scanner(System.in); // create scanner to read user input
         scan.nextLine(); // read line when user presses enter
 
-        Board board = new Board(); // create new board
-        board.initBoard(); // initialize board w just a pawn
+        BoardSaverLoader loader = new BoardSaverLoader(); // create board loader
+        Board board = (Board) loader.loadGameFromFile("kingTutorial"); // load board from file
+        board.setDrawStrategy(new BoardColorCLI()); // make the game pretty :)
         board.draw(GameColor.WHITE);
 
         /* TODO: draw board with a single king for the user to interact with */

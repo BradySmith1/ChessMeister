@@ -41,4 +41,22 @@ public enum ChessPieceType {
      * @return string to represent chess piece.
      */
     public String getType(){return this.type;}
+
+    /**
+     * Used to identify the type of chess piece based on the letter.
+     *
+     * @param letter the letter to identify
+     * @return the name for the piece type
+     */
+    public static String identify(String letter){
+        return switch (letter) {
+            case "K" -> "King";
+            case "Q" -> "Queen";
+            case "R" -> "Rook";
+            case "B" -> "Bishop";
+            case "N" -> "Knight";
+            case "P" -> "Pawn";
+            default -> "Invalid";
+        };
+    }
 }

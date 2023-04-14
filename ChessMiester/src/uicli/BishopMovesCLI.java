@@ -1,5 +1,6 @@
 package uicli;
 
+import enums.GameColor;
 import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
@@ -39,8 +40,8 @@ public class BishopMovesCLI implements RulesIF {
                    @@@@@@@@@@@       |  _ <| / __| '_ \\ / _ \\| '_ \\\s
                   @@@@@@@@@@@@@      | |_) | \\__ \\ | | | (_) | |_) |\s
                  @@@@@@@@@@@@@@@     |____/|_|___/_| |_|\\___/ | .__/\s
-               *@@@@@@@@@@@@@@@@@/                             | |   \s
-             &@@@@@@@@@@@@@@@@@@@@@*                           |_|\s
+               *@@@@@@@@@@@@@@@@@/                            | |   \s
+             &@@@@@@@@@@@@@@@@@@@@@*                          |_|\s
               @@@@@@@@@@@@@@@@@@@@@ \s
             *@@@@@@@@@@@@@@@@@@@@@@@  \s
            *@@@@@@@@@@@@@@@@@@@@@@@@@ \s
@@ -51,6 +52,7 @@ public class BishopMovesCLI implements RulesIF {
             """);
 
         str.append("""
+                
                 Bishops are considered to be one of the better piece in chess, and is why \s
                 a player is only provided with two of them. Bishops can move diagonally in any \s
                 direction, as long as there are no pieces in the way. Bishops can capture \s
@@ -66,8 +68,11 @@ public class BishopMovesCLI implements RulesIF {
         Scanner scan = new Scanner(System.in); // create scanner to read user input
         scan.nextLine(); // read line when user presses enter
 
-        BoardSaverLoader loader = new BoardSaverLoader();
-        loader.loadGameFromFile("bishopTutorial");
-        /* TODO: draw board with a single bishop for the user to interact with */
+        BoardSaverLoader loader = new BoardSaverLoader(); // create loader to load board
+        Board board = (Board) loader.loadGameFromFile("bishopTutorial"); // load board for bishop
+        board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
+        board.draw(GameColor.WHITE);
+
+        /* TODO: game loop for user to play */
     }
 }
