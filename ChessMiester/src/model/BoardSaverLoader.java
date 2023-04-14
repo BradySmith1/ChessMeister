@@ -37,6 +37,10 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
         FileReader reader = null; // initialize reader
         String contents = ""; // initialize string for contents
         String file = new File( "").getAbsolutePath(); //must be in chessmeister for this to work
+        if(System.getProperty("os.name").contains("Windows")) // check if windows
+            file = file.concat("\\src\\model\\saves\\" + fileName + ".txt"); // windows
+        else // linux and macos
+            file = file.concat("/src/model/saves/" + fileName + ".txt"); // concat file path
         file = file.concat("/src/model/saves/" + fileName + ".txt"); // concat file path
 
         try {
@@ -80,8 +84,8 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
 
     /**
      * Method to write the board state into a file.
-     * @param board
-     * @param saveFile
+     * @param board the board to write
+     * @param saveFile the file to write to
      */
     private void writeGame(BoardIF board, File saveFile) {
         FileWriter writer;
