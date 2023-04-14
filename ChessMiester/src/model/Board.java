@@ -87,6 +87,9 @@ public class Board implements BoardIF {
         setPieces(GameColor.BLACK, height-1);
     }
 
+    /**
+     * Method that creates the initial state for the board.
+     */
     private void createState() {
         StringBuilder stateBuilder = new StringBuilder("{");
         for (int i = 0; i < getWidth(); i++) {
@@ -276,10 +279,10 @@ public class Board implements BoardIF {
     /**
      * Method to check if a pawn has moved from the starting positions for pawns of its color,
      * if it has move set its firstMove field to false.
-     * @param pieceToInsert
-     * @param pieceType
-     * @param color
-     * @param newRank
+     * @param pieceToInsert the piece to be modified if it is a pawn
+     * @param pieceType the tpe of piece it is
+     * @param color the color of the piece
+     * @param newRank   the rank of the piece
      */
     private void pawnCheck(PieceIF pieceToInsert, ChessPieceType pieceType, GameColor color, Rank newRank) {
         if(pieceType == ChessPieceType.Pawn) {
@@ -293,5 +296,9 @@ public class Board implements BoardIF {
         }
     }
 
+    /**
+     * A memento nested class for the board object. It can hold a boards state.
+     * @param state A string representing the state the board is in
+     */
     public record BoardMemento(String state) implements BoardMementoIF{}
 }

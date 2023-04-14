@@ -14,12 +14,22 @@ import java.util.Scanner;
  */
 public class BoardSaverLoader implements BoardSaverLoaderIF {
 
+    /**
+     * Method to save a game to a file
+     * @param board the board / game to save
+     * @param fileName  the name you want for the file
+     */
     @Override
     public void saveGameToFile(BoardIF board, String fileName) {
         File saveFile = createFile(fileName);
         writeGame(board, saveFile);
     }
 
+    /**
+     * Method to load a game from a file
+     * @param fileName  the name of the file to load from
+     * @return  the board that you have loaded
+     */
     @Override
     public BoardIF loadGameFromFile(String fileName) {
         BoardIF board = new Board();
@@ -46,6 +56,11 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
         return board;
     }
 
+    /**
+     * Method to create the file
+     * @param fileName  Name of the file to create
+     * @return  the file that has been created
+     */
     private File createFile(String fileName) {
         File saveFile = null;
         try {
@@ -63,6 +78,11 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
         return saveFile;
     }
 
+    /**
+     * Method to write the board state into a file.
+     * @param board
+     * @param saveFile
+     */
     private void writeGame(BoardIF board, File saveFile) {
         FileWriter writer;
         try {
