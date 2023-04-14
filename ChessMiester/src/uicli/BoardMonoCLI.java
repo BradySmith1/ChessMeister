@@ -45,6 +45,8 @@ public class BoardMonoCLI implements BoardStrategy {
                 System.out.println("|");
                 printLine(height, 1);
             }
+            System.out.println("   -------------------------------------------------------------------------");
+            System.out.println("        H        G        F        E        D        C        B        A");
         }else{
             System.out.println("   --------------------------------" +
                     "-----------------------------------------");
@@ -64,9 +66,9 @@ public class BoardMonoCLI implements BoardStrategy {
                 System.out.println("|");
                 printLine(height, 0);
             }
+            System.out.println("   -------------------------------------------------------------------------");
+            System.out.println("        A        B        C        D        E        F        G        H");
         }
-        System.out.println("   -------------------------------------------------------------------------");
-        System.out.println("        A        B        C        D        E        F        G        H");
     }
 
     private void printLine(int height, int rotated){

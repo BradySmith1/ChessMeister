@@ -78,7 +78,7 @@ public class PlayMoveCLI implements PlayIF {
                 menuOptions[5];
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
         String prompt = "Enter your menu choice here -> ";
-        while (choice != 0) { //while user has not quit
+        while (choice != 6) { //while user has not quit
             System.out.println(menu);   //shows user menu options
             System.out.print(prompt);
             try {

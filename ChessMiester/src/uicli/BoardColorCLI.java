@@ -29,11 +29,11 @@ public class BoardColorCLI implements BoardStrategy {
     public void draw(BoardIF board, GameColor playerColor) {
         String unicode;
         String background = WHITE_BACK;
-        String letters = "     A      B      C      D      E      F      G      H\n";
-        int number = 8;
+        int number;
         //draws the board
         SquareIF[][] squares = board.getSquares();
-        if(playerColor == GameColor.BLACK){
+        if(playerColor == GameColor.WHITE){
+            number = 1;
             //draws the board
             for(int height = 0; height < board.getHeight(); height++){
                 System.out.print(number + " ");
@@ -45,9 +45,11 @@ public class BoardColorCLI implements BoardStrategy {
                 }
                 background = background.equals(WHITE_BACK) ? BLACK_BACK : WHITE_BACK;
                 System.out.print("\u001b[0m\n"); //ends the line. code is for reset
-                number--;
+                number++;
             }
+            System.out.print("     H      G      F      E      D      C      B      A\n");
         }else{
+            number = 8;
             for(int height = board.getHeight() - 1; height >= 0; height--){
                 System.out.print(number + " ");
                 //draws the squares
@@ -60,8 +62,8 @@ public class BoardColorCLI implements BoardStrategy {
                 System.out.print("\u001b[0m\n"); //ends the line. code is for reset
                 number--;
             }
+            System.out.print("     A      B      C      D      E      F      G      H\n");
         }
-        System.out.print(letters);
     }
 
     private void printPiece(Square square, String background) {
