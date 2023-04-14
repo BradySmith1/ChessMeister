@@ -218,7 +218,7 @@ public class Board implements BoardIF {
         return new BoardMemento(this.state);
     }
 
-    public void loadFromMemento(BoardMemento boardMemento) {
+    public void loadFromMemento(BoardMementoIF boardMemento) {
         String[] contents = boardMemento.state().split("#");
         String[] pieces = contents[0].substring(1, contents[0].length() - 2).split(",");
         setPiecesFromMemento(pieces);
@@ -250,5 +250,5 @@ public class Board implements BoardIF {
         }
     }
 
-    public record BoardMemento(String state) {}
+    public record BoardMemento(String state) implements BoardIF.BoardMementoIF {}
 }

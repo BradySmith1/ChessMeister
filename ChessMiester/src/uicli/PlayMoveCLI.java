@@ -37,6 +37,7 @@ public class PlayMoveCLI implements PlayIF {
 
     private String undo; /*undo move*/
 
+    private BoardMementoCaretaker caretaker;
     private String showMoves; /*show moves*/
 
     /**
@@ -48,6 +49,7 @@ public class PlayMoveCLI implements PlayIF {
         this.player1 = player1;
         this.player2 = player2;
         this.board = board;
+        this.caretaker = new BoardMementoCaretaker(board.createMemento());
         this.undo = undo;
         this.showMoves = showMoves;
         setSaveGame(new SaveGameCLI(scan));
@@ -431,7 +433,7 @@ public class PlayMoveCLI implements PlayIF {
                 inCheck = this.checkCondition(this.player1, this.player1.getKing().getPosition(board));
                 while (inCheck) {
                     System.out.println("Invalid move puts you in check");
-                    undoMove();
+                    undoMoveFromCheck();
                     startMove(this.player1);
                     inCheck = this.checkCondition(this.player1, this.player1.getKing().getPosition(board));
                 }
@@ -442,7 +444,7 @@ public class PlayMoveCLI implements PlayIF {
                 inCheck = this.checkCondition(this.player2, this.player2.getKing().getPosition(board));
                 while (inCheck) {
                     System.out.println("Invalid move puts you in check");
-                    undoMove();
+                    undoMoveFromCheck();
                     startMove(this.player2);
                     inCheck = this.checkCondition(this.player1, this.player1.getKing().getPosition(board));
                 }
@@ -451,8 +453,27 @@ public class PlayMoveCLI implements PlayIF {
         }
     }
 
-    private void undoMove() {
-        this.board.loadFromMemento();
+    private void undoMoveFromCheck() {
+        this.caretaker.pop();
+        this.board.loadFromMemento(this.caretaker.peek());
+    }
+
+    private void push(BoardIF.BoardMementoIF memento) {
+        this.caretaker.push(memento);
+    }
+
+    private void undo() {
+        BoardIF.BoardMementoIF memento = this.caretaker.down();
+        if(memento != null) {
+            this.board.loadFromMemento(memento);
+        }
+    }
+
+    private void redo() {
+        BoardIF.BoardMementoIF memento = this.caretaker.up();
+        if(memento != null) {
+            this.board.loadFromMemento(memento);
+        }
     }
 
     private void startMove(PlayerIF player) {
