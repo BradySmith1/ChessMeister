@@ -1,5 +1,6 @@
 package uicli;
 
+import controller.BoardMementoCaretaker;
 import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
@@ -25,6 +26,8 @@ public class PlayMoveCLI implements PlayIF {
     private String[] menuOptions; /*options for the menu*/
 
     private LoadSaveGameIF saveGame; /*save game object*/
+
+    private BoardMementoCaretaker caretaker;
 
     private PlayerIF player1; /*player 1*/
 
@@ -255,7 +258,7 @@ public class PlayMoveCLI implements PlayIF {
      * @param player player to check if their king is in check.
      * @return true if the king is in check, false otherwise.
      */
-    private boolean checkCondition(PlayerIF player, Position position){
+    public boolean checkCondition(PlayerIF player, Position position){
         boolean isCheck = false;
         //Position kingPos = player.getKing().getPosition(); TODO Pass this line into checkCondition when checking for check.
 
@@ -403,5 +406,58 @@ public class PlayMoveCLI implements PlayIF {
      */
     public void setSaveGame(LoadSaveGameIF saveGame){
         this.saveGame = saveGame;
+    }
+
+    /**
+     * Loop for the game to occur
+     */
+    private void gameLoop() {
+        boolean gameOver = false; // loop condition for game to hinge on
+        while(!gameOver){
+            boolean inCheck = this.checkCondition(this.player1, this.player1.getKing().getPosition(board));
+            boolean inCheckMate = this.checkmateCondition(this.player1, this.player2);
+            if(inCheckMate){ // player 1 is in checkmate, game is over
+                System.out.println(player1.getName() + ", you're in checkmate! Better luck" +
+                                                       " next time!");
+                // end game
+            }
+            else if(inCheck){
+                System.out.println(player1.getName() + ", you're in check! Better protect" +
+                                                       " your king!");
+            }
+            else {
+                // Prompt player 1 for input
+                // make move for player 1
+                inCheck = this.checkCondition(this.player1, this.player1.getKing().getPosition(board));
+                while (inCheck) {
+                    System.out.println("Invalid move puts you in check");
+                    undoMove();
+                    startMove(this.player1);
+                    inCheck = this.checkCondition(this.player1, this.player1.getKing().getPosition(board));
+                }
+                // Make move for player 1
+
+                // Prompt player 2 for input
+                // make move for player 2
+                inCheck = this.checkCondition(this.player2, this.player2.getKing().getPosition(board));
+                while (inCheck) {
+                    System.out.println("Invalid move puts you in check");
+                    undoMove();
+                    startMove(this.player2);
+                    inCheck = this.checkCondition(this.player1, this.player1.getKing().getPosition(board));
+                }
+                // Make move for player 2
+            }
+        }
+    }
+
+    private void undoMove() {
+        this.board.loadFromMemento();
+    }
+
+    private void startMove(PlayerIF player) {
+        // Prompt player for input
+        // make move for player
+        this.move(player, playerOther, 0, 0, 0, 0);
     }
 }
