@@ -37,4 +37,10 @@ public interface PieceIF extends BlackAndWhiteIF {
      * @return the position of the piece.
      */
     Position getPosition(BoardIF board);
+
+    /**
+     * method to get the movement type for the piece
+     * @return  a class that implements MovementIF that represents the moves this piece can do
+     */
+    MovementIF getMoveType();
 }

@@ -195,11 +195,25 @@ public class Board implements BoardIF {
     public PieceIF getPiece(int col, char row) {
         return squares[col][row].getPiece();
     }
-    
+
+    /**
+     * Getter for the state field of the Board
+     * @return the String of the board state
+     */
+    @Override
     public String getState() {
         return this.state;
     }
 
+    /**
+     * Adds the move to the boards state that it holds in a field.
+     * @param color color of the moving piece
+     * @param fromF current file for the piece
+     * @param fromR current rank for the piece
+     * @param toF   the file to move to
+     * @param toR   the rank to move to
+     */
+    @Override
     public void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR) {
         StringBuilder stateBuilder = new StringBuilder(this.state);
         stateBuilder.deleteCharAt(stateBuilder.length() - 1);
@@ -214,10 +228,20 @@ public class Board implements BoardIF {
         this.state = stateBuilder.toString();
     }
 
-    public BoardMemento createMemento() {
+    /**
+     * Creates a memento for the current state of the board
+     * @return the memento to be stored in a caretaker
+     */
+    @Override
+    public BoardMementoIF createMemento() {
         return new BoardMemento(this.state);
     }
 
+    /**
+     * Method to load the board from a different memento / board state.
+     * @param boardMemento  the memento to load in
+     */
+    @Override
     public void loadFromMemento(BoardMemento boardMemento) {
         String[] contents = boardMemento.state().split("#");
         String[] pieces = contents[0].substring(1, contents[0].length() - 1).split(",");
@@ -225,6 +249,10 @@ public class Board implements BoardIF {
         this.state = boardMemento.state();
     }
 
+    /**
+     * Method to place the pieces depending on the String[] passed in from loadFromMemento()
+     * @param pieces    An array in which each string describes a piece and its location
+     */
     private void setPiecesFromMemento(String[] pieces) {
         for (String piece : pieces) {
             Files newFile = Files.valueOf(String.valueOf(piece.charAt(0))); // get file
@@ -239,19 +267,31 @@ public class Board implements BoardIF {
                 case "W" -> color = GameColor.WHITE;
                 case "B" -> color = GameColor.BLACK;
             }
-            Piece pieceToInsert = new Piece(pieceType, color); // make piece to place
+            PieceIF pieceToInsert = new Piece(pieceType, color); // make piece to place
             squares[newRank.getIndex()][newFile.getFileNum()].setPiece(pieceToInsert); // place
-            if(pieceType == ChessPieceType.Pawn) {
-                PawnMovement pawn = (PawnMovement) pieceToInsert.getMoveType();
-                if(color == GameColor.BLACK && newRank.getIndex() != squares[0].length - 2) {
-                    pawn.setFirstMove();
-                }
-                else if(color == GameColor.BLACK && newRank.getIndex() != 1) {
-                    pawn.setFirstMove();
-                }
+            pawnCheck(pieceToInsert, pieceType, color, newRank);
+        }
+    }
+
+    /**
+     * Method to check if a pawn has moved from the starting positions for pawns of its color,
+     * if it has move set its firstMove field to false.
+     * @param pieceToInsert
+     * @param pieceType
+     * @param color
+     * @param newRank
+     */
+    private void pawnCheck(PieceIF pieceToInsert, ChessPieceType pieceType, GameColor color, Rank newRank) {
+        if(pieceType == ChessPieceType.Pawn) {
+            PawnMovement pawn = (PawnMovement) pieceToInsert.getMoveType();
+            if(color == GameColor.BLACK && newRank.getIndex() != squares[0].length - 2) {
+                pawn.setFirstMove();
+            }
+            else if(color == GameColor.BLACK && newRank.getIndex() != 1) {
+                pawn.setFirstMove();
             }
         }
     }
 
-    public record BoardMemento(String state) {}
+    public record BoardMemento(String state) implements BoardMementoIF{}
 }
