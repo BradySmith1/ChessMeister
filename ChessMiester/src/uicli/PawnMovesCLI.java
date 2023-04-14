@@ -1,11 +1,8 @@
 package uicli;
 
-import enums.GameColor;
 import interfaces.RulesIF;
+import interfaces.TutorialIF;
 import java.lang.StringBuilder;
-import java.util.Scanner;
-import model.Board;
-import model.BoardSaverLoader;
 
 /**
  * This class is responsible for displaying the rules of a pawn in chess.
@@ -13,7 +10,7 @@ import model.BoardSaverLoader;
  * @author Zach Eanes (100%)
  * @version 1.0 (done in sprint 2)
  */
-public class PawnMovesCLI implements RulesIF {
+public class PawnMovesCLI implements RulesIF, TutorialIF {
     /**
      * Displays the rules of a pawn in chess.
      */
@@ -44,7 +41,7 @@ public class PawnMovesCLI implements RulesIF {
 
         /* add all important rules of a pawn */
         str.append("""
-                
+                                
                 Pawns are considered to be the least powerful piece in chess, and is why a \s
                 player is provided with eight of them. Pawns can only move forward, and \s
                 can only capture diagonally. Pawns can move two spaces on their first move, \s
@@ -63,19 +60,13 @@ public class PawnMovesCLI implements RulesIF {
 
         /* display the pawn rules */
         System.out.println(str);
-
-        /* wait for user to press any key to continue */
-        System.out.println("When you're ready to try the pawn, press 'ENTER' to continue >>> ");
-        Scanner scan = new Scanner(System.in); // create scanner to read user input
-        scan.nextLine(); // read line when user presses enter
-
-        BoardSaverLoader loader = new BoardSaverLoader(); // create board loader
-        Board board = (Board) loader.loadGameFromFile("pawnTutorial"); // load board from file
-        board.setDrawStrategy(new BoardColorCLI()); // make the game pretty :)
-        board.draw(GameColor.WHITE);
-
-        /* TODO: draw board with a single pawn for the user to interact with */
-
-
     }
+
+    /**
+     * This method returns name of the file that contains the tutorial for the pawn.
+     *
+     * @return name of file that contains  tutorial for pawn
+     */
+    @Override
+    public String getFileName() { return "pawnTutorial"; }
 }
