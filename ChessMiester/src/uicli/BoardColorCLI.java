@@ -29,41 +29,50 @@ public class BoardColorCLI implements BoardStrategy {
     public void draw(BoardIF board, GameColor playerColor) {
         String unicode;
         String background = WHITE_BACK;
-        int number;
         //draws the board
         SquareIF[][] squares = board.getSquares();
         if(playerColor == GameColor.WHITE){
-            number = 1;
-            //draws the board
-            for(int height = 0; height < board.getHeight(); height++){
-                System.out.print(number + " ");
-                //draws the squares
-                for(int width = 0; width < board.getWidth(); width++){
-                    Square square = (Square) squares[height][width];
-                    printPiece(square, background);
-                    background = square.getColor() == GameColor.WHITE ? BLACK_BACK : WHITE_BACK;
-                }
-                background = background.equals(WHITE_BACK) ? BLACK_BACK : WHITE_BACK;
-                System.out.print("\u001b[0m\n"); //ends the line. code is for reset
-                number++;
-            }
-            System.out.print("     H      G      F      E      D      C      B      A\n");
+            printWhite(board, squares, background);
         }else{
-            number = 8;
-            for(int height = board.getHeight() - 1; height >= 0; height--){
-                System.out.print(number + " ");
-                //draws the squares
-                for(int width = board.getWidth() - 1; width >= 0; width--){
-                    Square square = (Square) squares[height][width];
-                    printPiece(square, background);
-                    background = square.getColor() == GameColor.WHITE ? BLACK_BACK : WHITE_BACK;
-                }
-                background = background.equals(WHITE_BACK) ? BLACK_BACK : WHITE_BACK;
-                System.out.print("\u001b[0m\n"); //ends the line. code is for reset
-                number--;
-            }
-            System.out.print("     A      B      C      D      E      F      G      H\n");
+            printBlack(board, squares, background);
         }
+    }
+
+    private void printWhite(BoardIF board, SquareIF[][] squares, String background) {
+        int number;
+        number = 1;
+        //draws the board
+        for(int height = 0; height < board.getHeight(); height++){
+            System.out.print(number + " ");
+            //draws the squares
+            for(int width = 0; width < board.getWidth(); width++){
+                Square square = (Square) squares[height][width];
+                printPiece(square, background);
+                background = square.getColor() == GameColor.WHITE ? BLACK_BACK : WHITE_BACK;
+            }
+            background = background.equals(WHITE_BACK) ? BLACK_BACK : WHITE_BACK;
+            System.out.print("\u001b[0m\n"); //ends the line. code is for reset
+            number++;
+        }
+        System.out.print("     H      G      F      E      D      C      B      A\n");
+    }
+
+    private void printBlack(BoardIF board, SquareIF[][] squares, String background) {
+        int number;
+        number = 8;
+        for(int height = board.getHeight() - 1; height >= 0; height--){
+            System.out.print(number + " ");
+            //draws the squares
+            for(int width = board.getWidth() - 1; width >= 0; width--){
+                Square square = (Square) squares[height][width];
+                printPiece(square, background);
+                background = square.getColor() == GameColor.WHITE ? BLACK_BACK : WHITE_BACK;
+            }
+            background = background.equals(WHITE_BACK) ? BLACK_BACK : WHITE_BACK;
+            System.out.print("\u001b[0m\n"); //ends the line. code is for reset
+            number--;
+        }
+        System.out.print("     A      B      C      D      E      F      G      H\n");
     }
 
     private void printPiece(Square square, String background) {
