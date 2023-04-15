@@ -576,10 +576,24 @@ public class PlayMoveCLI implements PlayIF {
                 // reset valid move to ensure loop doesn't end
                 validMove = false;
             }
+            // check to see if there is a piece at the position
+            if(this.board.getPiece(fromRank, fromFile) == null){
+                System.out.println("No piece at that position.");
+                validMove = false;
+            }
+            // check to see if the piece is the current player's piece
+            else if (!(currentPlayer.getPieces().contains(this.board.getPiece(fromRank, fromFile)))){
+                System.out.println("That is not your piece.");
+                validMove = false;
+            }
         }
 
-        Position position = new Position(fromRank, fromFile);
-       // board.highlight(position); // highlight places for the move
+        if (validMove) {
+            // Get valid moves for the piece
+            PieceIF piece = this.board.getPiece(fromRank, fromFile);
+            List<Position> validMoves = piece.getValidMoves(this.board, new Position(fromRank, fromFile));
+            //this.board.highlightMoves(validMoves);
+        }
     }
 
 }
