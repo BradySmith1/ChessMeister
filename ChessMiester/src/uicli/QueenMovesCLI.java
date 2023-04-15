@@ -1,7 +1,14 @@
 package uicli;
 
+import enums.ChessPieceType;
+import enums.Files;
+import enums.GameColor;
+import enums.Rank;
 import interfaces.RulesIF;
 import interfaces.TutorialIF;
+import model.Piece;
+import model.Position;
+
 import java.lang.StringBuilder;
 
 /**
@@ -62,13 +69,10 @@ public class QueenMovesCLI implements RulesIF, TutorialIF {
 
         /* display the queen rules */
         System.out.println(str);
+
+        /* create piece and call tutorial loop */
+        Piece queen = new Piece(ChessPieceType.Queen, GameColor.WHITE);
+        this.tutorialLoop("queenTutorial", queen, new Position(Rank.R1, Files.D));
     }
 
-    /**
-     * Method that returns the name of file for the tutorial for the queen.
-     *
-     * @return name of file for queen tutorial
-     */
-    @Override
-    public String getFileName() { return "queenTutorial"; }
 }

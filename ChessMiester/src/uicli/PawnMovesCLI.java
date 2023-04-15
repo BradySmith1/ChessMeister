@@ -1,7 +1,14 @@
 package uicli;
 
+import enums.ChessPieceType;
+import enums.Files;
+import enums.GameColor;
+import enums.Rank;
 import interfaces.RulesIF;
 import interfaces.TutorialIF;
+import model.Piece;
+import model.Position;
+
 import java.lang.StringBuilder;
 
 /**
@@ -60,13 +67,9 @@ public class PawnMovesCLI implements RulesIF, TutorialIF {
 
         /* display the pawn rules */
         System.out.println(str);
-    }
 
-    /**
-     * This method returns name of the file that contains the tutorial for the pawn.
-     *
-     * @return name of file that contains  tutorial for pawn
-     */
-    @Override
-    public String getFileName() { return "pawnTutorial"; }
+        /* create piece and call tutorial loop */
+        Piece pawn = new Piece(ChessPieceType.Pawn, GameColor.WHITE);
+        this.tutorialLoop("pawnTutorial", pawn, new Position(Rank.R2, Files.A));
+    }
 }

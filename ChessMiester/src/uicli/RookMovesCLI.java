@@ -1,7 +1,14 @@
 package uicli;
 
+import enums.ChessPieceType;
+import enums.Files;
+import enums.Rank;
+import enums.GameColor;
 import interfaces.RulesIF;
 import interfaces.TutorialIF;
+import model.Piece;
+import model.Position;
+
 import java.lang.StringBuilder;
 
 
@@ -29,12 +36,12 @@ public class RookMovesCLI implements RulesIF, TutorialIF {
                            @@@@@@@@# \s
                            @@@@@@@@& \s
                           .@@@@@@@@@  \s
-                          (@@@@@@@@@       _____                _   \s
-                          @@@@@@@@@@(     |  __ \\             | |  \s
-                          @@@@@@@@@@@     | |__) | ___    ___  | | __\s
-                         @@@@@@@@@@@@/    |  _   // _ \\ / _ \\| |/ /\s
-                        ,@@@@@@@@@@@@@    | | \\ \\(_) | |(_) ||    <\s
-                        @@@@@@@@@@@@@@@   |_|  \\_\\___/\\___/ |_|\\_\\\s
+                          (@@@@@@@@@       _____             _   \s
+                          @@@@@@@@@@(     |  __ \\           | |  \s
+                          @@@@@@@@@@@     | |__) |___   ___ | | __\s
+                         @@@@@@@@@@@@/    |  _  /  _ \\ / _ \\| |/ /\s
+                        ,@@@@@@@@@@@@@    | | \\ \\ (_) | (_) |   <\s
+                        @@@@@@@@@@@@@@@   |_|  \\_\\___/ \\___/|_|\\_\\\s
                        @@@@@@@@@@@@@@@@# \s
                       ..................  \s
                      @@@@@@@@@@@@@@@@@@@@% \s
@@ -51,18 +58,14 @@ public class RookMovesCLI implements RulesIF, TutorialIF {
                 vertically in any direction, as long as there are no pieces in the way. Rooks \s
                 can capture pieces by moving to the square that the opposing piece is on.\s\s
                                 
-                Now that the rules have been explained, let's try it out!\s\s
+                Now that the rules have been explained, let's try it out!\s\s                             
                 """);
 
         /* display the rook rules */
         System.out.println(str);
-    }
 
-    /**
-     * Method returns the name of the file used to load in a tutorial game for a rook.
-     *
-     * @return name of file used to load rook tutorial
-     */
-    @Override
-    public String getFileName() { return "rookTutorial"; }
+        /* create piece and call tutorial loop */
+        Piece rook = new Piece(ChessPieceType.Rook, GameColor.WHITE);
+        this.tutorialLoop("rookTutorial", rook, new Position(Rank.R1, Files.H));
+    }
 }

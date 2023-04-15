@@ -1,7 +1,14 @@
 package uicli;
 
+import enums.ChessPieceType;
+import enums.Files;
+import enums.GameColor;
+import enums.Rank;
 import interfaces.RulesIF;
 import interfaces.TutorialIF;
+import model.Piece;
+import model.Position;
+
 import java.lang.StringBuilder;
 
 /**
@@ -59,13 +66,9 @@ public class BishopMovesCLI implements RulesIF, TutorialIF{
                 """);
         /* display the bishop rules */
         System.out.println(str);
-    }
 
-    /**
-     * This method returns the name of the bishop tutorial file.
-     *
-     * @return the name of the bishop tutorial file
-     */
-    @Override
-    public String getFileName() { return "bishopTutorial"; }
+        /* create piece and call tutorial loop */
+        Piece bishop = new Piece(ChessPieceType.Bishop, GameColor.WHITE);
+        this.tutorialLoop("bishopTutorial", bishop, new Position(Rank.R1, Files.F));
+    }
 }

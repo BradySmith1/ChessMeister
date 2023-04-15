@@ -1,7 +1,14 @@
 package uicli;
 
+import enums.ChessPieceType;
+import enums.Files;
+import enums.GameColor;
+import enums.Rank;
 import interfaces.RulesIF;
 import interfaces.TutorialIF;
+import model.Piece;
+import model.Position;
+
 import java.lang.StringBuilder;
 
 /**
@@ -58,13 +65,9 @@ public class KnightMovesCLI implements RulesIF, TutorialIF {
 
         /* print out the rules */
         System.out.println(str);
-    }
 
-    /**
-     * This method returns the name of the file used to load in a game for knights.
-     *
-     * @return the name of the file used to load in a game for knights
-     */
-    @Override
-    public String getFileName() { return "knightTutorial"; }
+        /* make piece and call tutorial loop */
+        Piece knight = new Piece(ChessPieceType.Knight, GameColor.WHITE);
+        this.tutorialLoop("knightTutorial", knight, new Position(Rank.R1, Files.G));
+    }
 }

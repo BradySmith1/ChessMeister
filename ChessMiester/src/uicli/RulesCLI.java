@@ -99,46 +99,28 @@ public class RulesCLI implements RulePageIF {
                     rule.showRule();
                     break;
                 case 4:
-                    KingMovesCLI king = new KingMovesCLI();
-                    king.showRule();
-                    Piece kingP = new Piece(ChessPieceType.King, GameColor.WHITE);
-                    king.tutorialLoop(king.getFileName(), kingP,
-                                      new Position(Rank.R1, Files.C));
+                    setRule(new KingMovesCLI());
+                    rule.showRule();
                     break;
                 case 5:
-                    QueenMovesCLI queen = new QueenMovesCLI();
-                    queen.showRule();
-                    Piece queenP = new Piece(ChessPieceType.Queen, GameColor.WHITE);
-                    queen.tutorialLoop(queen.getFileName(), queenP,
-                                       new Position(Rank.R1, Files.D));
+                    setRule(new QueenMovesCLI());
+                    rule.showRule();
                     break;
                 case 6:
-                    BishopMovesCLI bishop = new BishopMovesCLI();
-                    bishop.showRule();
-                    Piece bishopP = new Piece(ChessPieceType.Bishop, GameColor.WHITE);
-                    bishop.tutorialLoop(bishop.getFileName(), bishopP,
-                                        new Position(Rank.R1, Files.F));
+                    setRule(new BishopMovesCLI());
+                    rule.showRule();
                     break;
                 case 7:
-                    KnightMovesCLI knight = new KnightMovesCLI();
-                    knight.showRule();
-                    Piece knightP = new Piece(ChessPieceType.Knight, GameColor.WHITE);
-                    knight.tutorialLoop(knight.getFileName(), knightP,
-                                        new Position(Rank.R1, Files.G));
+                    setRule(new KnightMovesCLI());
+                    rule.showRule();
                     break;
                 case 8:
-                    RookMovesCLI rook = new RookMovesCLI();
-                    rook.showRule();
-                    Piece rookP = new Piece(ChessPieceType.Rook, GameColor.WHITE);
-                    rook.tutorialLoop(rook.getFileName(), rookP,
-                                      new Position(Rank.R1, Files.H));
+                    setRule(new RookMovesCLI());
+                    rule.showRule();
                     break;
                 case 9:
-                    PawnMovesCLI pawn = new PawnMovesCLI();
-                    pawn.showRule();
-                    Piece pawnP = new Piece(ChessPieceType.Pawn, GameColor.WHITE);
-                    pawn.tutorialLoop(pawn.getFileName(), pawnP,
-                                      new Position(Rank.R2, Files.A));
+                    setRule(new PawnMovesCLI());
+                    rule.showRule();
                     break;
                 case 12:
                     setRule(new CheckRuleCLI());

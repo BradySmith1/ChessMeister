@@ -8,22 +8,11 @@ import model.BoardSaverLoader;
 import model.Piece;
 import model.Position;
 import uicli.BoardColorCLI;
-import uicli.PlayMoveCLI;
 
 import java.util.List;
 import java.util.Scanner;
 
 public interface TutorialIF{
-
-    /**
-     * This method will return the name of the file necessary to be loaded for the
-     * game loop.
-     *
-     * @return the name of the file necessary to be loaded for the game loop.
-     */
-    public String getFileName();
-
-
     /**
      * This method will be responsible for loading the game, and looping
      * the player through until the game is over.
@@ -71,9 +60,14 @@ public interface TutorialIF{
 
              // make the move
              if(toR != null && toF != null){;
-                 if(moves.contains(new Position(toR, toF))) {
-                     board.getSquares()[pos.getRank().getIndex()][pos.getFile().getFileNum()].clear(); // remove piece from old position
-                     board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(piece); // move piece
+                 Position newPos = new Position(toR, toF);
+                 if(moves.contains(newPos)){
+                     // remove piece from old position
+                     board.getSquares()[pos.getRank().getIndex()]
+                                       [pos.getFile().getFileNum()].clear();
+                     // set piece to new position
+                     board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(piece);
+                     pos = newPos;
                  } else {
                      System.out.println("Invalid move. Try again.");
                  }

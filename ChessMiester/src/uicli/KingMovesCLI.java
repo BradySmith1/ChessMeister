@@ -1,8 +1,14 @@
 package uicli;
 
+import enums.Files;
+import enums.Rank;
 import interfaces.RulesIF;
 import interfaces.TutorialIF;
 import java.lang.StringBuilder;
+import model.Piece;
+import model.Position;
+import enums.GameColor;
+import enums.ChessPieceType;
 
 /**
  * This class is responsible for displaying the rules of a king in chess.
@@ -63,13 +69,9 @@ public class KingMovesCLI implements RulesIF, TutorialIF {
 
         /* display the king rules */
         System.out.println(str);
-    }
 
-    /**
-     * Returns the name of the file used for the king tutorial file.
-     *
-     * @return name of file for king tutorial file
-     */
-    @Override
-    public String getFileName() { return "kingTutorial"; }
+        /* create piece and call tutorial loop */
+        Piece king = new Piece(ChessPieceType.King, GameColor.WHITE);
+        this.tutorialLoop("kingTutorial", king, new Position(Rank.R1, Files.D));
+    }
 }
