@@ -26,7 +26,7 @@ public interface TutorialIF{
      */
      default void tutorialLoop(String file) {
          /* wait for user to press any key to continue */
-         System.out.println("When you're ready to try the bishop, press 'ENTER' to continue >>> ");
+         System.out.println("When you're ready to try the bishop, press 'ENTER' to continue. ");
          Scanner scan = new Scanner(System.in); // create scanner to read user input
          scan.nextLine(); // read line when user presses enter
 
@@ -41,7 +41,7 @@ public interface TutorialIF{
              input = scan.nextLine();
              System.out.println(input);
                 if (!input.equals("0")) { // if user didn't quit
-                    board.move(input); // move the piece
+                   // board.move(input); // move the piece
                     board.draw(GameColor.WHITE); // draw the board
                 }
          }
