@@ -2,6 +2,7 @@ package movements;
 
 import enums.GameColor;
 import interfaces.BoardIF;
+import interfaces.FirstMoveIF;
 import interfaces.MovementIF;
 import model.Position;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author Zach Eanes (85%), Colton Brooks (15%)
  * @version 1.0
  */
-public class RookMovement extends QueenMovement implements MovementIF{
+public class RookMovement extends QueenMovement implements MovementIF, FirstMoveIF {
 
     /* Boolean to check if the rook has moved; needed for castling implementation */
     private boolean isFirstMove;
@@ -53,15 +54,18 @@ public class RookMovement extends QueenMovement implements MovementIF{
     }
 
     /**
-     * Method to be called whenever a rook makes its first move, changes isFirstMove to false
-     * to show a move has been made. Used for castling implementation.
+     * Method returns whether the piece have moved or not.
+     *
+     * @return true if the piece has not moved, false otherwise.
      */
-    public void setFirstMove() {this.isFirstMove = false;}
+    @Override
+    public boolean getFirstMove() { return this.isFirstMove; }
 
     /**
-     * Method to be called to check if the rook has moved
-     *
-     * @return true if the rook has not moved, false if it has
+     * Changes boolean if this is the first move of the piece occurs.
      */
-    public boolean getFirstMove(){return this.isFirstMove;}
+    @Override
+    public void setFirstMove(){ this.isFirstMove = false; }
+
+
 }
