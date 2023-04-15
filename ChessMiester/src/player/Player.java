@@ -199,7 +199,7 @@ public class Player implements PlayerIF{
     public PieceIF getKing() {
         PieceIF p = null;
         for(PieceIF piece : pieces){
-            if(piece.getType().getLetter() == 'K' && piece instanceof MovementIF){
+            if(piece.getType().getLetter() == 'K'){
                 p = piece;
             }
         }

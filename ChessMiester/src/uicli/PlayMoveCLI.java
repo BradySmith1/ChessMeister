@@ -10,6 +10,7 @@ import model.Piece;
 import model.Position;
 import movements.PawnMovement;
 
+import java.awt.*;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -75,7 +76,8 @@ public class PlayMoveCLI implements PlayIF {
      * Displays the play move dialog.
      */
     public void show() {
-        board.draw(GameColor.WHITE);
+        //board.draw(GameColor.WHITE);
+        this.display();
         String menu = "\nPlay Chess\n---------------------------------------------------------------\n" +
                 menuOptions[0] +
                 menuOptions[1] +
@@ -84,7 +86,7 @@ public class PlayMoveCLI implements PlayIF {
                 menuOptions[4] +
                 menuOptions[5];
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
-        String prompt = currentPlayer.getName() + "Enter your choice ===> ";
+        String prompt = currentPlayer.getName() + " Enter your choice ===> ";
         while (choice != 0) { //while user has not quit
             System.out.println(menu);   //shows user menu options
             System.out.print(prompt);   //ask user for this choice
@@ -98,6 +100,7 @@ public class PlayMoveCLI implements PlayIF {
                 case 1:
                     System.out.println("Move");
                     this.gameLoop();
+                    this.display();   //TODO TEMPORARY
                     this.switchPlayers();
 
                     if(endGameCondition()){
@@ -469,6 +472,7 @@ public class PlayMoveCLI implements PlayIF {
         boolean validMove = false;
         while(!validMove){ // loop until we get a valid move
             System.out.println("Make Move:"); // prompt for move
+            Scanner scan = new Scanner(System.in);  // TODO remove this line later after testing and replace with field
             String move = scan.nextLine();
             move = move.replaceAll("\\s", ""); // remove white space
 
