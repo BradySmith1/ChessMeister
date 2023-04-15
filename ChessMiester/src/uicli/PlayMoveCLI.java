@@ -27,7 +27,7 @@ public class PlayMoveCLI implements PlayIF {
 
     private LoadSaveGameIF saveGame; /*save game object*/
 
-    private BoardMementoCaretaker caretaker;
+    private BoardMementoCaretaker caretaker;    /*caretaker for the board*/
 
     private PlayerIF player1; /*player 1*/
 
@@ -39,7 +39,6 @@ public class PlayMoveCLI implements PlayIF {
 
     private String undo; /*undo move*/
 
-    private BoardMementoCaretaker caretaker;
     private String showMoves; /*show moves*/
 
     /**
@@ -437,6 +436,7 @@ public class PlayMoveCLI implements PlayIF {
 
     private void undoMove() {
         //this.board.loadFromMemento();
+    }
     private void undoMoveFromCheck() {
         this.caretaker.pop();
         this.board.loadFromMemento(this.caretaker.peek());
