@@ -76,11 +76,13 @@ public interface BoardIF{
 
     void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR);
 
-    Board.BoardMemento createMemento();
+    Board.BoardMementoIF createMemento();
 
     String getState();
 
-    void loadFromMemento(Board.BoardMemento boardMemento);
+    void loadFromMemento(Board.BoardMementoIF boardMemento);
 
-    public record BoardMemento(String state) {}
+    public interface BoardMementoIF {
+        String state();
+    }
 }

@@ -218,10 +218,12 @@ public class Board implements BoardIF {
         return new BoardMemento(this.state);
     }
 
-    public void loadFromMemento(BoardMemento boardMemento) {
+    public void loadFromMemento(BoardMementoIF boardMemento) {
         String[] contents = boardMemento.state().split("#");
         String[] pieces = contents[0].substring(1, contents[0].length() - 2).split(",");
+        String[] moves = contents[1].substring(1, contents[1].length() - 2).split(",");
         setPiecesFromMemento(pieces);
+        setFirstMovesFromMemento(moves);
         this.state = boardMemento.state();
     }
 
@@ -238,17 +240,13 @@ public class Board implements BoardIF {
             }
             Piece pieceToInsert = new Piece(type, color);
             squares[newFile.getFileNum()][newRank.getIndex()].setPiece(pieceToInsert);
-            if(type == ChessPieceType.Pawn) {
-                PawnMovement pawn = (PawnMovement) pieceToInsert.getMoveType();
-                if(color == GameColor.BLACK && newRank.getIndex() != squares[0].length - 2) {
-                    pawn.setFirstMove();
-                }
-                else if(color == GameColor.BLACK && newRank.getIndex() != 1) {
-                    pawn.setFirstMove();
-                }
-            }
         }
+
     }
 
-    public record BoardMemento(String state) {}
+    private void setFirstMovesFromMemento(String[] moves) {
+        // to be implemented
+    }
+
+    public record BoardMemento(String state) implements BoardIF.BoardMementoIF {}
 }

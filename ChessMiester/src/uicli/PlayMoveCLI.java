@@ -10,7 +10,6 @@ import model.Piece;
 import model.Position;
 import movements.PawnMovement;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -40,6 +39,7 @@ public class PlayMoveCLI implements PlayIF {
 
     private String undo; /*undo move*/
 
+    private BoardMementoCaretaker caretaker;
     private String showMoves; /*show moves*/
 
     /**
@@ -52,6 +52,7 @@ public class PlayMoveCLI implements PlayIF {
         this.player2 = player2;
         this.currentPlayer = player1;
         this.board = board;
+        this.caretaker = new BoardMementoCaretaker(board.createMemento());
         this.undo = undo;
         this.showMoves = showMoves;
         setSaveGame(new SaveGameCLI(scan));
@@ -436,6 +437,27 @@ public class PlayMoveCLI implements PlayIF {
 
     private void undoMove() {
         //this.board.loadFromMemento();
+    private void undoMoveFromCheck() {
+        this.caretaker.pop();
+        this.board.loadFromMemento(this.caretaker.peek());
+    }
+
+    private void push(BoardIF.BoardMementoIF memento) {
+        this.caretaker.push(memento);
+    }
+
+    private void undo() {
+        BoardIF.BoardMementoIF memento = this.caretaker.down();
+        if(memento != null) {
+            this.board.loadFromMemento(memento);
+        }
+    }
+
+    private void redo() {
+        BoardIF.BoardMementoIF memento = this.caretaker.up();
+        if(memento != null) {
+            this.board.loadFromMemento(memento);
+        }
     }
 
 

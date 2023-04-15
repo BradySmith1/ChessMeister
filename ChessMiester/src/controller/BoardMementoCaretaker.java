@@ -1,24 +1,36 @@
 package controller;
 
 import interfaces.BoardIF;
+import model.Board;
 
 public class BoardMementoCaretaker {
 
     private Element top;
 
-    public BoardMementoCaretaker(BoardIF.BoardMemento memento) {
+    public BoardMementoCaretaker(BoardIF.BoardMementoIF memento) {
         this.top = new Element(memento);
     }
 
-    public void push(BoardIF.BoardMemento memento) {
+    public void push(BoardIF.BoardMementoIF memento) {
         Element toPush = new Element(memento);
         toPush.downElement = this.top;
         this.top.upElement = toPush;
         this.top = toPush;
     }
 
-    public BoardIF.BoardMemento down() {
-        BoardIF.BoardMemento memento = null;
+    public BoardIF.BoardMementoIF pop() {
+        BoardIF.BoardMementoIF temp = this.top.data;
+        this.top = this.top.downElement;
+        this.top.upElement = null;
+        return temp;
+    }
+
+    public BoardIF.BoardMementoIF peek() {
+        return this.top.data;
+    }
+
+    public Board.BoardMementoIF down() {
+        BoardIF.BoardMementoIF memento = null;
         if(this.top.downElement != null) {
             this.top = this.top.downElement;
             memento = this.top.data;
@@ -26,8 +38,8 @@ public class BoardMementoCaretaker {
         return memento;
     }
 
-    public BoardIF.BoardMemento up() {
-        BoardIF.BoardMemento memento = null;
+    public BoardIF.BoardMementoIF up() {
+        BoardIF.BoardMementoIF memento = null;
         if(this.top.upElement != null) {
             this.top = this.top.upElement;
             memento = this.top.data;
@@ -37,11 +49,11 @@ public class BoardMementoCaretaker {
 
     private static class Element {
 
-        private final BoardIF.BoardMemento data;
+        private final BoardIF.BoardMementoIF data;
         private Element upElement;
         private Element downElement;
 
-        Element(BoardIF.BoardMemento memento) {
+        Element(BoardIF.BoardMementoIF memento) {
             this.data = memento;
             this.upElement = null;
             this.downElement = null;
