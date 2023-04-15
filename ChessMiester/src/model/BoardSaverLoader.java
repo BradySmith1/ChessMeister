@@ -41,7 +41,6 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
             file = file.concat("\\src\\model\\saves\\" + fileName + ".txt"); // windows
         else // linux and macos
             file = file.concat("/src/model/saves/" + fileName + ".txt"); // concat file path
-        file = file.concat("/src/model/saves/" + fileName + ".txt"); // concat file path
 
         try {
             reader = new FileReader(file); // open reader from the file path

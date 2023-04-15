@@ -10,4 +10,5 @@ public interface RulesIF {
      * Displays the rules.
      */
     public void showRule();
+
 }

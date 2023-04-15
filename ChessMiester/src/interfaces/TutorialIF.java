@@ -31,14 +31,19 @@ public interface TutorialIF{
          scan.nextLine(); // read line when user presses enter
 
          BoardSaverLoader loader = new BoardSaverLoader(); // create loader to load board
-         Board board = (Board) loader.loadGameFromFile("bishopTutorial"); // load board for bishop
+         Board board = (Board) loader.loadGameFromFile(file); // load board for bishop
          board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
          board.draw(GameColor.WHITE);
 
          String input = "1"; // basic string for user input
-         while (input != "0") { // loop game until user wants to quit
-             System.out.println("Enter a move => "); // prompt and read input
+         while (!input.equals("0")) { // loop game until user wants to quit
+             System.out.print("Enter a move (Enter 0 to quit) ===> "); // prompt and read input
              input = scan.nextLine();
+             System.out.println(input);
+                if (!input.equals("0")) { // if user didn't quit
+                    board.move(input); // move the piece
+                    board.draw(GameColor.WHITE); // draw the board
+                }
          }
      }
 }

@@ -92,28 +92,34 @@ public class RulesCLI implements RulePageIF {
                     rule.showRule();
                     break;
                 case 4:
-                    setRule(new KingMovesCLI());
-                    rule.showRule();
+                    KingMovesCLI king = new KingMovesCLI();
+                    king.showRule();
+                    king.tutorialLoop(king.getFileName());
                     break;
                 case 5:
-                    setRule(new QueenMovesCLI());
-                    rule.showRule();
+                    QueenMovesCLI queen = new QueenMovesCLI();
+                    queen.showRule();
+                    queen.tutorialLoop(queen.getFileName());
                     break;
                 case 6:
-                    setRule(new BishopMovesCLI());
-                    rule.showRule();
+                    BishopMovesCLI bishop = new BishopMovesCLI();
+                    bishop.showRule();
+                    bishop.tutorialLoop(bishop.getFileName());
                     break;
                 case 7:
-                    setRule(new KnightMovesCLI());
-                    rule.showRule();
+                    KnightMovesCLI knight = new KnightMovesCLI();
+                    knight.showRule();
+                    knight.tutorialLoop(knight.getFileName());
                     break;
                 case 8:
-                    setRule(new RookMovesCLI());
-                    rule.showRule();
+                    RookMovesCLI rook = new RookMovesCLI();
+                    rook.showRule();
+                    rook.tutorialLoop(rook.getFileName());
                     break;
                 case 9:
-                    setRule(new PawnMovesCLI());
-                    rule.showRule();
+                    PawnMovesCLI pawn = new PawnMovesCLI();
+                    pawn.showRule();
+                    pawn.tutorialLoop(pawn.getFileName());
                     break;
                 case 12:
                     setRule(new CheckRuleCLI());
