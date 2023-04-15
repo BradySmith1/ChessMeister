@@ -29,6 +29,18 @@ public class Player implements PlayerIF{
     /** The pieces the player has captured */
     private ArrayList<PieceIF> capturedPieces;
 
+    /** The number of wins the player has */
+    private int numberofWins;
+
+    /** The number of losses the player has */
+    private int numberofLosses;
+
+    /** The number of draws the player has */
+    private int numberofDraws;
+
+    /** The number of moves the player has made */
+    private int moveCount;
+
     /**
      * Constructor method for the Player class.
      *
@@ -128,6 +140,58 @@ public class Player implements PlayerIF{
     }
 
     /**
+     * Increases the number of losses the player has.
+     */
+    @Override
+    public void increaseLosses() {
+        this.numberofLosses++;
+    }
+
+    /**
+     * Increases the number of wins the player has.
+     */
+    @Override
+    public void increaseWins() {
+        this.numberofWins++;
+    }
+
+    /**
+     * Increases the number of draws the player has.
+     */
+    @Override
+    public void increaseDraws() {
+        this.numberofDraws++;
+    }
+
+    /**
+     * Displays the number of wins, losses, and draws the player has.
+     */
+    @Override
+    public void displayStats() {
+        System.out.println("Wins: " + this.numberofWins);
+        System.out.println("Losses: " + this.numberofLosses);
+        System.out.println("Draws: " + this.numberofDraws);
+    }
+
+    /**
+     * Increases the number of moves the player has made.
+     */
+    @Override
+    public void increaseMoveCount() {
+        this.moveCount++;
+    }
+
+    /**
+     * Returns the number of moves the player has made.
+     *
+     * @return : The number of moves the player has made.
+     */
+    @Override
+    public int getMoveCount() {
+        return this.moveCount;
+    }
+
+    /**
      * Returns the king of the player.
      * @return The king of the player.
      */
@@ -140,5 +204,29 @@ public class Player implements PlayerIF{
             }
         }
         return p;
+    }
+
+    /**
+     * Returns the number of wins the player has.
+     * @return The number of wins the player has.
+     */
+    public int getWins(){
+        return this.numberofWins;
+    }
+
+    /**
+     * Returns the number of losses the player has.
+     * @return The number of losses the player has.
+     */
+    public int getLosses(){
+        return this.numberofLosses;
+    }
+
+    /**
+     * Returns the number of draws the player has.
+     * @return The number of draws the player has.
+     */
+    public int getDraws(){
+        return this.numberofDraws;
     }
 }

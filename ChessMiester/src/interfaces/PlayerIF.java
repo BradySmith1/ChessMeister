@@ -69,4 +69,35 @@ public interface PlayerIF {
      * @param name : The name of the player.
      */
     public void setName(String name);
+
+    /**
+     * Increases the number of losses the player has.
+     */
+    public void increaseLosses();
+
+    /**
+     * Increases the number of wins the player has.
+     */
+    public void increaseWins();
+
+    /**
+     * Increases the number of draws the player has.
+     */
+    public void increaseDraws();
+
+    /**
+     * Displays the number of wins, losses, and draws the player has.
+     */
+    public void displayStats();
+
+    /**
+     * Increases the number of moves the player has made.
+     */
+    public void increaseMoveCount();
+
+    /**
+     * Returns the number of moves the player has made.
+     * @return : The number of moves the player has made.
+     */
+    public int getMoveCount();
 }
