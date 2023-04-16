@@ -39,7 +39,7 @@ public interface TutorialIF{
          /* Load in the board and go through game loop */
          BoardSaverLoader loader = new BoardSaverLoader(); // create loader to load board
          Board board = (Board) loader.loadGameFromFile(file); // load board for bishop
-         board.setDrawStrategy(new BoardMonoCLI()); // make it pretty :)
+         board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
          String input = "1"; // basic string for user input
 
          while (!input.equals("0")) { // loop game until user wants to quit

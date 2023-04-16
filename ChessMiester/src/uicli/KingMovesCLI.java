@@ -72,6 +72,6 @@ public class KingMovesCLI implements RulesIF, TutorialIF {
 
         /* create piece and call tutorial loop */
         Piece king = new Piece(ChessPieceType.King, GameColor.WHITE);
-        this.tutorialLoop("kingTutorial", king, new Position(Rank.R1, Files.D));
+        this.tutorialLoop("kingTutorial", king, new Position(Rank.R1, Files.E));
     }
 }
