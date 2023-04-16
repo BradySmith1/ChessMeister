@@ -4,11 +4,10 @@ import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.BoardStrategy;
 import interfaces.SquareIF;
-import model.Board;
-import model.Piece;
 import model.Position;
 import model.Square;
-//TODO documentation
+
+
 /**
  * This class implements the BoardStrategy interface for a black and white command line interface.
  *
@@ -17,10 +16,10 @@ import model.Square;
  */
 public class BoardMonoCLI implements BoardStrategy {
 
-    private String[] pieces = new String[8];
-    private String[] lines = new String[8];
-    private Position[] highlighted;
-    private boolean highlight = false;
+    private String[] pieces = new String[8]; /*The array of pieces*/
+    private String[] lines = new String[8]; /*The array of lines below and above the pieces*/
+    private Position[] highlighted; /*The array of highlighted positions*/
+    private boolean highlight = false; /*Whether to highlight the board*/
 
     /**
      * Draws the game board using the specified strategy.
@@ -37,6 +36,12 @@ public class BoardMonoCLI implements BoardStrategy {
         }
     }
 
+    /**
+     * Function for printing a highlighted board.
+     * @param board the BoardIF object representing the game board to be drawn.
+     * @param highlighted the array of positions that are highlighted.
+     * @param color the color of the player.
+     */
     public void highlight(BoardIF board, Position[] highlighted, GameColor color) {
         this.highlighted = highlighted;
         this.highlight = true;
@@ -47,6 +52,11 @@ public class BoardMonoCLI implements BoardStrategy {
         }
     }
 
+    /**
+     * Helper function for populating the pieces into the pieces array.
+     * @param board the BoardIF object representing the game board to be drawn.
+     * @param height the height of the board.
+     */
     private void populateRow(BoardIF board, int height){
         SquareIF[][] squares = board.getSquares();
         for(int width = 0; width < board.getWidth(); width++){
@@ -56,13 +66,15 @@ public class BoardMonoCLI implements BoardStrategy {
         populateLine();
     }
 
+    /**
+     * Helper function for printing the lines into lines array.
+     */
     private void populateLine(){
         String black = "#########";
         String white = "         ";
         String highlight = "---------";
         for(int width = 0; width < lines.length; width++){
             lines[width] = "";
-            String temp = pieces[width].substring(0, 1);
             if(pieces[width].substring(0, 1).equals(" ")){
                 lines[width] += white;
             }else if(pieces[width].substring(0, 1).equals("#")){
@@ -74,10 +86,12 @@ public class BoardMonoCLI implements BoardStrategy {
     }
 
     /**
-     * Prints the board with the rotation oriented towards the black player.
+     * Prints the board with the rotation oriented towards the white player.
      * @param board the BoardIF object representing the game board to be drawn.
      */
-    private void printBlack(BoardIF board) {
+    private void printWhite(BoardIF board) {
+        int number;
+        number = 8;
         System.out.println("   --------------------------------" +
                 "-----------------------------------------");
         // Print the board.
@@ -86,7 +100,7 @@ public class BoardMonoCLI implements BoardStrategy {
             System.out.print("  | ");
             printLine(true);
             System.out.println("|");
-            System.out.print(board.getHeight() - height + " | ");
+            System.out.print(number + " | ");
             // Print the pieces.
             for (int width = pieces.length - 1; width >= 0; width--) {
                 System.out.print(pieces[width]);
@@ -95,16 +109,19 @@ public class BoardMonoCLI implements BoardStrategy {
             System.out.print("  | ");
             printLine(true);
             System.out.println("|");
+            number--;
         }
         System.out.println("   -------------------------------------------------------------------------");
-        System.out.println("        H        G        F        E        D        C        B        A");
+        System.out.println("        A        B        C        D        E        F        G        H");
     }
 
     /**
-     * Prints the board with the rotation oriented towards the white player.
+     * Prints the board with the rotation oriented towards the black player.
      * @param board the BoardIF object representing the game board to be drawn.
      */
-    private void printWhite(BoardIF board) {
+    private void printBlack(BoardIF board) {
+        int number;
+        number = 1;
         System.out.println("   --------------------------------" +
                 "-----------------------------------------");
         // Print the board.
@@ -113,7 +130,7 @@ public class BoardMonoCLI implements BoardStrategy {
             System.out.print("  | ");
             printLine(false);
             System.out.println("|");
-            System.out.print(board.getHeight() - height + " | ");
+            System.out.print(number + " | ");
             for (int width = 0; width < pieces.length; width++) {
                 System.out.print(pieces[width]);
             }
@@ -121,11 +138,16 @@ public class BoardMonoCLI implements BoardStrategy {
             System.out.print("  | ");
             printLine(false);
             System.out.println("|");
+            number++;
         }
         System.out.println("   -------------------------------------------------------------------------");
-        System.out.println("        A        B        C        D        E        F        G        H");
+        System.out.println("        H        G        F        E        D        C        B        A");
     }
 
+    /**
+     * Helper function for printing the lines in the array.
+     * @param reversed whether to print the lines in reverse.
+     */
     private void printLine(boolean reversed){
         if(reversed){
             for (int width = lines.length - 1; width >= 0; width--) {
@@ -138,6 +160,11 @@ public class BoardMonoCLI implements BoardStrategy {
         }
     }
 
+    /**
+     * Helper function for printing the pieces in the array.
+     * @param square the square to print.
+     * @param index the index of the piece in the array.
+     */
     private void printPiece(Square square, int index){
         boolean squareHighlighted = false;
         // Print the rank numbers.
@@ -169,6 +196,11 @@ public class BoardMonoCLI implements BoardStrategy {
         }
     }
 
+    /**
+     * Helper function for checking if a square is highlighted.
+     * @param square the square to check.
+     * @return true if the square is highlighted, false otherwise.
+     */
     private boolean checkHighlight(Square square) {
         boolean result = false;
         for (Position position : highlighted) {
