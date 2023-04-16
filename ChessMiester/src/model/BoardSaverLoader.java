@@ -1,6 +1,7 @@
 package model;
 
 
+import controller.BoardMementoCaretaker;
 import interfaces.BoardIF;
 import interfaces.BoardSaverLoaderIF;
 
@@ -10,21 +11,22 @@ import java.util.Scanner;
 public class BoardSaverLoader implements BoardSaverLoaderIF {
 
     @Override
-    public void saveGameToFile(BoardIF board, String fileName) {
+    public void saveGameToFile(BoardMementoCaretaker caretaker, String fileName) {
         File saveFile = createFile(fileName);
-        writeGame(board, saveFile);
+        writeGame(caretaker, saveFile);
     }
 
     @Override
-    public BoardIF loadGameFromFile(String fileName) {
-        BoardIF board = new Board();
-        board.initBoard();
+    public BoardMementoCaretaker loadGameFromFile(String fileName) {
         Scanner scan = new Scanner("../saves/" + fileName + ".txt");
-        String contents = scan.nextLine();
+        BoardIF.BoardMementoIF memento = new Board.BoardMemento(scan.nextLine());
+        BoardMementoCaretaker caretaker = new BoardMementoCaretaker(memento);
+        while(scan.hasNext()) {
+            memento = new Board.BoardMemento(scan.nextLine());
+            caretaker.push(memento);
+        }
         scan.close();
-        Board.BoardMemento boardMemento = new Board.BoardMemento(contents);
-        board.loadFromMemento(boardMemento);
-        return board;
+        return caretaker;
     }
 
     private File createFile(String fileName) {
@@ -44,11 +46,14 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
         return saveFile;
     }
 
-    private void writeGame(BoardIF board, File saveFile) {
+    private void writeGame(BoardMementoCaretaker caretaker, File saveFile) {
         FileWriter writer;
         try {
             writer = new FileWriter(saveFile);
-            writer.write(board.getState());
+            writer.write(caretaker.topToBottom().state());
+            while(caretaker.up() != null) {
+                writer.write("\n" + caretaker.peek().state());
+            }
             writer.close();
         }
         catch (IOException e) {

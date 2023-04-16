@@ -5,8 +5,11 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 import interfaces.*;
-import movements.PawnMovement;
 import uicli.BoardMonoCLI;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * This class represents a game board that can be used for a chess game.
@@ -221,7 +224,10 @@ public class Board implements BoardIF {
     public void loadFromMemento(BoardMementoIF boardMemento) {
         String[] contents = boardMemento.state().split("#");
         String[] pieces = contents[0].substring(1, contents[0].length() - 2).split(",");
-        String[] moves = contents[1].substring(1, contents[1].length() - 2).split(",");
+        String[] movesForward = contents[1].substring(1, contents[1].length() - 2).split(",");
+        ArrayList<String> movesAL = new ArrayList<>(Arrays.stream(movesForward).toList());
+        Collections.reverse(movesAL);
+        String[] moves = movesAL.toArray(new String[0]);
         setPiecesFromMemento(pieces);
         setFirstMovesFromMemento(moves);
         this.state = boardMemento.state();
@@ -245,7 +251,17 @@ public class Board implements BoardIF {
     }
 
     private void setFirstMovesFromMemento(String[] moves) {
-        // to be implemented
+        for(String move : moves) {
+            Files fromF = Files.valueOf(String.valueOf(move.charAt(2)).toLowerCase());
+            Rank fromR = Rank.valueOf(String.valueOf(move.charAt(3)));
+            Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toLowerCase());
+            Rank toR = Rank.valueOf(String.valueOf(move.charAt(6)));
+            MovementIF movementType = squares[toF.getFileNum()][toR.index].getPiece().getMoveType();
+            if (squares[toF.getFileNum()][toR.index].getPiece().getMoveType() instanceof FirstMoveIF) {
+                FirstMoveIF movement = (FirstMoveIF) movementType;
+                movement.setFirstMoveFalse();
+            }
+        }
     }
 
     public record BoardMemento(String state) implements BoardIF.BoardMementoIF {}

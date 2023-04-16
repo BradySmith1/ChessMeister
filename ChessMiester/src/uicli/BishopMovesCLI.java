@@ -1,5 +1,6 @@
 package uicli;
 
+import controller.BoardMementoCaretaker;
 import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
@@ -67,7 +68,7 @@ public class BishopMovesCLI implements RulesIF {
         scan.nextLine(); // read line when user presses enter
 
         BoardSaverLoader loader = new BoardSaverLoader();
-        loader.loadGameFromFile("bishopTutorial");
+        BoardMementoCaretaker caretaker = loader.loadGameFromFile("bishopTutorial");
         /* TODO: draw board with a single bishop for the user to interact with */
     }
 }

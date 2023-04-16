@@ -6,9 +6,11 @@ import model.Board;
 public class BoardMementoCaretaker {
 
     private Element top;
+    private final Element bottom;
 
     public BoardMementoCaretaker(BoardIF.BoardMementoIF memento) {
         this.top = new Element(memento);
+        this.bottom = this.top;
     }
 
     public void push(BoardIF.BoardMementoIF memento) {
@@ -45,6 +47,11 @@ public class BoardMementoCaretaker {
             memento = this.top.data;
         }
         return memento;
+    }
+
+    public BoardIF.BoardMementoIF topToBottom() {
+        this.top = this.bottom;
+        return this.top.data;
     }
 
     private static class Element {
