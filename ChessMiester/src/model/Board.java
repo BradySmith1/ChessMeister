@@ -301,4 +301,10 @@ public class Board implements BoardIF {
      * @param state A string representing the state the board is in
      */
     public record BoardMemento(String state) implements BoardMementoIF{}
+
+    /**
+     * Getter for the draw strategy
+     * @return the draw strategy
+     */
+    public BoardStrategy getDrawStrategy() { return drawStrategy; }
 }

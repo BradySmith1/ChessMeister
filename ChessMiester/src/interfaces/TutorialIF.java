@@ -45,14 +45,13 @@ public interface TutorialIF{
          while (!input.equals("0")) { // loop game until user wants to quit
              board.draw(GameColor.WHITE); // draw board
              List<Position> moves = piece.getValidMoves(board, pos); // get valid moves for bishop
-             for(Position move : moves){
-                 System.out.print(move.getFile().getFileChar());
-                 System.out.println(move.getRank().getDisplayNum());
-             }
+//             for(Position move : moves){
+//                 System.out.print(move.getFile().getFileChar());
+//                 System.out.println(move.getRank().getDisplayNum());
+//             }
              System.out.print("Enter a move (Enter 0 to quit, " +
                               "1 to try capturing) ===> "); // prompt and read input
              input = scan.nextLine();
-             //System.out.println(input);
 
              if(input.equals("1")){ // user wants to spawn a pawn
                  board = this.spawnPiece(board, pos); // spawn a random pawn                                     GameColor.BLACK));
