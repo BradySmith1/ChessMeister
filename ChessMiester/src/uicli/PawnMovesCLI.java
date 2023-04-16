@@ -70,6 +70,6 @@ public class PawnMovesCLI implements RulesIF, TutorialIF {
 
         /* create piece and call tutorial loop */
         Piece pawn = new Piece(ChessPieceType.Pawn, GameColor.WHITE);
-        this.tutorialLoop("pawnTutorial", pawn, new Position(Rank.R2, Files.A));
+        this.tutorialLoop("pawnTutorial", pawn, new Position(Rank.R2, Files.D));
     }
 }

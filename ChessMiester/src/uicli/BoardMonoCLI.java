@@ -74,10 +74,10 @@ public class BoardMonoCLI implements BoardStrategy {
     }
 
     /**
-     * Prints the board with the rotation oriented towards the white player.
+     * Prints the board with the rotation oriented towards the black player.
      * @param board the BoardIF object representing the game board to be drawn.
      */
-    private void printWhite(BoardIF board) {
+    private void printBlack(BoardIF board) {
         System.out.println("   --------------------------------" +
                 "-----------------------------------------");
         // Print the board.
@@ -101,10 +101,10 @@ public class BoardMonoCLI implements BoardStrategy {
     }
 
     /**
-     * Prints the board with the rotation oriented towards the black player.
+     * Prints the board with the rotation oriented towards the white player.
      * @param board the BoardIF object representing the game board to be drawn.
      */
-    private void printBlack(BoardIF board) {
+    private void printWhite(BoardIF board) {
         System.out.println("   --------------------------------" +
                 "-----------------------------------------");
         // Print the board.

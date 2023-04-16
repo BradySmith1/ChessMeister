@@ -69,6 +69,6 @@ public class BishopMovesCLI implements RulesIF, TutorialIF{
 
         /* create piece and call tutorial loop */
         Piece bishop = new Piece(ChessPieceType.Bishop, GameColor.WHITE);
-        this.tutorialLoop("bishopTutorial", bishop, new Position(Rank.R1, Files.F));
+        this.tutorialLoop("bishopTutorial", bishop, new Position(Rank.R1, Files.C));
     }
 }

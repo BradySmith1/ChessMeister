@@ -38,6 +38,8 @@ public class NotationCLI implements RulesIF {
                 
                 Now, let's see if you have the right understanding! We're gonna highlight a \s
                 few squares, and just enter what square they are. \s\s
+                
+                
                 """);
 
         /* TODO: add a method to highlight squares on the board, and prompt user input */
