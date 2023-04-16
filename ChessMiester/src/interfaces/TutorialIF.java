@@ -45,16 +45,12 @@ public interface TutorialIF{
          while (!input.equals("0")) { // loop game until user wants to quit
              board.draw(GameColor.WHITE); // draw board
              List<Position> moves = piece.getValidMoves(board, pos); // get valid moves for bishop
-//             for(Position move : moves){
-//                 System.out.print(move.getFile().getFileChar());
-//                 System.out.println(move.getRank().getDisplayNum());
-//             }
              System.out.print("Enter a move (Enter 0 to quit, " +
                               "1 to try capturing) ===> "); // prompt and read input
              input = scan.nextLine();
 
              if(input.equals("1")){ // user wants to spawn a pawn
-                 board = this.spawnPiece(board, pos); // spawn a random pawn                                     GameColor.BLACK));
+                 board = this.spawnPiece(board, pos, piece); // spawn a random pawn                                     GameColor.BLACK));
                  board.draw(GameColor.WHITE); // draw board
                  System.out.print("Enter a move ===> ");
                  input = scan.nextLine();
@@ -97,23 +93,35 @@ public interface TutorialIF{
      } // end tutorialLoop
 
 
-    public default Board spawnPiece(Board board, Position pos){
+    public default Board spawnPiece(Board board, Position pos, Piece piece) {
+         Board toReturn;
         System.out.println("Spawning a pawn, go capture it!");
         // spawn a pawn near middle of the board
-        Files pawnFile = getRandomFile(); // get random file
-        while(pos.getFile().getFileNum() == pawnFile.getFileNum()){
-            pawnFile = getRandomFile(); // ensure the files not equal
-        }
+        if (!piece.getType().equals(ChessPieceType.Pawn)){
+            Files randFile = getRandomFile(); // get random file
+            while (pos.getFile().getFileNum() == randFile.getFileNum()) {
+                randFile = getRandomFile(); // ensure the files not equal
+            }
 
-        Rank pawnRank = getRandomRank(); // get random rank
-        while(pos.getRank().getIndex() == pawnRank.getIndex()){
-            pawnRank = getRandomRank(); // ensure the ranks not equal
-        }
-        board.getSquares()[pawnRank.getIndex()]
-                [pawnFile.getFileNum()].setPiece(new Piece(ChessPieceType.Pawn,
-                GameColor.BLACK));
+            Rank randRank = getRandomRank(); // get random rank
+            while (pos.getRank().getIndex() == randRank.getIndex()) {
+                randRank = getRandomRank(); // ensure the ranks not equal
+            }
 
-        return board;
+            if(piece.getType().equals(ChessPieceType.Bishop)){
+                //TODO logic for a spawning a piece for a bishop to capture
+            }
+            board.getSquares()[randRank.getIndex()]
+                    [randFile.getFileNum()].setPiece(new Piece(ChessPieceType.Pawn,
+                    GameColor.BLACK));
+
+            toReturn = board;
+        }else { // piece is a pawn
+            // TODO logic for a spawning a piece for a pawn to capture
+            toReturn = board;
+
+        }
+        return toReturn;
     }
     /**
      * This method is responsible for getting a random file, which is used to
