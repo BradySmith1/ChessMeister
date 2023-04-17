@@ -65,7 +65,7 @@ public class NotationCLI implements RulesIF, TutorialIF {
             userInput = scan.nextLine(); // read the user input
 
             if(!userInput.equals("0")){ // if user doesn't quit, check if they're correct
-                getResult(correctFile, correctRank, userInput, scan);
+                userInput = getResult(correctFile, correctRank, userInput, scan);
             }
 
         }
@@ -80,7 +80,7 @@ public class NotationCLI implements RulesIF, TutorialIF {
      * @param input input from the user
      * @param scan  scanner to read input from user if incorrect
      */
-    private void getResult(Files file, Rank rank, String input, Scanner scan){
+    private String getResult(Files file, Rank rank, String input, Scanner scan){
         boolean correct = false;
         while (!correct){ // loop until correct guess
             try {
@@ -93,16 +93,35 @@ public class NotationCLI implements RulesIF, TutorialIF {
                     System.out.println("Incorrect!");
                     System.out.print("Enter the square that was highlighted (0 to quit) ===> ");
                     input = scan.nextLine(); // read the user input
+                    correct = checkQuit(input, scan); // check if user wants to quit
                 }else{ // bad input (too short or too long)
                     System.out.println("Invalid input! EX of a valid input include 'a1' or 'A1'.");
                     System.out.print("Enter the square that was highlighted (EX: 0 to quit) ===> ");
                     input = scan.nextLine(); // read the user input
+                    correct = checkQuit(input, scan); // check if user wants to quit
                 }
             } catch(Exception e){ // something went wrong
                 System.out.println("Invalid input! EX of a valid input include 'a1' or 'A1'.");
                 System.out.print("Enter the square that was highlighted (0 to quit) ===> ");
-                input = scan.nextLine();
+                input = scan.nextLine(); // read the user input
+                correct = checkQuit(input, scan); // check if user wants to quit
             }
         }
+        return input;
+    }
+
+    /**
+     * This method is responsible for checking if the user wants to quit.
+     *
+     * @param input user input string
+     * @param scan  scanner to read input from user if incorrect
+     * @return      true if user wants to quit, false otherwise
+     */
+    private boolean checkQuit(String input, Scanner scan){
+        boolean quit = false;
+        if(input.equals("0")){
+            quit = true;
+        }
+        return quit;
     }
 }
