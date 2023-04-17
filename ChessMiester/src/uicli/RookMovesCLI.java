@@ -5,7 +5,6 @@ import enums.Files;
 import enums.Rank;
 import enums.GameColor;
 import interfaces.RulesIF;
-import interfaces.TutorialIF;
 import model.Piece;
 import model.Position;
 
@@ -18,7 +17,7 @@ import java.lang.StringBuilder;
  * @author Zach Eanes (100%)
  * @version 1.0 (done in sprint 2)
  */
-public class RookMovesCLI implements RulesIF, TutorialIF {
+public class RookMovesCLI extends TutorialCLI implements RulesIF{
     /**
      * Displays the rules of a rook in chess.
      */

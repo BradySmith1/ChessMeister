@@ -3,7 +3,7 @@ package uicli;
 import enums.Files;
 import enums.Rank;
 import interfaces.RulesIF;
-import interfaces.TutorialIF;
+
 import java.lang.StringBuilder;
 import model.Piece;
 import model.Position;
@@ -16,7 +16,7 @@ import enums.ChessPieceType;
  * @author Zach Eanes (100%)
  * @version 1.0 (done in sprint 2)
  */
-public class KingMovesCLI implements RulesIF, TutorialIF {
+public class KingMovesCLI extends TutorialCLI implements RulesIF{
     /**
      * Displays the rules of a king in chess.
      */

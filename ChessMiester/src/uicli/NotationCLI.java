@@ -5,7 +5,6 @@ import enums.GameColor;
 import enums.Rank;
 import interfaces.RulesIF;
 import model.Board;
-import interfaces.TutorialIF;
 import model.Position;
 import java.util.Scanner;
 
@@ -15,7 +14,7 @@ import java.util.Scanner;
  * @author Zach Eanes (100%)
  * @version 1.0 (done in sprint 2)
  */
-public class NotationCLI implements RulesIF, TutorialIF {
+public class NotationCLI extends TutorialCLI implements RulesIF{
     /**
      * Displays the rules of chess notation.
      */

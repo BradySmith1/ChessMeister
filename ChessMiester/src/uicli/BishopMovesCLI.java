@@ -5,7 +5,6 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 import interfaces.RulesIF;
-import interfaces.TutorialIF;
 import model.Piece;
 import model.Position;
 
@@ -17,7 +16,7 @@ import java.lang.StringBuilder;
  * @author Zach Eanes (100%)
  * @version 1.0 (done in sprint 2)
  */
-public class BishopMovesCLI implements RulesIF, TutorialIF{
+public class BishopMovesCLI extends TutorialCLI implements RulesIF{
     /**
      * Displays the rules of a bishop in chess.
      */

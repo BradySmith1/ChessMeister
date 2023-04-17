@@ -247,7 +247,7 @@ public class Board implements BoardIF {
     @Override
     public void loadFromMemento(BoardMemento boardMemento) {
         String[] contents = boardMemento.state().split("#");
-        String[] pieces = contents[0].substring(1, contents[0].length() - 1).split(",");
+        String[] pieces = contents[0].substring(1, contents[0].length()).split(",");
         setPiecesFromMemento(pieces);
         this.state = boardMemento.state();
     }
