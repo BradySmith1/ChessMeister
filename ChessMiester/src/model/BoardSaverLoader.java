@@ -36,7 +36,7 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
         board.initBoard();
         FileReader reader = null; // initialize reader
         String contents = ""; // initialize string for contents
-        String file = new File( "").getAbsolutePath(); //must be in chessmeister for this to work
+        String file = new java.io.File( ".").getAbsolutePath(); //must be in chessmeister for this to work
         if(System.getProperty("os.name").contains("Windows")) // check if windows
             file = file.concat("\\src\\model\\saves\\" + fileName + ".txt"); // windows
         else // linux and macos
