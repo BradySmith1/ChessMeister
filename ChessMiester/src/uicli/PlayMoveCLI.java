@@ -350,8 +350,8 @@ public class PlayMoveCLI implements PlayIF {
      * 4) agreement condition.
      * @return true if there is a draw, false otherwise.
      */
-    private boolean drawCondition(){
-        return stalemateCondition() || threefoldRepetitionCondition()
+    private boolean drawCondition(PlayerIF player){
+        return stalemateCondition(player) || threefoldRepetitionCondition()
                 || fiftyMoveRule() || agreementCondition();
     }
 
@@ -359,13 +359,27 @@ public class PlayMoveCLI implements PlayIF {
      * This method checks to see if there is a stalemate.
      * @return true if there is a stalemate, false otherwise.
      */
-    private boolean stalemateCondition() {
-        // A draw should be declared if either player is not in check but cannot make a move without putting themselves into Check.
+    private boolean stalemateCondition(PlayerIF player) {
+        // A draw should be declared if the king is not in check and there are no valid moves for the player
+        boolean inCheck = checkCondition(player1, player1.getKing().getPosition(board));
+        boolean stalemate = true;
 
-        // Write java code to check for stalemate here.
-        boolean stalemate = false;
+        // If the king is not in check, then check to see if there are any valid moves for the player.
+        if (!inCheck) {
+            for (PieceIF piece : player.getPieces()) {
+                // Cast the piece to a Piece object.
+                Piece p = (Piece) piece;
 
-        return stalemate;
+                // Get the list of valid moves for the piece.
+                List<Position> validMoves = p.getValidMoves(board, piece.getPosition(board));
+
+                if (validMoves.size() > 0) {
+                    stalemate = false;
+                }
+            }
+        }
+
+        return !inCheck && stalemate;
     }
 
     /**
