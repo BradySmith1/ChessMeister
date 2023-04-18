@@ -429,7 +429,7 @@ public class PlayMoveCLI implements PlayIF {
      */
     private void gameLoop(){
         this.populateMenu();
-        if(!checkmateCondition(currentPlayer, this.getOtherPlayer(currentPlayer)) && !drawCondition())
+        if(!checkmateCondition(currentPlayer, this.getOtherPlayer(currentPlayer)) && !drawCondition(currentPlayer))
         {
             if(checkCondition(currentPlayer, currentPlayer.getKing().getPosition(this.board))){ // see if player is in check
                 System.out.println(currentPlayer.getName() + ", you are in check! You must" +
@@ -554,7 +554,7 @@ public class PlayMoveCLI implements PlayIF {
 
             endGame = true;
 
-        }else if(drawCondition()){
+        }else if(drawCondition(currentPlayer)){
             System.out.println("Game ends in a draw!");
 
             // Both players draw, increase their draw record
