@@ -41,17 +41,20 @@ public class RulesCLI implements RulePageIF {
      * Populates the menu with the title and options.
      */
     private void populateMenu() {
-        menuOptions = new String[10];
-        menuOptions[0] = "1: Board Setup\n";
-        menuOptions[1] = "2: Understanding Notation\n";
-        menuOptions[2] = "3: Board Organization\n";
-        menuOptions[3] = "4: King Moves\n";
-        menuOptions[4] = "5: Queen Moves\n";
-        menuOptions[5] = "6: Bishop Moves\n";
-        menuOptions[6] = "7: Knight Moves\n";
-        menuOptions[7] = "8: Rook Moves\n";
-        menuOptions[8] = "9: Pawn Moves\n";
-        menuOptions[9] = "0: Main Menu\n";
+        menuOptions = new String[13];
+        menuOptions[0] = " 1: Board Setup\n";
+        menuOptions[1] = " 2: Understanding Notation\n";
+        menuOptions[2] = " 3: Board Organization\n";
+        menuOptions[3] = " 4: King Moves\n";
+        menuOptions[4] = " 5: Queen Moves\n";
+        menuOptions[5] = " 6: Bishop Moves\n";
+        menuOptions[6] = " 7: Knight Moves\n";
+        menuOptions[7] = " 8: Rook Moves\n";
+        menuOptions[8] = " 9: Pawn Moves\n";
+        menuOptions[9] = "10: Check\n";
+        menuOptions[10] = "11: Checkmate\n";
+        menuOptions[11] = "12: Draw\n";
+        menuOptions[12] = " 0: Main Menu\n";
     }
 
     /**
@@ -71,6 +74,9 @@ public class RulesCLI implements RulePageIF {
                 menuOptions[7] +
                 menuOptions[8] +
                 menuOptions[9] +
+                menuOptions[10] +
+                menuOptions[11] +
+                menuOptions[12] +
                 "\n-----------------------------------------" +
                 "---------------------\n";
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
@@ -122,8 +128,16 @@ public class RulesCLI implements RulePageIF {
                     setRule(new PawnMovesCLI());
                     rule.showRule();
                     break;
-                case 12:
+                case 10:
                     setRule(new CheckRuleCLI());
+                    rule.showRule();
+                    break;
+                case 11:
+                    setRule(new CheckmateRuleCLI());
+                    rule.showRule();
+                    break;
+                case 12:
+                    setRule(new DrawRuleCLI());
                     rule.showRule();
                     break;
                 case 0:
