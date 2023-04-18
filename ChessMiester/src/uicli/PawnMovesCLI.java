@@ -1,10 +1,14 @@
 package uicli;
 
+import enums.ChessPieceType;
+import enums.Files;
 import enums.GameColor;
+import enums.Rank;
 import interfaces.RulesIF;
+import model.Piece;
+import model.Position;
+
 import java.lang.StringBuilder;
-import java.util.Scanner;
-import model.Board;
 
 /**
  * This class is responsible for displaying the rules of a pawn in chess.
@@ -12,7 +16,7 @@ import model.Board;
  * @author Zach Eanes (100%)
  * @version 1.0 (done in sprint 2)
  */
-public class PawnMovesCLI implements RulesIF {
+public class PawnMovesCLI extends TutorialCLI implements RulesIF {
     /**
      * Displays the rules of a pawn in chess.
      */
@@ -38,11 +42,12 @@ public class PawnMovesCLI implements RulesIF {
                       @@@@@@@@@@@@@@@@@@@@@@@@@                          \s
                    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                       \s
                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&                    \s
-                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ \
+                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ \s
                 """);
 
         /* add all important rules of a pawn */
         str.append("""
+                                
                 Pawns are considered to be the least powerful piece in chess, and is why a \s
                 player is provided with eight of them. Pawns can only move forward, and \s
                 can only capture diagonally. Pawns can move two spaces on their first move, \s
@@ -62,17 +67,8 @@ public class PawnMovesCLI implements RulesIF {
         /* display the pawn rules */
         System.out.println(str);
 
-        /* wait for user to press any key to continue */
-        System.out.println("When you're ready to try the pawn, press 'ENTER' to continue >>> ");
-        Scanner scan = new Scanner(System.in); // create scanner to read user input
-        scan.nextLine(); // read line when user presses enter
-
-        Board board = new Board(); // create new board
-        board.initBoard(); // initialize board w just a pawn
-        board.draw(GameColor.WHITE);
-
-        /* TODO: draw board with a single pawn for the user to interact with */
-
-
+        /* create piece and call tutorial loop */
+        Piece pawn = new Piece(ChessPieceType.Pawn, GameColor.WHITE);
+        this.tutorialLoop("pawnTutorial", pawn, new Position(Rank.R2, Files.D));
     }
 }

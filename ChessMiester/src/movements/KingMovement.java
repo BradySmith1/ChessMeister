@@ -9,6 +9,7 @@ package movements;
 
 import enums.GameColor;
 import interfaces.BoardIF;
+import interfaces.FirstMoveIF;
 import interfaces.MovementIF;
 import model.BlackAndWhite;
 import model.Position;
@@ -23,7 +24,7 @@ import java.util.List;
  * @author Colton Brooks (80%), Zach Eanes (20%)
  * @version 1.0
  */
-public class KingMovement extends BlackAndWhite implements MovementIF{
+public class KingMovement extends BlackAndWhite implements MovementIF, FirstMoveIF {
 
     /* Boolean to check if the king has moved; needed for castling implementation */
     private boolean isFirstMove;
@@ -77,14 +78,14 @@ public class KingMovement extends BlackAndWhite implements MovementIF{
      * Method to be called whenever king makes its first move, sets isFirstMove false
      * to show a move with this piece has been made.
      */
-    public void setFirstMove(){this.isFirstMove = false;}
+    public void setFirstMove(){ this.isFirstMove = false; }
 
     /**
      * Method to be called to check if the king has moved
      *
      * @return true if the king has not moved, false if it has
      */
-    public boolean getFirstMove(){return this.isFirstMove;}
+    public boolean getFirstMove(){ return this.isFirstMove; }
 
     /*
      * This is the represent the possible logic that would be needed to implement castling.

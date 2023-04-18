@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * This class represents a chess piece that can be placed on a game board.
  *
- * @author Brady Smith 80%, Colton Brooks (20%)
+ * @author Brady Smith (80%), Colton Brooks (20%)
  * @version 1.0
  */
 public class Piece extends BlackAndWhite implements PieceIF{

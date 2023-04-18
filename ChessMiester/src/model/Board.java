@@ -87,6 +87,9 @@ public class Board implements BoardIF {
         setPieces(GameColor.BLACK, height-1);
     }
 
+    /**
+     * Method that creates the initial state for the board.
+     */
     private void createState() {
         StringBuilder stateBuilder = new StringBuilder("{");
         for (int i = 0; i < getWidth(); i++) {
@@ -195,11 +198,25 @@ public class Board implements BoardIF {
     public PieceIF getPiece(int col, char row) {
         return squares[col][row].getPiece();
     }
-    
+
+    /**
+     * Getter for the state field of the Board
+     * @return the String of the board state
+     */
+    @Override
     public String getState() {
         return this.state;
     }
 
+    /**
+     * Adds the move to the boards state that it holds in a field.
+     * @param color color of the moving piece
+     * @param fromF current file for the piece
+     * @param fromR current rank for the piece
+     * @param toF   the file to move to
+     * @param toR   the rank to move to
+     */
+    @Override
     public void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR) {
         StringBuilder stateBuilder = new StringBuilder(this.state);
         stateBuilder.deleteCharAt(stateBuilder.length() - 1);
@@ -214,41 +231,80 @@ public class Board implements BoardIF {
         this.state = stateBuilder.toString();
     }
 
-    public BoardMemento createMemento() {
+    /**
+     * Creates a memento for the current state of the board
+     * @return the memento to be stored in a caretaker
+     */
+    @Override
+    public BoardMementoIF createMemento() {
         return new BoardMemento(this.state);
     }
 
+    /**
+     * Method to load the board from a different memento / board state.
+     * @param boardMemento  the memento to load in
+     */
+    @Override
     public void loadFromMemento(BoardMemento boardMemento) {
         String[] contents = boardMemento.state().split("#");
-        String[] pieces = contents[0].substring(1, contents[0].length() - 2).split(",");
+        String[] pieces = contents[0].substring(1, contents[0].length()).split(",");
         setPiecesFromMemento(pieces);
         this.state = boardMemento.state();
     }
 
+    /**
+     * Method to place the pieces depending on the String[] passed in from loadFromMemento()
+     * @param pieces    An array in which each string describes a piece and its location
+     */
     private void setPiecesFromMemento(String[] pieces) {
         for (String piece : pieces) {
-            Files newFile = Files.valueOf(String.valueOf(piece.charAt(0)).toLowerCase());
-            Rank newRank = Rank.valueOf(String.valueOf(piece.charAt(1)));
-            ChessPieceType type = ChessPieceType.valueOf(String.valueOf(piece.charAt(3)));
-            String colorCase = String.valueOf(piece.charAt(4));
+            Files newFile = Files.valueOf(String.valueOf(piece.charAt(0))); // get file
+            Rank newRank = Rank.valueOf("R" + piece.charAt(1)); // get rank
+            // identify piece type from provided letter
+            String type = ChessPieceType.identify(String.valueOf(piece.charAt(3)));
+            // get piece type from returned string
+            ChessPieceType pieceType = ChessPieceType.valueOf(type);
+            String colorCase = String.valueOf(piece.charAt(4)); //get color
             GameColor color = null;
-            switch(colorCase) {
+            switch(colorCase){
                 case "W" -> color = GameColor.WHITE;
                 case "B" -> color = GameColor.BLACK;
             }
-            Piece pieceToInsert = new Piece(type, color);
-            squares[newFile.getFileNum()][newRank.getIndex()].setPiece(pieceToInsert);
-            if(type == ChessPieceType.Pawn) {
-                PawnMovement pawn = (PawnMovement) pieceToInsert.getMoveType();
-                if(color == GameColor.BLACK && newRank.getIndex() != squares[0].length - 2) {
-                    pawn.setFirstMove();
-                }
-                else if(color == GameColor.BLACK && newRank.getIndex() != 1) {
-                    pawn.setFirstMove();
-                }
+            PieceIF pieceToInsert = new Piece(pieceType, color); // make piece to place
+            squares[newRank.getIndex()][newFile.getFileNum()].setPiece(pieceToInsert); // place
+            pawnCheck(pieceToInsert, pieceType, color, newRank);
+        }
+    }
+
+    /**
+     * Method to check if a pawn has moved from the starting positions for pawns of its color,
+     * if it has move set its firstMove field to false.
+     * @param pieceToInsert the piece to be modified if it is a pawn
+     * @param pieceType the tpe of piece it is
+     * @param color the color of the piece
+     * @param newRank   the rank of the piece
+     */
+    private void pawnCheck(PieceIF pieceToInsert, ChessPieceType pieceType, GameColor color, Rank newRank) {
+        if(pieceType == ChessPieceType.Pawn) {
+            PawnMovement pawn = (PawnMovement) pieceToInsert.getMoveType();
+            if(color == GameColor.BLACK && newRank.getIndex() != squares[0].length - 2) {
+                pawn.setFirstMove();
+            }
+            else if(color == GameColor.BLACK && newRank.getIndex() != 1) {
+                pawn.setFirstMove();
             }
         }
     }
 
-    public record BoardMemento(String state) {}
+    /**
+     * A memento nested class for the board object. It can hold a boards state.
+     * @param state A string representing the state the board is in
+     */
+    public record BoardMemento(String state) implements BoardMementoIF{}
+
+    /**
+     * Getter for the draw strategy
+     * @return the draw strategy
+     */
+    public BoardStrategy getDrawStrategy() { return drawStrategy; }
 }

@@ -74,13 +74,36 @@ public interface BoardIF{
      */
     PieceIF getPiece(int col, char row);
 
+    /**
+     * Adds the move to the boards state that it holds in a field.
+     * @param color color of the moving piece
+     * @param fromF current file for the piece
+     * @param fromR current rank for the piece
+     * @param toF   the file to move to
+     * @param toR   the rank to move to
+     */
     void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR);
 
-    Board.BoardMemento createMemento();
+    /**
+     * Creates a memento for the current state of the board
+     * @return the memento to be stored in a caretaker
+     */
+    Board.BoardMementoIF createMemento();
 
+    /**
+     * Getter for the state field of the Board
+     * @return the String of the board state
+     */
     String getState();
 
+    /**
+     * Method to load the board from a different memento / board state.
+     * @param boardMemento  the memento to load in
+     */
     void loadFromMemento(Board.BoardMemento boardMemento);
 
-    public record BoardMemento(String state) {}
+    /**
+     * An interface to define the nested class to hold a memento of the board.
+     */
+    public interface BoardMementoIF {}
 }

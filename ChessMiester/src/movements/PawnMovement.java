@@ -2,6 +2,7 @@ package movements;
 
 import enums.GameColor;
 import interfaces.BoardIF;
+import interfaces.FirstMoveIF;
 import interfaces.MovementIF;
 import model.BlackAndWhite;
 import model.Position;
@@ -16,14 +17,13 @@ import java.util.List;
  * @author Kaushal Patel (60%), Colton Brooks (30%), Zach Eanes (10%)
  * @version 1.0
  */
-public class PawnMovement extends BlackAndWhite implements MovementIF{
+public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMoveIF {
     /* Fields */
 
     /** The color of the piece. */
     private GameColor color;
-
     /** If this is the first move of the piece. */
-    private boolean isFirstMove;
+   private boolean isFirstMove;
 
     /** The direction the pawn is moving. */
     private final int direction;
@@ -82,9 +82,16 @@ public class PawnMovement extends BlackAndWhite implements MovementIF{
     }
 
     /**
+     * Method returns whether the piece have moved or not.
+     *
+     * @return true if the piece has not moved, false otherwise.
+     */
+    @Override
+    public boolean getFirstMove() { return this.isFirstMove; }
+
+    /**
      * Changes boolean if this is the first move of the piece occurs.
      */
-    public void setFirstMove(){
-        this.isFirstMove = false;
-    }
+    @Override
+    public void setFirstMove(){ this.isFirstMove = false; }
 }
