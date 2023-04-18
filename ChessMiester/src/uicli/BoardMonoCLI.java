@@ -42,7 +42,7 @@ public class BoardMonoCLI implements BoardStrategy {
      * @param highlighted the array of positions that are highlighted.
      * @param color the color of the player.
      */
-    public void highlight(BoardIF board, Position[] highlighted, GameColor color) {
+    public void highlight(BoardIF board, Position[] highlighted, GameColor color){
         this.highlighted = highlighted;
         this.highlight = true;
         if(color == GameColor.WHITE){
