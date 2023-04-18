@@ -33,10 +33,11 @@ public class BoardColorCLI implements BoardStrategy {
         String background = WHITE_BACK;
         //draws the board
         SquareIF[][] squares = board.getSquares();
-        if(playerColor == GameColor.WHITE){
-            printWhite(board, squares, background);
-        }else{
+        if(playerColor == GameColor.BLACK){
+            //printWhite(board, squares, background);
             printBlack(board, squares, background);
+        }else{
+            printWhite(board, squares, background);
         }
     }
 
@@ -107,7 +108,7 @@ public class BoardColorCLI implements BoardStrategy {
         String temp_background = background;
         boolean squareHighlighted = false;
         for(int height = board.getHeight() - 1; height >= 0; height--){
-            System.out.print(number + " ");
+            System.out.print((board.getHeight() - height) + " "); // wrong
             //draws the squares
             for(int width = board.getWidth() - 1; width >= 0; width--){
                 Square square = (Square) squares[height][width];

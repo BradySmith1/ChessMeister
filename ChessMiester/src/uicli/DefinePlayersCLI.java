@@ -25,7 +25,9 @@ public class DefinePlayersCLI implements DefinePlayersIF {
     public DefinePlayersCLI(Scanner scan) {
         this.scan = scan;
         player1 = new Player(GameColor.WHITE);
+        player1.setName("Player 1");    // Default name
         player2 = new Player(GameColor.BLACK);
+        player2.setName("Player 2");    // Default name
         populateMenu();
     }
 
