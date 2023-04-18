@@ -2,10 +2,8 @@ package uicli;
 
 import enums.GameColor;
 import interfaces.DefinePlayersIF;
-import interfaces.MainMenuIF;
-import interfaces.PlayIF;
 import interfaces.PlayerIF;
-import player.Player;
+import model.Player;
 import java.util.Scanner;
 
 /**
