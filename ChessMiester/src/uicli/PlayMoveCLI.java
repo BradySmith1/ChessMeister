@@ -1,5 +1,6 @@
 package uicli;
 
+import controller.BoardMementoCaretaker;
 import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
@@ -9,6 +10,7 @@ import model.Piece;
 import model.Position;
 import movements.PawnMovement;
 
+import java.awt.*;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -26,9 +28,13 @@ public class PlayMoveCLI implements PlayIF {
 
     private LoadSaveGameIF saveGame; /*save game object*/
 
+    private BoardMementoCaretaker caretaker;    /*caretaker for the board*/
+
     private PlayerIF player1; /*player 1*/
 
     private PlayerIF player2; /*player 2*/
+
+    private PlayerIF currentPlayer; /*current player*/
 
     private BoardIF board; /*board to play game on*/
 
@@ -44,7 +50,9 @@ public class PlayMoveCLI implements PlayIF {
         this.scan = scan;
         this.player1 = player1;
         this.player2 = player2;
+        this.currentPlayer = player1;
         this.board = board;
+        this.caretaker = new BoardMementoCaretaker(board.createMemento());
         this.undo = undo;
         this.showMoves = showMoves;
         setSaveGame(new SaveGameCLI(scan));
@@ -69,7 +77,8 @@ public class PlayMoveCLI implements PlayIF {
      * Displays the play move dialog.
      */
     public void show() {
-        board.draw(GameColor.WHITE);
+        //board.draw(GameColor.WHITE);
+        this.display();
         String menu = "\nPlay Chess\n---------------------------------------------------------------\n" +
                 menuOptions[0] +
                 menuOptions[1] +
@@ -79,10 +88,10 @@ public class PlayMoveCLI implements PlayIF {
                 menuOptions[5] +
                 menuOptions[6];
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
-        String prompt = "Enter your menu choice here -> ";
-        while (choice != 6) { //while user has not quit
+        String prompt = currentPlayer.getName() + " Enter your choice ===> ";
+        while (choice != 0) { //while user has not quit
             System.out.println(menu);   //shows user menu options
-            System.out.print(prompt);
+            System.out.print(prompt);   //ask user for this choice
             try {
                 choice = scan.nextInt();
             }
@@ -92,6 +101,15 @@ public class PlayMoveCLI implements PlayIF {
             switch(choice){
                 case 1:
                     System.out.println("Move");
+                    this.gameLoop();
+                    this.display();   //TODO TEMPORARY
+                    this.switchPlayers();
+
+                    if(endGameCondition()){
+                        // Show each player's stats at the end of the game
+                        player1.displayStats();
+                        player2.displayStats();
+                    }
                     break;
                 case 2:
                     System.out.println("Undo");
@@ -101,6 +119,7 @@ public class PlayMoveCLI implements PlayIF {
                     break;
                 case 4:
                     System.out.println("Show Moves");
+                    this.showMoves();
                     break;
                 case 5:
                     this.saveGame.showLoadSave();
@@ -110,6 +129,7 @@ public class PlayMoveCLI implements PlayIF {
                     break;
                 case 7:
                     System.out.println("Concede and Exit Game");
+                    // go to main menu? or end program?
                     break;
                 default:
                     System.out.println("Invalid input.");
@@ -192,53 +212,33 @@ public class PlayMoveCLI implements PlayIF {
 
     /**
      * This function checks to see if the user gave a valid file for the piece movement.
-     * @return new file for the piece to be moved to
+     *
+     * @param file string to be validated
+     * @return a file if it's valid, null otherwise
      */
-    public Files findValidFile() {
-        System.out.print("Enter the file of the location (A-H) >>> ");
-        String input = scan.nextLine();
-        input = input.toUpperCase(); // make sure the input is uppercase
-
+    public Files findValidFile(String file) {
+        file = file.toUpperCase(); // make sure the input is uppercase
         Files newFile = null; // file to be returned
-
-        boolean valid = false; // boolean to see if input is valid
-        while(!valid){ // loop until a valid input is given be the user
-            try {
-                newFile = Files.valueOf(input);
-                valid = true;
-            }catch(IllegalArgumentException e) { //if a bad input is given, prompt for another
-                System.out.print("Invalid File, enter another (A-H) >>> ");
-                input = scan.nextLine();
-            }
-        }
+            try{
+                newFile = Files.valueOf(file);
+            }catch(IllegalArgumentException ignored){} // prevent crashing
         return newFile;
     }
 
     /**
      * This function checks to see if the user gave a valid rank for the piece movement.
-     * @return new rank for the piece to be moved to
+     *
+     * @param rank string to be validated
+     * @return a rank if it's valid, null otherwise
      */
-    public Rank findValidRank() {
-        System.out.print("Enter the rank of the location (1-8) >>> ");
-        String input = scan.nextLine();
+    public Rank findValidRank(String rank) {
         Rank newRank = null;
-        boolean valid = false; // boolean to see if input is valid
-        while(!valid){
-            try{
-                Rank[] ranks = Rank.values(); // get all the ranks
-                for(Rank r : ranks){
-                    if(r.getDisplayNum() == Integer.parseInt(input)){
-                        newRank = r;
-                        break;
-                    }
-                }
-                if(newRank == null){
-                    throw new IllegalArgumentException();
-                }
-                valid = true;
-            }catch(IllegalArgumentException e){
-                System.out.print("Invalid rank, please enter another (1-8) >>> ");
-                input = scan.nextLine();
+        Rank[] ranks = Rank.values(); // get all the ranks
+
+        for (Rank r : ranks) {
+            if (r.getDisplayNum() == Integer.parseInt(rank)) {
+                newRank = r; // set new rank if it exists
+                break;
             }
         }
         return newRank;
@@ -260,7 +260,7 @@ public class PlayMoveCLI implements PlayIF {
      * @param player player to check if their king is in check.
      * @return true if the king is in check, false otherwise.
      */
-    private boolean checkCondition(PlayerIF player, Position position){
+    public boolean checkCondition(PlayerIF player, Position position){
         boolean isCheck = false;
         //Position kingPos = player.getKing().getPosition(); TODO Pass this line into checkCondition when checking for check.
 
@@ -423,4 +423,200 @@ public class PlayMoveCLI implements PlayIF {
     public void setSaveGame(LoadSaveGameIF saveGame){
         this.saveGame = saveGame;
     }
+
+    /**
+     * Loop for the game to occur
+     */
+    private void gameLoop(){
+        this.populateMenu();
+        if(!checkmateCondition(currentPlayer, this.getOtherPlayer(currentPlayer)) && !drawCondition())
+        {
+            if(checkCondition(currentPlayer, currentPlayer.getKing().getPosition(this.board))){ // see if player is in check
+                System.out.println(currentPlayer.getName() + ", you are in check! You must" +
+                                   "defend your king!");
+                //check = true;
+            }
+            else{
+                // True if the king is in check, false otherwise.
+                boolean checkPass = checkCondition(currentPlayer,
+                                                   currentPlayer.getKing().getPosition(board));
+                while(!checkPass) {
+                    // Opponent did not place current player in check
+                    startMove(currentPlayer);// start move by prompting for input and making move
+                    if (checkCondition(currentPlayer, currentPlayer.getKing().getPosition(board))) {
+                        System.out.println(currentPlayer.getName() + ", invalid move. Cannot " +
+                                "place your own king in check");
+                        undoMove();
+                    } else {
+                        checkPass = true;
+                    }
+                }
+            }
+
+        }
+    }
+
+    private void undoMove() {
+        //this.board.loadFromMemento();
+    }
+    private void undoMoveFromCheck() {
+        this.caretaker.pop();
+        this.board.loadFromMemento(this.caretaker.peek());
+    }
+
+    private void push(BoardIF.BoardMementoIF memento) {
+        this.caretaker.push(memento);
+    }
+
+    private void undo() {
+        BoardIF.BoardMementoIF memento = this.caretaker.down();
+        if(memento != null) {
+            this.board.loadFromMemento(memento);
+        }
+    }
+
+    private void redo() {
+        BoardIF.BoardMementoIF memento = this.caretaker.up();
+        if(memento != null) {
+            this.board.loadFromMemento(memento);
+        }
+    }
+
+
+    private void startMove(PlayerIF player) {
+        Files fromFile = null, toFile = null; // establish needed variables
+        Rank fromRank = null, toRank = null;
+
+        // Prompt player for input
+        boolean validMove = false;
+        while(!validMove){ // loop until we get a valid move
+            System.out.println("Make Move:"); // prompt for move
+            Scanner scan = new Scanner(System.in);  // TODO remove this line later after testing and replace with field
+            String move = scan.nextLine();
+            move = move.replaceAll("\\s", ""); // remove white space
+
+            try {
+                // get and validate from position
+                fromFile = this.findValidFile(String.valueOf(move.charAt(0)));
+                fromRank = this.findValidRank(String.valueOf(move.charAt(1)));
+
+                // get and validate to position
+                toFile = this.findValidFile(String.valueOf(move.charAt(3)));
+                toRank = this.findValidRank(String.valueOf(move.charAt(4)));
+
+                // set valid move to true to end loop
+                validMove = true;
+            } catch (Exception e) {
+                System.out.println("Invalid move. Please try again.");
+            }
+            // check to see if any of the parts of the positions are null
+            if(fromFile == null || fromRank == null || toFile == null || toRank == null) {
+                System.out.println("Invalid move. Please try again.");
+
+                // reset validmove to ensure loop doesn't end
+                validMove = false;
+            }
+        }
+
+        // make move for player
+        this.move(player, getOtherPlayer(player), fromFile, fromRank, toFile, toRank);
+    }
+
+    /**
+     * Method that switches the active player in a game.
+     */
+    private void switchPlayers(){currentPlayer = currentPlayer == player1 ? player2 : player1;}
+
+    /**
+     * Returns the other player based on a passed in player.
+     *
+     * @param player player to get the opposite player of
+     * @return the other player
+     */
+    private PlayerIF getOtherPlayer(PlayerIF player){
+        return player == player1 ? player2 : player1;
+    }
+
+    /**
+     * This method makes all necessary checks to see if a game has ended.
+     * @return
+     */
+    private boolean endGameCondition(){
+        boolean endGame = false;
+
+        // game has come to an end, either because of checkmate or draw conditions
+        if(checkmateCondition(currentPlayer, this.getOtherPlayer(currentPlayer))){
+            System.out.println(currentPlayer.getName() + "you're in checkmate! Better luck" +
+                    "next time!");
+
+            currentPlayer.increaseLosses(); //current has lost, they were placed in checkmate
+            this.getOtherPlayer(currentPlayer).increaseWins();  //other has won, they placed other in checkmate
+
+            endGame = true;
+
+        }else if(drawCondition()){
+            System.out.println("Game ends in a draw!");
+
+            // Both players draw, increase their draw record
+            currentPlayer.increaseDraws();
+            this.getOtherPlayer(currentPlayer).increaseDraws();
+
+            endGame = true;
+        }
+        return endGame;
+    }
+
+
+    /***** SHOW MOVES ******/
+    /**
+     * Method that is responsible for showing the moves of where to go.
+     */
+    public void showMoves() {
+        Files fromFile = null; // establish needed variables
+        Rank fromRank = null;
+
+        // Prompt player for input
+        boolean validMove = false;
+        while(!validMove){ // loop until we get a valid move
+            System.out.println("Show moves for what piece? "); // prompt for move
+            String move = scan.nextLine();
+            move = move.replaceAll("\\s", ""); // remove white space
+
+            try {
+                // get and validate from position
+                fromFile = this.findValidFile(String.valueOf(move.charAt(0)));
+                fromRank = this.findValidRank(String.valueOf(move.charAt(1)));
+
+                // set valid move to true to end loop
+                validMove = true;
+            } catch (Exception e) {
+                System.out.println("Invalid piece. Please try again.");
+            }
+            // check to see if any of the parts of the positions are null
+            if(fromFile == null || fromRank == null) {
+                System.out.println("Invalid piece. Please try again.");
+
+                // reset valid move to ensure loop doesn't end
+                validMove = false;
+            }
+            // check to see if there is a piece at the position
+            if(this.board.getPiece(fromRank, fromFile) == null){
+                System.out.println("No piece at that position.");
+                validMove = false;
+            }
+            // check to see if the piece is the current player's piece
+            else if (!(currentPlayer.getPieces().contains(this.board.getPiece(fromRank, fromFile)))){
+                System.out.println("That is not your piece.");
+                validMove = false;
+            }
+        }
+
+        if (validMove) {
+            // Get valid moves for the piece
+            PieceIF piece = this.board.getPiece(fromRank, fromFile);
+            List<Position> validMoves = piece.getValidMoves(this.board, new Position(fromRank, fromFile));
+            //this.board.highlightMoves(validMoves);
+        }
+    }
+
 }

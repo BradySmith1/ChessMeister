@@ -1,6 +1,7 @@
 package controller;
 
 import interfaces.BoardIF;
+import model.Board;
 
 /**
  * A stack that holds elements of mementos for the BoardIF interface. This class is used
@@ -10,6 +11,7 @@ public class BoardMementoCaretaker {
 
     /** the current position in the stack that the board is at. (Does not have to be at the literal top of the stack) */
     private Element top;
+    private final Element bottom;
 
     /**
      * Constructor for the Caretaker. Only meant to be used at the beginning of a game
@@ -18,6 +20,7 @@ public class BoardMementoCaretaker {
      */
     public BoardMementoCaretaker(BoardIF.BoardMementoIF memento) {
         this.top = new Element(memento);
+        this.bottom = this.top;
     }
 
     /**
@@ -32,11 +35,23 @@ public class BoardMementoCaretaker {
         this.top = toPush;
     }
 
+
+    public BoardIF.BoardMementoIF pop() {
+        BoardIF.BoardMementoIF temp = this.top.data;
+        this.top = this.top.downElement;
+        this.top.upElement = null;
+        return temp;
+    }
+
+    public BoardIF.BoardMementoIF peek() {
+        return this.top.data;
+    }
+
     /**
      * Method to move down or "undo" in the stack.
      * @return  the memento of the element you are now at (returns null if there is now element below)
      */
-    public BoardIF.BoardMementoIF down() {
+    public Board.BoardMementoIF down() {
         BoardIF.BoardMementoIF memento = null;
         if(this.top.downElement != null) {
             this.top = this.top.downElement;
@@ -44,6 +59,7 @@ public class BoardMementoCaretaker {
         }
         return memento;
     }
+
     /**
      * Method to move up or "redo" in the stack.
      * @return  the memento of the element you are now at (returns null if there is now element above)
@@ -55,6 +71,11 @@ public class BoardMementoCaretaker {
             memento = this.top.data;
         }
         return memento;
+    }
+
+    public BoardIF.BoardMementoIF topToBottom() {
+        this.top = this.bottom;
+        return this.top.data;
     }
 
     /**

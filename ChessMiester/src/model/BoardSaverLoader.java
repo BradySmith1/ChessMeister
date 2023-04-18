@@ -1,6 +1,7 @@
 package model;
 
 
+import controller.BoardMementoCaretaker;
 import interfaces.BoardIF;
 import interfaces.BoardSaverLoaderIF;
 
@@ -20,9 +21,9 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
      * @param fileName  the name you want for the file
      */
     @Override
-    public void saveGameToFile(BoardIF board, String fileName) {
+    public void saveGameToFile(BoardMementoCaretaker caretaker, String fileName) {
         File saveFile = createFile(fileName);
-        writeGame(board, saveFile);
+        writeGame(caretaker, saveFile);
     }
 
     /**
@@ -83,14 +84,15 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
 
     /**
      * Method to write the board state into a file.
-     * @param board the board to write
-     * @param saveFile the file to write to
      */
-    private void writeGame(BoardIF board, File saveFile) {
+    private void writeGame(BoardMementoCaretaker caretaker, File saveFile) {
         FileWriter writer;
         try {
             writer = new FileWriter(saveFile);
-            writer.write(board.getState());
+            writer.write(caretaker.topToBottom().state());
+            while(caretaker.up() != null) {
+                writer.write("\n" + caretaker.peek().state());
+            }
             writer.close();
         }
         catch (IOException e) {
