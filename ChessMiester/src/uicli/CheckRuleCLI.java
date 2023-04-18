@@ -1,7 +1,9 @@
 package uicli;
 
+import controller.BoardMementoCaretaker;
 import enums.ChessPieceType;
 import enums.GameColor;
+import interfaces.BoardIF;
 import interfaces.RulesIF;
 import java.util.Scanner;
 import java.lang.StringBuilder;
@@ -60,7 +62,9 @@ public class CheckRuleCLI implements RulesIF {
 
         /* Load in the board and go through game loop */
         BoardSaverLoader loader = new BoardSaverLoader(); // create loader to load board
-        Board board = (Board) loader.loadGameFromFile("checkTutorial");
+        BoardMementoCaretaker caretaker = loader.loadGameFromFile("checkTutorial");
+        BoardIF board = new Board();
+        board.loadFromMemento(caretaker.peek());
         board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
 
         String input = "1"; // basic string for user input

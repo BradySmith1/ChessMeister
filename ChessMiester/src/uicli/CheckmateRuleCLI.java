@@ -1,7 +1,9 @@
 package uicli;
 
+import controller.BoardMementoCaretaker;
 import enums.ChessPieceType;
 import enums.GameColor;
+import interfaces.BoardIF;
 import interfaces.RulesIF;
 import model.Board;
 import model.BoardSaverLoader;
@@ -52,7 +54,9 @@ public class CheckmateRuleCLI implements RulesIF {
         scanner.nextLine(); // read the next line of input
 
         BoardSaverLoader loader = new BoardSaverLoader(); //create a new BoardSaverLoader object
-        Board board = (Board) loader.loadGameFromFile("checkmateTutorial");
+        BoardMementoCaretaker caretaker = loader.loadGameFromFile("checkmateTutorial");
+        BoardIF board = new Board();
+        board.loadFromMemento(caretaker.peek());
         board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
         board.draw(GameColor.WHITE); // draw the board
 

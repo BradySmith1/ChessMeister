@@ -1,1 +1,1 @@
-{A8:KB#F2:RW#C3:KW}
+{A8:KB,F2:RW,C3:KW}#[]

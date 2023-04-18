@@ -1,7 +1,9 @@
 package uicli;
 
+import controller.BoardMementoCaretaker;
 import enums.ChessPieceType;
 import enums.GameColor;
+import interfaces.BoardIF;
 import interfaces.RulesIF;
 import model.Board;
 import model.BoardSaverLoader;
@@ -71,7 +73,9 @@ public class DrawRuleCLI implements RulesIF {
 
         /* Load in the board and go through game loop */
         BoardSaverLoader loader = new BoardSaverLoader(); // create loader to load board
-        Board board = (Board) loader.loadGameFromFile("drawTutorial"); // load board
+        BoardMementoCaretaker caretaker = loader.loadGameFromFile("drawTutorial");
+        BoardIF board = new Board();
+        board.loadFromMemento(caretaker.peek());// load board
         board.setDrawStrategy(new BoardColorCLI());
 
         String input = "1"; // basic string for user input

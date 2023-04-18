@@ -1,9 +1,11 @@
 package uicli;
 
+import controller.BoardMementoCaretaker;
 import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
+import interfaces.BoardIF;
 import model.Board;
 import model.BoardSaverLoader;
 import model.Piece;
@@ -37,8 +39,9 @@ public class TutorialCLI {
         scan.nextLine(); // read line when user presses enter
 
         /* Load in the board and go through game loop */
-        BoardSaverLoader loader = new BoardSaverLoader(); // create loader to load board
-        Board board = (Board) this.loader.loadGameFromFile(file); // load board for bishop
+        BoardMementoCaretaker caretaker = this.loader.loadGameFromFile(file);
+        BoardIF board = new Board();
+        board.loadFromMemento(caretaker.peek());// load board for bishop
         board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
         String input = "1"; // basic string for user input
 
@@ -61,7 +64,6 @@ public class TutorialCLI {
                 toF = Files.valueOf(input.substring(0, 1).toUpperCase());
 
                 // find the rank from the input
-                toR = null;
                 Rank[] ranks = Rank.values();
                 for (Rank r : ranks) {
                     if (r.getDisplayNum() == Integer.parseInt(input.substring(1, 2))) {
@@ -99,8 +101,8 @@ public class TutorialCLI {
      * @param piece the piece to be spawned
      * @return      the board with the piece spawned on it
      */
-    public Board spawnPiece(Board board, Position pos, Piece piece) {
-        Board toReturn;
+    public BoardIF spawnPiece(BoardIF board, Position pos, Piece piece) {
+        BoardIF toReturn;
         String prompt = "Spawning a piece, go capture it!";
         // spawn a pawn near middle of the board
         if(!piece.getType().equals(ChessPieceType.Pawn) &&
@@ -120,7 +122,7 @@ public class TutorialCLI {
             System.out.println(prompt);
             toReturn = board; // return the new board
         }else if(piece.getType().equals(ChessPieceType.Pawn)){ // piece is a pawn
-            board = this.spawnPieceForPawn();
+            board = (Board) this.spawnPieceForPawn();
             toReturn = board;
         }else{ // piece is a bishop
             System.out.println(prompt);
@@ -141,7 +143,7 @@ public class TutorialCLI {
      * @param board the board to spawn the piece on
      * @return      the board with the piece spawned on it
      */
-    public Board spawnPieceForBishop(Board board){
+    public BoardIF spawnPieceForBishop(BoardIF board){
         boolean valid = false;
         while(!valid){
             Files randFile = getRandomFile(); // get random file
@@ -180,13 +182,15 @@ public class TutorialCLI {
      *
      * @return the board with the piece spawned on it
      */
-    public Board spawnPieceForPawn(){
+    public BoardIF spawnPieceForPawn(){
         System.out.println("Since pawn's can be a little odd when it comes to capturing, " +
                 "we'll create a new board for you to practice on.\n" +
                 "This board will have a piece on it for you to capture, just gotta get there!\n");
-        Board newBoard = (Board) this.loader.loadGameFromFile("pawnSpawn"); // load board for pawn
-        newBoard.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
-        return newBoard;
+        BoardMementoCaretaker caretaker = this.loader.loadGameFromFile("pawnSpawn");
+        BoardIF board = new Board();
+        board.loadFromMemento(caretaker.peek());    // load board for pawn
+        board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
+        return board;
 
     }
     /**

@@ -248,13 +248,15 @@ public class Board implements BoardIF {
     @Override
     public void loadFromMemento(BoardMementoIF boardMemento) {
         String[] contents = boardMemento.state().split("#");
-        String[] pieces = contents[0].substring(1, contents[0].length() - 2).split(",");
-        String[] movesForward = contents[1].substring(1, contents[1].length() - 2).split(",");
+        String[] pieces = contents[0].substring(1, contents[0].length() - 1).split(",");
+        String[] movesForward = contents[1].substring(1, contents[1].length() - 1).split(",");
         ArrayList<String> movesAL = new ArrayList<>(Arrays.stream(movesForward).toList());
         Collections.reverse(movesAL);
         String[] moves = movesAL.toArray(new String[0]);
         setPiecesFromMemento(pieces);
-        //setFirstMovesFromMemento(moves);
+        if (moves[0] != "") {
+            setFirstMovesFromMemento(moves);
+        }
         this.state = boardMemento.state();
     }
 
@@ -281,7 +283,7 @@ public class Board implements BoardIF {
         }
 
     }
-/*
+
     private void setFirstMovesFromMemento(String[] moves) {
         for(String move : moves) {
             Files fromF = Files.valueOf(String.valueOf(move.charAt(2)).toLowerCase());
@@ -291,11 +293,11 @@ public class Board implements BoardIF {
             MovementIF movementType = squares[toF.getFileNum()][toR.index].getPiece().getMoveType();
             if (squares[toF.getFileNum()][toR.index].getPiece().getMoveType() instanceof FirstMoveIF) {
                 FirstMoveIF movement = (FirstMoveIF) movementType;
-                movement.setFirstMoveFalse();
+                movement.setFirstMove();
             }
         }
     }
-*/
+
 
     /**
      * Method to check if a pawn has moved from the starting positions for pawns of its color,
