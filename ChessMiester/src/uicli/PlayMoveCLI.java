@@ -55,13 +55,14 @@ public class PlayMoveCLI implements PlayIF {
      * Populates the menu options.
      */
     private void populateMenu() {
-        menuOptions = new String[6];
+        menuOptions = new String[7];
         menuOptions[0] = "1: Move\n";
         menuOptions[1] = "2: Undo\n";
         menuOptions[2] = "3: Redo\n";
         menuOptions[3] = "4: Show Moves\n";
         menuOptions[4] = "5: Save Game\n";
-        menuOptions[5] = "6: Concede and Exit Game\n";
+        menuOptions[5] = "6: Propose Draw\n";
+        menuOptions[6] = "7: Concede and Exit Game\n";
     }
 
     /**
@@ -75,7 +76,8 @@ public class PlayMoveCLI implements PlayIF {
                 menuOptions[2] +
                 menuOptions[3] +
                 menuOptions[4] +
-                menuOptions[5];
+                menuOptions[5] +
+                menuOptions[6];
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
         String prompt = "Enter your menu choice here -> ";
         while (choice != 6) { //while user has not quit
@@ -104,6 +106,9 @@ public class PlayMoveCLI implements PlayIF {
                     this.saveGame.showLoadSave();
                     break;
                 case 6:
+                    System.out.println("Propose draw");
+                    break;
+                case 7:
                     System.out.println("Concede and Exit Game");
                     break;
                 default:
