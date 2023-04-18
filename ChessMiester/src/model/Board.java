@@ -229,7 +229,7 @@ public class Board implements BoardIF {
         Collections.reverse(movesAL);
         String[] moves = movesAL.toArray(new String[0]);
         setPiecesFromMemento(pieces);
-        setFirstMovesFromMemento(moves);
+        //setFirstMovesFromMemento(moves);
         this.state = boardMemento.state();
     }
 
@@ -249,7 +249,7 @@ public class Board implements BoardIF {
         }
 
     }
-
+/*
     private void setFirstMovesFromMemento(String[] moves) {
         for(String move : moves) {
             Files fromF = Files.valueOf(String.valueOf(move.charAt(2)).toLowerCase());
@@ -263,6 +263,6 @@ public class Board implements BoardIF {
             }
         }
     }
-
+*/
     public record BoardMemento(String state) implements BoardIF.BoardMementoIF {}
 }
