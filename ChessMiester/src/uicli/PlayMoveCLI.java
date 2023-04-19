@@ -104,8 +104,6 @@ public class PlayMoveCLI implements PlayIF {
                     this.display();
                     boolean successfulRun = this.gameLoop();
                     if (successfulRun) {
-                        // Save the board state.
-                        //caretaker.addMemento(board.createMemento());
                         this.display();
                         switchPlayers();
                     }
@@ -211,12 +209,13 @@ public class PlayMoveCLI implements PlayIF {
                 board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(fromPiece);
                 validMove = true;
 
-                // Add onto the Caretaker for the memento
+                // Add the move to the move history
+                board.addMove(currentPlayer.getColor(), fromF, fromR, toF, toR);
                 caretaker.push(board.createMemento());
 
                 if (fromPiece instanceof FirstMoveIF) {
                     FirstMoveIF movementPiece = (FirstMoveIF) fromPiece;
-                    movementPiece.setFirstMove();
+                    movementPiece.setFirstMove(false);
                 }
             }
             else{
