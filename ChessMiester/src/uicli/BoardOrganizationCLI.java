@@ -23,9 +23,9 @@ public class BoardOrganizationCLI implements RulesIF {
                   
                   R/R_W/R_B are Rooks - 2, which are placed into the corners of the board.\s
                   
-                  N/N_W/N_B are Knights - 2, which are placed next to the rooks. \s
+                  N/N_W/N_B are Knights - 2, which are placed inside next to the rooks. \s
                   
-                  B/B_W/B_B are Bishops - 2, which are placed next to the knights.\s
+                  B/B_W/B_B are Bishops - 2, which are placed inside next to the knights.\s
                   
                   Q/Q_W/Q_B is the Queen - 1, which is placed on the respective color square \s
                                               between the bishops. \s
@@ -39,9 +39,8 @@ public class BoardOrganizationCLI implements RulesIF {
                                """);
 
         /* wait for user to press enter */
-        System.out.println("Press enter to whenever you're ready to return to the tutorial menu.");
+        System.out.println("Press 'ENTER' whenever you're ready to return to the tutorial menu.");
         Scanner scan = new Scanner(System.in);
         scan.nextLine();
-        //scan.close();
     }
 }

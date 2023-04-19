@@ -93,5 +93,5 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
      * Changes boolean if this is the first move of the piece occurs.
      */
     @Override
-    public void setFirstMove(){ this.isFirstMove = false; }
+    public void setFirstMove(boolean isFirstMove){ this.isFirstMove = isFirstMove; }
 }

@@ -17,7 +17,7 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
 
     /**
      * Method to save a game to a file
-     * @param board the board / game to save
+     * @param caretaker the stack of mementos you want to save
      * @param fileName  the name you want for the file
      */
     @Override
@@ -32,12 +32,13 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
      * @return  the board that you have loaded
      */
     @Override
-    public BoardIF loadGameFromFile(String fileName) {
+    public BoardMementoCaretaker loadGameFromFile(String fileName) {
         BoardIF board = new Board();
         board.initBoard();
-        FileReader reader = null; // initialize reader
-        String contents = ""; // initialize string for contents
-        String file = new java.io.File( ".").getAbsolutePath(); //must be in chessmeister for this to work
+        FileReader reader; // initialize reader
+        BoardMementoCaretaker caretaker = null;
+        BoardIF.BoardMementoIF memento;
+        String file = new java.io.File( "").getAbsolutePath(); //must be in chessmeister for this to work
         if(System.getProperty("os.name").contains("Windows")) // check if windows
             file = file.concat("\\src\\model\\saves\\" + fileName + ".txt"); // windows
         else // linux and macos
@@ -46,7 +47,12 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
         try {
             reader = new FileReader(file); // open reader from the file path
             Scanner scan = new Scanner(reader); // create scanner from reader
-            contents = scan.nextLine(); // grab contents
+            memento = new Board.BoardMemento(scan.nextLine());
+            caretaker = new BoardMementoCaretaker(memento);
+            while(scan.hasNext()) {
+                memento = new Board.BoardMemento(scan.nextLine());
+                caretaker.push(memento);
+            }
             scan.close(); // close scanner
         }
         catch(FileNotFoundException e) {
@@ -55,9 +61,7 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
         }
 
         // establish memento and load from memento
-        Board.BoardMemento boardMemento = new Board.BoardMemento(contents);
-        board.loadFromMemento(boardMemento);
-        return board;
+        return caretaker;
     }
 
     /**
@@ -96,7 +100,7 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
             writer.close();
         }
         catch (IOException e) {
-            System.out.println(e);
+            System.out.println("The file could not be saved!!");
         }
     }
 }

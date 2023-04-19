@@ -6,5 +6,5 @@ public interface BoardSaverLoaderIF {
 
     void saveGameToFile(BoardMementoCaretaker caretaker, String fileName);
 
-    BoardIF loadGameFromFile(String fileName);
+    BoardMementoCaretaker loadGameFromFile(String fileName);
 }
