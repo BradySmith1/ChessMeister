@@ -24,7 +24,7 @@ public class SettingsCLI implements SettingsIF {
      * @param scan Scanner object to read user input
      */
     public SettingsCLI(Scanner scan) {
-        this.boardColor = "Mono";
+        this.boardColor = "Color"; //TODO change back to mono
         this.undo = "on";
         this.showMoves = "on";
         this.menuOptions = new String[7];

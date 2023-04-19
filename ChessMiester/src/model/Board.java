@@ -84,11 +84,11 @@ public class Board implements BoardIF {
         //need 1 king
 
         for(int i = 0; i < width; i++) {
-            squares[1][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.WHITE));
-            squares[6][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.BLACK));
+            squares[6][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.WHITE));
+            squares[1][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.BLACK));
         }
-        setPieces(GameColor.WHITE, 0);
-        setPieces(GameColor.BLACK, height-1);
+        setPieces(GameColor.BLACK, 0);
+        setPieces(GameColor.WHITE, height-1);
     }
 
     private void createState() {

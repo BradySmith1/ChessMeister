@@ -77,7 +77,7 @@ public class PlayMoveCLI implements PlayIF {
      * Displays the play move dialog.
      */
     public void show() {
-        //board.draw(GameColor.WHITE);
+        //board.draw(currentPlayer.getColor());
         this.display();
         String menu = "\nPlay Chess\n---------------------------------------------------------------\n" +
                 menuOptions[0] +
@@ -88,9 +88,10 @@ public class PlayMoveCLI implements PlayIF {
                 menuOptions[5] +
                 menuOptions[6];
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
-        String prompt = currentPlayer.getName() + " Enter your choice ===> ";
+        String prompt;
         while (choice != 0) { //while user has not quit
             System.out.println(menu);   //shows user menu options
+            prompt = currentPlayer.getName() + ", enter your choice ===> ";
             System.out.print(prompt);   //ask user for this choice
             try {
                 choice = scan.nextInt();
@@ -100,12 +101,15 @@ public class PlayMoveCLI implements PlayIF {
             }
             switch(choice){
                 case 1:
-                    System.out.println("Move");
-                    this.gameLoop();
-                    this.display();   //TODO TEMPORARY
-                    this.switchPlayers();
-
-                    if(endGameCondition()){
+                    this.display();
+                    boolean successfulRun = this.gameLoop();
+                    if (successfulRun) {
+                        // Save the board state.
+                        //caretaker.addMemento(board.createMemento());
+                        this.display();
+                        switchPlayers();
+                    }
+                    if (endGameCondition()) {
                         // Show each player's stats at the end of the game
                         player1.displayStats();
                         player2.displayStats();
@@ -126,10 +130,19 @@ public class PlayMoveCLI implements PlayIF {
                     break;
                 case 6:
                     System.out.println("Propose draw");
+                    if (agreementCondition() == true) {
+                        System.out.println("Draw");
+                        currentPlayer.increaseDraws();
+                        getOtherPlayer(currentPlayer).increaseDraws();
+                    } else {
+                        System.out.println("No draw");
+                    }
                     break;
                 case 7:
                     System.out.println("Concede and Exit Game");
-                    // go to main menu? or end program?
+                    currentPlayer.increaseLosses();
+                    getOtherPlayer(currentPlayer).increaseWins();
+                    System.exit(1);
                     break;
                 default:
                     System.out.println("Invalid input.");
@@ -176,7 +189,6 @@ public class PlayMoveCLI implements PlayIF {
 
                 // Clear the "from" position.
                 board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
-
 
                 if((piece.getType() == ChessPieceType.Pawn)){ //check if piece is a pawn
                     PawnMovement pawn = (PawnMovement) piece.getMoveType();
@@ -248,11 +260,13 @@ public class PlayMoveCLI implements PlayIF {
      * Function used to display current state of the board and captured pieces.
      */
     public void display(){
-        player1.displayCapturedPieces(); //display captured pieces for player 1
+        // display captured pieces for other
+        this.getOtherPlayer(currentPlayer).displayCapturedPieces();
         System.out.println(); // line printed for formatting
-        board.draw(GameColor.WHITE); // display the board
-        System.out.println(); // line printed for formatting
-        player2.displayCapturedPieces(); // display captured pieces for player 2
+        this.board.draw(currentPlayer.getColor());   // display the board
+        System.out.println();
+        //display captured pieces for current
+        this.currentPlayer.displayCapturedPieces();
     }
 
     /**
@@ -352,7 +366,7 @@ public class PlayMoveCLI implements PlayIF {
      */
     private boolean drawCondition(PlayerIF player){
         return stalemateCondition(player) || threefoldRepetitionCondition()
-                || fiftyMoveRule() || agreementCondition();
+                || fiftyMoveRule();
     }
 
     /**
@@ -389,7 +403,7 @@ public class PlayMoveCLI implements PlayIF {
     private boolean threefoldRepetitionCondition() {
         // A draw should be declared if the same board presence has occurred three times in a row
         boolean threefoldRepetition = false;
-
+        // TODO
         return threefoldRepetition;
     }
 
@@ -401,7 +415,7 @@ public class PlayMoveCLI implements PlayIF {
     {
         // A draw should be declared if a total of 50 moves (25 per player) has occurred and no piece has been captures and no pawn has been moved
         boolean fiftyMoveRule = false;
-
+        // TODO
         return fiftyMoveRule;
     }
 
@@ -412,7 +426,12 @@ public class PlayMoveCLI implements PlayIF {
     private boolean agreementCondition() {
         // Both players agree to a draw.
         boolean agreement = false;
-
+        this.scan = new Scanner(System.in);
+        System.out.println(getOtherPlayer(currentPlayer).getName() + ", do you agree to a draw? (y/n)");
+        String input = scan.nextLine();
+        if(input.equalsIgnoreCase("y")){
+            agreement = true;
+        }
         return agreement;
     }
 
@@ -427,7 +446,8 @@ public class PlayMoveCLI implements PlayIF {
     /**
      * Loop for the game to occur
      */
-    private void gameLoop(){
+    private boolean gameLoop(){
+        boolean success = false;
         this.populateMenu();
         if(!checkmateCondition(currentPlayer, this.getOtherPlayer(currentPlayer)) && !drawCondition(currentPlayer))
         {
@@ -446,28 +466,41 @@ public class PlayMoveCLI implements PlayIF {
                     if (checkCondition(currentPlayer, currentPlayer.getKing().getPosition(board))) {
                         System.out.println(currentPlayer.getName() + ", invalid move. Cannot " +
                                 "place your own king in check");
-                        undoMove();
+                        //undoMove();
                     } else {
                         checkPass = true;
+                        success = true;
                     }
                 }
             }
 
         }
+        return success;
     }
 
-    private void undoMove() {
-        //this.board.loadFromMemento();
-    }
-    private void undoMoveFromCheck() {
+
+    /**
+     * This method is used to see if a game is placed in check. This ensures
+     * that the move from check will not be in the list of valid moves so
+     * you cannot redo that move.
+     */
+    private void undoMoveFromCheck(){
         this.caretaker.pop();
         this.board.loadFromMemento(this.caretaker.peek());
     }
 
+    /**
+     * This method is responsible for pushing a board state onto the caretaker.
+     *
+     * @param memento the current memento to pushed pushed on
+     */
     private void push(BoardIF.BoardMementoIF memento) {
         this.caretaker.push(memento);
     }
 
+    /**
+     * This method undoes the last move done on the board.
+     */
     private void undo() {
         BoardIF.BoardMementoIF memento = this.caretaker.down();
         if(memento != null) {
@@ -475,6 +508,10 @@ public class PlayMoveCLI implements PlayIF {
         }
     }
 
+    /**
+     * This method redoes the move that just occured by viewing what is above in
+     * the caretaker.
+     */
     private void redo() {
         BoardIF.BoardMementoIF memento = this.caretaker.up();
         if(memento != null) {
@@ -482,7 +519,12 @@ public class PlayMoveCLI implements PlayIF {
         }
     }
 
-
+    /**
+     * This method is responsible for initiating a move given the player enters
+     * a proper file and rank.
+     *
+     * @param player player being prompted for a move
+     */
     private void startMove(PlayerIF player) {
         Files fromFile = null, toFile = null; // establish needed variables
         Rank fromRank = null, toRank = null;
@@ -490,7 +532,7 @@ public class PlayMoveCLI implements PlayIF {
         // Prompt player for input
         boolean validMove = false;
         while(!validMove){ // loop until we get a valid move
-            System.out.println("Make Move:"); // prompt for move
+            System.out.print("Make Move:"); // prompt for move
             Scanner scan = new Scanner(System.in);  // TODO remove this line later after testing and replace with field
             String move = scan.nextLine();
             move = move.replaceAll("\\s", ""); // remove white space
@@ -523,11 +565,6 @@ public class PlayMoveCLI implements PlayIF {
     }
 
     /**
-     * Method that switches the active player in a game.
-     */
-    private void switchPlayers(){currentPlayer = currentPlayer == player1 ? player2 : player1;}
-
-    /**
      * Returns the other player based on a passed in player.
      *
      * @param player player to get the opposite player of
@@ -537,9 +574,14 @@ public class PlayMoveCLI implements PlayIF {
         return player == player1 ? player2 : player1;
     }
 
+    private void switchPlayers(){
+        currentPlayer = currentPlayer == player1 ? player2 : player1;
+    }
+
     /**
      * This method makes all necessary checks to see if a game has ended.
-     * @return
+     *
+     * @return true if an end condition has been met, false otherwise
      */
     private boolean endGameCondition(){
         boolean endGame = false;

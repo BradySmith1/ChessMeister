@@ -29,10 +29,10 @@ public class BoardMonoCLI implements BoardStrategy {
     @Override
     public void draw(BoardIF board, GameColor color) {
         // Get the squares from the board.
-        if(color == GameColor.WHITE){
-            printWhite(board);
-        }else{
+        if(color == GameColor.BLACK){
             printBlack(board);
+        }else{
+            printWhite(board);
         }
     }
 
@@ -46,9 +46,9 @@ public class BoardMonoCLI implements BoardStrategy {
         this.highlighted = highlighted;
         this.highlight = true;
         if(color == GameColor.WHITE){
-            printWhite(board);
-        }else{
             printBlack(board);
+        }else{
+            printWhite(board);
         }
     }
 
@@ -95,7 +95,7 @@ public class BoardMonoCLI implements BoardStrategy {
         System.out.println("   --------------------------------" +
                 "-----------------------------------------");
         // Print the board.
-        for(int height = board.getHeight() - 1; height >= 0; height--) {
+        for(int height = 0; height < board.getHeight(); height++) {
             populateRow(board, height);
             System.out.print("  | ");
             printLine(true);
@@ -126,12 +126,12 @@ public class BoardMonoCLI implements BoardStrategy {
                 "-----------------------------------------");
         // Print the board.
         for(int height = 0; height < board.getHeight(); height++) {
-            populateRow(board, height);
+            populateRow(board, (board.getHeight() - height) - 1);
             System.out.print("  | ");
             printLine(false);
             System.out.println("|");
-            System.out.print(number + " | ");
-            for (int width = 0; width < pieces.length; width++) {
+            System.out.print(height + 1 + " | ");
+            for(int width = 0; width < pieces.length; width++) {
                 System.out.print(pieces[width]);
             }
             System.out.println("|");
