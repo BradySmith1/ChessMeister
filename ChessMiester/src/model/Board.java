@@ -53,6 +53,7 @@ public class Board implements BoardIF {
         squares = new Square[height][width];
         drawStrategy = strategy;
         this.initBoard();
+        this.state = "{}#[]";
     }
 
     /**
@@ -103,15 +104,14 @@ public class Board implements BoardIF {
                     stateBuilder.append(":");
                     stateBuilder.append(square.getPiece().getType().letter);
                     stateBuilder.append(square.getPiece().getColor().toString().charAt(0));
-                    if(i != getWidth() - 1) {
+                    if (i != getWidth() - 1 || j != getHeight() - 1) {
                         stateBuilder.append(",");
                     }
                 }
             }
         }
-        stateBuilder.append("}#[]");
-        System.out.println(stateBuilder + "923482389423894289384923894829398432");
-        this.state = stateBuilder.toString();
+        stateBuilder.append("}");
+        this.state = stateBuilder.toString() + "#" + this.state.split("#")[1];
     }
 
     /**
@@ -221,6 +221,7 @@ public class Board implements BoardIF {
      */
     @Override
     public void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR) {
+        createState();
         StringBuilder stateBuilder = new StringBuilder(this.state.split("#")[1]);
         stateBuilder.deleteCharAt(stateBuilder.length() - 1);
         if(stateBuilder.length() > 7) {
@@ -235,6 +236,7 @@ public class Board implements BoardIF {
         stateBuilder.append(toR.displayNum);
         stateBuilder.append("]");
         this.state = this.state.split("#")[0] + "#" + stateBuilder.toString();
+        System.out.println(this.state);
         System.out.println(this.state);
     }
 
@@ -268,11 +270,11 @@ public class Board implements BoardIF {
 
     /**
      * Method to place the pieces depending on the String[] passed in from loadFromMemento()
-     * @param pieces    An array in which each string describes a piece and its location
+     * @param pieces_string    An array in which each string describes a piece and its location
      */
-    private void setPiecesFromMemento(String[] pieces){
+    private void setPiecesFromMemento(String[] pieces_string){
         this.initBoard();
-        for (String piece : pieces) {
+        for (String piece : pieces_string) {
             Files newFile = Files.valueOf(String.valueOf(piece.charAt(0))); // get file
             Rank newRank = Rank.valueOf("R" + piece.charAt(1)); // get rank
             // identify piece type from provided letter
@@ -288,7 +290,6 @@ public class Board implements BoardIF {
             Piece pieceToInsert = new Piece(pieceType, color);
             squares[newRank.getIndex()][newFile.getFileNum()].setPiece(pieceToInsert);
         }
-
     }
 
     private void setFirstMovesFromMemento(String[] moves) {
@@ -306,10 +307,13 @@ public class Board implements BoardIF {
             Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toUpperCase());
             Rank toR = Rank.valueOf("R" + (String.valueOf(move.charAt(6))));
 
-            MovementIF movementType = squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType();
-            if (squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType() instanceof FirstMoveIF) {
-                FirstMoveIF movement = (FirstMoveIF) movementType;
-                movement.setFirstMove(false);
+            PieceIF piece = squares[toR.getIndex()][toF.getFileNum()].getPiece();
+
+            if (piece != null) {
+                MovementIF movementType = piece.getMoveType();
+                if (movementType instanceof FirstMoveIF movement) {
+                    movement.setFirstMove(false);
+                }
             }
         }
     }

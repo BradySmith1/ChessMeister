@@ -1,8 +1,10 @@
 package model;
 
+import interfaces.BoardIF;
 import interfaces.PlayerIF;
 import enums.GameColor;
 import interfaces.PieceIF;
+import interfaces.SquareIF;
 
 import java.util.ArrayList;
 
@@ -205,6 +207,23 @@ public class Player implements PlayerIF {
             }
         }
         return p;
+    }
+
+    /**
+     * This function is used to assign pieces to each user.
+     */
+    public void assignPieces(BoardIF board){
+        this.pieces.clear();
+        SquareIF[][] squares = board.getSquares();
+        for (int i = 0; i < board.getWidth(); i++) {
+            for (int j = 0; j < board.getHeight(); j++) {
+                if(squares[i][j].getPiece() != null){
+                    if(squares[i][j].getPiece().getColor() == this.getColor()){
+                        this.addPiece(squares[i][j].getPiece());
+                    }
+                }
+            }
+        }
     }
 
     /**

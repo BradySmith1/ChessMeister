@@ -11,6 +11,7 @@ import model.Position;
 import movements.PawnMovement;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -337,6 +338,9 @@ public class PlayMoveCLI implements PlayIF {
             // For each position in the list of valid moves, check to see if the king is in check.
             for (Position position : kingValidMoves) {
                 // Emulate the move of the king to each position in the list of valid moves.
+
+                Position test1 = king.getPosition(board);
+
                 this.move(player, playerOther, king.getPosition(board).getFile(), king.getPosition(board).getRank(), position.getFile(), position.getRank());
 
                 // Check to see if there is a check.
@@ -344,31 +348,42 @@ public class PlayMoveCLI implements PlayIF {
                     canMoveOutOfCheck = true;
                 }
                 //undo(); // TODO
+                String r1;
+                String r2;
+                r1 = board.getPiece(Rank.R1, Files.A).toString();
                 undoMoveFromCheck();
+                r2 = board.getPiece(Rank.R1, Files.A).toString();
+                this.display();
+                System.out.println(r1 + " " + r2);
+                System.out.println("R1 SHOULD EQUAL R2: " + r1.equals(r2));
             }
 
             // Check to see if any of the pieces can block the checkmate.
             for (PieceIF piece : player.getPieces()) {
                 // Cast the piece to a Piece object.
-                Piece p = (Piece) piece;
 
                 // Get the list of valid moves for the piece.
-                List<Position> validMoves = p.getValidMoves(board, piece.getPosition(board));
+                List<Position> validMoves = piece.getValidMoves(board, piece.getPosition(board));
 
                 for (Position position : validMoves) {
                     // Emulate the move of the piece to each position in the list of valid moves.
                     // Check to see if there is a check.
 
-                    this.move(player, playerOther,p.getPosition(board).getFile(), p.getPosition(board).getRank(), position.getFile(), position.getRank());
+
+                    Position test1 = piece.getPosition(board);
+
+
+                    this.move(player, playerOther,piece.getPosition(board).getFile(), piece.getPosition(board).getRank(), position.getFile(), position.getRank());
 
                     if (!this.checkCondition(player, king.getPosition(board))) {
                         canBlockCheck = true;
                     }
                     //undo(); // TODO
                     undoMoveFromCheck();
+
                 }
             }
-            checkmate = !canMoveOutOfCheck && !canBlockCheck;
+            checkmate = canMoveOutOfCheck && canBlockCheck;
         }
 
         return checkmate;
@@ -537,6 +552,8 @@ public class PlayMoveCLI implements PlayIF {
     private void undoMoveFromCheck(){
         this.caretaker.pop();
         this.board.loadFromMemento(this.caretaker.peek());
+        player1.assignPieces(board);
+        player2.assignPieces(board);
     }
 
     /**

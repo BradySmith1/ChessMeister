@@ -1,6 +1,7 @@
 package interfaces;
 
 import enums.GameColor;
+import model.Piece;
 import movements.KingMovement;
 
 import java.util.ArrayList;
@@ -38,6 +39,11 @@ public interface PlayerIF {
      * @param piece The piece to add.
      */
     public void addPiece(PieceIF piece);
+
+    /**
+     * This function is used to assign pieces to each user.
+     */
+    void assignPieces(BoardIF board);
 
 
     /**
