@@ -1,1 +1,1 @@
-{C6:KB,G2:RW,E1:QW}#[]
+{C6:KB,D1:PW,E1:RW}#[]

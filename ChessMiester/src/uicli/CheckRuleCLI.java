@@ -69,25 +69,25 @@ public class CheckRuleCLI implements RulesIF {
 
         String input = "1"; // basic string for user input
         board.draw(GameColor.WHITE); // draw board
-
+        System.out.println("Remember! Expected input is in the form of " +
+                "A1,A2 or A1, A2\nwith the first being the piece to move, and the second\n" +
+                "being the square to move to.\n");
+        input = "1";
         while(!input.equals("0")) { // loop game until user wants to quit
-            System.out.println("Remember! Expected input is in the form of " +
-                    "A1,A2 or A1, A2\nwith the first being the piece to move, and the second\n" +
-                    "being the square to move to.\n");
             System.out.print("Enter a move (Enter 0 to quit) ===> "); // prompt and read input
             input = scanner.nextLine();
             input = input.toLowerCase().replaceAll("\\s", "");
             if(input.length() != 5){ // bad user
                 System.out.println("Invalid input. Please try again.");
-            }else if(input.equals("g2,e2")){ // user is right
+            }else if(input.equals("e1,e6")){ // user is right
                 // place rook in right place and remove from old place
-                board.getSquares()[6][4].setPiece(new Piece(ChessPieceType.Rook, GameColor.WHITE));
+                board.getSquares()[2][4].setPiece(new Piece(ChessPieceType.Rook, GameColor.WHITE));
                 board.getSquares()[6][6].setPiece(null);
                 board.draw(GameColor.WHITE); // draw board
                 System.out.println("You got it! The opponent is now in check!");
                 System.out.print("Press 'ENTER' to return to the menu when ready ===> ");
                 scanner.nextLine();
-                break;
+                input = "0";
             }else{ // user is wrong
                 System.out.println("Sorry, that's not the right move. Try again!");
             }

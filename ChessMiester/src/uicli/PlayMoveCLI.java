@@ -192,7 +192,7 @@ public class PlayMoveCLI implements PlayIF {
 
                 if((piece.getType() == ChessPieceType.Pawn)){ //check if piece is a pawn
                     PawnMovement pawn = (PawnMovement) piece.getMoveType();
-                    pawn.setFirstMove(); // set first move for a pawn to false
+                    pawn.setFirstMove(false); // set first move for a pawn to false
                 }
                 moveMade = true; // move was successful
             }
@@ -205,7 +205,7 @@ public class PlayMoveCLI implements PlayIF {
 
                 if((piece.getType() == ChessPieceType.Pawn)){ //check if piece is a pawn
                     PawnMovement pawn = (PawnMovement) piece.getMoveType();
-                    pawn.setFirstMove(); //set first move for a pawn to false
+                    pawn.setFirstMove(false); //set first move for a pawn to false
                 }
 
                 moveMade = true; // move was successful

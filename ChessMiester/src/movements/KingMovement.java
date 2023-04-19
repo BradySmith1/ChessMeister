@@ -78,7 +78,7 @@ public class KingMovement extends BlackAndWhite implements MovementIF, FirstMove
      * Method to be called whenever king makes its first move, sets isFirstMove false
      * to show a move with this piece has been made.
      */
-    public void setFirstMove(){ this.isFirstMove = false; }
+    public void setFirstMove(boolean isFirstMove){ this.isFirstMove = isFirstMove; }
 
     /**
      * Method to be called to check if the king has moved

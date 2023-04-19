@@ -254,7 +254,7 @@ public class Board implements BoardIF {
         Collections.reverse(movesAL);
         String[] moves = movesAL.toArray(new String[0]);
         setPiecesFromMemento(pieces);
-        if (moves[0] != "") {
+        if (!moves[0].equals("")) {
             setFirstMovesFromMemento(moves);
         }
         this.state = boardMemento.state();
@@ -264,7 +264,8 @@ public class Board implements BoardIF {
      * Method to place the pieces depending on the String[] passed in from loadFromMemento()
      * @param pieces    An array in which each string describes a piece and its location
      */
-    private void setPiecesFromMemento(String[] pieces) {
+    private void setPiecesFromMemento(String[] pieces){
+        this.initBoard();
         for (String piece : pieces) {
             Files newFile = Files.valueOf(String.valueOf(piece.charAt(0))); // get file
             Rank newRank = Rank.valueOf("R" + piece.charAt(1)); // get rank
@@ -279,7 +280,7 @@ public class Board implements BoardIF {
                 case "B" -> color = GameColor.BLACK;
             }
             Piece pieceToInsert = new Piece(pieceType, color);
-            squares[newFile.getFileNum()][newRank.getIndex()].setPiece(pieceToInsert);
+            squares[newRank.getIndex()][newFile.getFileNum()].setPiece(pieceToInsert);
         }
 
     }
@@ -291,9 +292,9 @@ public class Board implements BoardIF {
             Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toLowerCase());
             Rank toR = Rank.valueOf(String.valueOf(move.charAt(6)));
             MovementIF movementType = squares[toF.getFileNum()][toR.index].getPiece().getMoveType();
-            if (squares[toF.getFileNum()][toR.index].getPiece().getMoveType() instanceof FirstMoveIF) {
+            if (squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType() instanceof FirstMoveIF) {
                 FirstMoveIF movement = (FirstMoveIF) movementType;
-                movement.setFirstMove();
+                movement.setFirstMove(false);
             }
         }
     }
@@ -311,10 +312,10 @@ public class Board implements BoardIF {
         if(pieceType == ChessPieceType.Pawn) {
             PawnMovement pawn = (PawnMovement) pieceToInsert.getMoveType();
             if(color == GameColor.BLACK && newRank.getIndex() != squares[0].length - 2) {
-                pawn.setFirstMove();
+                pawn.setFirstMove(false);
             }
             else if(color == GameColor.BLACK && newRank.getIndex() != 1) {
-                pawn.setFirstMove();
+                pawn.setFirstMove(false);
             }
         }
     }
