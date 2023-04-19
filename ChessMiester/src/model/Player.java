@@ -1,10 +1,8 @@
 package model;
 
-import interfaces.MovementIF;
 import interfaces.PlayerIF;
 import enums.GameColor;
 import interfaces.PieceIF;
-import model.Piece;
 
 import java.util.ArrayList;
 
@@ -15,7 +13,7 @@ import java.util.ArrayList;
  * @author Brady Smith (85%), Kaushal Patel (15%)
  * @version 1.0
  */
-public class Player implements PlayerIF{
+public class Player implements PlayerIF {
 
     /** The name of the player */
     private String name;
@@ -168,6 +166,9 @@ public class Player implements PlayerIF{
      */
     @Override
     public void displayStats() {
+        System.out.println("--------------------");
+        System.out.println("Stats for " + this.name + ":");
+        System.out.println("--------------------");
         System.out.println("Wins: " + this.numberofWins);
         System.out.println("Losses: " + this.numberofLosses);
         System.out.println("Draws: " + this.numberofDraws);

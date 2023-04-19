@@ -109,11 +109,6 @@ public class PlayMoveCLI implements PlayIF {
                         this.display();
                         switchPlayers();
                     }
-//                    if (endGameCondition()) {
-//                        // Show each player's stats at the end of the game
-//                        player1.displayStats();
-//                        player2.displayStats();
-//                    }
                     break;
                 case 2:
                     System.out.println("Undo");
@@ -130,10 +125,13 @@ public class PlayMoveCLI implements PlayIF {
                     break;
                 case 6:
                     System.out.println("Propose draw");
-                    if (agreementCondition() == true) {
-                        System.out.println("Draw");
+                    if (agreementCondition()) {
+                        System.out.println("There is a draw");
                         currentPlayer.increaseDraws();
                         getOtherPlayer(currentPlayer).increaseDraws();
+                        currentPlayer.displayStats();
+                        getOtherPlayer(currentPlayer).displayStats();
+                        System.exit(1);
                     } else {
                         System.out.println("No draw");
                     }
@@ -142,10 +140,13 @@ public class PlayMoveCLI implements PlayIF {
                     System.out.println("Concede and Exit Game");
                     currentPlayer.increaseLosses();
                     getOtherPlayer(currentPlayer).increaseWins();
+                    currentPlayer.displayStats();
+                    getOtherPlayer(currentPlayer).displayStats();
                     System.exit(1);
                     break;
                 default:
                     System.out.println("Invalid input.");
+                    break;
             }
         }
     }
@@ -287,7 +288,6 @@ public class PlayMoveCLI implements PlayIF {
      */
     public boolean checkCondition(PlayerIF player, Position position){
         boolean isCheck = false;
-        //Position kingPos = player.getKing().getPosition(); TODO Pass this line into checkCondition when checking for check.
 
         // Get the list of valid moves for all the enemy pieces on the board.
         for (PieceIF piece : player.getPieces()){
@@ -394,7 +394,7 @@ public class PlayMoveCLI implements PlayIF {
      */
     private boolean stalemateCondition(PlayerIF player) {
         // A draw should be declared if the king is not in check and there are no valid moves for the player
-        boolean inCheck = checkCondition(player1, player1.getKing().getPosition(board));
+        boolean inCheck = checkCondition(getOtherPlayer(player), player.getKing().getPosition(board));
         boolean stalemate = true;
 
         // If the king is not in check, then check to see if there are any valid moves for the player.
@@ -446,11 +446,13 @@ public class PlayMoveCLI implements PlayIF {
         // Both players agree to a draw.
         boolean agreement = false;
         this.scan = new Scanner(System.in);
-        System.out.println(getOtherPlayer(currentPlayer).getName() + ", do you agree to a draw? (y/n)");
+        switchPlayers();    // Switch to the other player
+        System.out.println(currentPlayer.getName() + ", do you agree to a draw? (y/n)");
         String input = scan.nextLine();
         if(input.equalsIgnoreCase("y")){
             agreement = true;
         }
+        switchPlayers();    // Switch back to the original player
         return agreement;
     }
 
@@ -477,11 +479,19 @@ public class PlayMoveCLI implements PlayIF {
          */
 
         // Check to see if the game is over by checkmate or draw.
-        System.out.println("CHECKMATE CONDITION: " + checkmateCondition(currentPlayer, getOtherPlayer(currentPlayer)));
         if(checkmateCondition(currentPlayer, getOtherPlayer(currentPlayer)) || drawCondition(currentPlayer)){
             // If the game is over, then notify the players and end the game.
             System.out.println("Game Over");
             System.out.println("The winner is " + getOtherPlayer(currentPlayer).getName());
+
+            // Display the stats of the players.
+            currentPlayer.displayStats();
+            getOtherPlayer(currentPlayer).displayStats();
+
+            // Save the game TODO
+
+            // End the game.
+            System.exit(1); // TODO change this to return something
         }
         // If the game is not over by checkmate or draw, then check to see if the player is in check.
         else if(checkCondition(getOtherPlayer(currentPlayer), currentPlayer.getKing().getPosition(board))){
@@ -597,7 +607,7 @@ public class PlayMoveCLI implements PlayIF {
             if(fromFile == null || fromRank == null || toFile == null || toRank == null) {
                 System.out.println("Invalid move. Please try again.");
 
-                // reset validmove to ensure loop doesn't end
+                // reset valid move to ensure loop doesn't end
                 validMove = false;
             }
         }
