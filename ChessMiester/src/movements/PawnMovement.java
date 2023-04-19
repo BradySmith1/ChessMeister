@@ -4,6 +4,7 @@ import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.FirstMoveIF;
 import interfaces.MovementIF;
+import interfaces.PieceIF;
 import model.BlackAndWhite;
 import model.Position;
 import java.util.ArrayList;
@@ -58,13 +59,63 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
             validMoves.add(moveCheck(board, currentPosition, direction * 2, 0, false));
         }
         // call to check diagonal captures
-        validMoves.add(moveCheck(board, currentPosition, direction, 1, true));
-        validMoves.add(moveCheck(board, currentPosition, direction, -1, true));
+        validMoves.add(getDirectionalCapture(board, currentPosition, 1));
+        validMoves.add(getDirectionalCapture(board, currentPosition, -1));
+        // call to check for en passant
+        //validMoves.addAll(getEnPassant(board, currentPosition));
         //remove all nulls in the list
         validMoves.removeAll(Collections.singleton(null));
         return validMoves;
     }
 
+    /**
+     * Method to return a possible diagonal capture for a pawn
+     * @param board     the board the piece is on
+     * @param currentPosition   the current position of the piece
+     * @param side      the side the pawn will move towards diagonally
+     * @return  a position if the move is possible, a null if not
+     */
+    private Position getDirectionalCapture(BoardIF board, Position currentPosition, int side) {
+        Position validMove = null;
+        Position place;
+        PieceIF pieceInPos;
+        int moveRank;
+        int moveFile;
+        place = moveCheck(board, currentPosition, direction, side, true);
+        if (place != null) {    // if we can move there in the first place
+            moveRank = place.getRank().getIndex();
+            moveFile = place.getFile().getFileNum();
+            pieceInPos = board.getSquares()[moveRank][moveFile].getPiece(); // this will be null if there is no piece
+            if (pieceInPos != null) {   // if there is a piece where we are going
+                validMove = place;
+            }
+        }
+        return validMove;
+    }
+/*
+    private List<Position> getEnPassant(BoardIF board, Position currentPosition) {
+        Position validMove = null;
+        Position place = null;
+        PieceIF pieceInPos = null;
+        int moveRank;
+        int moveFile;
+        place = moveCheck(board, currentPosition, direction, 0, true);
+        if(place != null) {
+            moveRank = place.getRank().getIndex();
+            moveFile = place.getFile().getFileNum();
+            pieceInPos = board.getSquares()[moveRank][moveFile].getPiece(); // this will be null if there is no piece
+            if(pieceInPos.getMoveType() instanceof PawnMovement) {
+                // TODO
+                // make a variable for getMoveType with a static type of FirstMoveIF
+                // if(getFirstMove is false) {
+                //      undo board
+                //      check if that pawns firstMove is now true
+                //      redo and add the diagonals to valid move
+            }
+        }
+        return validMove;
+    }
+*/
     /**
      * Gets the game color of the piece.
      * @return  the game color of the piece.
