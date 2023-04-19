@@ -49,7 +49,7 @@ public class CheckmateRuleCLI implements RulesIF {
 
         System.out.println(str);
 
-        System.out.print("When you're ready to try checkmate, press 'ENTER' to continue ===> ");
+        System.out.print("When you're ready to try checkmate, press 'ENTER' to continue. ");
         Scanner scanner = new Scanner(System.in); //create scanner object
         scanner.nextLine(); // read the next line of input
 
@@ -78,7 +78,7 @@ public class CheckmateRuleCLI implements RulesIF {
                 board.getSquares()[1][3].setPiece(null); // remove the pawn
                 board.draw(GameColor.WHITE); // draw the board
                 System.out.println("You got it! The opponent is now in checkmate!");
-                System.out.print("Press 'ENTER' to return to the menu when ready ===> ");
+                System.out.print("Press 'ENTER' to return to the menu when ready. ");
                 scanner.nextLine();
                 input = "0";
             } else { // user is wrong

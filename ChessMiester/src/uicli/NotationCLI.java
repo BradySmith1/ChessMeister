@@ -44,7 +44,7 @@ public class NotationCLI extends TutorialCLI implements RulesIF{
                 Now, let's see if you have the right understanding! We're gonna highlight a \s
                 few squares, and just enter what square they are. \s\s
                 
-                Press ENTER to continue whenever you're ready.
+                Press 'ENTER' to continue whenever you're ready.
                 """);
 
         Scanner scan = new Scanner(System.in); // create a scanner to read user input

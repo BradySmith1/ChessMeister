@@ -14,7 +14,7 @@ import model.Piece;
 /**
  * This class is responsible for displaying the rules of check in chess.
  *
- * @author Kaushal Patel (60%), Zach Eanes (40%)
+ * @author Kaushal Patel (50%), Zach Eanes (50%)
  * @version 1.0 (done in sprint 2)
  */
 public class CheckRuleCLI implements RulesIF {
@@ -49,7 +49,7 @@ public class CheckRuleCLI implements RulesIF {
         System.out.println(str);
 
         /* wait for user to press any key to continue */
-        System.out.print("When you're ready to try check, press 'ENTER' to continue ===> ");
+        System.out.print("When you're ready to try check, press 'ENTER' to continue. ");
         Scanner scanner = new Scanner(System.in); //create scanner object
         scanner.nextLine(); // read the next line of input
 
@@ -82,10 +82,10 @@ public class CheckRuleCLI implements RulesIF {
             }else if(input.equals("e1,e6")){ // user is right
                 // place rook in right place and remove from old place
                 board.getSquares()[2][4].setPiece(new Piece(ChessPieceType.Rook, GameColor.WHITE));
-                board.getSquares()[6][6].setPiece(null);
+                board.getSquares()[7][4].setPiece(null);
                 board.draw(GameColor.WHITE); // draw board
                 System.out.println("You got it! The opponent is now in check!");
-                System.out.print("Press 'ENTER' to return to the menu when ready ===> ");
+                System.out.print("Press 'ENTER' to return to the menu when ready. ");
                 scanner.nextLine();
                 input = "0";
             }else{ // user is wrong

@@ -35,7 +35,7 @@ public class BoardSetupCLI implements RulesIF {
                 """);
 
         /* wait for user to press enter */
-        System.out.println("Press enter to whenever you're ready to return to the tutorial menu.");
+        System.out.println("Press 'ENTER' whenever you're ready to return to the tutorial menu.");
         Scanner scan = new Scanner(System.in);
         scan.nextLine();
     }

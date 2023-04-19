@@ -7,7 +7,6 @@ import enums.GameColor;
 import enums.Rank;
 import interfaces.BoardIF;
 import interfaces.FirstMoveIF;
-import interfaces.MovementIF;
 import model.Board;
 import model.BoardSaverLoader;
 import model.Piece;
@@ -54,21 +53,22 @@ public class TutorialCLI {
 
         while (!input.equals("0")) { // loop game until user wants to quit
             this.board.draw(GameColor.WHITE); // draw board
+
+//            System.out.println("=-=-=-=-=-=-=");
+//            System.out.println("current position file: "+ pos.getFile().getFileChar());
+//            System.out.println(pos.getRank().getDisplayNum());
+//            System.out.println("=-=-=-=-=-=-=");
+
             List<Position> moves = piece.getValidMoves(this.board, pos); // get valid moves for bishop
             System.out.print("Enter a move (Enter 0 to quit, " +
                     "1 to try capturing) ===> "); // prompt and read input
             input = scan.nextLine();
-            while(input.equals("1")){ // user wants to spawn a pawn
+            if(input.equals("1")){ // user wants to spawn a pawn
                 pos = this.spawnPiece(pos, piece); // spawn a random pawn
-                this.board.draw(GameColor.WHITE); // draw board
-
                 if(piece.getType().equals(ChessPieceType.Pawn)){
                     piece = new Piece(ChessPieceType.Pawn, GameColor.WHITE); // rebase pawn
                 }
-
-                System.out.print("Enter a move (Enter 0 to quit, " +
-                        "1 to try capturing) ===> ");
-                input = scan.nextLine();
+                //input = "2"; // break out of loop
             }
             Files toF = null;
             Rank toR = null;
@@ -84,7 +84,7 @@ public class TutorialCLI {
                     }
                 }
             } catch (Exception e) {
-                if(!input.equals("0") && !input.equals("1"))
+                if(!input.equals("0") && !input.equals("1") && !input.equals("2"))
                     System.out.println("Invalid input. Expect a file and rank (EX: A1).");
             }
 
@@ -190,7 +190,7 @@ public class TutorialCLI {
      * they're forced back to the beginning, and it spawns a piece at a spot they can capture.
      */
     public void spawnPieceForPawn(Position pos){
-        System.out.println("Since pawn's can be a little odd when it comes to capturing, " +
+        System.out.println("\nSince pawn's can be a little odd when it comes to capturing, " +
                 "we'll create a new board for you to practice on.\n" +
                 "This board will have a piece on it for you to capture, just gotta get there!\n");
         BoardMementoCaretaker caretaker = this.loader.loadGameFromFile("pawnSpawn");
