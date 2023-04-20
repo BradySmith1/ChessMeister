@@ -96,7 +96,7 @@ public class DrawRuleCLI implements RulesIF {
                 board.getSquares()[1][1].setPiece(new Piece(ChessPieceType.Rook, GameColor.WHITE));
                 board.getSquares()[6][1].setPiece(null);
                 board.draw(GameColor.WHITE); // draw board
-                System.out.println("You got it! The game is now in a draw!");
+                System.out.println("You got it! The game is now in a draw by stalemate!");
                 System.out.print("Press 'ENTER' to return to the menu when ready. ");
                 scanner.nextLine();
                 break;

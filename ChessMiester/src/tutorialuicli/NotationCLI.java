@@ -61,7 +61,7 @@ public class NotationCLI extends TutorialCLI implements RulesIF{
 
             // highlight the random position
             board.getDrawStrategy().highlight(board, toHighlight, GameColor.WHITE);
-
+            board.draw(GameColor.WHITE); // display the board
             // ask the user to enter the square that was highlighted
             System.out.print("Enter the square that was highlighted (0 to quit): ");
             userInput = scan.nextLine(); // read the user input

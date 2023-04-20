@@ -113,34 +113,37 @@ public class MainMenuCLI implements MainMenuIF {
                     BoardSaverLoader loader = new BoardSaverLoader(); // obj to load file
                     // caretake that is a stack of all states of the game
                     BoardMementoCaretaker caretaker = loader.loadGameFromFile(loadGame.getURL());
-                    BoardStrategy boardStrat;
-                    // get the board strategy based on the settings
-                    if(settings.getBoardColor().equals("Mono")){
-                        boardStrat = new BoardMonoCLI();
-                    }else{
-                        boardStrat = new BoardColorCLI();
-                    }
+                    if(caretaker != null) { // file was loaded
 
-                    // create a new board and load the state found settings
-                    Board board = new Board();
-                    board.setDrawStrategy(boardStrat);
-                    board.loadFromMemento(caretaker.peek()); // load game state
+                        BoardStrategy boardStrat;
+                        // get the board strategy based on the settings
+                        if (settings.getBoardColor().equals("Mono")) {
+                            boardStrat = new BoardMonoCLI();
+                        } else {
+                            boardStrat = new BoardColorCLI();
+                        }
 
-                    // get the color of the last move
-                    String color = board.getState().substring(
-                            board.getState().length() - 8, board.getState().length() - 7);
+                        // create a new board and load the state found settings
+                        Board board = new Board();
+                        board.setDrawStrategy(boardStrat);
+                        board.loadFromMemento(caretaker.peek()); // load game state
 
-                    // get who's turn it is a continue the game
-                    if(color.equals("W")){ //blacks turn
-                        play = new NewGameCLI(scan, settings.getBoardColor(), settings.getUndo(),
-                                settings.getShowMoves(), definePlayers.getPlayer2(),
-                                definePlayers.getPlayer1(), board);
-                        play.show();
-                    }else{ // whites turn
-                        play = new NewGameCLI(scan, settings.getBoardColor(), settings.getUndo(),
-                                settings.getShowMoves(), definePlayers.getPlayer1(),
-                                definePlayers.getPlayer2(), board);
-                        play.show();
+                        // get the color of the last move
+                        String color = board.getState().substring(
+                                board.getState().length() - 8, board.getState().length() - 7);
+
+                        // get who's turn it is a continue the game
+                        if (color.equals("W")) { //blacks turn
+                            play = new NewGameCLI(scan, settings.getBoardColor(), settings.getUndo(),
+                                    settings.getShowMoves(), definePlayers.getPlayer2(),
+                                    definePlayers.getPlayer1(), board, caretaker);
+                            play.show();
+                        } else { // whites turn
+                            play = new NewGameCLI(scan, settings.getBoardColor(), settings.getUndo(),
+                                    settings.getShowMoves(), definePlayers.getPlayer1(),
+                                    definePlayers.getPlayer2(), board, caretaker);
+                            play.show();
+                        }
                     }
                     break;
                 case 0: // user quit

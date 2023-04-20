@@ -29,8 +29,10 @@ public class LoadGameCLI implements LoadSaveGameIF {
      */
     @Override
     public void showLoadSave() {
-        System.out.print("Load Game\n-------------------------------------" +
-                "--------------------------\nEnter file name: ");
+
+        System.out.print(" Load Game-------------------------------------------------------------" +
+                "--\n\n" + "File input is expected with just the title, so 'example.txt' should\n" +
+                "be entered as 'example'.\n\n" + "Enter file name: ");
         scan = new Scanner(System.in);
         this.url = scan.nextLine();
     }
