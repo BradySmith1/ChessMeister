@@ -53,7 +53,8 @@ public class SettingsCLI implements SettingsIF {
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
         String prompt = "Enter your menu choice here -> ";
         while (true) {//while user has not quit
-            String menu = "Settings\n---------------------------------------------------------------\n" +
+            String menu = "Settings\n\n" +
+                    "---------------------------------------------------------------\n" +
                     "Board: " + this.boardColor + "\n" +
                     "Undo is " + this.undo + "\n" +
                     "Show Moves is " + this.showMoves + "\n" +
@@ -64,7 +65,7 @@ public class SettingsCLI implements SettingsIF {
                     menuOptions[4] +
                     menuOptions[5] +
                     menuOptions[6] +
-                    "\n-----------------------------------------" +
+                    "\n\n-----------------------------------------" +
                     "---------------------\n";
             System.out.println(menu);   //shows user menu options
             System.out.print(prompt);
