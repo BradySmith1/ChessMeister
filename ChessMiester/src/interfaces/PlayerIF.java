@@ -1,6 +1,7 @@
 package interfaces;
 
 import enums.GameColor;
+import model.Piece;
 import movements.KingMovement;
 
 import java.util.ArrayList;
@@ -11,13 +12,6 @@ import java.util.ArrayList;
  * @author Brady Smith 100%
  */
 public interface PlayerIF {
-    /**
-     * Returns the color of the player.
-     *
-     * @return The color of the player.
-     */
-    public GameColor getPieceColor();
-
     /**
      * Returns the pieces that the player has on the board.
      *
@@ -47,16 +41,29 @@ public interface PlayerIF {
     public void addPiece(PieceIF piece);
 
     /**
-     * Removes a piece from the player's set of pieces.
-     * @return : The piece that was removed.
+     * This function is used to assign pieces to each user.
      */
-    public GameColor getColor();
+    void assignPieces(BoardIF board);
+
 
     /**
      * Returns the king of the player.
      * @return : The king of the player.
      */
     PieceIF getKing();
+
+    /**
+     * Returns the color of the player.
+     *
+     * @return The color of the player.
+     */
+    public GameColor getPieceColor();
+
+    /**
+     * Removes a piece from the player's set of pieces.
+     * @return : The piece that was removed.
+     */
+    public GameColor getColor();
 
     /**
      * Returns the name of the player.

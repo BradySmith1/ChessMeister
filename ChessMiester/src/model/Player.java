@@ -1,10 +1,10 @@
 package model;
 
-import interfaces.MovementIF;
+import interfaces.BoardIF;
 import interfaces.PlayerIF;
 import enums.GameColor;
 import interfaces.PieceIF;
-import model.Piece;
+import interfaces.SquareIF;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author Brady Smith (85%), Kaushal Patel (15%)
  * @version 1.0
  */
-public class Player implements PlayerIF{
+public class Player implements PlayerIF {
 
     /** The name of the player */
     private String name;
@@ -168,6 +168,9 @@ public class Player implements PlayerIF{
      */
     @Override
     public void displayStats() {
+        System.out.println("--------------------");
+        System.out.println("Stats for " + this.name + ":");
+        System.out.println("--------------------");
         System.out.println("Wins: " + this.numberofWins);
         System.out.println("Losses: " + this.numberofLosses);
         System.out.println("Draws: " + this.numberofDraws);
@@ -204,6 +207,23 @@ public class Player implements PlayerIF{
             }
         }
         return p;
+    }
+
+    /**
+     * This function is used to assign pieces to each user.
+     */
+    public void assignPieces(BoardIF board){
+        this.pieces.clear();
+        SquareIF[][] squares = board.getSquares();
+        for (int i = 0; i < board.getWidth(); i++) {
+            for (int j = 0; j < board.getHeight(); j++) {
+                if(squares[i][j].getPiece() != null){
+                    if(squares[i][j].getPiece().getColor() == this.getColor()){
+                        this.addPiece(squares[i][j].getPiece());
+                    }
+                }
+            }
+        }
     }
 
     /**
