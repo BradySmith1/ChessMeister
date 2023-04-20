@@ -233,7 +233,8 @@ public class PlayMoveCLI implements PlayIF {
                     ((FirstMoveIF) rook).setFirstMove(false);
                 }
 
-                this.display();
+                //this.display();
+                System.out.println("\n" + currentPlayer.getName() + " has castled!");
                 return true;
             }
             System.out.println("Invalid castle attempt.");
