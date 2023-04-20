@@ -194,59 +194,58 @@ public class PlayMoveCLI implements PlayIF {
 
         boolean isPlayersPiece = currentPlayer.getPieces().contains(fromPiece);
 
-        if(this.board.getSquares()[fromR.getIndex()] // if it's a king
-                [fromF.getFileNum()].getPiece().getType().equals(ChessPieceType.King) &&
-           this.board.getSquares()[toR.getIndex()]
-                        [toF.getFileNum()].getPiece().getType().equals(ChessPieceType.Rook)){
+        if (fromPiece.getType().equals(ChessPieceType.King) && toPiece != null) {
+            if (toPiece.getType().equals(ChessPieceType.Rook)) {
 
-            if(canCastle(fromF, fromR, toF, toR)){ // see if it can castle
-                Piece king = (Piece) this.board.getSquares()[fromR.getIndex()]
-                        [fromF.getFileNum()].getPiece(); // get king from the board
-                Piece rook = (Piece) this.board.getSquares()[toR.getIndex()]
-                        [toF.getFileNum()].getPiece(); // get rook from the board
+                if (canCastle(fromF, fromR, toF, toR)) { // see if it can castle
+                    Piece king = (Piece) this.board.getSquares()[fromR.getIndex()]
+                            [fromF.getFileNum()].getPiece(); // get king from the board
+                    Piece rook = (Piece) this.board.getSquares()[toR.getIndex()]
+                            [toF.getFileNum()].getPiece(); // get rook from the board
 
-                if(fromF.getFileNum() < toF.getFileNum()){
-                    // you can guarantee that the rook will be in F
-                    this.board.getSquares()[toR.getIndex()] // set rook at new place
-                            [Files.F.getFileNum()].setPiece(rook);
+                    if (fromF.getFileNum() < toF.getFileNum()) {
+                        // you can guarantee that the rook will be in F
+                        this.board.getSquares()[toR.getIndex()] // set rook at new place
+                                [Files.F.getFileNum()].setPiece(rook);
 
-                    this.board.getSquares()[fromR.getIndex()] // clear square from king
-                            [fromF.getFileNum()].clear();
-                    this.board.getSquares()[toR.getIndex()] // clear square from rook
-                            [toF.getFileNum()].clear();
+                        this.board.getSquares()[fromR.getIndex()] // clear square from king
+                                [fromF.getFileNum()].clear();
+                        this.board.getSquares()[toR.getIndex()] // clear square from rook
+                                [toF.getFileNum()].clear();
 
-                    // you can guarantee that the king will be in G
-                    this.board.getSquares()[toR.getIndex()] // set king at new place
-                            [Files.G.getFileNum()].setPiece(king);
-                }else{
-                    // you can guarantee that the rook will be in D
-                    this.board.getSquares()[toR.getIndex()] // set rook at new place
-                            [Files.D.getFileNum()].setPiece(rook);
+                        // you can guarantee that the king will be in G
+                        this.board.getSquares()[toR.getIndex()] // set king at new place
+                                [Files.G.getFileNum()].setPiece(king);
+                    } else {
+                        // you can guarantee that the rook will be in D
+                        this.board.getSquares()[toR.getIndex()] // set rook at new place
+                                [Files.D.getFileNum()].setPiece(rook);
 
-                    this.board.getSquares()[fromR.getIndex()] // clear square from king
-                            [fromF.getFileNum()].clear();
-                    this.board.getSquares()[toR.getIndex()] // clear square from rook
-                            [toF.getFileNum()].clear();
+                        this.board.getSquares()[fromR.getIndex()] // clear square from king
+                                [fromF.getFileNum()].clear();
+                        this.board.getSquares()[toR.getIndex()] // clear square from rook
+                                [toF.getFileNum()].clear();
 
-                    // you can guarantee that the king will be in C
-                    this.board.getSquares()[toR.getIndex()] // set king at new place
-                            [Files.C.getFileNum()].setPiece(king);
+                        // you can guarantee that the king will be in C
+                        this.board.getSquares()[toR.getIndex()] // set king at new place
+                                [Files.C.getFileNum()].setPiece(king);
+                    }
+
+                    // set first move to false for both pieces
+                    if (king instanceof FirstMoveIF) {
+                        ((FirstMoveIF) king).setFirstMove(false);
+                    }
+                    if (rook instanceof FirstMoveIF) {
+                        ((FirstMoveIF) rook).setFirstMove(false);
+                    }
+
+                    //this.display();
+                    System.out.println("\n" + currentPlayer.getName() + " has castled!");
+                    return true;
                 }
-
-                // set first move to false for both pieces
-                if(king instanceof FirstMoveIF){
-                    ((FirstMoveIF) king).setFirstMove(false);
-                }
-                if(rook instanceof FirstMoveIF){
-                    ((FirstMoveIF) rook).setFirstMove(false);
-                }
-
-                //this.display();
-                System.out.println("\n" + currentPlayer.getName() + " has castled!");
-                return true;
+                System.out.println("Invalid castle attempt.");
+                return false;
             }
-            System.out.println("Invalid castle attempt.");
-            return false;
         }
 
         if (isPlayersPiece && (toPiece == null || toPiece.getColor() != currentPlayer.getColor())) {
@@ -410,19 +409,23 @@ public class PlayMoveCLI implements PlayIF {
                 if (!this.checkCondition(player, king.getPosition(board))) {
                     canMoveOutOfCheck = true;
                 }
-                //undo(); // TODO
-                undoMoveFromCheck();
+                undo(); // TODO
+                //undoMoveFromCheck();
+                this.display();
             }
 
+            ArrayList<PieceIF> pieces = player.getPieces();
             // Check to see if any of the pieces can block the checkmate.
-            for (PieceIF piece : player.getPieces()) {
+            for (int i = 0; i < pieces.size(); i++){
+
+            //for (PieceIF piece : player.getPieces()) {
                 // Get the list of valid moves for the piece.
-                List<Position> validMoves = piece.getValidMoves(board, piece.getPosition(board));
+                List<Position> validMoves = pieces.get(i).getValidMoves(board, pieces.get(i).getPosition(board));
 
                 for (Position position : validMoves) {
                     // Emulate the move of the piece to each position in the list of valid moves.
                     // Check to see if there is a check.
-                    this.move(player, playerOther,piece.getPosition(board).getFile(), piece.getPosition(board).getRank(), position.getFile(), position.getRank());
+                    this.move(player, playerOther,pieces.get(i).getPosition(board).getFile(), pieces.get(i).getPosition(board).getRank(), position.getFile(), position.getRank());
 
                     if (!this.checkCondition(player, king.getPosition(board))) {
                         canBlockCheck = true;
@@ -432,6 +435,7 @@ public class PlayMoveCLI implements PlayIF {
 
                 }
             }
+            System.out.println("Can move out of check : " + canMoveOutOfCheck + " | Can Block Check : " + canBlockCheck);
             checkmate = canMoveOutOfCheck && canBlockCheck;
         }
 
@@ -620,6 +624,8 @@ public class PlayMoveCLI implements PlayIF {
         BoardIF.BoardMementoIF memento = this.caretaker.down();
         if(memento != null) {
             this.board.loadFromMemento(memento);
+            player1.assignPieces(this.board);
+            player2.assignPieces(this.board);
         }
     }
 
