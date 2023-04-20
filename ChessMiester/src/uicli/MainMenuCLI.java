@@ -158,6 +158,7 @@ public class MainMenuCLI implements MainMenuIF {
                     break;
                 case 6:
                     viewPlayed.showPlayedGames();
+                    break;
                 case 0: // user quit
                     scan.close();
                     System.out.println("""
