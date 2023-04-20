@@ -409,8 +409,8 @@ public class PlayMoveCLI implements PlayIF {
                 if (!this.checkCondition(player, king.getPosition(board))) {
                     canMoveOutOfCheck = true;
                 }
-                undo(); // TODO
-                //undoMoveFromCheck();
+                //undo(); // TODO
+                undoMoveFromCheck();
                 this.display();
             }
 
@@ -549,6 +549,9 @@ public class PlayMoveCLI implements PlayIF {
             // If the game is over, then notify the players and end the game.
             System.out.println("Game Over");
             System.out.println("The winner is " + getOtherPlayer(currentPlayer).getName());
+
+            currentPlayer.increaseLosses();
+            getOtherPlayer(currentPlayer).increaseWins();
 
             // Display the stats of the players.
             currentPlayer.displayStats();
