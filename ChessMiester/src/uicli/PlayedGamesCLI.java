@@ -9,6 +9,7 @@ import interfaces.ViewPlayedGamesIF;
 import model.BoardSaverLoader;
 import model.Board;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -37,46 +38,51 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
      */
     @Override
     public void showPlayedGames() {
-        System.out.print("""
-                -----------------------------------------------------------------\s
-                                
-                Choose a game to view:
-                  1: Conceded Game \s
-                  2: Checkmate Game \s
-                  3: Stalemate Game \s
-                  4: Scholars Mate Game (Checkmate in four moves!) \s
-                  0: Return to Main Menu\s
-                                
-                -----------------------------------------------------------------\s
-                """);
+        int choice = 999;
+        while(choice != 0) {
+            System.out.print("""
+                    -----------------------------------------------------------------\s
+                                    
+                    Choose a game to view:
+                      1: Conceded Game \s
+                      2: Checkmate Game \s
+                      3: Stalemate Game \s
+                      4: Scholars Mate Game (Checkmate in four moves!) \s
+                      0: Return to Main Menu\s
+                                    
+                    -----------------------------------------------------------------\s
+                    """);
 
-        System.out.print("Enter your menu choice here -> ");
-
-        int choice = scan.nextInt();
-
-        Board board; // create new board
-        switch (choice) { // load game based on choice
-            case 1:
-                board = this.loadBeginning("concededGame");
-                this.loopMoves(board);
-                break;
-            case 2:
-                board = this.loadBeginning("checkmateGame");
-                this.loopMoves(board);
-                break;
-            case 3:
-                board = this.loadBeginning("stalemateGame");
-                this.loopMoves(board);
-                break;
-            case 4:
-                board = this.loadBeginning("scholarsMateGame");
-                this.loopMoves(board);
-                break;
-            case 0: // return to menu
-                break;
-            default:
-                System.out.println("Invalid choice, please try again.");
+            System.out.print("Enter your menu choice here -> ");
+            try {
                 choice = scan.nextInt();
+            } catch (InputMismatchException ignore) {
+                // ignore
+            }
+            Board board; // create new board
+            switch (choice) { // load game based on choice
+                case 1:
+                    board = this.loadBeginning("concededGame");
+                    this.loopMoves(board);
+                    break;
+                case 2:
+                    board = this.loadBeginning("checkmateGame");
+                    this.loopMoves(board);
+                    break;
+                case 3:
+                    board = this.loadBeginning("stalemateGame");
+                    this.loopMoves(board);
+                    break;
+                case 4:
+                    board = this.loadBeginning("scholarsMateGame");
+                    this.loopMoves(board);
+                    break;
+                case 0: // return to menu
+                    break;
+                default:
+                    System.out.println("Invalid choice, please try again.");
+                    scan.nextLine();
+            }
         }
     }
 
@@ -130,7 +136,12 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                     -----------------------------------------------------------------\s""");
 
             System.out.print("Enter your menu choice here -> ");
-            choice = scan.nextInt(); // get user choice
+            try{
+                choice = scan.nextInt();
+            } catch (Exception e){
+                // ignore
+            }
+            //choice = scan.nextInt(); // get user choice
             BoardIF.BoardMementoIF memento = this.caretaker.peek(); // establish memento
             switch(choice){
                 case 1: // "redo" move
@@ -155,11 +166,10 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                     break;
                 default:
                     System.out.println("Invalid choice, please try again.");
-                    choice = scan.nextInt();
+                    scan.nextLine();
             }
 
         }
-        //board.draw(color);
     }
 
     /**
