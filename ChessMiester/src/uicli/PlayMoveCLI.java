@@ -99,10 +99,10 @@ public class PlayMoveCLI implements PlayIF {
             prompt = currentPlayer.getName() + ", enter your choice ===> ";
             System.out.print(prompt);   //ask user for this choice
             try {
-                System.out.print("");
-                scan.nextLine();
+                //System.out.print("");
+                //scan.nextLine();
                 choice = scan.nextInt();
-                scan.nextLine();
+                //scan.nextLine();
             } catch (InputMismatchException ignore) {
                 //ignore
             }
@@ -152,6 +152,8 @@ public class PlayMoveCLI implements PlayIF {
                 default:
                     System.out.println("Invalid input.");
                     choice = 999; // preventative if enter 0
+                    System.out.println(); // consume a line to fix scan
+                    scan.nextLine();
             }
 
         }
