@@ -24,7 +24,7 @@ public class BoardColorCLI implements BoardStrategy {
     private final String WHITE_BACK = "\u001b[47;1m"; /*White unicode*/
     private ArrayList<Position> highlighted; /*The array of highlighted positions*/
     private boolean highlight = false; /*Whether to highlight the board*/
-    private final String SHOW_MOVES_PURPLE = "\u001b[1m\u001b[45m"; /*Purple unicode for highlight*/
+    private final String SHOW_MOVES_PURPLE = "\u001b[1m\u001b[45m";/*Purple unicode for highlight*/
 
     /**
      * Draws the game board using the specified strategy.
@@ -46,9 +46,10 @@ public class BoardColorCLI implements BoardStrategy {
 
     /**
      * Function for printing a highlighted board.
-     * @param board the BoardIF object representing the game board to be drawn.
+     *
+     * @param board       the BoardIF object representing the game board to be drawn.
      * @param highlighted the array of positions that are highlighted.
-     * @param color the color of the player.
+     * @param color       the color of the player.
      */
     @Override
     public void highlight(BoardIF board, ArrayList<Position> highlighted, GameColor color) {
@@ -66,8 +67,9 @@ public class BoardColorCLI implements BoardStrategy {
 
     /**
      * The function for printing the board for whites move.
-     * @param board the BoardIF object representing the game board to be drawn.
-     * @param squares the array of squares on the board.
+     *
+     * @param board      the BoardIF object representing the game board to be drawn.
+     * @param squares    the array of squares on the board.
      * @param background the background color of the square.
      */
     private void printWhite(BoardIF board, SquareIF[][] squares, String background) {
@@ -102,8 +104,9 @@ public class BoardColorCLI implements BoardStrategy {
 
     /**
      * The function for printing the board when it is blacks move.
-     * @param board the BoardIF object representing the game board to be drawn.
-     * @param squares the array of squares on the board.
+     *
+     * @param board      the BoardIF object representing the game board to be drawn.
+     * @param squares    the array of squares on the board.
      * @param background the background color of the square.
      */
     private void printBlack(BoardIF board, SquareIF[][] squares, String background) {
@@ -137,7 +140,8 @@ public class BoardColorCLI implements BoardStrategy {
 
     /**
      * The function for printing a piece.
-     * @param square the square that the piece is on.
+     *
+     * @param square     the square that the piece is on.
      * @param background the background color of the square.
      */
     private void printPiece(Square square, String background) {
@@ -158,6 +162,7 @@ public class BoardColorCLI implements BoardStrategy {
 
     /**
      * The function for checking if a square is highlighted for valid moves.
+     *
      * @param square the square to check.
      * @return true if the square is highlighted, false otherwise.
      */

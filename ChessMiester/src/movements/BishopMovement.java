@@ -13,7 +13,7 @@ import java.util.List;
  * by finding the valid moves for a bishop on a chess board in all diagonal directions.
  *
  * @author Zach Eanes (85%), Colton Brooks (15%)
- * @version 1.0
+ * @version 2.0
  */
 public class BishopMovement extends QueenMovement implements MovementIF{
 

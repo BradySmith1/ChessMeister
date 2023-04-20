@@ -27,6 +27,7 @@ public class BoardMonoCLI implements BoardStrategy {
      * Draws the game board using the specified strategy.
      *
      * @param board the BoardIF object representing the game board to be drawn.
+     * @param color the color of the player.
      */
     @Override
     public void draw(BoardIF board, GameColor color) {
@@ -40,9 +41,10 @@ public class BoardMonoCLI implements BoardStrategy {
 
     /**
      * Function for printing a highlighted board.
-     * @param board the BoardIF object representing the game board to be drawn.
+     *
+     * @param board       the BoardIF object representing the game board to be drawn.
      * @param highlighted the array of positions that are highlighted.
-     * @param color the color of the player.
+     * @param color       the color of the player.
      */
     public void highlight(BoardIF board, ArrayList<Position> highlighted, GameColor color){
         this.highlighted = highlighted;
@@ -56,7 +58,8 @@ public class BoardMonoCLI implements BoardStrategy {
 
     /**
      * Helper function for populating the pieces into the pieces array.
-     * @param board the BoardIF object representing the game board to be drawn.
+     *
+     * @param board  the BoardIF object representing the game board to be drawn.
      * @param height the height of the board.
      */
     private void populateRow(BoardIF board, int height){
@@ -89,6 +92,7 @@ public class BoardMonoCLI implements BoardStrategy {
 
     /**
      * Prints the board with the rotation oriented towards the white player.
+     *
      * @param board the BoardIF object representing the game board to be drawn.
      */
     private void printWhite(BoardIF board) {
@@ -119,6 +123,7 @@ public class BoardMonoCLI implements BoardStrategy {
 
     /**
      * Prints the board with the rotation oriented towards the black player.
+     *
      * @param board the BoardIF object representing the game board to be drawn.
      */
     private void printBlack(BoardIF board) {
@@ -148,6 +153,7 @@ public class BoardMonoCLI implements BoardStrategy {
 
     /**
      * Helper function for printing the lines in the array.
+     *
      * @param reversed whether to print the lines in reverse.
      */
     private void printLine(boolean reversed){
@@ -164,8 +170,9 @@ public class BoardMonoCLI implements BoardStrategy {
 
     /**
      * Helper function for printing the pieces in the array.
+     *
      * @param square the square to print.
-     * @param index the index of the piece in the array.
+     * @param index  the index of the piece in the array.
      */
     private void printPiece(Square square, int index){
         boolean squareHighlighted = false;
@@ -207,6 +214,7 @@ public class BoardMonoCLI implements BoardStrategy {
 
     /**
      * Helper function for checking if a square is highlighted.
+     *
      * @param square the square to check.
      * @return true if the square is highlighted, false otherwise.
      */

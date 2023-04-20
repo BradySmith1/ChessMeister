@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * list of pieces captured, and the color of the player themselves.
  *
  * @author Brady Smith (85%), Kaushal Patel (15%)
- * @version 1.0
+ * @version 2.0
  */
 public class Player implements PlayerIF {
 
@@ -125,7 +125,8 @@ public class Player implements PlayerIF {
 
     /**
      * Getter method for the players name.
-     * @return : name of the player
+     *
+     * @return name of the player
      */
     public String getName() {
         return this.name;
@@ -133,7 +134,8 @@ public class Player implements PlayerIF {
 
     /**
      * Setter method for the players name.
-     * @param name : name of the player
+     *
+     * @param name name of the player
      */
     public void setName(String name) {
         this.name = name;
@@ -187,7 +189,7 @@ public class Player implements PlayerIF {
     /**
      * Returns the number of moves the player has made.
      *
-     * @return : The number of moves the player has made.
+     * @return The number of moves the player has made.
      */
     @Override
     public int getMoveCount() {
@@ -196,6 +198,7 @@ public class Player implements PlayerIF {
 
     /**
      * Returns the king of the player.
+     *
      * @return The king of the player.
      */
     @Override
@@ -228,6 +231,7 @@ public class Player implements PlayerIF {
 
     /**
      * Returns the number of wins the player has.
+     *
      * @return The number of wins the player has.
      */
     public int getWins(){
@@ -236,6 +240,7 @@ public class Player implements PlayerIF {
 
     /**
      * Returns the number of losses the player has.
+     *
      * @return The number of losses the player has.
      */
     public int getLosses(){
@@ -244,6 +249,7 @@ public class Player implements PlayerIF {
 
     /**
      * Returns the number of draws the player has.
+     *
      * @return The number of draws the player has.
      */
     public int getDraws(){

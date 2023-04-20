@@ -1,6 +1,5 @@
 package model;
 
-
 import controller.BoardMementoCaretaker;
 import interfaces.BoardIF;
 import interfaces.BoardSaverLoaderIF;
@@ -12,11 +11,13 @@ import java.util.Scanner;
  * Class responsible for loading and saving chess games to and from .txt files.
  *
  * @author Colton Brooks (85%), Zach Eanes (15%)
+ * @version 1.0 (done in sprint 2)
  */
 public class BoardSaverLoader implements BoardSaverLoaderIF {
 
     /**
      * Method to save a game to a file
+     *
      * @param caretaker the stack of mementos you want to save
      * @param fileName  the name you want for the file
      */
@@ -34,8 +35,9 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
 
     /**
      * Method to load a game from a file
-     * @param fileName  the name of the file to load from
-     * @return  the board that you have loaded
+     *
+     * @param fileName the name of the file to load from
+     * @return         the board that you have loaded
      */
     @Override
     public BoardMementoCaretaker loadGameFromFile(String fileName) {
@@ -44,11 +46,12 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
         FileReader reader; // initialize reader
         BoardMementoCaretaker caretaker = null;
         BoardIF.BoardMementoIF memento;
-        String file = new java.io.File( "").getAbsolutePath(); //must be in chessmeister for this to work
+        //must be in chessmeister for this to work
+        String file = new java.io.File( "").getAbsolutePath();
         if(System.getProperty("os.name").contains("Windows")) // check if windows
             file = file.concat("\\src\\model\\saves\\" + fileName + ".txt"); // windows
         else // linux and macos
-            file = file.concat("/src/model/saves/" + fileName + ".txt"); // concat file path
+            file = file.concat("/src/model/saves/" + fileName + ".txt");
 
         try {
             reader = new FileReader(file); // open reader from the file path
@@ -72,8 +75,9 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
 
     /**
      * Method to create the file
-     * @param fileName  Name of the file to create
-     * @return  the file that has been created
+     *
+     * @param fileName Name of the file to create
+     * @return         the file that has been created
      */
     private File createFile(String fileName) {
         File saveFile = null;
@@ -94,6 +98,9 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
 
     /**
      * Method to write the board state into a file.
+     *
+     * @param caretaker the stack of mementos you want to save
+     * @param saveFile  the file you want to save to
      */
     private void writeGame(BoardMementoCaretaker caretaker, File saveFile) {
         FileWriter writer;

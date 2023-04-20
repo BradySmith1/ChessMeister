@@ -17,6 +17,7 @@ public interface SquareIF {
     /**
      * Sets a piece on the square.
      *
+     * @param piece The piece to set on the square.
      * @return The piece that was previously on the square, if any.
      */
     public PieceIF setPiece(PieceIF piece);

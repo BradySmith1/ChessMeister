@@ -1,10 +1,3 @@
-/**
- * Class to define the movements of a king in a game of chess. This class does so
- * by finding the valid moves for a king on a chess board in all diagonal directions.
- *
- * @author Colton Brooks (100%)
- * @version 1.0
- */
 package movements;
 
 import enums.GameColor;
@@ -22,7 +15,7 @@ import java.util.List;
  * by finding the valid moves for a king on a chess board in all diagonal directions.
  *
  * @author Colton Brooks (80%), Zach Eanes (20%)
- * @version 1.0
+ * @version 2.0
  */
 public class KingMovement extends BlackAndWhite implements MovementIF, FirstMoveIF {
 
@@ -66,17 +59,11 @@ public class KingMovement extends BlackAndWhite implements MovementIF, FirstMove
         return validMoves;
     }
 
-    /*
-     * Rules for castling:
-     * 1) King cannot have moved beforehand
-     * 2) Rook cannot have moved beforehand
-     * 3) King cannot be in check or pass through check
-     * 4) No piece between king and rook
-     */
-
     /**
      * Method to be called whenever king makes its first move, sets isFirstMove false
      * to show a move with this piece has been made.
+     *
+     * @param isFirstMove boolean to set the first move of the king
      */
     public void setFirstMove(boolean isFirstMove){ this.isFirstMove = isFirstMove; }
 

@@ -84,6 +84,7 @@ public class Piece extends BlackAndWhite implements PieceIF{
 
     /**
      * Gets the position of the piece on the board.
+     *
      * @param board The board that the piece is on.
      * @return the position of the piece on the board.
      */

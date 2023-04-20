@@ -16,7 +16,8 @@ public interface MovementIF extends BlackAndWhiteIF{
     /**
      * Returns a list of MovePositions that are valid & legal on the board.
      *
-     * @param board The game board that the piece moves on.
+     * @param board           The game board that the piece moves on.
+     * @param currentPosition The current position to get the valid moves from.
      * @return A list of valid MovePositions.
      */
     List<Position> getValidMoves(BoardIF board, Position currentPosition);
