@@ -119,6 +119,7 @@ public class PlayMoveCLI implements PlayIF {
                     if (successfulRun){
                         this.board.getDrawStrategy().setHighlight(false);
                         switchPlayers(); // switch players
+                        this.checkForCheckmate(); // check for checkmate
                     }
                     break;
                 case 2:
@@ -572,26 +573,26 @@ public class PlayMoveCLI implements PlayIF {
          * 4. If the player is not in check, then ask the player for a move.
          */
 
-        // Check to see if the game is over by checkmate or draw.
-        if(checkmateCondition(currentPlayer, getOtherPlayer(currentPlayer)) || drawCondition(currentPlayer)){
-            // If the game is over, then notify the players and end the game.
-            System.out.println("Game Over");
-            System.out.println("The winner is " + getOtherPlayer(currentPlayer).getName());
-
-            currentPlayer.increaseLosses();
-            getOtherPlayer(currentPlayer).increaseWins();
-
-            // Display the stats of the players.
-            currentPlayer.displayStats();
-            getOtherPlayer(currentPlayer).displayStats();
-
-            // Save the game TODO
-
-            // End the game.
-            System.exit(1); // TODO change this to return something
-        }
+//        // Check to see if the game is over by checkmate or draw.
+//        if(checkmateCondition(currentPlayer, getOtherPlayer(currentPlayer)) || drawCondition(currentPlayer)){
+//            // If the game is over, then notify the players and end the game.
+//            System.out.println("Game Over");
+//            System.out.println("The winner is " + getOtherPlayer(currentPlayer).getName());
+//
+//            currentPlayer.increaseLosses();
+//            getOtherPlayer(currentPlayer).increaseWins();
+//
+//            // Display the stats of the players.
+//            currentPlayer.displayStats();
+//            getOtherPlayer(currentPlayer).displayStats();
+//
+//            // Save the game TODO
+//
+//            // End the game.
+//            System.exit(1); // TODO change this to return something
+//        }
         // If the game is not over by checkmate or draw, then check to see if the player is in check.
-        else if(checkCondition(getOtherPlayer(currentPlayer), currentPlayer.getKing().getPosition(board))){
+        if(checkCondition(getOtherPlayer(currentPlayer), currentPlayer.getKing().getPosition(board))){
             // If the player is in check, then notify the player.
             System.out.println("You are in check!");
             // Ask the player for a move.
@@ -907,5 +908,26 @@ public class PlayMoveCLI implements PlayIF {
             }
         }
         return canCastle; //true if castling is possible, false if not
+    }
+
+    private void checkForCheckmate(){
+        // Check to see if the game is over by checkmate or draw.
+        if(checkmateCondition(currentPlayer, getOtherPlayer(currentPlayer)) || drawCondition(currentPlayer)){
+            // If the game is over, then notify the players and end the game.
+            System.out.println("Game Over");
+            System.out.println("The winner is " + getOtherPlayer(currentPlayer).getName());
+
+            currentPlayer.increaseLosses();
+            getOtherPlayer(currentPlayer).increaseWins();
+
+            // Display the stats of the players.
+            currentPlayer.displayStats();
+            getOtherPlayer(currentPlayer).displayStats();
+
+            // Save the game TODO
+
+            // End the game.
+            System.exit(1); // TODO change this to return something
+        }
     }
 }
