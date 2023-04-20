@@ -7,6 +7,8 @@ import interfaces.SquareIF;
 import model.Position;
 import model.Square;
 
+import java.util.ArrayList;
+
 
 /**
  * This class implements the BoardStrategy interface for a black and white command line interface.
@@ -18,7 +20,7 @@ public class BoardMonoCLI implements BoardStrategy {
 
     private String[] pieces = new String[8]; /*The array of pieces*/
     private String[] lines = new String[8]; /*The array of lines below and above the pieces*/
-    private Position[] highlighted; /*The array of highlighted positions*/
+    private ArrayList<Position> highlighted; /*The array of highlighted positions*/
     private boolean highlight = false; /*Whether to highlight the board*/
 
     /**
@@ -42,7 +44,7 @@ public class BoardMonoCLI implements BoardStrategy {
      * @param highlighted the array of positions that are highlighted.
      * @param color the color of the player.
      */
-    public void highlight(BoardIF board, Position[] highlighted, GameColor color){
+    public void highlight(BoardIF board, ArrayList<Position> highlighted, GameColor color){
         this.highlighted = highlighted;
         this.highlight = true;
         if(color == GameColor.WHITE){

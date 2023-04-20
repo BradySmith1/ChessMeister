@@ -4,6 +4,9 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 import model.Board;
+import model.Position;
+
+import java.util.ArrayList;
 
 /**
  * This interface defines the basic functionality of a game board object.
@@ -81,6 +84,8 @@ public interface BoardIF{
     String getState();
 
     void loadFromMemento(Board.BoardMementoIF boardMemento);
+
+    void highlight(BoardIF board, ArrayList<Position> array, GameColor color);
 
     public interface BoardMementoIF {
         String state();

@@ -4,8 +4,11 @@ import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.BoardStrategy;
 import interfaces.SquareIF;
+import javafx.geometry.Pos;
 import model.Position;
 import model.Square;
+
+import java.util.ArrayList;
 
 /**
  * This class implements the BoardStrategy interface for a color command line interface.
@@ -19,7 +22,7 @@ public class BoardColorCLI implements BoardStrategy {
     private final String WHITE = "\u001b[1m\u001b[35m"; /*actually black with bold*/
     private final String BLACK_BACK = "\u001b[40m"; /*Black unicode*/
     private final String WHITE_BACK = "\u001b[47;1m"; /*White unicode*/
-    private Position[] highlighted; /*The array of highlighted positions*/
+    private ArrayList<Position> highlighted; /*The array of highlighted positions*/
     private boolean highlight = false; /*Whether to highlight the board*/
     private final String SHOW_MOVES_PURPLE = "\u001b[1m\u001b[45m"; /*Purple unicode for highlight*/
 
@@ -48,7 +51,7 @@ public class BoardColorCLI implements BoardStrategy {
      * @param color the color of the player.
      */
     @Override
-    public void highlight(BoardIF board, Position[] highlighted, GameColor color) {
+    public void highlight(BoardIF board, ArrayList<Position> highlighted, GameColor color) {
         this.highlighted = highlighted;
         this.highlight = true;
         String background = WHITE_BACK;

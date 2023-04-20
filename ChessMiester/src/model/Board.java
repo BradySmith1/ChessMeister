@@ -140,6 +140,15 @@ public class Board implements BoardIF {
     }
 
     /**
+     * Method that highlights the specified squares on the game board.
+     * @param positions the positions to highlight
+     * @param color     the color to orient the board
+     */
+    public void highlight(BoardIF board, ArrayList<Position> positions, GameColor color){
+        this.drawStrategy.highlight(board, positions, color);
+    }
+
+    /**
      * Returns a 2D array of squares on the game board.
      *
      * @return a 2D array of SquareIF objects representing the squares on the board.

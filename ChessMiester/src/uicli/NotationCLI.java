@@ -6,6 +6,8 @@ import enums.Rank;
 import interfaces.RulesIF;
 import model.Board;
 import model.Position;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -53,8 +55,8 @@ public class NotationCLI extends TutorialCLI implements RulesIF{
         while(!userInput.equals("0")) {
             Rank correctRank = getRandomRank(); // get a random rank
             Files correctFile = getRandomFile(); // get a random file
-            Position[] toHighlight = new Position[1]; // create an array of positions to highlight
-            toHighlight[0] = (new Position(correctRank, correctFile)); // add pos to array
+            ArrayList<Position> toHighlight = new ArrayList<Position>(); // create an array of positions to highlight
+            toHighlight.add((new Position(correctRank, correctFile))); // add pos to array
 
             // highlight the random position
             board.getDrawStrategy().highlight(board, toHighlight, GameColor.WHITE);

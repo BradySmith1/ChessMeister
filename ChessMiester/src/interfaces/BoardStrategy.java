@@ -3,6 +3,8 @@ package interfaces;
 import enums.GameColor;
 import model.Position;
 
+import java.util.ArrayList;
+
 /**
  * This interface defines the basic functionality of a drawing strategy for a game board.
  *
@@ -19,5 +21,5 @@ public interface BoardStrategy {
      */
     public void draw(BoardIF board, GameColor color);
 
-    public void highlight(BoardIF board, Position[] highlighted, GameColor color);
+    public void highlight(BoardIF board, ArrayList<Position> highlighted, GameColor color);
 }

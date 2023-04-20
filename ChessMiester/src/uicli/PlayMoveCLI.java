@@ -13,6 +13,8 @@ import movements.PawnMovement;
 import movements.RookMovement;
 
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -110,11 +112,11 @@ public class PlayMoveCLI implements PlayIF {
                         this.display();
                         switchPlayers();
                     }
-//                    if (endGameCondition()) {
-//                        // Show each player's stats at the end of the game
-//                        player1.displayStats();
-//                        player2.displayStats();
-//                    }
+                    if (endGameCondition()) {
+                        // Show each player's stats at the end of the game
+                        player1.displayStats();
+                        player2.displayStats();
+                    }
                     break;
                 case 2:
                     System.out.println("Undo");
@@ -130,13 +132,13 @@ public class PlayMoveCLI implements PlayIF {
                     this.saveGame.showLoadSave();
                     break;
                 case 6:
-                    System.out.println("Propose draw");
                     if (agreementCondition() == true) {
                         System.out.println("Draw");
                         currentPlayer.increaseDraws();
                         getOtherPlayer(currentPlayer).increaseDraws();
+                        choice = 0; // end loop
                     } else {
-                        System.out.println("No draw");
+                        System.out.println("No draw!");
                     }
                     break;
                 case 7:
@@ -764,7 +766,7 @@ public class PlayMoveCLI implements PlayIF {
             // Get valid moves for the piece
             PieceIF piece = this.board.getPiece(fromRank, fromFile);
             List<Position> validMoves = piece.getValidMoves(this.board, new Position(fromRank, fromFile));
-            //this.board.highlightMoves(validMoves);
+            this.board.highlight(this.board, (ArrayList<Position>) validMoves, currentPlayer.getColor());
         }
     }
 
