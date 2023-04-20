@@ -5,6 +5,7 @@ import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
 import interfaces.PieceIF;
+import interfaces.SquareIF;
 import movements.*;
 
 import java.util.List;
@@ -88,11 +89,14 @@ public class Piece extends BlackAndWhite implements PieceIF{
      */
     public Position getPosition(BoardIF board){
         Position position = null;
-        Square[][] squares = (Square[][]) board.getSquares();
+        SquareIF[][] squares = board.getSquares();
+        PieceIF temp;
         for(int i = 0; i < squares.length; i++) {
             for (int j = 0; j < squares[i].length; j++) {
-                if (squares[i][j].getPiece() == this) {
-                    position = squares[i][j].getPosition();
+                temp = squares[i][j].getPiece();
+                if (temp == this) {
+                    Square square = (Square) squares[i][j];
+                    position = square.getPosition();
                 }
             }
         }

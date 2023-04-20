@@ -298,10 +298,9 @@ public class Board implements BoardIF {
                 case "W" -> color = GameColor.WHITE;
                 case "B" -> color = GameColor.BLACK;
             }
-            Piece pieceToInsert = new Piece(pieceType, color);
+            PieceIF pieceToInsert = new Piece(pieceType, color);
             squares[newRank.getIndex()][newFile.getFileNum()].setPiece(pieceToInsert);
         }
-
     }
 
     private void setFirstMovesFromMemento(String[] moves) {
@@ -319,6 +318,17 @@ public class Board implements BoardIF {
             }
         }
 
+//        for(String move : moves) {
+//            Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toUpperCase());
+//            Rank toR = Rank.valueOf("R" + (String.valueOf(move.charAt(6))));
+//
+//            MovementIF movementType = squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType();
+//            if (squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType() instanceof FirstMoveIF) {
+//                FirstMoveIF movement = (FirstMoveIF) movementType;
+//                movement.setFirstMove(false);
+//            }
+//        }
+//
 //        for(String move : moves) {
 //            Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toUpperCase());
 //            Rank toR = Rank.valueOf("R" + (String.valueOf(move.charAt(6))));

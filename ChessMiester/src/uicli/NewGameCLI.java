@@ -83,26 +83,8 @@ public class NewGameCLI implements PlayIF {
         }
         board = new Board(boardC); //create new board to play game on
         board.setup(); // initialize board
-        assignPieces(); // assign pieces to player
-    }
-
-
-    /**
-     * This function is used to assign pieces to each user.
-     */
-    private void assignPieces(){
-        SquareIF[][] squares = board.getSquares();
-        for (int i = 0; i < board.getWidth(); i++) {
-            for (int j = 0; j < board.getHeight(); j++) {
-                if(squares[i][j].getPiece() != null){
-                    if(((Piece) squares[i][j].getPiece()).getColor() == player1.getColor()){
-                        player1.addPiece(squares[i][j].getPiece());
-                    }else{
-                        player2.addPiece(squares[i][j].getPiece());
-                    }
-                }
-            }
-        }
+        player1.assignPieces(board); // assign pieces to player
+        player2.assignPieces(board);
     }
 
     /**
