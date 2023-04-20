@@ -330,7 +330,7 @@ public class PlayMoveCLI implements PlayIF {
             // Check to see if the king can move to a position where it is not in check.
 
             // Get the king of the player.
-            Piece king = (Piece)player.getKing();
+            PieceIF king = player.getKing();
 
             // Get the list of valid moves for the king.
             List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition(board));
@@ -338,8 +338,6 @@ public class PlayMoveCLI implements PlayIF {
             // For each position in the list of valid moves, check to see if the king is in check.
             for (Position position : kingValidMoves) {
                 // Emulate the move of the king to each position in the list of valid moves.
-
-                Position test1 = king.getPosition(board);
 
                 this.move(player, playerOther, king.getPosition(board).getFile(), king.getPosition(board).getRank(), position.getFile(), position.getRank());
 
@@ -360,19 +358,12 @@ public class PlayMoveCLI implements PlayIF {
 
             // Check to see if any of the pieces can block the checkmate.
             for (PieceIF piece : player.getPieces()) {
-                // Cast the piece to a Piece object.
-
                 // Get the list of valid moves for the piece.
                 List<Position> validMoves = piece.getValidMoves(board, piece.getPosition(board));
 
                 for (Position position : validMoves) {
                     // Emulate the move of the piece to each position in the list of valid moves.
                     // Check to see if there is a check.
-
-
-                    Position test1 = piece.getPosition(board);
-
-
                     this.move(player, playerOther,piece.getPosition(board).getFile(), piece.getPosition(board).getRank(), position.getFile(), position.getRank());
 
                     if (!this.checkCondition(player, king.getPosition(board))) {

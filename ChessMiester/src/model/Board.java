@@ -287,7 +287,7 @@ public class Board implements BoardIF {
                 case "W" -> color = GameColor.WHITE;
                 case "B" -> color = GameColor.BLACK;
             }
-            Piece pieceToInsert = new Piece(pieceType, color);
+            PieceIF pieceToInsert = new Piece(pieceType, color);
             squares[newRank.getIndex()][newFile.getFileNum()].setPiece(pieceToInsert);
         }
     }
