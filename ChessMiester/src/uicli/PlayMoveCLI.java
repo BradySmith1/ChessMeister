@@ -751,6 +751,7 @@ public class PlayMoveCLI implements PlayIF {
                 validMove = true;
             } catch (Exception e) {
                 System.out.println("Invalid piece. Please try again.");
+                continue;
             }
             // check to see if any of the parts of the positions are null
             if(fromFile == null || fromRank == null) {
@@ -758,16 +759,19 @@ public class PlayMoveCLI implements PlayIF {
 
                 // reset valid move to ensure loop doesn't end
                 validMove = false;
+                continue;
             }
             // check to see if there is a piece at the position
             if(this.board.getPiece(fromRank, fromFile) == null){
                 System.out.println("No piece at that position.");
                 validMove = false;
+                continue;
             }
             // check to see if the piece is the current player's piece
             else if (!(currentPlayer.getPieces().contains(this.board.getPiece(fromRank, fromFile)))){
                 System.out.println("That is not your piece.");
                 validMove = false;
+                continue;
             }
         }
 

@@ -47,7 +47,7 @@ public class BoardMonoCLI implements BoardStrategy {
     public void highlight(BoardIF board, ArrayList<Position> highlighted, GameColor color){
         this.highlighted = highlighted;
         this.highlight = true;
-        if(color == GameColor.WHITE){
+        if(color == GameColor.BLACK){
             printBlack(board);
         }else{
             printWhite(board);
@@ -100,16 +100,16 @@ public class BoardMonoCLI implements BoardStrategy {
         for(int height = 0; height < board.getHeight(); height++) {
             populateRow(board, height);
             System.out.print("  | ");
-            printLine(true);
+            printLine(false);
             System.out.println("|");
             System.out.print(number + " | ");
             // Print the pieces.
-            for (int width = pieces.length - 1; width >= 0; width--) {
+            for(int width = 0; width < pieces.length; width++) {
                 System.out.print(pieces[width]);
             }
             System.out.println("|");
             System.out.print("  | ");
-            printLine(true);
+            printLine(false);
             System.out.println("|");
             number--;
         }
@@ -190,10 +190,17 @@ public class BoardMonoCLI implements BoardStrategy {
                 }
             }
         } else {
-            if(square.isWhite()) {
-                pieces[index] = ("         ");
-            }else{
-                pieces[index] = ("#########");
+            if(highlight) {
+                squareHighlighted = checkHighlight(square);
+            }
+            if(squareHighlighted) {
+                pieces[index] = ("---------");
+            }else {
+                if (square.isWhite()) {
+                    pieces[index] = ("         ");
+                } else {
+                    pieces[index] = ("#########");
+                }
             }
         }
     }
