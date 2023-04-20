@@ -16,6 +16,7 @@ public class LoadGameCLI implements LoadSaveGameIF {
 
     /**
      * Constructor for the load game dialog.
+     *
      * @param scan Scanner for user input
      */
     public LoadGameCLI(Scanner scan) {
@@ -36,6 +37,7 @@ public class LoadGameCLI implements LoadSaveGameIF {
 
     /**
      * Returns the URL of the file to load.
+     *
      * @return URL of the file to load
      */
     public String getURL(){

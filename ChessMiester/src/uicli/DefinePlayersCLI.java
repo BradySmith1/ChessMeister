@@ -53,6 +53,7 @@ public class DefinePlayersCLI implements DefinePlayersIF {
 
     /**
      * Prompts the user for input.
+     *
      * @param num the number of which player is being prompted.
      */
     private void promptUser(int num){
@@ -68,6 +69,7 @@ public class DefinePlayersCLI implements DefinePlayersIF {
 
     /**
      * Gets player 1.
+     *
      * @return player 1.
      */
     @Override
@@ -77,6 +79,7 @@ public class DefinePlayersCLI implements DefinePlayersIF {
 
     /**
      * Gets player 2.
+     *
      * @return player 2.
      */
     @Override
