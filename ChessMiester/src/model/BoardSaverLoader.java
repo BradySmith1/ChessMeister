@@ -64,8 +64,8 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
             }
             scan.close(); // close scanner
         }
-        catch(FileNotFoundException e) {
-            System.out.println("File not found: " + e);
+        catch(FileNotFoundException ignore){
+            System.out.println("\nFile could not be located. Please enter a different name.\n");
 
         }
 

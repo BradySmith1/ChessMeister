@@ -1,5 +1,6 @@
 package uicli;
 
+import controller.BoardMementoCaretaker;
 import interfaces.*;
 import model.Board;
 import model.Piece;
@@ -38,7 +39,8 @@ public class NewGameCLI implements PlayIF {
      * @param player1    player 1
      * @param player2    player 2
      */
-    public NewGameCLI(Scanner scan, String boardColor, String undo, String showMoves, PlayerIF player1, PlayerIF player2) {
+    public NewGameCLI(Scanner scan, String boardColor, String undo, String showMoves,
+                      PlayerIF player1, PlayerIF player2) {
         this.scan = scan;
         this.boardColor = boardColor;
         this.undo = undo;
@@ -47,7 +49,8 @@ public class NewGameCLI implements PlayIF {
         setPlayer2(player2);
         initBoard();
         board.createState();
-        setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2));
+        BoardMementoCaretaker ct = new BoardMementoCaretaker(board.createMemento());
+        setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2, ct));
     }
 
     /**
@@ -62,7 +65,7 @@ public class NewGameCLI implements PlayIF {
      * @param board      board to play game on
      */
     public NewGameCLI(Scanner scan, String boardColor, String undo, String showMoves,
-                      PlayerIF player1, PlayerIF player2, Board board) {
+                      PlayerIF player1, PlayerIF player2, Board board, BoardMementoCaretaker ct) {
         this.scan = scan;
         this.boardColor = boardColor;
         this.undo = undo;
@@ -70,8 +73,7 @@ public class NewGameCLI implements PlayIF {
         setPlayer1(player1);
         setPlayer2(player2);
         this.board = board;
-        //this.board.setDrawStrategy();
-        setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2));
+        setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2, ct));
     }
     /**
      * This function is used to initialize the board.

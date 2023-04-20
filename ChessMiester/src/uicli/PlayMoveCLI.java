@@ -58,14 +58,14 @@ public class PlayMoveCLI implements PlayIF {
      * @param player1   who to set to player 1
      * @param player2   who to set to player 2
      */
-    public PlayMoveCLI(Scanner scan, BoardIF board, String undo,
-                       String showMoves, PlayerIF player1, PlayerIF player2) {
+    public PlayMoveCLI(Scanner scan, BoardIF board, String undo, String showMoves, PlayerIF player1,
+                       PlayerIF player2, BoardMementoCaretaker caretaker) {
         this.scan = scan;
         this.player1 = player1;
         this.player2 = player2;
         this.currentPlayer = player1;
         this.board = board;
-        this.caretaker = new BoardMementoCaretaker(board.createMemento());
+        this.caretaker = caretaker;
         this.undo = undo;
         this.showMoves = showMoves;
         setSaveGame(new SaveGameCLI(scan));
@@ -121,11 +121,21 @@ public class PlayMoveCLI implements PlayIF {
                         switchPlayers(); // switch players
                     }
                     break;
-                case 2: // TODO
-                    System.out.println("Undo is not implemented yet.");
+                case 2:
+                    boolean undone = this.undo();
+                    if(undone){
+                        this.switchPlayers();
+                    }else{
+                        System.out.println("\nThere is nothing to undo!");
+                    }
                     break;
-                case 3: //TODO
-                    System.out.println("Redo is not implemented yet.");
+                case 3:
+                    boolean redone = this.redo();
+                    if(redone) {
+                        this.switchPlayers();
+                    }else{
+                        System.out.println("\nThere is nothing to redo!");
+                    }
                     break;
                 case 4: // show moves for a piece
                     this.showMoves();
@@ -612,7 +622,6 @@ public class PlayMoveCLI implements PlayIF {
                 }
             }
         }
-
         return success;
     }
 
@@ -640,25 +649,36 @@ public class PlayMoveCLI implements PlayIF {
 
     /**
      * This method undoes the last move done on the board.
+     *
+     * @return true if the undo was successful, false otherwise
      */
-    private void undo() {
+    private boolean undo() {
+        boolean success = false;
         BoardIF.BoardMementoIF memento = this.caretaker.down();
         if(memento != null) {
             this.board.loadFromMemento(memento);
             player1.assignPieces(this.board);
             player2.assignPieces(this.board);
+            success = true;
         }
+        return success;
     }
 
     /**
      * This method redoes the move that just occured by viewing what is above in
      * the caretaker.
+     *
+     * @return true if the redo was successful, false otherwise
      */
-    private void redo() {
+    private boolean redo() {
+        boolean success = false;
         BoardIF.BoardMementoIF memento = this.caretaker.up();
         if(memento != null) {
             this.board.loadFromMemento(memento);
+            player1.assignPieces(this.board);
+            success = true;
         }
+        return success;
     }
 
     /**
@@ -809,14 +829,6 @@ public class PlayMoveCLI implements PlayIF {
             this.board.highlight(this.board, (ArrayList<Position>) validMoves, currentPlayer.getColor());
         }
     }
-
-    /*
-     * This is the represent the possible logic that would be needed to implement castling.
-     * I wanted to wait and see where to place it, but this method is essentially it.
-     *
-     * Outside of this function, if statement in game logic to see if the pieces
-     * as "from" == king and "to" == rook, then call this method if true
-     */
 
     /**
      * Method to check if castling is possible
