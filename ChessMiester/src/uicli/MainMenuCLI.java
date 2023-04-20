@@ -30,16 +30,19 @@ public class MainMenuCLI implements MainMenuIF {
     private RulePageIF rules; /*rules object*/
     private LoadSaveGameIF loadGame; /*load game object*/
 
+    private ViewPlayedGamesIF viewPlayed; /*view played games object*/
+
 
     /**
      * Constructor for the main menu.
      */
     public MainMenuCLI(){
         scan = new Scanner(System.in);
-        setRules(new RulesCLI(scan));//zach needs to do
+        setRules(new RulesCLI(scan));
         setDefinePlayers(new DefinePlayersCLI(scan));//done
         setSettings(new SettingsCLI(scan));//done
         setLoadGame(new LoadGameCLI(scan));//done
+        setViewPlayed(new PlayedGamesCLI(scan));//done
         this.menuOptions = new String[7];
         populateMenu();
     }
@@ -61,7 +64,8 @@ public class MainMenuCLI implements MainMenuIF {
         menuOptions[2] = "3: Define Players\n";
         menuOptions[3] = "4: Settings\n";
         menuOptions[4] = "5: Load Game\n";
-        menuOptions[5] = "0: Quit";
+        menuOptions[5] = "6: View Played Games\n";
+        menuOptions[6] = "0: Quit";
     }
 
     /**
@@ -70,7 +74,8 @@ public class MainMenuCLI implements MainMenuIF {
     @Override
     public void showMainMenu() {
         String menu = menuTitle;
-        menu = menu.concat("\n---------------------------------------------------------------\n" +
+        menu = menu.concat(
+                "\n---------------------------------------------------------------\n\n" +
                 "Please make a selection as to what you would like to do:\n" +
                 menuOptions[0] +
                 menuOptions[1] +
@@ -78,7 +83,8 @@ public class MainMenuCLI implements MainMenuIF {
                 menuOptions[3] +
                 menuOptions[4] +
                 menuOptions[5] +
-                "\n---------------------------------------------------------------\n");
+                menuOptions[6] +
+                "\n\n---------------------------------------------------------------\n");
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
         String prompt = "Enter your menu choice here -> ";
         while (choice != 0) { //while user has not quit
@@ -150,6 +156,8 @@ public class MainMenuCLI implements MainMenuIF {
                         }
                     }
                     break;
+                case 6:
+                    viewPlayed.showPlayedGames();
                 case 0: // user quit
                     scan.close();
                     System.out.println("""
@@ -219,6 +227,13 @@ public class MainMenuCLI implements MainMenuIF {
     public void setPlay(PlayIF play) {
         this.play = play;
     }
+
+    /**
+     * Sets the view played object.
+     *
+     * @param viewPlayed the view played object
+     */
+    public void setViewPlayed(ViewPlayedGamesIF viewPlayed) { this.viewPlayed = viewPlayed; }
 
 
 }
