@@ -696,7 +696,7 @@ public class PlayMoveCLI implements PlayIF {
             }
             // check to see if any of the parts of the positions are null
             if(fromFile == null || fromRank == null || toFile == null || toRank == null) {
-                System.out.println("Invalid move. Please try again.");
+                //System.out.println("Invalid move. Please try again.");    // TODO uncomment this line
 
                 // reset valid move to ensure loop doesn't end
                 validMove = false;
