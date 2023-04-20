@@ -273,6 +273,7 @@ public class Board implements BoardIF {
             setFirstMovesFromMemento(moves);
         }
         this.state = boardMemento.state();
+
     }
 
     /**
