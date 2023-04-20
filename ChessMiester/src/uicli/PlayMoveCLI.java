@@ -459,8 +459,8 @@ public class PlayMoveCLI implements PlayIF {
                     if (!this.checkCondition(player, king.getPosition(board))) {
                         canBlockCheck = true;
                     }
-                    //undo(); // TODO
-                    undoMoveFromCheck();
+                    undo(); // TODO
+                    //undoMoveFromCheck();
 
                 }
             }
