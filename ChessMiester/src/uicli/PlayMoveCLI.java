@@ -138,7 +138,7 @@ public class PlayMoveCLI implements PlayIF {
                     choice = 0; // end loop
                     break;
                 case 6:
-                    if (agreementCondition() == true) {
+                    if (agreementCondition()) {
                         System.out.println("Draw");
                         currentPlayer.increaseDraws();
                         getOtherPlayer(currentPlayer).increaseDraws();
