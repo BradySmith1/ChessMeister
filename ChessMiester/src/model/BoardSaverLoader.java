@@ -22,7 +22,13 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
      */
     @Override
     public void saveGameToFile(BoardMementoCaretaker caretaker, String fileName) {
-        File saveFile = createFile(fileName);
+        String path = new java.io.File("").getAbsolutePath();
+        if(System.getProperty("os.name").contains("Windows")) // check if windows
+            path = path.concat("\\src\\model\\saves"); // windows
+        else // linux and macos
+            path = path.concat("/src/model/saves/"); // concat file path
+        path = path.concat(fileName);
+        File saveFile = createFile(path);
         writeGame(caretaker, saveFile);
     }
 
@@ -72,10 +78,10 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
     private File createFile(String fileName) {
         File saveFile = null;
         try {
-            fileName = "../saves/" + fileName + ".txt";
+            fileName = fileName.concat(".txt");
             saveFile = new File(fileName);
             if (saveFile.createNewFile()) {
-                System.out.println("\nSave File: " + fileName + "Successfully Created");
+                System.out.println("\nSave File: " + fileName + " was Successfully Created!");
             } else {
                 System.out.println("\nFile: " + fileName + "Already Exists");
             }
@@ -100,7 +106,7 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
             writer.close();
         }
         catch (IOException e) {
-            System.out.println("The file could not be saved!!");
+            System.out.println("The file could not be saved!");
         }
     }
 }

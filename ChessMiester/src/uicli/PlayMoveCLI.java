@@ -6,6 +6,7 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 import interfaces.*;
+import model.BoardSaverLoader;
 import model.Piece;
 import model.Position;
 import movements.KingMovement;
@@ -121,10 +122,10 @@ public class PlayMoveCLI implements PlayIF {
                     }
                     break;
                 case 2:
-                    System.out.println("Undo");
+                    System.out.println("Undo is not implemented yet.");
                     break;
                 case 3:
-                    System.out.println("Redo");
+                    System.out.println("Redo is not implemented yet.");
                     break;
                 case 4:
                     System.out.println("Show Moves");
@@ -132,6 +133,9 @@ public class PlayMoveCLI implements PlayIF {
                     break;
                 case 5:
                     this.saveGame.showLoadSave();
+                    BoardSaverLoader loader = new BoardSaverLoader();
+                    loader.saveGameToFile(this.caretaker, this.saveGame.getURL());
+                    choice = 0; // end loop
                     break;
                 case 6:
                     if (agreementCondition() == true) {

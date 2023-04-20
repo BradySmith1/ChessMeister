@@ -1,6 +1,11 @@
 package uicli;
 
+import controller.BoardMementoCaretaker;
+import enums.GameColor;
 import interfaces.*;
+import model.Board;
+import model.BoardSaverLoader;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -64,7 +69,6 @@ public class MainMenuCLI implements MainMenuIF {
      */
     @Override
     public void showMainMenu() {
-        System.out.println(menuTitle);
         String menu = "---------------------------------------------------------------\n" +
                 "Please make a selection as to what you would like to do:\n" +
                 menuOptions[0] +
@@ -78,6 +82,7 @@ public class MainMenuCLI implements MainMenuIF {
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
         String prompt = "Enter your menu choice here -> ";
         while (choice != 0) { //while user has not quit
+            System.out.println(menuTitle);
             System.out.println(menu);   //shows user menu options
             System.out.print(prompt);
             try {
@@ -105,6 +110,33 @@ public class MainMenuCLI implements MainMenuIF {
                     break;
                 case 5:
                     loadGame.showLoadSave();
+                    BoardSaverLoader loader = new BoardSaverLoader();
+                    BoardMementoCaretaker caretaker = loader.loadGameFromFile(loadGame.getURL());
+                    BoardStrategy boardStrat;
+                    if(settings.getBoardColor().equals("Mono")){
+                        boardStrat = new BoardMonoCLI();
+                    }else{
+                        boardStrat = new BoardColorCLI();
+                    }
+
+                    Board board = new Board();
+                    board.setDrawStrategy(boardStrat);
+                    board.loadFromMemento(caretaker.peek());
+                    // get the color of the last move
+                    String color = board.getState().substring(
+                            board.getState().length() - 8, board.getState().length() - 7);
+
+                    if(color.equals("W")){ //blacks turn
+                        play = new NewGameCLI(scan, settings.getBoardColor(), settings.getUndo(),
+                                settings.getShowMoves(), definePlayers.getPlayer2(),
+                                definePlayers.getPlayer1(), board);
+                        play.show();
+                    }else{ // whites turn
+                        play = new NewGameCLI(scan, settings.getBoardColor(), settings.getUndo(),
+                                settings.getShowMoves(), definePlayers.getPlayer1(),
+                                definePlayers.getPlayer2(), board);
+                        play.show();
+                    }
                     break;
                 case 0:
                     scan.close();

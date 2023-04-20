@@ -9,4 +9,9 @@ public interface LoadSaveGameIF {
      * Displays the load game dialog.
      */
     public void showLoadSave();
+
+    /**
+     * Gets the URL of the file to load.
+     */
+    public String getURL();
 }

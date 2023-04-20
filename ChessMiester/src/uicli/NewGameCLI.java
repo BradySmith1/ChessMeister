@@ -32,6 +32,8 @@ public class NewGameCLI implements PlayIF {
      * Constructor for the main menu.
      * @param scan scanner for user input
      * @param boardColor color of the board
+     * @param undo moves that are undone
+     * @param showMoves way to show the moves occurred
      * @param player1 player 1
      * @param player2 player 2
      */
@@ -47,6 +49,28 @@ public class NewGameCLI implements PlayIF {
         setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2));
     }
 
+    /**
+     * Constructor for the game loop when a board is loaded in.
+     * @param scan scanner for user input
+     * @param boardColor color of the board
+     * @param undo undo move
+     * @param showMoves show moves
+     * @param player1 player 1
+     * @param player2 player 2
+     * @param board board to play game on
+     */
+    public NewGameCLI(Scanner scan, String boardColor, String undo, String showMoves,
+                      PlayerIF player1, PlayerIF player2, Board board) {
+        this.scan = scan;
+        this.boardColor = boardColor;
+        this.undo = undo;
+        this.showMoves = showMoves;
+        setPlayer1(player1);
+        setPlayer2(player2);
+        this.board = board;
+        //this.board.setDrawStrategy();
+        setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2));
+    }
     /**
      * This function is used to initialize the board.
      */

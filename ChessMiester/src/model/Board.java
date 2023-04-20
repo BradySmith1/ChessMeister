@@ -53,6 +53,7 @@ public class Board implements BoardIF {
         squares = new Square[height][width];
         drawStrategy = strategy;
         this.initBoard();
+        this.state = "{}#[]";
     }
 
     /**
@@ -91,6 +92,9 @@ public class Board implements BoardIF {
         setPieces(GameColor.WHITE, height-1);
     }
 
+    /**
+     * Creates a memento state of the board to be saved.
+     */
     public void createState() {
         StringBuilder stateBuilder = new StringBuilder("{");
         for (int i = 0; i < getWidth(); i++) {
@@ -103,15 +107,14 @@ public class Board implements BoardIF {
                     stateBuilder.append(":");
                     stateBuilder.append(square.getPiece().getType().letter);
                     stateBuilder.append(square.getPiece().getColor().toString().charAt(0));
-                    if(i != getWidth() - 1) {
+                    if (i != getWidth() - 1 || j != getHeight() - 1) {
                         stateBuilder.append(",");
                     }
                 }
             }
         }
-        stateBuilder.append("}#[]");
-        System.out.println(stateBuilder + "923482389423894289384923894829398432");
-        this.state = stateBuilder.toString();
+        stateBuilder.append("}");
+        this.state = stateBuilder.toString() + "#" + this.state.split("#")[1];
     }
 
     /**
@@ -229,7 +232,8 @@ public class Board implements BoardIF {
      * @param toR   the rank to move to
      */
     @Override
-    public void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR) {
+    public void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR){
+        this.createState();
         StringBuilder stateBuilder = new StringBuilder(this.state.split("#")[1]);
         stateBuilder.deleteCharAt(stateBuilder.length() - 1);
         if(stateBuilder.length() > 7) {
@@ -301,26 +305,30 @@ public class Board implements BoardIF {
     }
 
     private void setFirstMovesFromMemento(String[] moves) {
+        for(String move : moves) {
+            Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toUpperCase());
+            Rank toR = Rank.valueOf("R" + (String.valueOf(move.charAt(6))));
+
+            PieceIF piece = squares[toR.getIndex()][toF.getFileNum()].getPiece();
+
+            if (piece != null) {
+                MovementIF movementType = piece.getMoveType();
+                if (movementType instanceof FirstMoveIF movement) {
+                    movement.setFirstMove(false);
+                }
+            }
+        }
+
 //        for(String move : moves) {
 //            Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toUpperCase());
-//            Rank toR = Rank.valueOf(String.valueOf(move.charAt(6)));
-//            MovementIF movementType = squares[toF.getFileNum()][toR.index].getPiece().getMoveType();
+//            Rank toR = Rank.valueOf("R" + (String.valueOf(move.charAt(6))));
+//
+//            MovementIF movementType = squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType();
 //            if (squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType() instanceof FirstMoveIF) {
 //                FirstMoveIF movement = (FirstMoveIF) movementType;
 //                movement.setFirstMove(false);
 //            }
 //        }
-
-        for(String move : moves) {
-            Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toUpperCase());
-            Rank toR = Rank.valueOf("R" + (String.valueOf(move.charAt(6))));
-
-            MovementIF movementType = squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType();
-            if (squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType() instanceof FirstMoveIF) {
-                FirstMoveIF movement = (FirstMoveIF) movementType;
-                movement.setFirstMove(false);
-            }
-        }
     }
 
 

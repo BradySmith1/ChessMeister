@@ -24,7 +24,8 @@ public class SaveGameCLI implements LoadSaveGameIF {
     @Override
     public void showLoadSave() {
         System.out.print("Save Game\n-------------------------------------" +
-                "--------------------------\nEnter file path:");
+                "--------------------------\nEnter file name: ");
+        scan = new Scanner(System.in);
         this.url = scan.nextLine();
     }
 
