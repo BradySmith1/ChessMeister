@@ -134,7 +134,7 @@ public class PlayMoveCLI implements PlayIF {
                     this.saveGame.showLoadSave();
                     break;
                 case 6:
-                    if (agreementCondition() == true) {
+                    if (agreementCondition()) {
                         System.out.println("Draw");
                         currentPlayer.increaseDraws();
                         getOtherPlayer(currentPlayer).increaseDraws();
