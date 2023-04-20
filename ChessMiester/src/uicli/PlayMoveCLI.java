@@ -770,7 +770,7 @@ public class PlayMoveCLI implements PlayIF {
             // Get valid moves for the piece
             PieceIF piece = this.board.getPiece(fromRank, fromFile);
             List<Position> validMoves = piece.getValidMoves(this.board, new Position(fromRank, fromFile));
-            this.board.highlightMoves(validMoves);
+            //this.board.highlightMoves(validMoves);
         }
     }
 
