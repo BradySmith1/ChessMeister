@@ -198,27 +198,31 @@ public class PlayMoveCLI implements PlayIF {
                         [toF.getFileNum()].getPiece(); // get rook from the board
 
                 if(fromF.getFileNum() < toF.getFileNum()){
+                    // you can guarantee that the rook will be in F
                     this.board.getSquares()[toR.getIndex()] // set rook at new place
-                            [toF.getFileNum() - 1].setPiece(rook);
+                            [Files.F.getFileNum()].setPiece(rook);
 
                     this.board.getSquares()[fromR.getIndex()] // clear square from king
                             [fromF.getFileNum()].clear();
                     this.board.getSquares()[toR.getIndex()] // clear square from rook
                             [toF.getFileNum()].clear();
 
+                    // you can guarantee that the king will be in G
                     this.board.getSquares()[toR.getIndex()] // set king at new place
-                            [toF.getFileNum()].setPiece(king);
+                            [Files.G.getFileNum()].setPiece(king);
                 }else{
+                    // you can guarantee that the rook will be in D
                     this.board.getSquares()[toR.getIndex()] // set rook at new place
-                            [toF.getFileNum() + 1].setPiece(rook);
+                            [Files.D.getFileNum()].setPiece(rook);
 
                     this.board.getSquares()[fromR.getIndex()] // clear square from king
                             [fromF.getFileNum()].clear();
                     this.board.getSquares()[toR.getIndex()] // clear square from rook
                             [toF.getFileNum()].clear();
 
+                    // you can guarantee that the king will be in C
                     this.board.getSquares()[toR.getIndex()] // set king at new place
-                            [toF.getFileNum()].setPiece(king);
+                            [Files.C.getFileNum()].setPiece(king);
                 }
 
                 // set first move to false for both pieces
@@ -810,9 +814,10 @@ public class PlayMoveCLI implements PlayIF {
 
         // check if king is moving to the right
         Files tempF = fromF;
+        int cnt = 0;
         if (tempF.getFileNum() < toF.getFileNum() && canCastle) {
             tempF = Files.values()[tempF.getFileNum() + 1];
-            while (!tempF.equals(toF)) {
+            while (cnt < 2) {
                 //check if king is ever put into check
                 if (!checkCondition(currentPlayer, new Position(fromR, tempF))) {
                     canCastle = false;
@@ -825,11 +830,12 @@ public class PlayMoveCLI implements PlayIF {
                     //flag = false;
                 }
                 tempF = Files.values()[tempF.getFileNum() + 1];
+                cnt++;
             }
         }
         // check if king is moving to the left
         else {
-            while (!tempF.equals(toF)) {
+            while (cnt < 2) {
                 tempF = Files.values()[tempF.getFileNum() - 1];
                 //check if king is ever put into check
                 if (!checkCondition(currentPlayer, new Position(fromR, tempF))) {
@@ -841,6 +847,7 @@ public class PlayMoveCLI implements PlayIF {
                     canCastle = false;
                 }
                 tempF = Files.values()[tempF.getFileNum() - 1];
+                cnt++;
             }
         }
         return canCastle; //true if castling is possible, false if not
