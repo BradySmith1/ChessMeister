@@ -128,6 +128,10 @@ public class MainMenuCLI implements MainMenuIF {
                         board.setDrawStrategy(boardStrat);
                         board.loadFromMemento(caretaker.peek()); // load game state
 
+                        // assign the pieces to the players after loading the game
+                        definePlayers.getPlayer1().assignPieces(board);
+                        definePlayers.getPlayer2().assignPieces(board);
+
                         // get the color of the last move
                         String color = board.getState().substring(
                                 board.getState().length() - 8, board.getState().length() - 7);

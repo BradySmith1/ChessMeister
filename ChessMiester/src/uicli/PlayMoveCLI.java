@@ -676,6 +676,7 @@ public class PlayMoveCLI implements PlayIF {
         if(memento != null) {
             this.board.loadFromMemento(memento);
             player1.assignPieces(this.board);
+            player2.assignPieces(this.board);
             success = true;
         }
         return success;
