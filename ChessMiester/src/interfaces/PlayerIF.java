@@ -21,8 +21,6 @@ public interface PlayerIF {
 
     /**
      * Returns the pieces that the player has captured.
-     *
-     * @return The pieces that the player has captured.
      */
     public void displayCapturedPieces();
 
@@ -45,10 +43,10 @@ public interface PlayerIF {
      */
     void assignPieces(BoardIF board);
 
-
     /**
      * Returns the king of the player.
-     * @return : The king of the player.
+     *
+     * @return The king of the player.
      */
     PieceIF getKing();
 
@@ -61,19 +59,22 @@ public interface PlayerIF {
 
     /**
      * Removes a piece from the player's set of pieces.
-     * @return : The piece that was removed.
+     *
+     * @return The piece that was removed.
      */
     public GameColor getColor();
 
     /**
      * Returns the name of the player.
-     * @return : The name of the player.
+     *
+     * @return The name of the player.
      */
     public String getName();
 
     /**
      * Sets the name of the player.
-     * @param name : The name of the player.
+     *
+     * @param name The name of the player.
      */
     public void setName(String name);
 
@@ -104,7 +105,8 @@ public interface PlayerIF {
 
     /**
      * Returns the number of moves the player has made.
-     * @return : The number of moves the player has made.
+     *
+     * @return The number of moves the player has made.
      */
     public int getMoveCount();
 }

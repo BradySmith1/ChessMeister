@@ -16,7 +16,7 @@ import java.util.List;
  * This class represents the movement of a pawn.
  *
  * @author Kaushal Patel (60%), Colton Brooks (30%), Zach Eanes (10%)
- * @version 1.0
+ * @version 2.0
  */
 public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMoveIF {
     /* Fields */
@@ -70,9 +70,9 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
 
     /**
      * Method to return a possible diagonal capture for a pawn
-     * @param board     the board the piece is on
-     * @param currentPosition   the current position of the piece
-     * @param side      the side the pawn will move towards diagonally
+     * @param board           the board the piece is on
+     * @param currentPosition the current position of the piece
+     * @param side            the side the pawn will move towards diagonally
      * @return  a position if the move is possible, a null if not
      */
     private Position getDirectionalCapture(BoardIF board, Position currentPosition, int side) {
@@ -118,7 +118,8 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
 */
     /**
      * Gets the game color of the piece.
-     * @return  the game color of the piece.
+     *
+     * @return the game color of the piece.
      */
     public GameColor getColor() {
         return color;
@@ -142,6 +143,8 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
 
     /**
      * Changes boolean if this is the first move of the piece occurs.
+     *
+     * @param isFirstMove boolean to set the first move to
      */
     @Override
     public void setFirstMove(boolean isFirstMove){ this.isFirstMove = isFirstMove; }

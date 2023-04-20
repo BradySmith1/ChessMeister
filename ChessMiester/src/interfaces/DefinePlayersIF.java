@@ -14,7 +14,6 @@ public interface DefinePlayersIF {
      * Returns the first player.
      *
      * @return the PlayerIF object representing the first player.
-     * @author Brady Smith 100%
      */
     public PlayerIF getPlayer1();
 

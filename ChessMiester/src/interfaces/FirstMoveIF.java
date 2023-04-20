@@ -17,6 +17,8 @@ public interface FirstMoveIF{
     /**
      * Method to be called whenever a rook makes its first move, changes isFirstMove to false
      * to show a move has been made. Used for castling implementation.
+     *
+     * @param isFirstMove true if the piece has not moved, false otherwise
      */
      void setFirstMove(boolean isFirstMove);
 

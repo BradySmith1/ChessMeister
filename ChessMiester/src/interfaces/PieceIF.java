@@ -14,25 +14,31 @@ public interface PieceIF extends BlackAndWhiteIF {
 
     /**
      * Gets the type of the piece.
+     *
      * @return the type of the piece.
      */
     ChessPieceType getType();
 
     /**
      * Sets the type of the piece.
+     *
      * @param type the type of the piece.
      */
     void setType(ChessPieceType type);
 
     /**
      * Returns a list of MovePositions that are valid & legal on the board.
-     * @param board The game board that the piece moves on.
+     *
+     * @param board           The game board that the piece moves on.
+     * @param currentPosition The current position to get the valid moves from.
+     *
      * @return A list of valid MovePositions.
      */
     List<Position> getValidMoves(BoardIF board, Position currentPosition);
 
     /**
      * Gets the position of the piece.
+     *
      * @param board the board the piece is on.
      * @return the position of the piece.
      */
@@ -40,7 +46,8 @@ public interface PieceIF extends BlackAndWhiteIF {
 
     /**
      * method to get the movement type for the piece
-     * @return  a class that implements MovementIF that represents the moves this piece can do
+     *
+     * @return a class that implements MovementIF that represents the moves this piece can do
      */
     MovementIF getMoveType();
 }

@@ -16,7 +16,7 @@ import java.util.Collections;
  * This class represents a game board that can be used for a chess game.
  *
  * @author Brady Smith (100%)
- * @version 1.0
+ * @version 2.0
  */
 public class Board implements BoardIF {
 
@@ -136,6 +136,8 @@ public class Board implements BoardIF {
 
     /**
      * Method that draws the state of the game board.
+     *
+     * @param playerColor the color of the player to orient the board
      */
     @Override
     public void draw(GameColor playerColor) {
@@ -144,6 +146,8 @@ public class Board implements BoardIF {
 
     /**
      * Method that highlights the specified squares on the game board.
+     *
+     * @param board     the board to highlight
      * @param positions the positions to highlight
      * @param color     the color to orient the board
      */
@@ -205,6 +209,7 @@ public class Board implements BoardIF {
 
     /**
      * Returns the piece at the specified column and row on the game board.
+     *
      * @param col the column of the piece.
      * @param row the row of the piece.
      * @return    the PieceIF object at the specified column and row.
@@ -216,6 +221,7 @@ public class Board implements BoardIF {
 
     /**
      * Getter for the state field of the Board
+     *
      * @return the String of the board state
      */
     @Override
@@ -225,6 +231,7 @@ public class Board implements BoardIF {
 
     /**
      * Adds the move to the boards state that it holds in a field.
+     *
      * @param color color of the moving piece
      * @param fromF current file for the piece
      * @param fromR current rank for the piece
@@ -248,11 +255,11 @@ public class Board implements BoardIF {
         stateBuilder.append(toR.displayNum);
         stateBuilder.append("]");
         this.state = this.state.split("#")[0] + "#" + stateBuilder.toString();
-        //System.out.println(this.state);
     }
 
     /**
      * Creates a memento for the current state of the board
+     *
      * @return the memento to be stored in a caretaker
      */
     @Override
@@ -262,6 +269,7 @@ public class Board implements BoardIF {
 
     /**
      * Method to load the board from a different memento / board state.
+     *
      * @param boardMemento  the memento to load in
      */
     @Override
@@ -281,6 +289,7 @@ public class Board implements BoardIF {
 
     /**
      * Method to place the pieces depending on the String[] passed in from loadFromMemento()
+     *
      * @param pieces    An array in which each string describes a piece and its location
      */
     private void setPiecesFromMemento(String[] pieces){
@@ -303,8 +312,14 @@ public class Board implements BoardIF {
         }
     }
 
+    /**
+     * Sets the first moves for pieces that have certain characteristics that can
+     * be determined by whether they're made a first move.
+     *
+     * @param moves the moves that have occurred in the game
+     */
     private void setFirstMovesFromMemento(String[] moves) {
-        for(String move : moves) {
+        for (String move : moves) {
             Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toUpperCase());
             Rank toR = Rank.valueOf("R" + (String.valueOf(move.charAt(6))));
 
@@ -317,34 +332,12 @@ public class Board implements BoardIF {
                 }
             }
         }
-
-//        for(String move : moves) {
-//            Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toUpperCase());
-//            Rank toR = Rank.valueOf("R" + (String.valueOf(move.charAt(6))));
-//
-//            MovementIF movementType = squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType();
-//            if (squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType() instanceof FirstMoveIF) {
-//                FirstMoveIF movement = (FirstMoveIF) movementType;
-//                movement.setFirstMove(false);
-//            }
-//        }
-//
-//        for(String move : moves) {
-//            Files toF = Files.valueOf(String.valueOf(move.charAt(5)).toUpperCase());
-//            Rank toR = Rank.valueOf("R" + (String.valueOf(move.charAt(6))));
-//
-//            MovementIF movementType = squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType();
-//            if (squares[toR.getIndex()][toF.getFileNum()].getPiece().getMoveType() instanceof FirstMoveIF) {
-//                FirstMoveIF movement = (FirstMoveIF) movementType;
-//                movement.setFirstMove(false);
-//            }
-//        }
     }
-
 
     /**
      * Method to check if a pawn has moved from the starting positions for pawns of its color,
      * if it has move set its firstMove field to false.
+     *
      * @param pieceToInsert the piece to be modified if it is a pawn
      * @param pieceType the tpe of piece it is
      * @param color the color of the piece
@@ -364,12 +357,14 @@ public class Board implements BoardIF {
 
     /**
      * A memento nested class for the board object. It can hold a boards state.
+     *
      * @param state A string representing the state the board is in
      */
     public record BoardMemento(String state) implements BoardMementoIF{}
 
     /**
      * Getter for the draw strategy
+     *
      * @return the draw strategy
      */
     public BoardStrategy getDrawStrategy() { return drawStrategy; }

@@ -15,7 +15,7 @@ import java.util.List;
  * of a given piece.
  *
  * @author Zach Eanes (85%), Colton Brooks (15%)
- * @version 1.0
+ * @version 2.0
  */
 public class RookMovement extends QueenMovement implements MovementIF, FirstMoveIF {
 
@@ -63,6 +63,8 @@ public class RookMovement extends QueenMovement implements MovementIF, FirstMove
 
     /**
      * Changes boolean if this is the first move of the piece occurs.
+     *
+     * @param isFirstMove boolean to set for the first move of the piece.
      */
     @Override
     public void setFirstMove(boolean isFirstMove){ this.isFirstMove = isFirstMove; }

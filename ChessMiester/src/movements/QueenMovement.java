@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * This class represents the movement of a Queen.
  *
- * @authors Kaushal Patel (65%), Zach Eanes (20%), Colton Brooks (15%)
- * @version 1.0
+ * @author Kaushal Patel (65%), Zach Eanes (20%), Colton Brooks (15%)
+ * @version 2.0
  */
 public class QueenMovement extends BlackAndWhite implements MovementIF {// The color of the piece.
 
@@ -54,13 +54,15 @@ public class QueenMovement extends BlackAndWhite implements MovementIF {// The c
 
     /**
      * This method also inherited by bishop and rook allows for continuous directional movement
-     * @param board The board the piece is on
-     * @param currentPosition   The current position of the piece
-     * @param rank  The *direction* the piece is moving in for the rank
-     * @param file  The *direction* the piece is moving in for the file
+     *
+     * @param board           The board the piece is on
+     * @param currentPosition The current position of the piece
+     * @param rank            The *direction* the piece is moving in for the rank
+     * @param file            The *direction* the piece is moving in for the file
      * @return An ArrayList of the valid moves in the direction specified by the rank and file
      */
-    List<Position> getDirectionalMoves(BoardIF board, Position currentPosition, int rank, int file){
+    List<Position> getDirectionalMoves(BoardIF board, Position currentPosition,
+                                       int rank, int file){
         List<Position> validDirectional = new ArrayList<>();
 
         boolean movementStop = false;
