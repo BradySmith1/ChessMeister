@@ -21,5 +21,12 @@ public interface BoardStrategy {
      */
     public void draw(BoardIF board, GameColor color);
 
+    /**
+     * Highlights the specified squares on the game board.
+     *
+     * @param board       the board to highlight
+     * @param highlighted the squares to highlight
+     * @param color       the color to orient the board
+     */
     public void highlight(BoardIF board, ArrayList<Position> highlighted, GameColor color);
 }

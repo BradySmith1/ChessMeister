@@ -10,8 +10,8 @@ import uicli.MainMenuCLI;
  * Includes methods to create a main menu and read player input, launch a new game, save/load
  * games (coming later) and many other crucial operations.
  *
- * @author Brady Smith (25%), Zach Eanes (25%), Kaushal Patel (25%), and Colton Brooks (25%)
- * @version 1.0
+ * @author Brady Smith (100%)
+ * @version 2.0
  */
 public class Chess {
 

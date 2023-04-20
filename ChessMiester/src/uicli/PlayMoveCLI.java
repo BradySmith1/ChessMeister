@@ -738,6 +738,7 @@ public class PlayMoveCLI implements PlayIF {
         boolean validMove = false;
         while(!validMove){ // loop until we get a valid move
             System.out.println("Show moves for what piece? "); // prompt for move
+            scan = new Scanner(System.in);
             String move = scan.nextLine();
             move = move.replaceAll("\\s", ""); // remove white space
 
@@ -774,7 +775,7 @@ public class PlayMoveCLI implements PlayIF {
             // Get valid moves for the piece
             PieceIF piece = this.board.getPiece(fromRank, fromFile);
             List<Position> validMoves = piece.getValidMoves(this.board, new Position(fromRank, fromFile));
-            //this.board.highlightMoves(validMoves);
+            this.board.highlight(this.board, (ArrayList<Position>) validMoves, currentPlayer.getColor());
         }
     }
 

@@ -248,7 +248,7 @@ public class Board implements BoardIF {
         stateBuilder.append(toR.displayNum);
         stateBuilder.append("]");
         this.state = this.state.split("#")[0] + "#" + stateBuilder.toString();
-        System.out.println(this.state);
+        //System.out.println(this.state);
     }
 
     /**

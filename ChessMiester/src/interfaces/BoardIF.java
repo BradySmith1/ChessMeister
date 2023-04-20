@@ -7,6 +7,7 @@ import model.Board;
 import model.Position;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This interface defines the basic functionality of a game board object.
@@ -77,16 +78,49 @@ public interface BoardIF{
      */
     PieceIF getPiece(int col, char row);
 
+    /**
+     * Adds a move to the game board memento.
+     *
+     * @param color the color of the piece that is added
+     * @param fromF the "from" file of the movement
+     * @param fromR the "from" rank of the movement
+     * @param toF   the "to" file of the movement
+     * @param toR   the "to" rank of the movement
+     */
     void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR);
 
+    /**
+     * Creates a new memento.
+     * @return the new memento
+     */
     Board.BoardMementoIF createMemento();
 
+    /**
+     * Gets the state of the memento which includes the placement for pieces
+     * and movements.
+     *
+     * @return the state of the memento
+     */
     String getState();
 
+    /**
+     * Loads a game from a given memento.
+     *
+     * @param boardMemento the memento to load from
+     */
     void loadFromMemento(Board.BoardMementoIF boardMemento);
 
+    /**
+     * Highlights the given arraylist of positions on the board.
+     * @param board the board to highlight
+     * @param array the arraylist of positions to highlight
+     * @param color the color of the orientation of the board
+     */
     void highlight(BoardIF board, ArrayList<Position> array, GameColor color);
 
+    /**
+     * Interface for the memento.
+     */
     public interface BoardMementoIF {
         String state();
     }
