@@ -65,6 +65,6 @@ public class RookMovesCLI extends TutorialCLI implements RulesIF{
 
         /* create piece and call tutorial loop */
         Piece rook = new Piece(ChessPieceType.Rook, GameColor.WHITE);
-        this.tutorialLoop("rookTutorial", rook, new Position(Rank.R1, Files.H));
+        this.tutorialLoop("rookTutorial", rook, new Position(Rank.R1, Files.A));
     }
 }

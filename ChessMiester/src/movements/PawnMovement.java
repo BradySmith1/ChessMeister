@@ -39,7 +39,7 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
         this.isFirstMove = true;
 
         /* The direction the pawn is moving. */
-        this.direction = color == GameColor.WHITE ? 1 : -1;
+        this.direction = color == GameColor.BLACK ? 1 : -1;
     }
 
     /**
@@ -144,5 +144,5 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
      * Changes boolean if this is the first move of the piece occurs.
      */
     @Override
-    public void setFirstMove(){ this.isFirstMove = false; }
+    public void setFirstMove(boolean isFirstMove){ this.isFirstMove = isFirstMove; }
 }

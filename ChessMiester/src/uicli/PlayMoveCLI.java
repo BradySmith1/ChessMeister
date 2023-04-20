@@ -8,9 +8,13 @@ import enums.Rank;
 import interfaces.*;
 import model.Piece;
 import model.Position;
+import movements.KingMovement;
 import movements.PawnMovement;
+import movements.RookMovement;
 
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -44,6 +48,7 @@ public class PlayMoveCLI implements PlayIF {
 
     /**
      * Constructor for the play move dialog.
+     *
      * @param scan Scanner for user input
      */
     public PlayMoveCLI(Scanner scan, BoardIF board, String undo, String showMoves, PlayerIF player1, PlayerIF player2) {
@@ -77,7 +82,7 @@ public class PlayMoveCLI implements PlayIF {
      * Displays the play move dialog.
      */
     public void show() {
-        //board.draw(GameColor.WHITE);
+        //board.draw(currentPlayer.getColor());
         this.display();
         String menu = "\nPlay Chess\n---------------------------------------------------------------\n" +
                 menuOptions[0] +
@@ -88,24 +93,28 @@ public class PlayMoveCLI implements PlayIF {
                 menuOptions[5] +
                 menuOptions[6];
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
-        String prompt = currentPlayer.getName() + " Enter your choice ===> ";
+        String prompt;
         while (choice != 0) { //while user has not quit
             System.out.println(menu);   //shows user menu options
+            prompt = currentPlayer.getName() + ", enter your choice ===> ";
             System.out.print(prompt);   //ask user for this choice
             try {
+                System.out.print("");
+                scan.nextLine();
                 choice = scan.nextInt();
+                scan.nextLine();
+            } catch (InputMismatchException ignore) {
+                //ignore
             }
-            catch (InputMismatchException e) {
-                System.out.println("Invalid input.");
-            }
-            switch(choice){
+            switch (choice) {
                 case 1:
-                    System.out.println("Move");
-                    this.gameLoop();
-                    this.display();   //TODO TEMPORARY
-                    this.switchPlayers();
-
-                    if(endGameCondition()){
+                    this.display();
+                    boolean successfulRun = this.gameLoop();
+                    if (successfulRun) {
+                        this.display();
+                        switchPlayers();
+                    }
+                    if (endGameCondition()) {
                         // Show each player's stats at the end of the game
                         player1.displayStats();
                         player2.displayStats();
@@ -125,88 +134,163 @@ public class PlayMoveCLI implements PlayIF {
                     this.saveGame.showLoadSave();
                     break;
                 case 6:
-                    System.out.println("Propose draw");
+                    if (agreementCondition() == true) {
+                        System.out.println("Draw");
+                        currentPlayer.increaseDraws();
+                        getOtherPlayer(currentPlayer).increaseDraws();
+                        choice = 0; // end loop
+                    } else {
+                        System.out.println("No draw!");
+                    }
                     break;
                 case 7:
                     System.out.println("Concede and Exit Game");
-                    // go to main menu? or end program?
+                    currentPlayer.increaseLosses();
+                    getOtherPlayer(currentPlayer).increaseWins();
+                    System.exit(1);
                     break;
                 default:
                     System.out.println("Invalid input.");
+                    choice = 999; // preventative if enter 0
             }
+
         }
     }
 
     /**
      * This is the function responsible for allowing the pieces to be moved.
+     *
      * @param fromF File placement of where the piece is currently at
      * @param fromR Rank placement of where the piece is currently at
      * @param toF   File placement of where the piece will go
      * @param toR   Rank placement of where the piece will go
      */
     public boolean move(PlayerIF currentPlayer, PlayerIF otherPlayer, Files fromF,
-                        Rank fromR, Files toF, Rank toR){
-        boolean moveMade = false; // initialize to false
-        // Get the piece at the current/"from" position.
-        Piece piece = (Piece) board.getPiece(fromR, fromF);
+                        Rank fromR, Files toF, Rank toR) {
+        /**
+         * This function is responsible for moving the pieces on the board.
+         *
+         * Algorithm:
+         * 1. Get the piece at the from position.   TODO DONE
+         * 2. Check if the piece at to is null. (If it is, then there is no piece at the from position)
+         * 3. Check to see if the player owns the piece.
+         * 4. Get all the possible moves for the piece.
+         * 5. Two cases: The to position is in the list of possible moves, or it is not.
+         * 6. If it is, then check to see if the to position is occupied.
+         * 7. If it is, then check to see if the piece is the same color as the player.
+         * 8. If it is, then the move is invalid. // Cannot move to a position that is occupied by a piece of the same color.
+         * 9. If it is not, then the move is valid. // Can move to a position that is occupied by a piece of the opposite color.
+         * 10. If the to position contains an enemy piece, then remove it from the board. and set our piece to the to position.
+         * 11. Remove the piece from the from position.
+         * 12. Add the enemy piece to the player's captured pieces.
+         * 13. Remove the piece from the enemy player's pieces.
+         */
+        boolean validMove = false;
+        Piece fromPiece = (Piece) board.getPiece(fromR, fromF);
+        Piece toPiece = (Piece) board.getPiece(toR, toF);
 
-        if(currentPlayer.getPieces().contains(piece)){
-            // True if there is a piece at the to position
-            boolean hasPiece = board.getPiece(toR, toF) != null;
+        boolean isPlayersPiece = currentPlayer.getPieces().contains(fromPiece);
 
-            // list of possible moves
-            List<Position> moves = piece.getValidMoves(board, new Position(fromR, fromF));
-            Position to = new Position(toR, toF); // position to move to
-            boolean success = false; // initialize to false
-            success = moves.contains(to); // check if where user wants to move is a valid move
+        if(this.board.getSquares()[fromR.getIndex()] // if it's a king
+                [fromF.getFileNum()].getPiece().getType().equals(ChessPieceType.King) &&
+           this.board.getSquares()[toR.getIndex()]
+                        [toF.getFileNum()].getPiece().getType().equals(ChessPieceType.Rook)){
 
-            if(success && hasPiece){ // A piece was captured and move is valid
-                // Add the captured piece to the player's list of captured pieces.
-                currentPlayer.addCapturedPiece(board.getPiece(toR, toF));
+            if(canCastle(fromF, fromR, toF, toR)){ // see if it can castle
+                Piece king = (Piece) this.board.getSquares()[fromR.getIndex()]
+                        [fromF.getFileNum()].getPiece(); // get king from the board
+                Piece rook = (Piece) this.board.getSquares()[toR.getIndex()]
+                        [toF.getFileNum()].getPiece(); // get rook from the board
 
+                if(fromF.getFileNum() < toF.getFileNum()){
+                    // you can guarantee that the rook will be in F
+                    this.board.getSquares()[toR.getIndex()] // set rook at new place
+                            [Files.F.getFileNum()].setPiece(rook);
 
-                // Remove the captured piece from the player's list of pieces.
-                otherPlayer.getPieces().remove(piece);
+                    this.board.getSquares()[fromR.getIndex()] // clear square from king
+                            [fromF.getFileNum()].clear();
+                    this.board.getSquares()[toR.getIndex()] // clear square from rook
+                            [toF.getFileNum()].clear();
 
-                // Clear the piece at the "to" position.
-                this.board.getSquares()[toR.getIndex()][toF.getFileNum()].clear();
+                    // you can guarantee that the king will be in G
+                    this.board.getSquares()[toR.getIndex()] // set king at new place
+                            [Files.G.getFileNum()].setPiece(king);
+                }else{
+                    // you can guarantee that the rook will be in D
+                    this.board.getSquares()[toR.getIndex()] // set rook at new place
+                            [Files.D.getFileNum()].setPiece(rook);
 
-                // Move the piece to the "to" position.
-                this.board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(piece);
+                    this.board.getSquares()[fromR.getIndex()] // clear square from king
+                            [fromF.getFileNum()].clear();
+                    this.board.getSquares()[toR.getIndex()] // clear square from rook
+                            [toF.getFileNum()].clear();
 
-                // Clear the "from" position.
+                    // you can guarantee that the king will be in C
+                    this.board.getSquares()[toR.getIndex()] // set king at new place
+                            [Files.C.getFileNum()].setPiece(king);
+                }
+
+                // set first move to false for both pieces
+                if(king instanceof FirstMoveIF){
+                    ((FirstMoveIF) king).setFirstMove(false);
+                }
+                if(rook instanceof FirstMoveIF){
+                    ((FirstMoveIF) rook).setFirstMove(false);
+                }
+
+                //this.display();
+                System.out.println("\n" + currentPlayer.getName() + " has castled!");
+                return true;
+            }
+            System.out.println("Invalid castle attempt.");
+            return false;
+        }
+
+        if (isPlayersPiece && (toPiece == null || toPiece.getColor() != currentPlayer.getColor())) {
+            // Is our piece and the to position is empty or the piece is the opposite color
+
+            // Get all the possible moves for the piece
+            List<Position> possibleMoves = fromPiece.getValidMoves(board, new Position(fromR, fromF));
+
+            // Check to see if the to position is in the list of possible moves
+            if (possibleMoves.contains(new Position(toR, toF))) {
+                // The to position is in the list of possible moves
+                if (toPiece != null) {
+                    // The to position is occupied by an enemy piece
+
+                    // Remove the to piece from the board
+                    board.getSquares()[toR.getIndex()][toF.getFileNum()].clear();
+
+                    // Add the piece to the player's captured pieces
+                    currentPlayer.addCapturedPiece(toPiece);
+
+                    // Remove the piece from the enemy player's pieces
+                    getOtherPlayer(currentPlayer).getPieces().remove(toPiece);
+                }
+                // Remove the from piece from the board
                 board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
 
+                // Move the piece to the to position
+                board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(fromPiece);
+                validMove = true;
 
-                if((piece.getType() == ChessPieceType.Pawn)){ //check if piece is a pawn
-                    PawnMovement pawn = (PawnMovement) piece.getMoveType();
-                    pawn.setFirstMove(); // set first move for a pawn to false
+                // Add the move to the move history
+                board.addMove(currentPlayer.getColor(), fromF, fromR, toF, toR);
+                caretaker.push(board.createMemento());
+
+                if (fromPiece instanceof FirstMoveIF) {
+                    FirstMoveIF movementPiece = (FirstMoveIF) fromPiece;
+                    movementPiece.setFirstMove(false);
                 }
-                moveMade = true; // move was successful
-            }
-            else if(success && !hasPiece){ // No piece was captured and move is valid
-                // Move the piece to the "to" position.
-                board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(piece);
-
-                // Clear the "from" position.
-                board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
-
-                if((piece.getType() == ChessPieceType.Pawn)){ //check if piece is a pawn
-                    PawnMovement pawn = (PawnMovement) piece.getMoveType();
-                    pawn.setFirstMove(); //set first move for a pawn to false
-                }
-
-                moveMade = true; // move was successful
-            }
-            else{
+            } else {
                 System.out.println("Invalid move.");
             }
+        } else if (toPiece.getColor() == currentPlayer.getColor()) {
+            System.out.println("Cannot move to a position that is occupied by your own piece.");
+        } else {
+            System.out.println("Cannot move a piece that is not yours.");
         }
-        else{
-            System.out.println("You cannot move that piece because it is not yours.");
-        }
-
-        return moveMade; // return whether or not the move was successful
+        return validMove;
     }
 
 
@@ -219,9 +303,10 @@ public class PlayMoveCLI implements PlayIF {
     public Files findValidFile(String file) {
         file = file.toUpperCase(); // make sure the input is uppercase
         Files newFile = null; // file to be returned
-            try{
-                newFile = Files.valueOf(file);
-            }catch(IllegalArgumentException ignored){} // prevent crashing
+        try {
+            newFile = Files.valueOf(file);
+        } catch (IllegalArgumentException ignored) {
+        } // prevent crashing
         return newFile;
     }
 
@@ -247,77 +332,89 @@ public class PlayMoveCLI implements PlayIF {
     /**
      * Function used to display current state of the board and captured pieces.
      */
-    public void display(){
-        player1.displayCapturedPieces(); //display captured pieces for player 1
+    public void display() {
+        // display captured pieces for other
+        this.getOtherPlayer(currentPlayer).displayCapturedPieces();
         System.out.println(); // line printed for formatting
-        board.draw(GameColor.WHITE); // display the board
-        System.out.println(); // line printed for formatting
-        player2.displayCapturedPieces(); // display captured pieces for player 2
+        this.board.draw(currentPlayer.getColor());   // display the board
+        System.out.println();
+        //display captured pieces for current
+        this.currentPlayer.displayCapturedPieces();
     }
 
     /**
      * This function checks to see if there is a check on the king.
+     *
      * @param player player to check if their king is in check.
      * @return true if the king is in check, false otherwise.
      */
-    public boolean checkCondition(PlayerIF player, Position position){
+    public boolean checkCondition(PlayerIF player, Position position) {
         boolean isCheck = false;
         //Position kingPos = player.getKing().getPosition(); TODO Pass this line into checkCondition when checking for check.
 
         // Get the list of valid moves for all the enemy pieces on the board.
-        for (PieceIF piece : player.getPieces()){
+        for (PieceIF piece : player.getPieces()) {
             // Cast the piece to a Piece object.
             Piece p = (Piece) piece;
             // Get the list of valid moves for the piece.
             List<Position> validMoves = p.getValidMoves(board, piece.getPosition(board));
 
             // Check to see if the king's position is in the list of valid moves.
-            if (validMoves.contains(position)) {isCheck = true;}
+            if (validMoves.contains(position)) {
+                isCheck = true;
+            }
         }
         return isCheck;
     }
 
     /**
      * This function checks to see if there is a checkmate on the king.
+     *
      * @param player player to check if their king is in checkmate.
      * @return true if the king is in checkmate, false otherwise.
      */
-    private boolean checkmateCondition(PlayerIF player, PlayerIF playerOther){
-        // If the king isn't in check, then there is no checkmate.
-        boolean inCheck = checkCondition(player, player.getKing().getPosition(board)); // True if the king is in check, false otherwise.
-        boolean checkmate = false; // True if the king is in checkmate, false otherwise.
-        int checkCount = 0; // Number of checks on the king.
+    private boolean checkmateCondition(PlayerIF player, PlayerIF playerOther) {
+        /**
+         * Steps:
+         * Check to see if the king is in check.
+         * If the king is in check, then check to see if there is checkmate.
+         * If the king is not in check, then there is no checkmate.
+         * If the king is in check, then check to see if the king can move to a position where it is not in check.
+         * If the king can move to a position where it is not in check, then there is no checkmate.
+         * If the king cannot move to a position where it is not in check, then check to see if any of the pieces can block the checkmate.
+         * If any of the pieces can block the checkmate, then there is no checkmate.
+         * If none of the pieces can block the checkmate, then there is a checkmate.
+         */
 
-        // If the king is in check, then check to see if there is checkmate.
-        if(inCheck){
-            // TODO
-            /**
-             * Steps:
-             * 1. Get the king of the player.
-             * 2. Get the list of valid moves for the king.
-             * 3. For each position in the list of valid moves, check to see if the king is in check.
-             * 4. If the king is not in check for any of the positions, then there is no checkmate.
-             */
+        // Check to see if the king is in check.
+        boolean checkmate = false;
+        boolean canMoveOutOfCheck = false;
+        boolean canBlockCheck = false;
+        boolean inCheck = checkCondition(playerOther, player.getKing().getPosition(board));
+
+        if (inCheck) {
+            // Check to see if the king can move to a position where it is not in check.
+
             // Get the king of the player.
-            Piece king = (Piece)player.getKing();
+            Piece king = (Piece) player.getKing();
 
             // Get the list of valid moves for the king.
             List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition(board));
 
             // For each position in the list of valid moves, check to see if the king is in check.
-            for(Position pos : kingValidMoves) {
-                // Call the checkCondition function to see if the king is in check if it is moved to the position.
-                if (checkCondition(player, pos)) {
-                    checkCount++;
+            for (Position position : kingValidMoves) {
+                // Emulate the move of the king to each position in the list of valid moves.
+                this.move(player, playerOther, king.getPosition(board).getFile(), king.getPosition(board).getRank(), position.getFile(), position.getRank());
+
+                // Check to see if there is a check.
+                if (!this.checkCondition(player, king.getPosition(board))) {
+                    canMoveOutOfCheck = true;
                 }
+                //undo(); // TODO
+                undoMoveFromCheck();
             }
 
-            // If the king is not in check for any of the positions, then there is no checkmate.
-            if (checkCount == kingValidMoves.size()) {
-                checkmate = true;
-            }
-
-            // TODO Check to see if any of the pieces can block the checkmate.
+            // Check to see if any of the pieces can block the checkmate.
             for (PieceIF piece : player.getPieces()) {
                 // Cast the piece to a Piece object.
                 Piece p = (Piece) piece;
@@ -329,16 +426,18 @@ public class PlayMoveCLI implements PlayIF {
                     // Emulate the move of the piece to each position in the list of valid moves.
                     // Check to see if there is a check.
 
-                    this.move(player, playerOther,p.getPosition(board).getFile(), p.getPosition(board).getRank(), position.getFile(), position.getRank());
+                    this.move(player, playerOther, p.getPosition(board).getFile(), p.getPosition(board).getRank(), position.getFile(), position.getRank());
 
                     if (!this.checkCondition(player, king.getPosition(board))) {
-                        //UndoMove(); //Down
-                        checkmate = false;
+                        canBlockCheck = true;
                     }
-                    //UndoMove(); //Down
+                    //undo(); // TODO
+                    undoMoveFromCheck();
                 }
             }
+            checkmate = !canMoveOutOfCheck && !canBlockCheck;
         }
+
         return checkmate;
     }
 
@@ -348,15 +447,17 @@ public class PlayMoveCLI implements PlayIF {
      * 2) threefold repetition
      * 3) fifty move rule
      * 4) agreement condition.
+     *
      * @return true if there is a draw, false otherwise.
      */
-    private boolean drawCondition(PlayerIF player){
+    private boolean drawCondition(PlayerIF player) {
         return stalemateCondition(player) || threefoldRepetitionCondition()
-                || fiftyMoveRule() || agreementCondition();
+                || fiftyMoveRule();
     }
 
     /**
      * This method checks to see if there is a stalemate.
+     *
      * @return true if there is a stalemate, false otherwise.
      */
     private boolean stalemateCondition(PlayerIF player) {
@@ -384,113 +485,165 @@ public class PlayMoveCLI implements PlayIF {
 
     /**
      * This method checks to see if there is a check by threefold repetition.
+     *
      * @return true if there is a threefold repetition, false otherwise.
      */
     private boolean threefoldRepetitionCondition() {
         // A draw should be declared if the same board presence has occurred three times in a row
         boolean threefoldRepetition = false;
-
+        // TODO
         return threefoldRepetition;
     }
 
     /**
      * This method checks to see if there is a check by fifty move rule.
+     *
      * @return true if there is a fifty move rule, false otherwise.
      */
-    private boolean fiftyMoveRule()
-    {
+    private boolean fiftyMoveRule() {
         // A draw should be declared if a total of 50 moves (25 per player) has occurred and no piece has been captures and no pawn has been moved
         boolean fiftyMoveRule = false;
-
+        // TODO
         return fiftyMoveRule;
     }
 
     /**
      * This method checks to see if there is a check by agreement condition.
-     * @return  true if there is a agreement condition, false otherwise.
+     *
+     * @return true if there is a agreement condition, false otherwise.
      */
     private boolean agreementCondition() {
         // Both players agree to a draw.
         boolean agreement = false;
-
+        this.scan = new Scanner(System.in);
+        System.out.println(getOtherPlayer(currentPlayer).getName() + ", do you agree to a draw? (y/n)");
+        String input = scan.nextLine();
+        if (input.equalsIgnoreCase("y")) {
+            agreement = true;
+        }
         return agreement;
     }
 
     /**
      * Sets the save game object.
+     *
      * @param saveGame save game object
      */
-    public void setSaveGame(LoadSaveGameIF saveGame){
+    public void setSaveGame(LoadSaveGameIF saveGame) {
         this.saveGame = saveGame;
     }
 
     /**
      * Loop for the game to occur
      */
-    private void gameLoop(){
-        this.populateMenu();
-        if(!checkmateCondition(currentPlayer, this.getOtherPlayer(currentPlayer)) && !drawCondition(currentPlayer))
-        {
-            if(checkCondition(currentPlayer, currentPlayer.getKing().getPosition(this.board))){ // see if player is in check
-                System.out.println(currentPlayer.getName() + ", you are in check! You must" +
-                                   "defend your king!");
-                //check = true;
-            }
-            else{
-                // True if the king is in check, false otherwise.
-                boolean checkPass = checkCondition(currentPlayer,
-                                                   currentPlayer.getKing().getPosition(board));
-                while(!checkPass) {
-                    // Opponent did not place current player in check
-                    startMove(currentPlayer);// start move by prompting for input and making move
-                    if (checkCondition(currentPlayer, currentPlayer.getKing().getPosition(board))) {
-                        System.out.println(currentPlayer.getName() + ", invalid move. Cannot " +
-                                "place your own king in check");
-                        undoMove();
-                    } else {
-                        checkPass = true;
-                    }
+    private boolean gameLoop() {
+        boolean success = false;
+
+        // Logic
+        /**
+         * 1. Check to see if the game is over by checkmate or draw.
+         * 2. If the game is not over by checkmate or draw, then check to see if the player is in check.
+         * 3. If the player is in check, notify the player. (Player is able to move out of check since the game is not checkmate)
+         * 4. If the player is not in check, then ask the player for a move.
+         */
+
+        // Check to see if the game is over by checkmate or draw.
+        System.out.println("CHECKMATE CONDITION: " + checkmateCondition(currentPlayer, getOtherPlayer(currentPlayer)));
+        if (checkmateCondition(currentPlayer, getOtherPlayer(currentPlayer)) || drawCondition(currentPlayer)) {
+            // If the game is over, then notify the players and end the game.
+            System.out.println("Game Over");
+            System.out.println("The winner is " + getOtherPlayer(currentPlayer).getName());
+        }
+        // If the game is not over by checkmate or draw, then check to see if the player is in check.
+        else if (checkCondition(getOtherPlayer(currentPlayer), currentPlayer.getKing().getPosition(board))) {
+            // If the player is in check, then notify the player.
+            System.out.println("You are in check!");
+            // Ask the player for a move.
+
+            boolean notInCheck = true;
+            while (notInCheck) {
+                success = startMove(currentPlayer);   // possibly return a boolean for valid move made
+                if (!checkCondition(getOtherPlayer(currentPlayer), currentPlayer.getKing().getPosition(board))) {
+                    notInCheck = false;
+                } else {
+                    System.out.println("Cannot move into check!");
+                    undoMoveFromCheck();
                 }
             }
-
         }
+        // If the player is not in check, then ask the player for a move.
+        else {
+            boolean notInCheck = true;
+            while (notInCheck) {
+                success = startMove(currentPlayer);   // possibly return a boolean for valid move made
+                if (!checkCondition(getOtherPlayer(currentPlayer), currentPlayer.getKing().getPosition(board))) {
+                    notInCheck = false;
+                } else {
+                    System.out.println("Cannot move into check!");
+                    undoMoveFromCheck();
+                }
+            }
+        }
+
+        return success;
     }
 
-    private void undoMove() {
-        //this.board.loadFromMemento();
-    }
+
+    /**
+     * This method is used to see if a game is placed in check. This ensures
+     * that the move from check will not be in the list of valid moves so
+     * you cannot redo that move.
+     */
     private void undoMoveFromCheck() {
         this.caretaker.pop();
         this.board.loadFromMemento(this.caretaker.peek());
     }
 
+    /**
+     * This method is responsible for pushing a board state onto the caretaker.
+     *
+     * @param memento the current memento to pushed pushed on
+     */
     private void push(BoardIF.BoardMementoIF memento) {
         this.caretaker.push(memento);
     }
 
+    /**
+     * This method undoes the last move done on the board.
+     */
     private void undo() {
         BoardIF.BoardMementoIF memento = this.caretaker.down();
-        if(memento != null) {
+        if (memento != null) {
             this.board.loadFromMemento(memento);
         }
     }
 
+    /**
+     * This method redoes the move that just occured by viewing what is above in
+     * the caretaker.
+     */
     private void redo() {
         BoardIF.BoardMementoIF memento = this.caretaker.up();
-        if(memento != null) {
+        if (memento != null) {
             this.board.loadFromMemento(memento);
         }
     }
 
-
-    private void startMove(PlayerIF player) {
+    /**
+     * This method is responsible for initiating a move given the player enters
+     * a proper file and rank.
+     *
+     * @param player player being prompted for a move
+     */
+    private boolean startMove(PlayerIF player) {
         Files fromFile = null, toFile = null; // establish needed variables
         Rank fromRank = null, toRank = null;
+        boolean successfulMove = false;
 
         // Prompt player for input
         boolean validMove = false;
-        while(!validMove){ // loop until we get a valid move
-            System.out.println("Make Move:"); // prompt for move
+        while (!validMove) { // loop until we get a valid move
+            System.out.print("Make Move:"); // prompt for move
             Scanner scan = new Scanner(System.in);  // TODO remove this line later after testing and replace with field
             String move = scan.nextLine();
             move = move.replaceAll("\\s", ""); // remove white space
@@ -510,7 +663,7 @@ public class PlayMoveCLI implements PlayIF {
                 System.out.println("Invalid move. Please try again.");
             }
             // check to see if any of the parts of the positions are null
-            if(fromFile == null || fromRank == null || toFile == null || toRank == null) {
+            if (fromFile == null || fromRank == null || toFile == null || toRank == null) {
                 System.out.println("Invalid move. Please try again.");
 
                 // reset validmove to ensure loop doesn't end
@@ -519,13 +672,9 @@ public class PlayMoveCLI implements PlayIF {
         }
 
         // make move for player
-        this.move(player, getOtherPlayer(player), fromFile, fromRank, toFile, toRank);
+        successfulMove = this.move(player, getOtherPlayer(player), fromFile, fromRank, toFile, toRank);
+        return successfulMove;
     }
-
-    /**
-     * Method that switches the active player in a game.
-     */
-    private void switchPlayers(){currentPlayer = currentPlayer == player1 ? player2 : player1;}
 
     /**
      * Returns the other player based on a passed in player.
@@ -533,19 +682,24 @@ public class PlayMoveCLI implements PlayIF {
      * @param player player to get the opposite player of
      * @return the other player
      */
-    private PlayerIF getOtherPlayer(PlayerIF player){
+    private PlayerIF getOtherPlayer(PlayerIF player) {
         return player == player1 ? player2 : player1;
+    }
+
+    private void switchPlayers() {
+        currentPlayer = currentPlayer == player1 ? player2 : player1;
     }
 
     /**
      * This method makes all necessary checks to see if a game has ended.
-     * @return
+     *
+     * @return true if an end condition has been met, false otherwise
      */
-    private boolean endGameCondition(){
+    private boolean endGameCondition() {
         boolean endGame = false;
 
         // game has come to an end, either because of checkmate or draw conditions
-        if(checkmateCondition(currentPlayer, this.getOtherPlayer(currentPlayer))){
+        if (checkmateCondition(currentPlayer, this.getOtherPlayer(currentPlayer))) {
             System.out.println(currentPlayer.getName() + "you're in checkmate! Better luck" +
                     "next time!");
 
@@ -554,7 +708,7 @@ public class PlayMoveCLI implements PlayIF {
 
             endGame = true;
 
-        }else if(drawCondition(currentPlayer)){
+        } else if (drawCondition(currentPlayer)) {
             System.out.println("Game ends in a draw!");
 
             // Both players draw, increase their draw record
@@ -577,7 +731,7 @@ public class PlayMoveCLI implements PlayIF {
 
         // Prompt player for input
         boolean validMove = false;
-        while(!validMove){ // loop until we get a valid move
+        while (!validMove) { // loop until we get a valid move
             System.out.println("Show moves for what piece? "); // prompt for move
             String move = scan.nextLine();
             move = move.replaceAll("\\s", ""); // remove white space
@@ -593,19 +747,19 @@ public class PlayMoveCLI implements PlayIF {
                 System.out.println("Invalid piece. Please try again.");
             }
             // check to see if any of the parts of the positions are null
-            if(fromFile == null || fromRank == null) {
+            if (fromFile == null || fromRank == null) {
                 System.out.println("Invalid piece. Please try again.");
 
                 // reset valid move to ensure loop doesn't end
                 validMove = false;
             }
             // check to see if there is a piece at the position
-            if(this.board.getPiece(fromRank, fromFile) == null){
+            if (this.board.getPiece(fromRank, fromFile) == null) {
                 System.out.println("No piece at that position.");
                 validMove = false;
             }
             // check to see if the piece is the current player's piece
-            else if (!(currentPlayer.getPieces().contains(this.board.getPiece(fromRank, fromFile)))){
+            else if (!(currentPlayer.getPieces().contains(this.board.getPiece(fromRank, fromFile)))) {
                 System.out.println("That is not your piece.");
                 validMove = false;
             }
@@ -615,8 +769,93 @@ public class PlayMoveCLI implements PlayIF {
             // Get valid moves for the piece
             PieceIF piece = this.board.getPiece(fromRank, fromFile);
             List<Position> validMoves = piece.getValidMoves(this.board, new Position(fromRank, fromFile));
-            //this.board.highlightMoves(validMoves);
+            this.board.highlight(this.board, (ArrayList<Position>) validMoves, currentPlayer.getColor());
         }
     }
 
+    /*
+     * This is the represent the possible logic that would be needed to implement castling.
+     * I wanted to wait and see where to place it, but this method is essentially it.
+     *
+     * Outside of this function, if statement in game logic to see if the pieces
+     * as "from" == king and "to" == rook, then call this method if true
+     */
+
+    /**
+     * Method to check if castling is possible
+     *
+     * @param fromF the file the king is moving from
+     * @param fromR the rank the king is moving from
+     * @param toF   the file the king is moving to
+     * @param toR   the rank the king is moving to
+     * @return true if castling is possible, false if not
+     */
+    public boolean canCastle(Files fromF, Rank fromR, Files toF, Rank toR) {
+        // grab the king and rook piece from positions to save keystrokes
+        KingMovement king =
+             (KingMovement) this.board.getSquares()[fromR.getIndex()]
+                                                   [fromF.getFileNum()].getPiece().getMoveType();
+        RookMovement rook =
+             (RookMovement) this.board.getSquares()[toR.getIndex()]
+                                                   [toF.getFileNum()].getPiece().getMoveType();
+
+        //boolean to return at the end
+        //boolean flag = true;
+        boolean canCastle = true;
+
+        // if either rook or king have moved, castling cannot occur
+        if(!king.getFirstMove() || !rook.getFirstMove()) {
+            canCastle = false;
+            //flag = false;
+        }
+
+        // if king is in check or moves into check, castling cannot occur
+        if (this.checkCondition(currentPlayer, new Position(fromR, fromF)) ||
+            this.checkCondition(currentPlayer, new Position(toR, toF))) {
+            canCastle = false;
+            //flag = false;
+        }
+
+        // if king passes through check or a piece is there, castling cannot occur
+
+        // check if king is moving to the right
+        Files tempF = fromF;
+        int cnt = 0;
+        if (tempF.getFileNum() < toF.getFileNum() && canCastle) {
+            tempF = Files.values()[tempF.getFileNum() + 1];
+            while (cnt < 2) {
+                //check if king is ever put into check
+                if (!checkCondition(currentPlayer, new Position(fromR, tempF))) {
+                    canCastle = false;
+                    //flag = false;
+                }
+                //check if there is a piece in the way
+                if (board.getSquares()[fromR.getIndex()]
+                        [tempF.getFileNum()].getPiece() != null) {
+                    canCastle = false;
+                    //flag = false;
+                }
+                tempF = Files.values()[tempF.getFileNum() + 1];
+                cnt++;
+            }
+        }
+        // check if king is moving to the left
+        else {
+            while (cnt < 2) {
+                tempF = Files.values()[tempF.getFileNum() - 1];
+                //check if king is ever put into check
+                if (!checkCondition(currentPlayer, new Position(fromR, tempF))) {
+                    canCastle = false;
+                }
+                //check if there is a piece in the way
+                if (board.getSquares()[fromR.getIndex()]
+                        [tempF.getFileNum()].getPiece() != null) {
+                    canCastle = false;
+                }
+                tempF = Files.values()[tempF.getFileNum() - 1];
+                cnt++;
+            }
+        }
+        return canCastle; //true if castling is possible, false if not
+    }
 }

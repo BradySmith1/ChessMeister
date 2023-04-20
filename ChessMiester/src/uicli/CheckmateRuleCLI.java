@@ -49,7 +49,7 @@ public class CheckmateRuleCLI implements RulesIF {
 
         System.out.println(str);
 
-        System.out.print("When you're ready to try checkmate, press 'ENTER' to continue ===> ");
+        System.out.print("When you're ready to try checkmate, press 'ENTER' to continue. ");
         Scanner scanner = new Scanner(System.in); //create scanner object
         scanner.nextLine(); // read the next line of input
 
@@ -63,22 +63,27 @@ public class CheckmateRuleCLI implements RulesIF {
         System.out.println("Remember! Expected input is in the form of " +
                 "A1,A2 or A1, A2\nwith the first being the piece to move, and the second\n" +
                 "being the square to move to.\n");
-        System.out.print("Enter a move (0 to quit) ===> ");
-        String input = scanner.nextLine(); // read the next line of input
-        input = input.toLowerCase().replaceAll("\\s", ""); // remove spaces and make lowercase
 
-        if (input.length() != 5) { // bad user
-            System.out.println("Invalid input. Please try again.");
-        } else if (input.equals("d7,h5")) { // user is right
-            // move queen to correct place and remove from old spot
-            board.getSquares()[3][7].setPiece(new Piece(ChessPieceType.Queen, GameColor.WHITE));
-            board.getSquares()[1][3].setPiece(null); // remove the pawn
-            board.draw(GameColor.WHITE); // draw the board
-            System.out.println("You got it! The opponent is now in checkmate!");
-            System.out.print("Press 'ENTER' to return to the menu when ready ===> ");
-            scanner.nextLine();
-        }else{ // user is wrong
-            System.out.println("Sorry, that's not the right move or an invalid input. Try again!");
+        String input = "1";
+        while(!input.equals("0")){
+            System.out.print("Enter a move (0 to quit) ===> ");
+            input = scanner.nextLine(); // read the next line of input
+            input = input.toLowerCase().replaceAll("\\s", ""); // remove spaces and make lowercase
+
+            if (input.length() != 5) { // bad user
+                System.out.println("Invalid input. Please try again.");
+            } else if (input.equals("d7,f5")) { // user is right
+                // move queen to correct place and remove from old spot
+                board.getSquares()[3][5].setPiece(new Piece(ChessPieceType.Queen, GameColor.WHITE));
+                board.getSquares()[1][3].setPiece(null); // remove the pawn
+                board.draw(GameColor.WHITE); // draw the board
+                System.out.println("You got it! The opponent is now in checkmate!");
+                System.out.print("Press 'ENTER' to return to the menu when ready. ");
+                scanner.nextLine();
+                input = "0";
+            } else { // user is wrong
+                System.out.println("Sorry, that's not the right move or an invalid input. Try again!");
+            }
         }
     }
 }

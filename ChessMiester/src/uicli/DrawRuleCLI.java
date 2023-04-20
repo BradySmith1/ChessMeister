@@ -60,7 +60,7 @@ public class DrawRuleCLI implements RulesIF {
         System.out.println(str);
 
         /* wait for user to press any key to continue */
-        System.out.print("When you're ready to try check, press 'ENTER' to continue ===> ");
+        System.out.print("When you're ready to try drawing, press 'ENTER' to continue. ");
         Scanner scanner = new Scanner(System.in); //create scanner object
         scanner.nextLine(); // read the next line of input
 
@@ -90,13 +90,13 @@ public class DrawRuleCLI implements RulesIF {
             input = input.toLowerCase().replaceAll("\\s", "");
             if(input.length() != 5){ // bad user
                 System.out.println("Invalid input. Please try again.");
-            }else if(input.equals("f2,b2")){ // user is right
+            }else if(input.equals("b2,b7")){ // user is right
                 // place rook in correct spot and remove from old
                 board.getSquares()[1][1].setPiece(new Piece(ChessPieceType.Rook, GameColor.WHITE));
-                board.getSquares()[1][5].setPiece(null);
+                board.getSquares()[6][1].setPiece(null);
                 board.draw(GameColor.WHITE); // draw board
                 System.out.println("You got it! The game is now in a draw!");
-                System.out.print("Press 'ENTER' to return to the menu when ready ===> ");
+                System.out.print("Press 'ENTER' to return to the menu when ready. ");
                 scanner.nextLine();
                 break;
             }else{ // user is wrong

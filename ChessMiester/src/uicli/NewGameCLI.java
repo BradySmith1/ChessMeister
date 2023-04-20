@@ -43,6 +43,7 @@ public class NewGameCLI implements PlayIF {
         setPlayer1(player1);
         setPlayer2(player2);
         initBoard();
+        board.createState();
         setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2));
     }
 
