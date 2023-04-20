@@ -4,7 +4,7 @@ Authors: Brady Smith, Kaushal Patel, Zachary Eanes, and Colton Brooks.
 Version: 2.0 (April 20, 2023)
 
                        ************   IMPORTANT NOTE   ************
-In order for saving, loading, and some other features to work, this progream must be opened in
+In order for saving, loading, and some other features to work, this program must be opened in
 the ChessMiester folder. This is because the program uses relative paths to access the files
 that are needed to save and load games. If you open the program in the ChessMiester folder, it
 will work as intended. If you open it in the src folder, it will not work as intended.
