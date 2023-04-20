@@ -44,6 +44,7 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                   1: Conceded Game \s
                   2: Checkmate Game \s
                   3: Stalemate Game \s
+                  4: Scholars Mate Game (Checkmate in four moves!) \s
                   0: Return to Main Menu\s
                                 
                 -----------------------------------------------------------------\s
@@ -65,6 +66,10 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                 break;
             case 3:
                 board = this.loadBeginning("stalemateGame");
+                this.loopMoves(board);
+                break;
+            case 4:
+                board = this.loadBeginning("scholarsMateGame");
                 this.loopMoves(board);
                 break;
             case 0: // return to menu
@@ -132,7 +137,6 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                     memento = this.caretaker.up(); // get next move
                     if(memento != null) { // if there is a next move
                         board.loadFromMemento(memento); // set move
-                        color = this.switchColor(color); // flip color
                         board.draw(color); // display board
                     }else{
                         System.out.println("No next move available.");
@@ -142,7 +146,6 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                     memento = this.caretaker.down(); // get previous move
                     if(memento != null) { // if there is a previous move
                         board.loadFromMemento(memento);  // set move
-                        color = this.switchColor(color); // flip color
                         board.draw(color); // display board
                     }else{
                         System.out.println("No previous move available.");
@@ -159,19 +162,6 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
         //board.draw(color);
     }
 
-    /**
-     * Switches the color based on the color passed in.
-     *
-     * @param clr current color of the board
-     * @return the opposite color
-     */
-    private GameColor switchColor(GameColor clr){
-        if(clr == GameColor.WHITE){
-            return GameColor.BLACK;
-        }else{
-            return GameColor.WHITE;
-        }
-    }
     /**
      * Sets the caretaker for the board.
      *
