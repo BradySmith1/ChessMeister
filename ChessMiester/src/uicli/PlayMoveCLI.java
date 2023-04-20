@@ -155,7 +155,6 @@ public class PlayMoveCLI implements PlayIF {
                     System.out.println(); // consume a line to fix scan
                     scan.nextLine();
             }
-
         }
     }
 
