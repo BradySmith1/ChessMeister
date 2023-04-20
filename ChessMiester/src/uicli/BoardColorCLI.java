@@ -55,14 +55,6 @@ public class BoardColorCLI implements BoardStrategy {
     public void highlight(BoardIF board, ArrayList<Position> highlighted, GameColor color) {
         this.highlighted = highlighted;
         this.setHighlight(true);
-        String background = WHITE_BACK;
-        //draws the board
-        SquareIF[][] squares = board.getSquares();
-        if(color == GameColor.WHITE){
-            printWhite(board, squares, background);
-        }else{
-            printBlack(board, squares, background);
-        }
     }
 
     /**

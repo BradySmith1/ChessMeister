@@ -1,9 +1,10 @@
-package uicli;
+package tutorialuicli;
 
 import enums.GameColor;
 import interfaces.RulesIF;
 import java.util.Scanner;
 import model.Board;
+import uicli.BoardColorCLI;
 
 /**
  * This class is responsible for explaining the setup of a chess board.

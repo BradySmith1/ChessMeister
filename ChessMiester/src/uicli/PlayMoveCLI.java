@@ -755,7 +755,7 @@ public class PlayMoveCLI implements PlayIF {
         // Prompt player for input
         boolean validMove = false;
         while(!validMove){ // loop until we get a valid move
-            System.out.println("Show moves for what piece? "); // prompt for move
+            System.out.print("Show moves for what piece? "); // prompt for move
             scan = new Scanner(System.in);
             String move = scan.nextLine();
             move = move.replaceAll("\\s", ""); // remove white space

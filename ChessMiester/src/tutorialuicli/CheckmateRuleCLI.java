@@ -1,4 +1,4 @@
-package uicli;
+package tutorialuicli;
 
 import controller.BoardMementoCaretaker;
 import enums.ChessPieceType;
@@ -8,6 +8,7 @@ import interfaces.RulesIF;
 import model.Board;
 import model.BoardSaverLoader;
 import model.Piece;
+import uicli.BoardColorCLI;
 
 import java.util.Scanner;
 

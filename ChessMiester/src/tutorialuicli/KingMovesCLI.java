@@ -1,4 +1,4 @@
-package uicli;
+package tutorialuicli;
 
 import enums.Files;
 import enums.Rank;

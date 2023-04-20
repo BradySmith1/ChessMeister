@@ -1,4 +1,4 @@
-package uicli;
+package tutorialuicli;
 
 import enums.Files;
 import enums.GameColor;
@@ -6,6 +6,7 @@ import enums.Rank;
 import interfaces.RulesIF;
 import model.Board;
 import model.Position;
+import uicli.BoardColorCLI;
 
 import java.util.ArrayList;
 import java.util.Scanner;

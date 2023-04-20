@@ -49,11 +49,6 @@ public class BoardMonoCLI implements BoardStrategy {
     public void highlight(BoardIF board, ArrayList<Position> highlighted, GameColor color) {
         this.highlighted = highlighted;
         this.setHighlight(true);
-        if (color == GameColor.BLACK) {
-            printBlack(board);
-        } else {
-            printWhite(board);
-        }
     }
 
     /**
