@@ -1,4 +1,4 @@
-package uicli;
+package tutorialuicli;
 
 import interfaces.RulesIF;
 import java.util.Scanner;

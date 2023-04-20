@@ -34,7 +34,7 @@ public class PlayMoveCLI implements PlayIF {
 
     private LoadSaveGameIF saveGame; /*save game object*/
 
-    private BoardMementoCaretaker caretaker;    /*caretaker for the board*/
+    private BoardMementoCaretaker caretaker;/*caretaker for the board*/
 
     private PlayerIF player1; /*player 1*/
 
@@ -51,9 +51,15 @@ public class PlayMoveCLI implements PlayIF {
     /**
      * Constructor for the play move dialog.
      *
-     * @param scan Scanner for user input
+     * @param scan      Scanner for user input
+     * @param board     board to play game on
+     * @param undo      string to undo to
+     * @param showMoves string to show moves
+     * @param player1   who to set to player 1
+     * @param player2   who to set to player 2
      */
-    public PlayMoveCLI(Scanner scan, BoardIF board, String undo, String showMoves, PlayerIF player1, PlayerIF player2) {
+    public PlayMoveCLI(Scanner scan, BoardIF board, String undo,
+                       String showMoves, PlayerIF player1, PlayerIF player2) {
         this.scan = scan;
         this.player1 = player1;
         this.player2 = player2;
@@ -83,9 +89,7 @@ public class PlayMoveCLI implements PlayIF {
     /**
      * Displays the play move dialog.
      */
-    public void show() {
-        //board.draw(currentPlayer.getColor());
-        this.display();
+    public void show(){
         String menu = "\nPlay Chess\n---------------------------------------------------------------\n" +
                 menuOptions[0] +
                 menuOptions[1] +
@@ -93,64 +97,78 @@ public class PlayMoveCLI implements PlayIF {
                 menuOptions[3] +
                 menuOptions[4] +
                 menuOptions[5] +
-                menuOptions[6];
+                menuOptions[6] +
+                "---------------------------------------------------------------";
         int choice = 999; //initialized to 999 so there is no option chosen or quitting loop
         String prompt;
         while (choice != 0) { //while user has not quit
+            this.display();
             System.out.println(menu);   //shows user menu options
             prompt = currentPlayer.getName() + ", enter your choice ===> ";
             System.out.print(prompt);   //ask user for this choice
             try {
                 choice = scan.nextInt();
             }
-            catch (InputMismatchException e) {
-                System.out.println("Invalid input.");
+            catch (InputMismatchException ignore) {
+                choice = 999; // issue found, default the switch statement
+                //System.out.println("Invalid input.");
             }
             switch(choice){
                 case 1:
-                    this.display();
-                    boolean successfulRun = this.gameLoop();
-                    if (successfulRun) {
-                        this.display();
-                        switchPlayers();
+                    boolean successfulRun = this.gameLoop(); // see if the move was successful
+                    if (successfulRun){
+                        this.board.getDrawStrategy().setHighlight(false);
+                        switchPlayers(); // switch players
                     }
                     break;
-                case 2:
+                case 2: // TODO
                     System.out.println("Undo is not implemented yet.");
                     break;
-                case 3:
+                case 3: //TODO
                     System.out.println("Redo is not implemented yet.");
                     break;
-                case 4:
-                    System.out.println("Show Moves");
+                case 4: // show moves for a piece
                     this.showMoves();
                     break;
-                case 5:
-                    this.saveGame.showLoadSave();
-                    BoardSaverLoader loader = new BoardSaverLoader();
+                case 5: // save game
+                    this.saveGame.showLoadSave(); // show the save game dialog
+                    BoardSaverLoader loader = new BoardSaverLoader(); // create a loader to save
+                    // save a game with a stack of mementos and the given URL to file
                     loader.saveGameToFile(this.caretaker, this.saveGame.getURL());
                     choice = 0; // end loop
                     break;
                 case 6:
-                    System.out.println("Propose draw");
-                    if (agreementCondition()) {
-                        System.out.println("There is a draw");
+                    System.out.println("---------------------------------------");
+                    if (agreementCondition()) { // if both players agree
+                        System.out.println("Game ends in a draw!");
+                        // increment stats and display them
                         currentPlayer.increaseDraws();
                         getOtherPlayer(currentPlayer).increaseDraws();
                         currentPlayer.displayStats();
                         getOtherPlayer(currentPlayer).displayStats();
-                        System.exit(1);
+                        System.out.println("---------------------------------------");
+
+                        choice = 0; // end loop
                     } else {
-                        System.out.println("No draw");
+                        System.out.println("\n" + getOtherPlayer(currentPlayer).getName()
+                                + " declines the draw!");
+                        System.out.println("---------------------------------------");
                     }
                     break;
                 case 7:
-                    System.out.println("Concede and Exit Game");
+                    System.out.println("---------------------------------------" +
+                            "\n" + currentPlayer.getName() + " concedes the game!" +
+                            "\n" + getOtherPlayer(currentPlayer).getName() + " wins!");
+
+                    // increment stats and display them for each player
                     currentPlayer.increaseLosses();
                     getOtherPlayer(currentPlayer).increaseWins();
                     currentPlayer.displayStats();
                     getOtherPlayer(currentPlayer).displayStats();
-                    System.exit(1);
+                    System.out.print("---------------------------------------" +
+                            "\n\nPress 'ENTER' whenever you're ready to return to the main menu. ");
+                    scan.nextLine();
+                    choice = 0; // end loop
                     break;
                 default:
                     System.out.println("Invalid input.");
@@ -513,7 +531,7 @@ public class PlayMoveCLI implements PlayIF {
         boolean agreement = false;
         this.scan = new Scanner(System.in);
         switchPlayers();    // Switch to the other player
-        System.out.println(currentPlayer.getName() + ", do you agree to a draw? (y/n)");
+        System.out.print(currentPlayer.getName() + ", do you agree to a draw? (y/n) ===> ");
         String input = scan.nextLine();
         if(input.equalsIgnoreCase("y")){
             agreement = true;
@@ -657,7 +675,7 @@ public class PlayMoveCLI implements PlayIF {
         // Prompt player for input
         boolean validMove = false;
         while(!validMove){ // loop until we get a valid move
-            System.out.print("Make Move:"); // prompt for move
+            System.out.print("Make Move: "); // prompt for move
             Scanner scan = new Scanner(System.in);  // TODO remove this line later after testing and replace with field
             String move = scan.nextLine();
             move = move.replaceAll("\\s", ""); // remove white space
@@ -746,7 +764,7 @@ public class PlayMoveCLI implements PlayIF {
         // Prompt player for input
         boolean validMove = false;
         while(!validMove){ // loop until we get a valid move
-            System.out.println("Show moves for what piece? "); // prompt for move
+            System.out.print("Show moves for what piece? "); // prompt for move
             scan = new Scanner(System.in);
             String move = scan.nextLine();
             move = move.replaceAll("\\s", ""); // remove white space
@@ -760,6 +778,7 @@ public class PlayMoveCLI implements PlayIF {
                 validMove = true;
             } catch (Exception e) {
                 System.out.println("Invalid piece. Please try again.");
+                continue;
             }
             // check to see if any of the parts of the positions are null
             if(fromFile == null || fromRank == null) {
@@ -767,16 +786,19 @@ public class PlayMoveCLI implements PlayIF {
 
                 // reset valid move to ensure loop doesn't end
                 validMove = false;
+                continue;
             }
             // check to see if there is a piece at the position
             if(this.board.getPiece(fromRank, fromFile) == null){
                 System.out.println("No piece at that position.");
                 validMove = false;
+                continue;
             }
             // check to see if the piece is the current player's piece
             else if (!(currentPlayer.getPieces().contains(this.board.getPiece(fromRank, fromFile)))){
                 System.out.println("That is not your piece.");
                 validMove = false;
+                continue;
             }
         }
 

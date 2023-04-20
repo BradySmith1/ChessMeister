@@ -1,15 +1,8 @@
 package uicli;
 
-import enums.ChessPieceType;
-import enums.Files;
-import enums.GameColor;
-import enums.Rank;
-import interfaces.MainMenuIF;
 import interfaces.RulePageIF;
 import interfaces.RulesIF;
-import model.Piece;
-import model.Position;
-import movements.KingMovement;
+import tutorialuicli.*;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

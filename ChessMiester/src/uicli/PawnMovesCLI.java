@@ -7,6 +7,7 @@ import enums.Rank;
 import interfaces.RulesIF;
 import model.Piece;
 import model.Position;
+import tutorialuicli.TutorialCLI;
 
 import java.lang.StringBuilder;
 

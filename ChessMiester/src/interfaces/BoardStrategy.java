@@ -29,4 +29,9 @@ public interface BoardStrategy {
      * @param color       the color to orient the board
      */
     public void highlight(BoardIF board, ArrayList<Position> highlighted, GameColor color);
+
+    /**
+     * Returns the draw strategy.
+     */
+    public void setHighlight(boolean boo);
 }

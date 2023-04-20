@@ -1,4 +1,4 @@
-package uicli;
+package tutorialuicli;
 
 import controller.BoardMementoCaretaker;
 import enums.ChessPieceType;
@@ -10,6 +10,7 @@ import java.lang.StringBuilder;
 import model.Board;
 import model.BoardSaverLoader;
 import model.Piece;
+import uicli.BoardColorCLI;
 
 /**
  * This class is responsible for displaying the rules of check in chess.
