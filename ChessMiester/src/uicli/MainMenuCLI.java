@@ -111,7 +111,7 @@ public class MainMenuCLI implements MainMenuIF {
                 case 5: // load a game from the name of a file
                     loadGame.showLoadSave(); // prompt and get file name
                     BoardSaverLoader loader = new BoardSaverLoader(); // obj to load file
-                    // caretake that is a stack of all states of the game
+                    // caretaker that is a stack of all states of the game
                     BoardMementoCaretaker caretaker = loader.loadGameFromFile(loadGame.getURL());
                     if(caretaker != null) { // file was loaded
 
