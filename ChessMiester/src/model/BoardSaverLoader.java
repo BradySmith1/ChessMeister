@@ -25,7 +25,7 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
     public void saveGameToFile(BoardMementoCaretaker caretaker, String fileName) {
         String path = new java.io.File("").getAbsolutePath();
         if(System.getProperty("os.name").contains("Windows")) // check if windows
-            path = path.concat("\\src\\model\\saves"); // windows
+            path = path.concat("\\src\\model\\saves\\"); // windows
         else // linux and macos
             path = path.concat("/src/model/saves/"); // concat file path
         path = path.concat(fileName);
@@ -64,8 +64,8 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
             }
             scan.close(); // close scanner
         }
-        catch(FileNotFoundException e) {
-            System.out.println("File not found: " + e);
+        catch(FileNotFoundException ignore){
+            System.out.println("\nFile could not be located. Please enter a different name.\n");
 
         }
 

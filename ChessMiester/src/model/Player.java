@@ -204,9 +204,9 @@ public class Player implements PlayerIF {
     @Override
     public PieceIF getKing() {
         PieceIF p = null;
-        for(PieceIF piece : pieces){
-            if(piece.getType().getLetter() == 'K'){
-                p = piece;
+        for (int i = 0; i < pieces.size(); i++) {
+            if (pieces.get(i).getType().getLetter() == 'K') {
+                p = pieces.get(i);
             }
         }
         return p;

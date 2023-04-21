@@ -1,4 +1,4 @@
-package uicli;
+package tutorialuicli;
 
 import enums.Files;
 import enums.GameColor;
@@ -6,6 +6,8 @@ import enums.Rank;
 import interfaces.RulesIF;
 import model.Board;
 import model.Position;
+import uicli.BoardColorCLI;
+import uicli.BoardMonoCLI;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,11 +21,20 @@ import java.util.Scanner;
 public class NotationCLI extends TutorialCLI implements RulesIF{
     /**
      * Displays the rules of chess notation.
+     *
+     * @param boardColor the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule(String boardColor) {
         Board board = new Board(); // create a new board
-        board.setDrawStrategy(new BoardColorCLI());
+
+        // set the draw strategy based on the settings
+        if(boardColor.equals("Mono")){
+            board.setDrawStrategy(new BoardMonoCLI()); // set the draw strategy to mono
+        } else {
+            board.setDrawStrategy(new BoardColorCLI()); // set the draw strategy to color
+        }
+
         board.draw(GameColor.WHITE); // draw the board for the player to see
 
         // display the rules of chess notation
@@ -60,7 +71,7 @@ public class NotationCLI extends TutorialCLI implements RulesIF{
 
             // highlight the random position
             board.getDrawStrategy().highlight(board, toHighlight, GameColor.WHITE);
-
+            board.draw(GameColor.WHITE); // display the board
             // ask the user to enter the square that was highlighted
             System.out.print("Enter the square that was highlighted (0 to quit): ");
             userInput = scan.nextLine(); // read the user input

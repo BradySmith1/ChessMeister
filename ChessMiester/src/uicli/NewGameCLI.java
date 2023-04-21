@@ -1,5 +1,6 @@
 package uicli;
 
+import controller.BoardMementoCaretaker;
 import interfaces.*;
 import model.Board;
 import model.Piece;
@@ -30,14 +31,16 @@ public class NewGameCLI implements PlayIF {
 
     /**
      * Constructor for the main menu.
-     * @param scan scanner for user input
+     *
+     * @param scan       scanner for user input
      * @param boardColor color of the board
-     * @param undo moves that are undone
-     * @param showMoves way to show the moves occurred
-     * @param player1 player 1
-     * @param player2 player 2
+     * @param undo       moves that are undone
+     * @param showMoves  way to show the moves occurred
+     * @param player1    player 1
+     * @param player2    player 2
      */
-    public NewGameCLI(Scanner scan, String boardColor, String undo, String showMoves, PlayerIF player1, PlayerIF player2) {
+    public NewGameCLI(Scanner scan, String boardColor, String undo, String showMoves,
+                      PlayerIF player1, PlayerIF player2) {
         this.scan = scan;
         this.boardColor = boardColor;
         this.undo = undo;
@@ -46,21 +49,23 @@ public class NewGameCLI implements PlayIF {
         setPlayer2(player2);
         initBoard();
         board.createState();
-        setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2));
+        BoardMementoCaretaker ct = new BoardMementoCaretaker(board.createMemento());
+        setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2, ct));
     }
 
     /**
      * Constructor for the game loop when a board is loaded in.
-     * @param scan scanner for user input
+     *
+     * @param scan       scanner for user input
      * @param boardColor color of the board
-     * @param undo undo move
-     * @param showMoves show moves
-     * @param player1 player 1
-     * @param player2 player 2
-     * @param board board to play game on
+     * @param undo       undo move
+     * @param showMoves  show moves
+     * @param player1    player 1
+     * @param player2    player 2
+     * @param board      board to play game on
      */
     public NewGameCLI(Scanner scan, String boardColor, String undo, String showMoves,
-                      PlayerIF player1, PlayerIF player2, Board board) {
+                      PlayerIF player1, PlayerIF player2, Board board, BoardMementoCaretaker ct) {
         this.scan = scan;
         this.boardColor = boardColor;
         this.undo = undo;
@@ -68,8 +73,7 @@ public class NewGameCLI implements PlayIF {
         setPlayer1(player1);
         setPlayer2(player2);
         this.board = board;
-        //this.board.setDrawStrategy();
-        setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2));
+        setPlay(new PlayMoveCLI(scan, this.board, undo, showMoves, player1, player2, ct));
     }
     /**
      * This function is used to initialize the board.
@@ -97,7 +101,8 @@ public class NewGameCLI implements PlayIF {
 
     /**
      * This function is used to set the move ui for the game.
-     * @param play play object
+     *
+     * @param play play object to set
      */
     public void setPlay(PlayIF play){
         this.play = play;
@@ -105,7 +110,8 @@ public class NewGameCLI implements PlayIF {
 
     /**
      * This function is used to set the player 1.
-     * @param player1 player 1
+     *
+     * @param player1 who to set to player one
      */
     public void setPlayer1(PlayerIF player1){
         this.player1 = player1;
@@ -113,7 +119,8 @@ public class NewGameCLI implements PlayIF {
 
     /**
      * This function is used to set the player 2.
-     * @param player2 player 2
+     *
+     * @param player2 who to set to player 2
      */
     public void setPlayer2(PlayerIF player2) {
         this.player2 = player2;

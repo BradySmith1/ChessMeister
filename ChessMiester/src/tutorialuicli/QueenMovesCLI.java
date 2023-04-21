@@ -1,4 +1,4 @@
-package uicli;
+package tutorialuicli;
 
 import enums.ChessPieceType;
 import enums.Files;
@@ -19,9 +19,11 @@ import java.lang.StringBuilder;
 public class QueenMovesCLI extends TutorialCLI implements RulesIF{
     /**
      * Displays the rules of a queen in chess.
+     *
+     * @param boardColor the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule(String boardColor) {
         StringBuilder str = new StringBuilder();
 
         /* create cool, fancy ascii art */
@@ -71,7 +73,7 @@ public class QueenMovesCLI extends TutorialCLI implements RulesIF{
 
         /* create piece and call tutorial loop */
         Piece queen = new Piece(ChessPieceType.Queen, GameColor.WHITE);
-        this.tutorialLoop("queenTutorial", queen, new Position(Rank.R1, Files.D));
+        this.tutorialLoop("queenTutorial", queen, new Position(Rank.R1, Files.D), boardColor);
     }
 
 }

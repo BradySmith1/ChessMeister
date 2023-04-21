@@ -1,4 +1,4 @@
-package uicli;
+package tutorialuicli;
 
 import interfaces.RulesIF;
 import java.util.Scanner;
@@ -13,9 +13,11 @@ import java.util.Scanner;
 public class BoardOrganizationCLI implements RulesIF {
     /**
      * Displays the rules of chess organization in chess.
+     *
+     * @param color the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule(String color) {
         System.out.println("""
                 Players each receive 16 pieces, and the pieces are divided into six categories:\s
                         

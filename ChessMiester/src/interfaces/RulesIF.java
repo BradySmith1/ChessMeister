@@ -9,6 +9,6 @@ public interface RulesIF {
     /**
      * Displays the rules.
      */
-    public void showRule();
+    public void showRule(String boardColor);
 
 }

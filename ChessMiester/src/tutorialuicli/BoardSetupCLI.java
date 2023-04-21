@@ -1,9 +1,11 @@
-package uicli;
+package tutorialuicli;
 
 import enums.GameColor;
 import interfaces.RulesIF;
 import java.util.Scanner;
 import model.Board;
+import uicli.BoardColorCLI;
+import uicli.BoardMonoCLI;
 
 /**
  * This class is responsible for explaining the setup of a chess board.
@@ -14,12 +16,20 @@ import model.Board;
 public class BoardSetupCLI implements RulesIF {
     /**
      * Displays the rules of board setup in chess.
+     *
+     * @param boardColor the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule(String boardColor) {
         Board board = new Board(); // make a new board
-        board.setDrawStrategy(new BoardColorCLI()); // make the board pretty :)
         board.setup(); // initialize the board with pieces
+
+        //set draw strategy according to settings
+        if(boardColor.equals("Mono")){
+            board.setDrawStrategy(new BoardMonoCLI());
+        }else{
+            board.setDrawStrategy(new BoardColorCLI());
+        }
         board.draw(GameColor.WHITE); // display the board
 
         /* explain the setup/layout of a chess board */

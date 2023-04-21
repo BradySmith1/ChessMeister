@@ -18,14 +18,14 @@ public interface SettingsIF {
     public String getBoardColor();
 
     /**
-     * Gets the color of the pieces
-     * @return the color of the pieces
+     * Gets whether undo is on or off
+     * @return string of on or off
      */
     public String getUndo();
 
     /**
-     * Gets the color of the pieces
-     * @return the color of the pieces
+     * Gets whether highlighting is on of off
+     * @return string of on or off
      */
     public String getShowMoves();
 }

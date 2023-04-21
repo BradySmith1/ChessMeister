@@ -1,4 +1,4 @@
-package uicli;
+package tutorialuicli;
 
 import enums.Files;
 import enums.Rank;
@@ -19,9 +19,11 @@ import enums.ChessPieceType;
 public class KingMovesCLI extends TutorialCLI implements RulesIF{
     /**
      * Displays the rules of a king in chess.
+     *
+     * @param boardColor the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule(String boardColor){
         StringBuilder str = new StringBuilder();
 
         /* create cool, fancy ascii art */
@@ -72,6 +74,6 @@ public class KingMovesCLI extends TutorialCLI implements RulesIF{
 
         /* create piece and call tutorial loop */
         Piece king = new Piece(ChessPieceType.King, GameColor.WHITE);
-        this.tutorialLoop("kingTutorial", king, new Position(Rank.R1, Files.E));
+        this.tutorialLoop("kingTutorial", king, new Position(Rank.R1, Files.E), boardColor);
     }
 }

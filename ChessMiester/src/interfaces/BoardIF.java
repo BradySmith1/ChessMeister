@@ -112,12 +112,19 @@ public interface BoardIF{
 
     /**
      * Highlights the given arraylist of positions on the board.
+     *
      * @param board the board to highlight
      * @param array the arraylist of positions to highlight
      * @param color the color of the orientation of the board
      */
     void highlight(BoardIF board, ArrayList<Position> array, GameColor color);
 
+    /**
+     * Returns the draw strategy.
+     *
+     * @return the draw strategy
+     */
+    BoardStrategy getDrawStrategy();
     /**
      * Interface for the memento.
      */
