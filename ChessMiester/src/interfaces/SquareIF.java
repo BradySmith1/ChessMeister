@@ -1,3 +1,7 @@
+package interfaces;
+
+import model.Position;
+
 /**
  * An interface for a square on a chess board. Each square can be cleared,
  * and can hold a piece or be empty.
@@ -5,8 +9,6 @@
  * @author Brady Smith (100%)
  * @version 1.0
  */
-package interfaces;
-
 public interface SquareIF {
 
     /**
@@ -17,6 +19,7 @@ public interface SquareIF {
     /**
      * Sets a piece on the square.
      *
+     * @param piece The piece to set on the square.
      * @return The piece that was previously on the square, if any.
      */
     public PieceIF setPiece(PieceIF piece);
@@ -27,4 +30,11 @@ public interface SquareIF {
      * @return The piece on the square, or null if the square is empty.
      */
     public PieceIF getPiece();
+
+    /**
+     * Returns the position of a square
+     *
+     * @return position of the square
+     */
+    public Position getPosition();
 }

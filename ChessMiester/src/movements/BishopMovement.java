@@ -2,8 +2,8 @@
  * Class to define the movements of a bishop in a game of chess. This class does so
  * by finding the valid moves for a bishop on a chess board in all diagonal directions.
  *
- * @author Zach Eanes (85%), Colton Brooks (15%)
- * @version 1.0
+ * @author Colton Brooks (100%)
+ * @version 2.0
  */
 package movements;
 

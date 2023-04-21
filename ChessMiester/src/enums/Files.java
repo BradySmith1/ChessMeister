@@ -1,10 +1,13 @@
+package enums;
+
+import java.io.File;
+
 /**
  * Enumeration class to represent the file types.
  *
- * @author Zach Eanes (100%)
+ * @author Zach Eanes (95%), Colton Brooks (5%)
  * @version 1.0
  */
-package enums;
 public enum Files {
     A('a', 0), /* Represents the different positions on a chess board. */
     B('b', 1),
@@ -27,6 +30,37 @@ public enum Files {
     private Files(char fileChar, int fileNum) {
         this.fileChar = fileChar;
         this.fileNum = fileNum;
+    }
+
+    public static Files getFileFromFileNum(int fileNum) {
+        Files file = null;
+        switch (fileNum) {
+            case 0 :
+                file = A;
+                break;
+            case 1 :
+                file = B;
+                break;
+            case 2 :
+                file = C;
+                break;
+            case 3 :
+                file = D;
+                break;
+            case 4 :
+                file = E;
+                break;
+            case 5 :
+                file = F;
+                break;
+            case 6 :
+                file = G;
+                break;
+            case 7 :
+                file = H;
+                break;
+        }
+        return file;
     }
 
     /**

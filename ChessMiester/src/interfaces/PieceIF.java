@@ -1,33 +1,52 @@
-/**
- * This interface represents a chess piece.
- *
- * @authors Brady Smith (75%), Zach Eanes (25%)
- * @version 1.0
- */
 package interfaces;
 
 import enums.ChessPieceType;
 import model.Position;
 import java.util.List;
 
-public interface PieceIF {
+/**
+ * This interface represents a chess piece.
+ *
+ * @author Brady Smith (75%), Zach Eanes (25%)
+ * @version 1.0
+ */
+public interface PieceIF extends BlackAndWhiteIF {
 
     /**
      * Gets the type of the piece.
+     *
      * @return the type of the piece.
      */
-    public ChessPieceType getType();
+    ChessPieceType getType();
 
     /**
      * Sets the type of the piece.
+     *
      * @param type the type of the piece.
      */
-    public void setType(ChessPieceType type);
+    void setType(ChessPieceType type);
 
     /**
      * Returns a list of MovePositions that are valid & legal on the board.
-     * @param board The game board that the piece moves on.
+     *
+     * @param board           The game board that the piece moves on.
+     * @param currentPosition The current position to get the valid moves from.
      * @return A list of valid MovePositions.
      */
-    public List<Position> getValidMoves(BoardIF board, Position currentPosition);
+    List<Position> getValidMoves(BoardIF board, Position currentPosition);
+
+    /**
+     * Gets the position of the piece.
+     *
+     * @param board the board the piece is on.
+     * @return the position of the piece.
+     */
+    Position getPosition(BoardIF board);
+
+    /**
+     * method to get the movement type for the piece
+     *
+     * @return a class that implements MovementIF that represents the moves this piece can do
+     */
+    MovementIF getMoveType();
 }

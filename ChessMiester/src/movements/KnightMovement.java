@@ -3,7 +3,7 @@
  * by finding the valid moves for a knight on a chess board in all diagonal directions.
  *
  * @author Colton Brooks (100%)
- * @version 1.0
+ * @version 2.0
  */
 package movements;
 import enums.GameColor;

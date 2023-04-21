@@ -1,25 +1,26 @@
-/**
- * Class to define the movements of a king in a game of chess. This class does so
- * by finding the valid moves for a king on a chess board in all diagonal directions.
- *
- * @author Colton Brooks (100%)
- * @version 1.0
- */
 package movements;
 
 import enums.GameColor;
 import interfaces.BoardIF;
+import interfaces.FirstMoveIF;
 import interfaces.MovementIF;
 import model.BlackAndWhite;
-import model.Piece;
 import model.Position;
-import model.Square;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class KingMovement extends BlackAndWhite implements MovementIF{
+/**
+ * Class to define the movements of a king in a game of chess. This class does so
+ * by finding the valid moves for a king on a chess board in all diagonal directions.
+ *
+ * @author Colton Brooks (90%), Zach Eanes (10%)
+ * @version 2.0
+ */
+public class KingMovement extends BlackAndWhite implements MovementIF, FirstMoveIF {
+
+    /* Boolean to check if the king has moved; needed for castling implementation */
+    private boolean isFirstMove;
 
     /**
      * Constructor method for the KingMovement Class
@@ -28,6 +29,7 @@ public class KingMovement extends BlackAndWhite implements MovementIF{
      */
     public KingMovement(GameColor color) {
         super(color);
+        this.isFirstMove = true;
     }
 
     /**
@@ -42,49 +44,36 @@ public class KingMovement extends BlackAndWhite implements MovementIF{
         // Set of valid moves to be found for a king
         List<Position> validMoves = new ArrayList<>();
 
+
         // Check all 8 possible moves for a king
-        validMoves.add(moveCheck(board, currentPosition, 1, 0));
-        validMoves.add(moveCheck(board, currentPosition, 1, 1));
-        validMoves.add(moveCheck(board, currentPosition, 0, 1));
-        validMoves.add(moveCheck(board, currentPosition, -1, 1));
-        validMoves.add(moveCheck(board, currentPosition, -1, 0));
-        validMoves.add(moveCheck(board, currentPosition, -1, -1));
-        validMoves.add(moveCheck(board, currentPosition, 0, -1));
-        validMoves.add(moveCheck(board, currentPosition, 1, -1));
+        validMoves.add(moveCheck(board, currentPosition, 1, 0, true));
+        validMoves.add(moveCheck(board, currentPosition, 1, 1, true));
+        validMoves.add(moveCheck(board, currentPosition, 0, 1, true));
+        validMoves.add(moveCheck(board, currentPosition, -1, 1, true));
+        validMoves.add(moveCheck(board, currentPosition, -1, 0, true));
+        validMoves.add(moveCheck(board, currentPosition, -1, -1, true));
+        validMoves.add(moveCheck(board, currentPosition, 0, -1, true));
+        validMoves.add(moveCheck(board, currentPosition, 1, -1, true));
 
         validMoves.removeAll(Collections.singleton(null)); // remove all null values
         return validMoves;
     }
 
     /**
-     * Checks to see if the movement to the square is valid.
+     * Method to be called whenever king makes its first move, sets isFirstMove false
+     * to show a move with this piece has been made.
      *
-     * @param board           the board the piece is on
-     * @param currentPosition the current position of the piece
-     * @param rank            the rank to move to
-     * @param file            the file to move to
-     * @return the position of the move if it is valid, null otherwise
+     * @param isFirstMove boolean to set the first move of the king
      */
-    private Position moveCheck(BoardIF board, Position currentPosition, int rank, int file) {
+    public void setFirstMove(boolean isFirstMove){ this.isFirstMove = isFirstMove; }
 
-        Position movePossible = null; // move starts are nonexistent
+    /**
+     * Method to be called to check if the king has moved
+     *
+     * @return true if the king has not moved, false if it has
+     */
+    public boolean getFirstMove(){ return this.isFirstMove; }
 
-        int currentRank = currentPosition.getRank().getIndex(); // current rank of piece
-        int currentFile = currentPosition.getFile().getFileNum(); //current file of piece
 
-        //check for knight move up 1, right 2
-        if (currentRank + rank < board.getHeight() && currentFile + file < board.getWidth() &&
-            currentRank + rank >= 0 && currentFile + file >= 0){
-            //get the square of the move and the piece in the square
-            Square currentSquare = (Square) board.getSquares()[currentRank + rank]
-                    [currentFile + file];
-            Piece currentPiece = (Piece) currentSquare.getPiece();
-            //check if there is an empty square or an enemy piece
-            if (currentPiece == null || !currentPiece.getColor().equals(getColor())) {
-                //the move is possible so add it
-                movePossible = currentSquare.getPosition();
-            }
-        }
-        return movePossible; // return the result of if a move is possible
-    }
+
 }
