@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * This class represents the movement of a Queen.
  *
- * @author Kaushal Patel (65%), Zach Eanes (20%), Colton Brooks (15%)
+ * @author Colton Brooks (100%)
  * @version 2.0
  */
 public class QueenMovement extends BlackAndWhite implements MovementIF {// The color of the piece.

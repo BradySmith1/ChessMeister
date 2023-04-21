@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 /**
  * This class is the CLI implementation of the SettingsIF interface.
+ * @author  Smith (60%), Zach Eanes (40%)
  */
 public class SettingsCLI implements SettingsIF {
 

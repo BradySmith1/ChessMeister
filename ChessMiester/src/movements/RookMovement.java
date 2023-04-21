@@ -14,7 +14,7 @@ import java.util.List;
  * by looking through and finding all possible moves above, below, left, and right
  * of a given piece.
  *
- * @author Zach Eanes (85%), Colton Brooks (15%)
+ * @author Colton Brooks (90%), Zach Eanes (10%)
  * @version 2.0
  */
 public class RookMovement extends QueenMovement implements MovementIF, FirstMoveIF {
