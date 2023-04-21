@@ -45,6 +45,7 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                                     
                     Choose a game to view:
                       1: Scholars Mate Game (Checkmate in four moves!) \s
+                      2: Stalemate Game \s
                       0: Return to Main Menu\s
                       
                       MORE COMING SOON!
@@ -66,10 +67,10 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                     board = this.loadBeginning("scholarsMateGame");
                     this.loopMoves(board);
                     break;
-//                case 2:
-//                    board = this.loadBeginning("checkmateGame");
-//                    this.loopMoves(board);
-//                    break;
+                case 2:
+                    board = this.loadBeginning("stalemateGame");
+                    this.loopMoves(board);
+                    break;
 //                case 3:
 //                    board = this.loadBeginning("stalemateGame");
 //                    this.loopMoves(board);
