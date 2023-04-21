@@ -17,6 +17,7 @@ public class SaveGameCLI implements LoadSaveGameIF {
 
     /**
      * Constructor for the save game dialog.
+     *
      * @param scan Scanner for user input
      */
     public SaveGameCLI(Scanner scan) {
