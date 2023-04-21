@@ -158,7 +158,6 @@ public class PlayMoveCLI implements PlayIF {
                         currentPlayer.displayStats();
                         getOtherPlayer(currentPlayer).displayStats();
                         System.out.println("---------------------------------------");
-
                         choice = 0; // end loop
                     } else {
                         System.out.println("\n" + getOtherPlayer(currentPlayer).getName()
@@ -438,8 +437,9 @@ public class PlayMoveCLI implements PlayIF {
                 if (!this.checkCondition(player, king.getPosition(board))) {
                     canMoveOutOfCheck = true;
                 }
-                //undo(); // TODO
-                undoMoveFromCheck();
+                undo(); // TODO
+                king = player.getKing();
+                //undoMoveFromCheck();
                 this.display();
             }
 
@@ -460,6 +460,7 @@ public class PlayMoveCLI implements PlayIF {
                         canBlockCheck = true;
                     }
                     undo(); // TODO
+                    king = player.getKing();
                     //undoMoveFromCheck();
 
                 }
@@ -912,10 +913,16 @@ public class PlayMoveCLI implements PlayIF {
 
     private void checkForCheckmate(){
         // Check to see if the game is over by checkmate or draw.
-        if(checkmateCondition(currentPlayer, getOtherPlayer(currentPlayer)) || drawCondition(currentPlayer)){
+        boolean checkmate = checkmateCondition(currentPlayer, getOtherPlayer(currentPlayer));
+        boolean draw = drawCondition(currentPlayer);
+
+        if(checkmate || draw){
             // If the game is over, then notify the players and end the game.
-            System.out.println("Game Over");
-            System.out.println("The winner is " + getOtherPlayer(currentPlayer).getName());
+            StringBuilder gameStatus = new StringBuilder("Game is over by ");
+            gameStatus.append(checkmate ? "Checkmate" : "Draw");
+            gameStatus.append(": The winner is ").append(getOtherPlayer(currentPlayer).getName());
+
+            System.out.println("\n" + gameStatus);
 
             currentPlayer.increaseLosses();
             getOtherPlayer(currentPlayer).increaseWins();
@@ -925,6 +932,15 @@ public class PlayMoveCLI implements PlayIF {
             getOtherPlayer(currentPlayer).displayStats();
 
             // Save the game TODO
+            System.out.println("\nDo you want to save the game? (y/n)");
+            Scanner scan = new Scanner(System.in);
+            String save = scan.nextLine();
+            if(save.equalsIgnoreCase("y")){
+                this.saveGame.showLoadSave(); // show the save game dialog
+                BoardSaverLoader loader = new BoardSaverLoader(); // create a loader to save
+                // save a game with a stack of mementos and the given URL to file
+                loader.saveGameToFile(this.caretaker, this.saveGame.getURL());
+            }
 
             // End the game.
             System.exit(1); // TODO change this to return something
