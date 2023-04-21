@@ -59,6 +59,7 @@ public class BoardColorCLI implements BoardStrategy {
 
     /**
      * Sets whether to highlight the board or not
+     *
      * @param boo true to highlight the board, false to not
      */
     @Override

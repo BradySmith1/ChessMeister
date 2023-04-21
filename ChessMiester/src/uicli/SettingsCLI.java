@@ -21,6 +21,7 @@ public class SettingsCLI implements SettingsIF {
 
     /**
      * Constructor for the SettingsCLI class.
+     *
      * @param scan Scanner object to read user input
      */
     public SettingsCLI(Scanner scan) {
@@ -95,6 +96,7 @@ public class SettingsCLI implements SettingsIF {
 
     /**
      * Gets the board color.
+     *
      * @return String board color
      */
     @Override
@@ -104,6 +106,7 @@ public class SettingsCLI implements SettingsIF {
 
     /**
      * Gets the undo option.
+     *
      * @return String undo option
      */
     @Override
@@ -113,6 +116,7 @@ public class SettingsCLI implements SettingsIF {
 
     /**
      * Gets the show moves option.
+     *
      * @return String show moves option
      */
     @Override

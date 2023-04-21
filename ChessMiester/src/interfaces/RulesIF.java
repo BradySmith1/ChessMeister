@@ -8,6 +8,8 @@ public interface RulesIF {
 
     /**
      * Displays the rules.
+     *
+     * @param boardColor the color of the board.
      */
     public void showRule(String boardColor);
 

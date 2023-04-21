@@ -45,7 +45,7 @@ public class Board implements BoardIF {
     /**
      * Constructor method that creates a new game board with the specified strategy.
      *
-     * @param strategy : the strategy to use to draw the board
+     * @param strategy the strategy to use to draw the board
      */
     public Board(BoardStrategy strategy){
         this.width = 8;
@@ -77,13 +77,6 @@ public class Board implements BoardIF {
     */
     @Override
     public void setup() {
-        //need 8 pawns
-        //need 2 rooks
-        //need 2 knights
-        //need 2 bishops
-        //need 1 queen
-        //need 1 king
-
         for(int i = 0; i < width; i++) {
             squares[6][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.WHITE));
             squares[1][i].setPiece(new Piece(ChessPieceType.Pawn, GameColor.BLACK));
@@ -102,7 +95,8 @@ public class Board implements BoardIF {
                 Square square = ((Square) squares[i][j]);
                 if (square.getPiece() != null) {
 
-                    stateBuilder.append(Character.toUpperCase(square.getPosition().getFile().getFileChar()));
+                    stateBuilder.append(
+                            Character.toUpperCase(square.getPosition().getFile().getFileChar()));
                     stateBuilder.append(square.getPosition().getRank().displayNum);
                     stateBuilder.append(":");
                     stateBuilder.append(square.getPiece().getType().letter);
@@ -212,7 +206,7 @@ public class Board implements BoardIF {
      *
      * @param col the column of the piece.
      * @param row the row of the piece.
-     * @return    the PieceIF object at the specified column and row.
+     * @return the PieceIF object at the specified column and row.
      */
     @Override
     public PieceIF getPiece(int col, char row) {
@@ -270,7 +264,7 @@ public class Board implements BoardIF {
     /**
      * Method to load the board from a different memento / board state.
      *
-     * @param boardMemento  the memento to load in
+     * @param boardMemento the memento to load in
      */
     @Override
     public void loadFromMemento(BoardMementoIF boardMemento) {
@@ -290,7 +284,7 @@ public class Board implements BoardIF {
     /**
      * Method to place the pieces depending on the String[] passed in from loadFromMemento()
      *
-     * @param pieces    An array in which each string describes a piece and its location
+     * @param pieces An array in which each string describes a piece and its location
      */
     private void setPiecesFromMemento(String[] pieces){
         this.initBoard();
@@ -330,27 +324,6 @@ public class Board implements BoardIF {
                 if (movementType instanceof FirstMoveIF movement) {
                     movement.setFirstMove(false);
                 }
-            }
-        }
-    }
-
-    /**
-     * Method to check if a pawn has moved from the starting positions for pawns of its color,
-     * if it has move set its firstMove field to false.
-     *
-     * @param pieceToInsert the piece to be modified if it is a pawn
-     * @param pieceType the tpe of piece it is
-     * @param color the color of the piece
-     * @param newRank   the rank of the piece
-     */
-    private void pawnCheck(PieceIF pieceToInsert, ChessPieceType pieceType, GameColor color, Rank newRank) {
-        if(pieceType == ChessPieceType.Pawn) {
-            PawnMovement pawn = (PawnMovement) pieceToInsert.getMoveType();
-            if(color == GameColor.BLACK && newRank.getIndex() != squares[0].length - 2) {
-                pawn.setFirstMove(false);
-            }
-            else if(color == GameColor.BLACK && newRank.getIndex() != 1) {
-                pawn.setFirstMove(false);
             }
         }
     }

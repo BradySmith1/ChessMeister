@@ -214,6 +214,8 @@ public class Player implements PlayerIF {
 
     /**
      * This function is used to assign pieces to each user.
+     *
+     * @param board The board to assign the pieces to.
      */
     public void assignPieces(BoardIF board){
         this.pieces.clear();

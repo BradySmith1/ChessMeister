@@ -33,7 +33,8 @@ public interface SquareIF {
 
     /**
      * Returns the position of a square
-     * @return position
+     *
+     * @return position of the square
      */
     public Position getPosition();
 }

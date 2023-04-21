@@ -29,9 +29,11 @@ public interface MovementIF extends BlackAndWhiteIF{
      * @param currentPosition the current position of the piece
      * @param rank            the rank to move to
      * @param file            the file to move to
+     * @param capture         true if a capture, false otherwise
      * @return the position of the move if it is valid, null otherwise
      */
-    default Position moveCheck(BoardIF board, Position currentPosition, int rank, int file, boolean capture) {
+    default Position moveCheck(BoardIF board, Position currentPosition, int rank, int file,
+                               boolean capture) {
 
         Position movePossible = null; // move starts are nonexistent
 

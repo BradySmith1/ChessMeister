@@ -79,7 +79,7 @@ public class CheckmateRuleCLI implements RulesIF {
         while(!input.equals("0")){
             System.out.print("Enter a move (0 to quit) ===> ");
             input = scanner.nextLine(); // read the next line of input
-            input = input.toLowerCase().replaceAll("\\s", ""); // remove spaces and make lowercase
+            input = input.toLowerCase().replaceAll("\\s", "");
 
             if (input.length() != 5) { // bad user
                 System.out.println("Invalid input. Please try again.");
@@ -93,7 +93,8 @@ public class CheckmateRuleCLI implements RulesIF {
                 scanner.nextLine();
                 input = "0";
             } else { // user is wrong
-                System.out.println("Sorry, that's not the right move or an invalid input. Try again!");
+                System.out.println("Sorry, that's not the right move or an " +
+                        "invalid input. Try again!");
             }
         }
     }

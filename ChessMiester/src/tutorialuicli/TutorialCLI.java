@@ -35,6 +35,7 @@ public class TutorialCLI {
      * @param file  the name of the file to be loaded.
      * @param piece the piece to be used in the tutorial
      * @param pos   the position of the piece to be used in the tutorial
+     * @param color the color of the draw strategy
      */
     public void tutorialLoop(String file, Piece piece, Position pos, String color) {
         /* wait for user to press any key to continue */
@@ -124,6 +125,7 @@ public class TutorialCLI {
      *
      * @param pos   the position of the piece to be spawned
      * @param piece the piece to be spawned
+     * @return the position of the piece that was spawned
      */
     public Position spawnPiece(Position pos, Piece piece) {
         Position toReturn = pos;
@@ -197,6 +199,8 @@ public class TutorialCLI {
      * Because pawns can be advanced all the way forward and get stuck, we decided
      * it was best to create a new board for the player to practice on, where
      * they're forced back to the beginning, and it spawns a piece at a spot they can capture.
+     *
+     * @param pos the position of the pawn
      */
     public void spawnPieceForPawn(Position pos){
         System.out.println("\nSince pawn's can be a little odd when it comes to capturing, " +
@@ -206,9 +210,11 @@ public class TutorialCLI {
         board.loadFromMemento(caretaker.peek()); // load board for pawn
         // remove from old position
     }
+
     /**
      * This method is responsible for getting a random file, which is used to
      * spawn a random piece in for players to capture.
+     *
      * @return a random file
      */
     public Files getRandomFile(){
@@ -220,6 +226,7 @@ public class TutorialCLI {
     /**
      * Method is responsible for getting a random rank, which is used
      * to spawn a random piece in for the players to capture.
+     *
      * @return a random rank
      */
     public Rank getRandomRank(){

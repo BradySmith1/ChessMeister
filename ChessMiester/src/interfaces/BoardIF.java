@@ -29,6 +29,8 @@ public interface BoardIF{
 
     /**
      * Draws the game board.
+     *
+     * @param playerColor the color of the player.
      */
     public void draw(GameColor playerColor);
 

@@ -22,7 +22,7 @@ public interface BoardSaverLoaderIF {
      * Loads a game from a file.
      *
      * @param fileName the name of the file to load from
-     * @return         the caretaker that holds all states of a file
+     * @return the caretaker that holds all states of a file
      */
     BoardMementoCaretaker loadGameFromFile(String fileName);
 }
