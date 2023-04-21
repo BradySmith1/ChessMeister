@@ -106,7 +106,7 @@ public class MainMenuCLI implements MainMenuIF {
                     play.show();
                     break;
                 case 2: // go into the rules menu
-                    rules.showRulesPage();
+                    rules.showRulesPage(settings.getBoardColor());
                     break;
                 case 3: // go into the define players menu
                     definePlayers.show();

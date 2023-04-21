@@ -9,6 +9,7 @@ import model.Board;
 import model.BoardSaverLoader;
 import model.Piece;
 import uicli.BoardColorCLI;
+import uicli.BoardMonoCLI;
 
 import java.util.Scanner;
 
@@ -20,9 +21,11 @@ public class DrawRuleCLI implements RulesIF {
     /**
      * This method creates the logic and display messages required for
      * explaining draw in chess.
+     *
+     * @param boardColor the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule(String boardColor) {
         StringBuilder str = new StringBuilder();
 
         str.append("""
@@ -37,7 +40,7 @@ public class DrawRuleCLI implements RulesIF {
                 A draw is a result in chess where neither player wins or loses. \s
                 There are many different ways of achieving the result of a draw, \s
                 so let's explain them each: \s
-                
+                                
                 1. Stalemate: A stalemate is a result in chess where a player's king is \s
                               placed in a position where they are not currently under attack\s
                               but the only legal moves they have are to move into a square \s
@@ -77,7 +80,13 @@ public class DrawRuleCLI implements RulesIF {
         BoardMementoCaretaker caretaker = loader.loadGameFromFile("drawTutorial");
         BoardIF board = new Board();
         board.loadFromMemento(caretaker.peek());// load board
-        board.setDrawStrategy(new BoardColorCLI());
+
+        // set the draw strategy according to settings
+        if (boardColor.equals("Mono")){
+            board.setDrawStrategy(new BoardMonoCLI());
+        }else{
+            board.setDrawStrategy(new BoardColorCLI());
+        }
 
         String input = "1"; // basic string for user input
         board.draw(GameColor.WHITE); // draw board

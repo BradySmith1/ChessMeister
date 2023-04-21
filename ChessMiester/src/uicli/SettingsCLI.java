@@ -15,9 +15,7 @@ public class SettingsCLI implements SettingsIF {
 
     private String boardColor; /* Board color */
 
-    private String undo; /* Undo option */
-
-    private String redo; /* Redo option */
+    private String undoRedo; /* Undo/redo option */
 
     private String showMoves; /* Show moves option */
 
@@ -27,8 +25,7 @@ public class SettingsCLI implements SettingsIF {
      */
     public SettingsCLI(Scanner scan) {
         this.boardColor = "Color"; //TODO change back to mono
-        this.undo = "on";
-        this.redo = "on";
+        this.undoRedo = "on";
         this.showMoves = "on";
         this.menuOptions = new String[9];
         this.scan = scan;
@@ -41,13 +38,11 @@ public class SettingsCLI implements SettingsIF {
     private void populateMenu() {
         menuOptions[0] = "1: Set Mono board\n";
         menuOptions[1] = "2: Set Color board\n";
-        menuOptions[2] = "3: Enable Undo\n";
-        menuOptions[3] = "4: Disable Undo\n";
-        menuOptions[4] = "5: Enable Redo\n";
-        menuOptions[5] = "6: Disable Redo\n";
-        menuOptions[6] = "5: Enable Show Move\n";
-        menuOptions[7] = "6: Disable Show Moves\n";
-        menuOptions[8] = "0: Main Menu";
+        menuOptions[2] = "3: Enable Undo/Redo\n";
+        menuOptions[3] = "4: Disable Undo/Redo\n";
+        menuOptions[4] = "5: Enable Show Move\n";
+        menuOptions[5] = "6: Disable Show Moves\n";
+        menuOptions[6] = "0: Main Menu";
     }
 
     /**
@@ -61,8 +56,7 @@ public class SettingsCLI implements SettingsIF {
             String menu = "Settings\n\n" +
                     "---------------------------------------------------------------\n" +
                     "Board: " + this.boardColor + "\n" +
-                    "Undo is " + this.undo + "\n" +
-                    "Redo is " + this.redo + "\n" +
+                    "Undo is " + this.undoRedo + "\n" +
                     "Show Moves is " + this.showMoves + "\n" +
                     menuOptions[0] +
                     menuOptions[1] +
@@ -71,9 +65,7 @@ public class SettingsCLI implements SettingsIF {
                     menuOptions[4] +
                     menuOptions[5] +
                     menuOptions[6] +
-                    menuOptions[7] +
-                    menuOptions[8] +
-                    "\n\n-----------------------------------------" +
+                    "\n-----------------------------------------" +
                     "---------------------\n";
             System.out.println(menu); //shows user menu options
             System.out.print(prompt);
@@ -87,12 +79,10 @@ public class SettingsCLI implements SettingsIF {
             switch (choice) {
                 case 1 -> boardColor = "Mono";
                 case 2 -> boardColor = "Color";
-                case 3 -> undo = "on";
-                case 4 -> undo = "off";
-                case 5 -> redo = "on";
-                case 6 -> redo = "off";
-                case 7 -> showMoves = "on";
-                case 8 -> showMoves = "off";
+                case 3 -> undoRedo = "on";
+                case 4 -> undoRedo = "off";
+                case 5 -> showMoves = "on";
+                case 6 -> showMoves = "off";
                 case 0 -> {
                     return;
                 }
@@ -118,14 +108,8 @@ public class SettingsCLI implements SettingsIF {
      */
     @Override
     public String getUndo() {
-        return undo;
+        return undoRedo;
     }
-
-    /**
-     * Gets the redo option.
-     * @return String redo option
-     */
-    public String getRedo(){ return redo; }
 
     /**
      * Gets the show moves option.

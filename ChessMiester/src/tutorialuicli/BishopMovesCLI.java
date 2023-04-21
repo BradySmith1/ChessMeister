@@ -19,9 +19,11 @@ import java.lang.StringBuilder;
 public class BishopMovesCLI extends TutorialCLI implements RulesIF{
     /**
      * Displays the rules of a bishop in chess.
+     *
+     * @param boardColor the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule(String boardColor) {
         StringBuilder str = new StringBuilder();
         /* create cool, fancy ascii art */
         str.append("""
@@ -68,6 +70,6 @@ public class BishopMovesCLI extends TutorialCLI implements RulesIF{
 
         /* create piece and call tutorial loop */
         Piece bishop = new Piece(ChessPieceType.Bishop, GameColor.WHITE);
-        this.tutorialLoop("bishopTutorial", bishop, new Position(Rank.R1, Files.C));
+        this.tutorialLoop("bishopTutorial", bishop, new Position(Rank.R1, Files.C), boardColor);
     }
 }

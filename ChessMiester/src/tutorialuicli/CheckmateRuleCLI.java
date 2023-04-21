@@ -9,6 +9,7 @@ import model.Board;
 import model.BoardSaverLoader;
 import model.Piece;
 import uicli.BoardColorCLI;
+import uicli.BoardMonoCLI;
 
 import java.util.Scanner;
 
@@ -24,9 +25,11 @@ public class CheckmateRuleCLI implements RulesIF {
      * This method is responsible for displaying the rules of checkmate in chess.
      * This includes a message explaining what checkmate is, and a practice
      * game for the user to play an opponent in checkmate.
+     *
+     * @param boardColor the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule(String boardColor) {
 
         StringBuilder str = new StringBuilder();
 
@@ -58,7 +61,14 @@ public class CheckmateRuleCLI implements RulesIF {
         BoardMementoCaretaker caretaker = loader.loadGameFromFile("checkmateTutorial");
         BoardIF board = new Board();
         board.loadFromMemento(caretaker.peek());
-        board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
+
+        //set draw strategy according to settings
+        if(boardColor.equals("Mono")) {
+            board.setDrawStrategy(new BoardMonoCLI()); // draw the board
+        } else {
+            board.setDrawStrategy(new BoardColorCLI()); // draw the board
+        }
+
         board.draw(GameColor.WHITE); // draw the board
 
         System.out.println("Remember! Expected input is in the form of " +

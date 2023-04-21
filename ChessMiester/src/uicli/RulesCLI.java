@@ -54,7 +54,7 @@ public class RulesCLI implements RulePageIF {
      * Shows the rules page.
      */
     @Override
-    public void showRulesPage() {
+    public void showRulesPage(String boardColor) {
         String menu = "View Rules\n---------------------------------------------------------------\n" +
                 "Please make a selection as to what you would like to do:\n" +
                 menuOptions[0] +
@@ -87,51 +87,51 @@ public class RulesCLI implements RulePageIF {
             switch (choice) {
                 case 1:
                     setRule(new BoardSetupCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 2:
                     setRule(new NotationCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 3:
                     setRule(new BoardOrganizationCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 4:
                     setRule(new KingMovesCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 5:
                     setRule(new QueenMovesCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 6:
                     setRule(new BishopMovesCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 7:
                     setRule(new KnightMovesCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 8:
                     setRule(new RookMovesCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 9:
                     setRule(new PawnMovesCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 10:
                     setRule(new CheckRuleCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 11:
                     setRule(new CheckmateRuleCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 12:
                     setRule(new DrawRuleCLI());
-                    rule.showRule();
+                    rule.showRule(boardColor);
                     break;
                 case 0:
                     return;

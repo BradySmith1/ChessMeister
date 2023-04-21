@@ -24,12 +24,6 @@ public interface SettingsIF {
     public String getUndo();
 
     /**
-     * Gets whether redo is on or off
-     * @return string of on or off
-     */
-    public String getRedo();
-
-    /**
      * Gets whether highlighting is on of off
      * @return string of on or off
      */

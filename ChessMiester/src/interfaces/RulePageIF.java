@@ -9,5 +9,5 @@ public interface RulePageIF {
     /**
      * Displays the rule page.
      */
-    public void showRulesPage();
+    public void showRulesPage(String boardColor);
 }

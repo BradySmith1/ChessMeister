@@ -36,7 +36,7 @@ public class TutorialCLI {
      * @param piece the piece to be used in the tutorial
      * @param pos   the position of the piece to be used in the tutorial
      */
-    public void tutorialLoop(String file, Piece piece, Position pos) {
+    public void tutorialLoop(String file, Piece piece, Position pos, String color) {
         /* wait for user to press any key to continue */
         System.out.println("""
          Let's start with some practice moves!
@@ -55,15 +55,17 @@ public class TutorialCLI {
         BoardMementoCaretaker caretaker = this.loader.loadGameFromFile(file);
         //BoardIF board = new Board();
         this.board.loadFromMemento(caretaker.peek());// load board for bishop
-        this.board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
+
+        // set the board color based on settings
+        if(color.equals("Mono")){
+            this.board.setDrawStrategy(new BoardMonoCLI());
+        } else {
+            this.board.setDrawStrategy(new BoardColorCLI());
+        }
+
         String input = "1"; // basic string for user input
 
         while (!input.equals("0")) { // loop game until user wants to quit
-            if(settings.getBoardColor().equals("Mono")){
-                this.board.setDrawStrategy(new BoardMonoCLI());
-            } else {
-                this.board.setDrawStrategy(new BoardColorCLI());
-            }
             this.board.draw(GameColor.WHITE); // draw board
 
             List<Position> moves = piece.getValidMoves(this.board, pos); // get valid moves for bishop

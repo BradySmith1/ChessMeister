@@ -1,4 +1,4 @@
-package uicli;
+package tutorialuicli;
 
 import enums.ChessPieceType;
 import enums.Files;
@@ -20,9 +20,11 @@ import java.lang.StringBuilder;
 public class PawnMovesCLI extends TutorialCLI implements RulesIF {
     /**
      * Displays the rules of a pawn in chess.
+     *
+     * @param boardColor the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule(String boardColor){
         StringBuilder str = new StringBuilder();
         /* create cool, fancy ascii art */
         str.append("""
@@ -70,6 +72,6 @@ public class PawnMovesCLI extends TutorialCLI implements RulesIF {
 
         /* create piece and call tutorial loop */
         Piece pawn = new Piece(ChessPieceType.Pawn, GameColor.WHITE);
-        this.tutorialLoop("pawnTutorial", pawn, new Position(Rank.R2, Files.D));
+        this.tutorialLoop("pawnTutorial", pawn, new Position(Rank.R2, Files.D), boardColor);
     }
 }

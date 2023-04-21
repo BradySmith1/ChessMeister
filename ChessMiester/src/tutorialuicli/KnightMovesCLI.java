@@ -19,9 +19,11 @@ import java.lang.StringBuilder;
 public class KnightMovesCLI extends TutorialCLI implements RulesIF{
     /**
      * Displays the rules of a knight in chess.
+     *
+     * @param boardColor the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule(String boardColor) {
         StringBuilder str = new StringBuilder();
 
         /* create cool, fancy ascii art */
@@ -67,6 +69,6 @@ public class KnightMovesCLI extends TutorialCLI implements RulesIF{
 
         /* make piece and call tutorial loop */
         Piece knight = new Piece(ChessPieceType.Knight, GameColor.WHITE);
-        this.tutorialLoop("knightTutorial", knight, new Position(Rank.R1, Files.B));
+        this.tutorialLoop("knightTutorial", knight, new Position(Rank.R1, Files.B), boardColor);
     }
 }

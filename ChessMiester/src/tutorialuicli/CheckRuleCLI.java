@@ -11,6 +11,7 @@ import model.Board;
 import model.BoardSaverLoader;
 import model.Piece;
 import uicli.BoardColorCLI;
+import uicli.BoardMonoCLI;
 
 /**
  * This class is responsible for displaying the rules of check in chess.
@@ -21,9 +22,11 @@ import uicli.BoardColorCLI;
 public class CheckRuleCLI implements RulesIF {
     /**
      * Displays the rules of check in chess.
+     *
+     * @param boardColor the color of the board
      */
     @Override
-    public void showRule() {
+    public void showRule( String boardColor) {
         StringBuilder str = new StringBuilder();
 
         /* create cool, fancy ascii art */
@@ -66,7 +69,13 @@ public class CheckRuleCLI implements RulesIF {
         BoardMementoCaretaker caretaker = loader.loadGameFromFile("checkTutorial");
         BoardIF board = new Board();
         board.loadFromMemento(caretaker.peek());
-        board.setDrawStrategy(new BoardColorCLI()); // make it pretty :)
+
+        // set draw strategy according to settings
+        if(boardColor.equals("Mono")){
+            board.setDrawStrategy(new BoardMonoCLI());
+        }else{
+            board.setDrawStrategy(new BoardColorCLI());
+        }
 
         String input = "1"; // basic string for user input
         board.draw(GameColor.WHITE); // draw board

@@ -125,7 +125,7 @@ public class PlayMoveCLI implements PlayIF {
                     }
                     break;
                 case 2:
-                    if(settings.getUndo().equals("on")){ // if settings allow undo
+                    if(this.undo.equals("on")){ // if settings allow undo
                         boolean undone = this.undo();
                         if (undone) {
                             this.switchPlayers();
@@ -133,11 +133,11 @@ public class PlayMoveCLI implements PlayIF {
                             System.out.println("\nThere is nothing to undo!");
                         }
                     }else{
-                        System.out.println("Undo is not enabled!");
+                        System.out.println("\nUndo is not enabled!");
                     }
                     break;
                 case 3:
-                    if(settings.getRedo().equals("on")) { // if settings allow redo
+                    if(this.undo.equals("on")) { // if settings allow redo
                         boolean redone = this.redo();
                         if (redone) {
                             this.switchPlayers();
@@ -145,11 +145,15 @@ public class PlayMoveCLI implements PlayIF {
                             System.out.println("\nThere is nothing to redo!");
                         }
                     }else{
-                        System.out.println("Redo is not enabled!");
+                        System.out.println("\nRedo is not enabled!");
                     }
                     break;
                 case 4: // show moves for a piece
-                    this.showMoves();
+                    if(this.showMoves.equals("on")) { // if settings allow showing moves
+                        this.showMoves();
+                    }else{
+                        System.out.println("\nShow moves is not enabled!");
+                    }
                     break;
                 case 5: // save game
                     this.saveGame.showLoadSave(); // show the save game dialog
