@@ -9,6 +9,7 @@ import interfaces.ViewPlayedGamesIF;
 import model.BoardSaverLoader;
 import model.Board;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -37,41 +38,51 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
      */
     @Override
     public void showPlayedGames() {
-        System.out.print("""
-                -----------------------------------------------------------------\s
-                                
-                Choose a game to view:
-                  1: Conceded Game \s
-                  2: Checkmate Game \s
-                  3: Stalemate Game \s
-                  0: Return to Main Menu\s
-                                
-                -----------------------------------------------------------------\s
-                """);
+        int choice = 999;
+        while(choice != 0) {
+            System.out.print("""
+                    -----------------------------------------------------------------\s
+                                    
+                    Choose a game to view:
+                      1: Conceded Game \s
+                      2: Checkmate Game \s
+                      3: Stalemate Game \s
+                      4: Scholars Mate Game (Checkmate in four moves!) \s
+                      0: Return to Main Menu\s
+                                    
+                    -----------------------------------------------------------------\s
+                    """);
 
-        System.out.print("Enter your menu choice here -> ");
-
-        int choice = scan.nextInt();
-
-        Board board; // create new board
-        switch (choice) { // load game based on choice
-            case 1:
-                board = this.loadBeginning("concededGame");
-                this.loopMoves(board);
-                break;
-            case 2:
-                board = this.loadBeginning("checkmateGame");
-                this.loopMoves(board);
-                break;
-            case 3:
-                board = this.loadBeginning("stalemateGame");
-                this.loopMoves(board);
-                break;
-            case 0: // return to menu
-                break;
-            default:
-                System.out.println("Invalid choice, please try again.");
+            System.out.print("Enter your menu choice here -> ");
+            try {
                 choice = scan.nextInt();
+            } catch (InputMismatchException ignore) {
+                // ignore
+            }
+            Board board; // create new board
+            switch (choice) { // load game based on choice
+                case 1:
+                    board = this.loadBeginning("concededGame");
+                    this.loopMoves(board);
+                    break;
+                case 2:
+                    board = this.loadBeginning("checkmateGame");
+                    this.loopMoves(board);
+                    break;
+                case 3:
+                    board = this.loadBeginning("stalemateGame");
+                    this.loopMoves(board);
+                    break;
+                case 4:
+                    board = this.loadBeginning("scholarsMateGame");
+                    this.loopMoves(board);
+                    break;
+                case 0: // return to menu
+                    break;
+                default:
+                    System.out.println("Invalid choice, please try again.");
+                    scan.nextLine();
+            }
         }
     }
 
@@ -125,14 +136,18 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                     -----------------------------------------------------------------\s""");
 
             System.out.print("Enter your menu choice here -> ");
-            choice = scan.nextInt(); // get user choice
+            try{
+                choice = scan.nextInt();
+            } catch (Exception e){
+                // ignore
+            }
+            //choice = scan.nextInt(); // get user choice
             BoardIF.BoardMementoIF memento = this.caretaker.peek(); // establish memento
             switch(choice){
                 case 1: // "redo" move
                     memento = this.caretaker.up(); // get next move
                     if(memento != null) { // if there is a next move
                         board.loadFromMemento(memento); // set move
-                        color = this.switchColor(color); // flip color
                         board.draw(color); // display board
                     }else{
                         System.out.println("No next move available.");
@@ -142,7 +157,6 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                     memento = this.caretaker.down(); // get previous move
                     if(memento != null) { // if there is a previous move
                         board.loadFromMemento(memento);  // set move
-                        color = this.switchColor(color); // flip color
                         board.draw(color); // display board
                     }else{
                         System.out.println("No previous move available.");
@@ -152,26 +166,12 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                     break;
                 default:
                     System.out.println("Invalid choice, please try again.");
-                    choice = scan.nextInt();
+                    scan.nextLine();
             }
 
         }
-        //board.draw(color);
     }
 
-    /**
-     * Switches the color based on the color passed in.
-     *
-     * @param clr current color of the board
-     * @return the opposite color
-     */
-    private GameColor switchColor(GameColor clr){
-        if(clr == GameColor.WHITE){
-            return GameColor.BLACK;
-        }else{
-            return GameColor.WHITE;
-        }
-    }
     /**
      * Sets the caretaker for the board.
      *
