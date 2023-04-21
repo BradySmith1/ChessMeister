@@ -44,11 +44,10 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
                     -----------------------------------------------------------------\s
                                     
                     Choose a game to view:
-                      1: Conceded Game \s
-                      2: Checkmate Game \s
-                      3: Stalemate Game \s
-                      4: Scholars Mate Game (Checkmate in four moves!) \s
+                      1: Scholars Mate Game (Checkmate in four moves!) \s
                       0: Return to Main Menu\s
+                      
+                      MORE COMING SOON!
                                     
                     -----------------------------------------------------------------\s
                     """);
@@ -61,22 +60,24 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
             }
             Board board; // create new board
             switch (choice) { // load game based on choice
+
+                //we plan on adding following games later, ran out of time for now
                 case 1:
-                    board = this.loadBeginning("concededGame");
-                    this.loopMoves(board);
-                    break;
-                case 2:
-                    board = this.loadBeginning("checkmateGame");
-                    this.loopMoves(board);
-                    break;
-                case 3:
-                    board = this.loadBeginning("stalemateGame");
-                    this.loopMoves(board);
-                    break;
-                case 4:
                     board = this.loadBeginning("scholarsMateGame");
                     this.loopMoves(board);
                     break;
+//                case 2:
+//                    board = this.loadBeginning("checkmateGame");
+//                    this.loopMoves(board);
+//                    break;
+//                case 3:
+//                    board = this.loadBeginning("stalemateGame");
+//                    this.loopMoves(board);
+//                    break;
+//                case 4:
+//                    board = this.loadBeginning("scholarsMateGame");
+//                    this.loopMoves(board);
+//                    break;
                 case 0: // return to menu
                     break;
                 default:
