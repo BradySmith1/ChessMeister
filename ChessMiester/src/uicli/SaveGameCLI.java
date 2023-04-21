@@ -4,6 +4,12 @@ import interfaces.LoadSaveGameIF;
 
 import java.util.Scanner;
 
+/**
+ * This class implements the save game dialog.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 2)
+ */
 public class SaveGameCLI implements LoadSaveGameIF {
     private Scanner scan; /* Scanner for user input */
 
