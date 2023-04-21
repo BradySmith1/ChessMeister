@@ -1,10 +1,14 @@
 package movements;
 
+import enums.Files;
 import enums.GameColor;
+import enums.Rank;
+import enums.Files;
 import interfaces.BoardIF;
 import interfaces.FirstMoveIF;
 import interfaces.MovementIF;
 import interfaces.PieceIF;
+import javafx.geometry.Pos;
 import model.BlackAndWhite;
 import model.Position;
 import java.util.ArrayList;
@@ -21,8 +25,6 @@ import java.util.List;
 public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMoveIF {
     /* Fields */
 
-    /** The color of the piece. */
-    private GameColor color;
     /** If this is the first move of the piece. */
    private boolean isFirstMove;
 
@@ -92,45 +94,51 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
         }
         return validMove;
     }
-/*
-    private List<Position> getEnPassant(BoardIF board, Position currentPosition) {
+
+    public Position enPassant(BoardIF board, Position currentPosition) {
         Position validMove = null;
-        Position place = null;
-        PieceIF pieceInPos = null;
-        int moveRank;
-        int moveFile;
-        place = moveCheck(board, currentPosition, direction, 0, true);
-        if(place != null) {
-            moveRank = place.getRank().getIndex();
-            moveFile = place.getFile().getFileNum();
-            pieceInPos = board.getSquares()[moveRank][moveFile].getPiece(); // this will be null if there is no piece
-            if(pieceInPos.getMoveType() instanceof PawnMovement) {
-                // TODO
-                // make a variable for getMoveType with a static type of FirstMoveIF
-                // if(getFirstMove is false) {
-                //      undo board
-                //      check if that pawns firstMove is now true
-                //      redo and add the diagonals to valid move
+        validMove = enPassantHelper(board, currentPosition, 1);
+        if(validMove == null) {
+            validMove = enPassantHelper(board, currentPosition, -1);
+        }
+        return validMove;
+    }
+
+    private Position enPassantHelper(BoardIF board, Position currentPosition, int side) {
+        Position validMove = null;
+        Position possiblePiece = moveCheck(board, currentPosition, 0, side, true);
+        if(possiblePiece != null) {
+            int moveRank = possiblePiece.getRank().getIndex();
+            int moveFile = possiblePiece.getFile().getFileNum();
+            PieceIF pieceInPos = board.getSquares()[moveRank][moveFile].getPiece(); // this will be null if there is no piece
+
+            if(pieceInPos != null && !pieceInPos.getColor().equals(this.getColor()) && pieceInPos.getMoveType() instanceof PawnMovement) {
+                String[] moveArr = board.getState().split("#")[1].split(",");
+                String lastMove = moveArr[moveArr.length - 1];
+                Position pos = pieceInPos.getPosition(board);
+                int rankOf = pos.getRank().getDisplayNum();
+                char fileOf = pos.getFile().getFileChar();
+                int rankToList = Character.getNumericValue(lastMove.charAt(6));
+                char fileToList = Character.toLowerCase(lastMove.charAt(5));
+                if(fileToList == fileOf && rankToList == rankOf) {
+                    int previousRank = Character.getNumericValue(lastMove.charAt(3));
+                    int possiblePreviousRank = rankToList - (direction * 2);
+                    if(previousRank == possiblePreviousRank) {
+                        validMove = board.getSquares()[currentPosition.getRank().index + direction][currentPosition.getFile().getFileNum() + side].getPosition();
+                    }
+                }
             }
         }
         return validMove;
     }
-*/
-    /**
-     * Gets the game color of the piece.
-     *
-     * @return the game color of the piece.
-     */
-    public GameColor getColor() {
-        return color;
-    }
 
-    /**
-     * Sets the game color of the piece.
-     * @param color the game color of the piece.
-     */
-    public void setColor(GameColor color) {
-        this.color = color;
+    public boolean getEnPassant(BoardIF board, Position posToCheck, Position currentPosition){
+        boolean canEnPassant = false;
+        Position enPosition = this.enPassant(board, currentPosition);
+        if(enPosition != null && enPosition.equals(posToCheck)) {
+            canEnPassant = true;
+        }
+        return canEnPassant;
     }
 
     /**
@@ -148,4 +156,8 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
      */
     @Override
     public void setFirstMove(boolean isFirstMove){ this.isFirstMove = isFirstMove; }
+
+    public int getDirection() {
+        return this.direction;
+    }
 }

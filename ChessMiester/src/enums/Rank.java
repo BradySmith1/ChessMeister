@@ -43,4 +43,35 @@ public enum Rank {
      * @return index of the current rank.
      */
     public int getIndex() {return index;}
+
+    public static Rank getRankFromIndex(int index) {
+        Rank rank = null;
+        switch (index) {
+            case 0 :
+                rank = R8;
+                break;
+            case 1 :
+                rank = R7;
+                break;
+            case 2 :
+                rank = R6;
+                break;
+            case 3 :
+                rank = R5;
+                break;
+            case 4 :
+                rank = R4;
+                break;
+            case 5 :
+                rank = R3;
+                break;
+            case 6 :
+                rank = R2;
+                break;
+            case 7 :
+                rank = R1;
+                break;
+        }
+        return rank;
+    }
 }

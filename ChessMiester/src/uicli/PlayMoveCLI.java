@@ -9,6 +9,7 @@ import interfaces.*;
 import model.BoardSaverLoader;
 import model.Piece;
 import model.Position;
+import model.Square;
 import movements.KingMovement;
 import movements.PawnMovement;
 import movements.RookMovement;
@@ -193,8 +194,46 @@ public class PlayMoveCLI implements PlayIF {
         Piece toPiece = (Piece)board.getPiece(toR, toF);
 
         boolean isPlayersPiece = currentPlayer.getPieces().contains(fromPiece);
+        boolean isEnPassant = false;
+        // EN PASSANT
+        if(fromPiece.getMoveType() instanceof PawnMovement pawn){
+            if(pawn.getEnPassant(board, board.getSquares()[toR.getIndex()][toF.getFileNum()].getPosition(), fromPiece.getPosition(board))){
 
-        if(this.board.getSquares()[fromR.getIndex()] // if it's a king
+                PieceIF moveTo = board.getPiece(toR, toF);
+
+                // Remove the to piece from the board
+                board.getSquares()[toR.getIndex()][toF.getFileNum()].clear();
+
+                Rank pieceToCapRank = Rank.getRankFromIndex(toR.index - pawn.getDirection());
+
+                SquareIF capturedSquare = board.getSquares()[pieceToCapRank.index][toF.getFileNum()];
+                PieceIF capturedPiece = capturedSquare.getPiece();
+
+                // Add the piece to the player's captured pieces
+                currentPlayer.addCapturedPiece(capturedPiece);
+
+                int toCapRankInt = capturedSquare.getPosition().getRank().getIndex();
+                int toCapFileInt = capturedSquare.getPosition().getFile().getFileNum();
+                // Remove the should_checked piece from the board
+                board.getSquares()[toCapRankInt][toCapFileInt].clear();
+
+                // Remove the piece from the enemy player's pieces
+                getOtherPlayer(currentPlayer).getPieces().remove(capturedPiece);
+
+                // Remove the from piece from the board
+                board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
+
+                // Move the piece to the to position
+                board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(fromPiece);
+
+                validMove = true;
+                isEnPassant = true;
+                // Do the move
+                // Clear the piece to the right or left of fromF and fromR
+            }
+        }
+
+        if(!validMove && this.board.getSquares()[fromR.getIndex()] // if it's a king
                 [fromF.getFileNum()].getPiece().getType().equals(ChessPieceType.King) &&
            this.board.getSquares()[toR.getIndex()]
                         [toF.getFileNum()].getPiece().getType().equals(ChessPieceType.Rook)){
@@ -249,7 +288,7 @@ public class PlayMoveCLI implements PlayIF {
             return false;
         }
 
-        if (isPlayersPiece && (toPiece == null || toPiece.getColor() != currentPlayer.getColor())) {
+        if (!validMove && isPlayersPiece && (toPiece == null || toPiece.getColor() != currentPlayer.getColor())) {
             // Is our piece and the to position is empty or the piece is the opposite color
 
             // Get all the possible moves for the piece
@@ -288,9 +327,9 @@ public class PlayMoveCLI implements PlayIF {
             } else {
                 System.out.println("Invalid move.");
             }
-        } else if (toPiece.getColor() == currentPlayer.getColor()) {
+        } else if (!isEnPassant && toPiece.getColor() == currentPlayer.getColor()) {
             System.out.println("Cannot move to a position that is occupied by your own piece.");
-        } else {
+        } else if (!isEnPassant){
             System.out.println("Cannot move a piece that is not yours.");
         }
         return validMove;
