@@ -24,6 +24,8 @@ public class RulesCLI implements RulePageIF {
 
     /**
      * Constructor for the rules page.
+     *
+     * @param scan Scanner for user input
      */
     public RulesCLI(Scanner scan) {
         this.scan = scan;
@@ -52,10 +54,13 @@ public class RulesCLI implements RulePageIF {
 
     /**
      * Shows the rules page.
+     *
+     * @param boardColor the color of the board
      */
     @Override
     public void showRulesPage(String boardColor) {
-        String menu = "View Rules\n---------------------------------------------------------------\n" +
+        String menu = "View Rules\n------------------------------------------" +
+                "---------------------\n" +
                 "Please make a selection as to what you would like to do:\n" +
                 menuOptions[0] +
                 menuOptions[1] +
@@ -144,8 +149,7 @@ public class RulesCLI implements RulePageIF {
     }
 
     /**
-     * Gets the rule object.
-     * @return the rule object
+     * Sets the rule object.
      */
     public void setRule(RulesIF rule) {
         this.rule = rule;

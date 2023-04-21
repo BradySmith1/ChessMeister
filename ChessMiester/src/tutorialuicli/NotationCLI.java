@@ -66,7 +66,7 @@ public class NotationCLI extends TutorialCLI implements RulesIF{
         while(!userInput.equals("0")) {
             Rank correctRank = getRandomRank(); // get a random rank
             Files correctFile = getRandomFile(); // get a random file
-            ArrayList<Position> toHighlight = new ArrayList<Position>(); // create an array of positions to highlight
+            ArrayList<Position> toHighlight = new ArrayList<Position>(); // array of positions to highlight
             toHighlight.add((new Position(correctRank, correctFile))); // add pos to array
 
             // highlight the random position
@@ -91,6 +91,7 @@ public class NotationCLI extends TutorialCLI implements RulesIF{
      * @param rank  rank of square highlighted
      * @param input input from the user
      * @param scan  scanner to read input from user if incorrect
+     * @return      the user input
      */
     private String getResult(Files file, Rank rank, String input, Scanner scan){
         boolean correct = false;

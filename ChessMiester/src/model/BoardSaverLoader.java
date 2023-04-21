@@ -37,7 +37,7 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
      * Method to load a game from a file
      *
      * @param fileName the name of the file to load from
-     * @return         the board that you have loaded
+     * @return the board that you have loaded
      */
     @Override
     public BoardMementoCaretaker loadGameFromFile(String fileName) {
@@ -66,9 +66,7 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
         }
         catch(FileNotFoundException ignore){
             System.out.println("\nFile could not be located. Please enter a different name.\n");
-
         }
-
         // establish memento and load from memento
         return caretaker;
     }
@@ -77,7 +75,7 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
      * Method to create the file
      *
      * @param fileName Name of the file to create
-     * @return         the file that has been created
+     * @return the file that has been created
      */
     private File createFile(String fileName) {
         File saveFile = null;

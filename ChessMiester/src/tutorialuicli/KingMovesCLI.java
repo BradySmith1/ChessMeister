@@ -61,10 +61,10 @@ public class KingMovesCLI extends TutorialCLI implements RulesIF{
                 as long as there are no pieces in the way. Kings can capture pieces by \s
                 moving to the square that the opposing piece is on.\s\s
                             
-                Kings are the life of the game, and if they are captured or placed into checkmate, \s
+                Kings are the life of the game, and if they are captured or placed into checkmate,\s
                 which is explained in another section of the tutorial, the game is over.\s
-                Kings can be put into check by an opposing piece, which another rule also explained \s
-                in another section of the tutorial.\s\s
+                Kings can be put into check by an opposing piece, which another rule also \s
+                explained in another section of the tutorial.\s\s
                             
                 Now that the rules have been explained, let's try it out!\s\s
                 """);

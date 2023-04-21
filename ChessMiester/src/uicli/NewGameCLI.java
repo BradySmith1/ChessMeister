@@ -63,6 +63,7 @@ public class NewGameCLI implements PlayIF {
      * @param player1    player 1
      * @param player2    player 2
      * @param board      board to play game on
+     * @param ct         caretaker for the board
      */
     public NewGameCLI(Scanner scan, String boardColor, String undo, String showMoves,
                       PlayerIF player1, PlayerIF player2, Board board, BoardMementoCaretaker ct) {

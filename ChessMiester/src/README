@@ -38,6 +38,11 @@ destination. The user will then be told if the move is valid or not, and if it i
 board is updated and the next player's turn begins. This is repeated until the game meets an
 ending condition, such as draw.
 
+SAVING:
+After the user ends the program, the states of the game are saved in the file the user gave. These
+are all strings representing each piece on the board, and the moves that occurred. This is
+done in order to make sure that the game can be loaded and played again.
+
 Along with this, there are many navigable features in the menu, including a functional saving
 and loading of the game, tutorials in order to learn basic chess, and many more. Feel free to
 explore the menu and see what you can find!

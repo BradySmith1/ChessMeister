@@ -31,7 +31,6 @@ public interface PieceIF extends BlackAndWhiteIF {
      *
      * @param board           The game board that the piece moves on.
      * @param currentPosition The current position to get the valid moves from.
-     *
      * @return A list of valid MovePositions.
      */
     List<Position> getValidMoves(BoardIF board, Position currentPosition);

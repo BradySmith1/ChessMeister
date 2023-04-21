@@ -91,6 +91,7 @@ public class PlayedGamesCLI implements ViewPlayedGamesIF {
      * Loads a game from a file and sets it to the first state.
      *
      * @param fileName The name of the file to load.
+     * @return The board loaded from the beginning of the file
      */
     private Board loadBeginning(String fileName) {
         Board board = new Board(); // create new board

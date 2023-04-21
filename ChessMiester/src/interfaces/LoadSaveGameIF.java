@@ -12,6 +12,8 @@ public interface LoadSaveGameIF {
 
     /**
      * Gets the URL of the file to load.
+     *
+     * @return the URL of the file to load.
      */
     public String getURL();
 }
