@@ -205,6 +205,7 @@ public class PlayMoveCLI implements PlayIF {
 
     /**
      * This is the function responsible for allowing the pieces to be moved.
+     *
      * @param fromF File placement of where the piece is currently at
      * @param fromR Rank placement of where the piece is currently at
      * @param toF   File placement of where the piece will go
@@ -212,167 +213,150 @@ public class PlayMoveCLI implements PlayIF {
      */
     public boolean move(PlayerIF currentPlayer, PlayerIF otherPlayer, Files fromF,
                         Rank fromR, Files toF, Rank toR){
-        /**
-         * This function is responsible for moving the pieces on the board.
-         *
-         * Algorithm:
-         * 1. Get the piece at the from position.   TODO DONE
-         * 2. Check if the piece at to is null. (If it is, then there is no piece at the from position)
-         * 3. Check to see if the player owns the piece.
-         * 4. Get all the possible moves for the piece.
-         * 5. Two cases: The to position is in the list of possible moves, or it is not.
-         * 6. If it is, then check to see if the to position is occupied.
-         * 7. If it is, then check to see if the piece is the same color as the player.
-         * 8. If it is, then the move is invalid. // Cannot move to a position that is occupied by a piece of the same color.
-         * 9. If it is not, then the move is valid. // Can move to a position that is occupied by a piece of the opposite color.
-         * 10. If the to position contains an enemy piece, then remove it from the board. and set our piece to the to position.
-         * 11. Remove the piece from the from position.
-         * 12. Add the enemy piece to the player's captured pieces.
-         * 13. Remove the piece from the enemy player's pieces.
-         */
+
         boolean validMove = false;
         Piece fromPiece = (Piece)board.getPiece(fromR, fromF);
         Piece toPiece = (Piece)board.getPiece(toR, toF);
 
-        boolean isPlayersPiece = currentPlayer.getPieces().contains(fromPiece);
-        boolean isEnPassant = false;
-        // EN PASSANT
-        if(fromPiece.getMoveType() instanceof PawnMovement pawn){
-            if(pawn.getEnPassant(board, board.getSquares()[toR.getIndex()][toF.getFileNum()].getPosition(), fromPiece.getPosition(board))){
-
-                PieceIF moveTo = board.getPiece(toR, toF);
-
-                // Remove the to piece from the board
-                board.getSquares()[toR.getIndex()][toF.getFileNum()].clear();
-
-                Rank pieceToCapRank = Rank.getRankFromIndex(toR.index - pawn.getDirection());
-
-                SquareIF capturedSquare = board.getSquares()[pieceToCapRank.index][toF.getFileNum()];
-                PieceIF capturedPiece = capturedSquare.getPiece();
-
-                // Add the piece to the player's captured pieces
-                currentPlayer.addCapturedPiece(capturedPiece);
-
-                int toCapRankInt = capturedSquare.getPosition().getRank().getIndex();
-                int toCapFileInt = capturedSquare.getPosition().getFile().getFileNum();
-                // Remove the should_checked piece from the board
-                board.getSquares()[toCapRankInt][toCapFileInt].clear();
-                // Remove the piece from the enemy player's pieces
-                getOtherPlayer(currentPlayer).getPieces().remove(capturedPiece);
-
-                // Remove the from piece from the board
-                board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
-
-                // Move the piece to the to position
-                board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(fromPiece);
-
-                validMove = true;
-                isEnPassant = true;
-                // Do the move
-                // Clear the piece to the right or left of fromF and fromR
-            }
-        }
-        if (!validMove && fromPiece.getType().equals(ChessPieceType.King) && toPiece != null) {
-            if (toPiece.getType().equals(ChessPieceType.Rook)) {
-
-                if (canCastle(fromF, fromR, toF, toR)) { // see if it can castle
-                    Piece king = (Piece) this.board.getSquares()[fromR.getIndex()]
-                            [fromF.getFileNum()].getPiece(); // get king from the board
-                    Piece rook = (Piece) this.board.getSquares()[toR.getIndex()]
-                            [toF.getFileNum()].getPiece(); // get rook from the board
-
-                    if (fromF.getFileNum() < toF.getFileNum()) {
-                        // you can guarantee that the rook will be in F
-                        this.board.getSquares()[toR.getIndex()] // set rook at new place
-                                [Files.F.getFileNum()].setPiece(rook);
-
-                        this.board.getSquares()[fromR.getIndex()] // clear square from king
-                                [fromF.getFileNum()].clear();
-                        this.board.getSquares()[toR.getIndex()] // clear square from rook
-                                [toF.getFileNum()].clear();
-
-                        // you can guarantee that the king will be in G
-                        this.board.getSquares()[toR.getIndex()] // set king at new place
-                                [Files.G.getFileNum()].setPiece(king);
-                    } else {
-                        // you can guarantee that the rook will be in D
-                        this.board.getSquares()[toR.getIndex()] // set rook at new place
-                                [Files.D.getFileNum()].setPiece(rook);
-
-                        this.board.getSquares()[fromR.getIndex()] // clear square from king
-                                [fromF.getFileNum()].clear();
-                        this.board.getSquares()[toR.getIndex()] // clear square from rook
-                                [toF.getFileNum()].clear();
-
-                        // you can guarantee that the king will be in C
-                        this.board.getSquares()[toR.getIndex()] // set king at new place
-                                [Files.C.getFileNum()].setPiece(king);
-                    }
-
-                    // set first move to false for both pieces
-                    if (king instanceof FirstMoveIF) {
-                        ((FirstMoveIF) king).setFirstMove(false);
-                    }
-                    if (rook instanceof FirstMoveIF) {
-                        ((FirstMoveIF) rook).setFirstMove(false);
-                    }
-
-                    //this.display();
-                    System.out.println("\n" + currentPlayer.getName() + " has castled!");
-                    return true;
-                }
-                System.out.println("Invalid castle attempt.");
-                return false;
-            }
-        }
-
-        if (!validMove && isPlayersPiece && (toPiece == null || toPiece.getColor() != currentPlayer.getColor())) {
-            // Is our piece and the to position is empty or the piece is the opposite color
-
-            // Get all the possible moves for the piece
-            List<Position> possibleMoves = fromPiece.getValidMoves(board, new Position(fromR, fromF));
-
-            // Check to see if the to position is in the list of possible moves
-            if (possibleMoves.contains(new Position(toR, toF))) {
-                // The to position is in the list of possible moves
-                if (toPiece != null) {
-                    // The to position is occupied by an enemy piece
+        if(fromPiece != null) { // user actually selects a square with a piece
+            boolean isPlayersPiece = currentPlayer.getPieces().contains(fromPiece);
+            boolean isEnPassant = false;
+            // EN PASSANT
+            if (fromPiece.getMoveType() instanceof PawnMovement pawn) {
+                if (pawn.getEnPassant(board, board.getSquares()[toR.getIndex()][toF.getFileNum()].getPosition(), fromPiece.getPosition(board))) {
 
                     // Remove the to piece from the board
                     board.getSquares()[toR.getIndex()][toF.getFileNum()].clear();
 
+                    Rank pieceToCapRank = Rank.getRankFromIndex(toR.index - pawn.getDirection());
+
+                    SquareIF capturedSquare = board.getSquares()[pieceToCapRank.index][toF.getFileNum()];
+                    PieceIF capturedPiece = capturedSquare.getPiece();
+
                     // Add the piece to the player's captured pieces
-                    currentPlayer.addCapturedPiece(toPiece);
+                    currentPlayer.addCapturedPiece(capturedPiece);
 
+                    int toCapRankInt = capturedSquare.getPosition().getRank().getIndex();
+                    int toCapFileInt = capturedSquare.getPosition().getFile().getFileNum();
+                    // Remove the should_checked piece from the board
+                    board.getSquares()[toCapRankInt][toCapFileInt].clear();
                     // Remove the piece from the enemy player's pieces
-                    getOtherPlayer(currentPlayer).getPieces().remove(toPiece);
+                    getOtherPlayer(currentPlayer).getPieces().remove(capturedPiece);
+
+                    // Remove the from piece from the board
+                    board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
+
+                    // Move the piece to the to position
+                    board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(fromPiece);
+
+                    validMove = true;
+                    isEnPassant = true;
                 }
-                // Remove the from piece from the board
-                board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
-
-                // Move the piece to the to position
-                board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(fromPiece);
-                validMove = true;
-
-                // Add the move to the move history
-                board.addMove(currentPlayer.getColor(), fromF, fromR, toF, toR);
-                caretaker.push(board.createMemento());
-
-                if (fromPiece instanceof FirstMoveIF) {
-                    FirstMoveIF movementPiece = (FirstMoveIF) fromPiece;
-                    movementPiece.setFirstMove(false);
-                }
-            } else {
-                System.out.println("Invalid move.");
             }
-        } else if (!isEnPassant && toPiece.getColor() == currentPlayer.getColor()) {
-            System.out.println("Cannot move to a position that is occupied by your own piece.");
-        } else if (!isEnPassant){
-            System.out.println("Cannot move a piece that is not yours.");
+            if (!validMove && fromPiece.getType().equals(ChessPieceType.King) && toPiece != null) {
+                if (toPiece.getType().equals(ChessPieceType.Rook)) {
+
+                    if (canCastle(fromF, fromR, toF, toR)) { // see if it can castle
+                        Piece king = (Piece) this.board.getSquares()[fromR.getIndex()]
+                                [fromF.getFileNum()].getPiece(); // get king from the board
+                        Piece rook = (Piece) this.board.getSquares()[toR.getIndex()]
+                                [toF.getFileNum()].getPiece(); // get rook from the board
+
+                        if (fromF.getFileNum() < toF.getFileNum()) {
+                            // you can guarantee that the rook will be in F
+                            this.board.getSquares()[toR.getIndex()] // set rook at new place
+                                    [Files.F.getFileNum()].setPiece(rook);
+
+                            this.board.getSquares()[fromR.getIndex()] // clear square from king
+                                    [fromF.getFileNum()].clear();
+                            this.board.getSquares()[toR.getIndex()] // clear square from rook
+                                    [toF.getFileNum()].clear();
+
+                            // you can guarantee that the king will be in G
+                            this.board.getSquares()[toR.getIndex()] // set king at new place
+                                    [Files.G.getFileNum()].setPiece(king);
+                        } else {
+                            // you can guarantee that the rook will be in D
+                            this.board.getSquares()[toR.getIndex()] // set rook at new place
+                                    [Files.D.getFileNum()].setPiece(rook);
+
+                            this.board.getSquares()[fromR.getIndex()] // clear square from king
+                                    [fromF.getFileNum()].clear();
+                            this.board.getSquares()[toR.getIndex()] // clear square from rook
+                                    [toF.getFileNum()].clear();
+
+                            // you can guarantee that the king will be in C
+                            this.board.getSquares()[toR.getIndex()] // set king at new place
+                                    [Files.C.getFileNum()].setPiece(king);
+                        }
+
+                        // set first move to false for both pieces
+                        if (king instanceof FirstMoveIF) {
+                            ((FirstMoveIF) king).setFirstMove(false);
+                        }
+                        if (rook instanceof FirstMoveIF) {
+                            ((FirstMoveIF) rook).setFirstMove(false);
+                        }
+
+                        //this.display();
+                        System.out.println("\n" + currentPlayer.getName() + " has castled!");
+                        return true;
+                    }
+                    System.out.println("Invalid castle attempt.");
+                    return false;
+                }
+            }
+
+            if (!validMove && isPlayersPiece && (toPiece == null || toPiece.getColor() != currentPlayer.getColor())) {
+                // Is our piece and the to position is empty or the piece is the opposite color
+
+                // Get all the possible moves for the piece
+                List<Position> possibleMoves = fromPiece.getValidMoves(board, new Position(fromR, fromF));
+
+                // Check to see if the to position is in the list of possible moves
+                if (possibleMoves.contains(new Position(toR, toF))) {
+                    // The to position is in the list of possible moves
+                    if (toPiece != null) {
+                        // The to position is occupied by an enemy piece
+
+                        // Remove the to piece from the board
+                        board.getSquares()[toR.getIndex()][toF.getFileNum()].clear();
+
+                        // Add the piece to the player's captured pieces
+                        currentPlayer.addCapturedPiece(toPiece);
+
+                        // Remove the piece from the enemy player's pieces
+                        getOtherPlayer(currentPlayer).getPieces().remove(toPiece);
+                    }
+                    // Remove the from piece from the board
+                    board.getSquares()[fromR.getIndex()][fromF.getFileNum()].clear();
+
+                    // Move the piece to the to position
+                    board.getSquares()[toR.getIndex()][toF.getFileNum()].setPiece(fromPiece);
+                    validMove = true;
+
+                    // Add the move to the move history
+                    board.addMove(currentPlayer.getColor(), fromF, fromR, toF, toR);
+                    caretaker.push(board.createMemento());
+
+                    if (fromPiece instanceof FirstMoveIF) {
+                        FirstMoveIF movementPiece = (FirstMoveIF) fromPiece;
+                        movementPiece.setFirstMove(false);
+                    }
+                } else {
+                    System.out.println("Invalid move.");
+                } //  && toPiece.getColor() == currentPlayer.getColor()
+            } else if (!isEnPassant) {
+                System.out.println("Cannot move a piece that is not yours.");
+
+            } else{
+                System.out.println("Cannot move to a position that is occupied by your own piece.");
+            }
+        }else{
+            System.out.println("Square selected is empty.");
         }
         return validMove;
     }
-
 
     /**
      * This function checks to see if the user gave a valid file for the piece movement.
