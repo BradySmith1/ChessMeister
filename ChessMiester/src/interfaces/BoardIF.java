@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * This interface defines the basic functionality of a game board object.
  *
- * @author Brady Smith (100%)
- * @version 1.0
+ * @author Brady Smith (50%), Colton Brooks (50%)
+ * @version 2.0
  */
 public interface BoardIF{
 

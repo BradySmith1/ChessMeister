@@ -3,7 +3,7 @@ package enums;
 /**
  * Enumeration file to represent the rank in chess.
  *
- * @author Zach Eanes (100%)
+ * @author Zach Eanes (95%), Colton Brooks (5%)
  * @version 1.0
  */
 public enum Rank {

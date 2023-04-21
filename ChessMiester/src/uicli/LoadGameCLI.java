@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 /**
  * This class implements the load game dialog.
+ * @author Brady Smith (100%)
  */
 public class LoadGameCLI implements LoadSaveGameIF {
 

@@ -25,6 +25,7 @@ import java.util.Scanner;
 
 /**
  * This class implements the play move dialog.
+ * @author Brady Smith (40%), Zach Eanes (20%), Colton Brooks (20%), Kaushal Patel (20%)
  */
 public class PlayMoveCLI implements PlayIF {
 

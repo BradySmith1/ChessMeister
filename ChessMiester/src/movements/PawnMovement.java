@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * This class represents the movement of a pawn.
  *
- * @author Kaushal Patel (60%), Colton Brooks (30%), Zach Eanes (10%)
+ * @author Colton Brooks (100%)
  * @version 2.0
  */
 public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMoveIF {

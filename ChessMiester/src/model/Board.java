@@ -15,7 +15,7 @@ import java.util.Collections;
 /**
  * This class represents a game board that can be used for a chess game.
  *
- * @author Brady Smith (100%)
+ * @author Brady Smith (40%), Colton Brooks (40%), Kaushal Patel(10%), Zach Eanes (10%)
  * @version 2.0
  */
 public class Board implements BoardIF {

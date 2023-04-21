@@ -14,7 +14,7 @@ import java.util.List;
  * Class to define the movements of a king in a game of chess. This class does so
  * by finding the valid moves for a king on a chess board in all diagonal directions.
  *
- * @author Colton Brooks (80%), Zach Eanes (20%)
+ * @author Colton Brooks (90%), Zach Eanes (10%)
  * @version 2.0
  */
 public class KingMovement extends BlackAndWhite implements MovementIF, FirstMoveIF {

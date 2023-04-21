@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * Enumeration class to represent the file types.
  *
- * @author Zach Eanes (100%)
+ * @author Zach Eanes (95%), Colton Brooks (5%)
  * @version 1.0
  */
 public enum Files {
