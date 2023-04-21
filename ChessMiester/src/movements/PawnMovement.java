@@ -1,20 +1,15 @@
 package movements;
 
-import enums.Files;
 import enums.GameColor;
-import enums.Rank;
-import enums.Files;
 import interfaces.BoardIF;
 import interfaces.FirstMoveIF;
 import interfaces.MovementIF;
 import interfaces.PieceIF;
-import javafx.geometry.Pos;
 import model.BlackAndWhite;
 import model.Position;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 
 /**
  * This class represents the movement of a pawn.
@@ -95,15 +90,28 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
         return validMove;
     }
 
+    /**
+     * Method that checks en passant for both sides using the helper method
+     * @param board the current board we are on
+     * @param currentPosition   position of our pawn
+     * @return a possible en passant move, null if not possible
+     */
     public Position enPassant(BoardIF board, Position currentPosition) {
         Position validMove = null;
         validMove = enPassantHelper(board, currentPosition, 1);
-        if(validMove == null) {
+        if(validMove == null) {     //only one en passant should ever be possible
             validMove = enPassantHelper(board, currentPosition, -1);
         }
         return validMove;
     }
 
+    /**
+     * En Passant logic to see if a piece beside you is a pawn that has moved forwards 2 spaces on the last turn
+     * @param board current board we are on
+     * @param currentPosition   position of our pawn
+     * @param side  the side of the pawn we are checking for another pawn
+     * @return  a position for a possible en passant movement, null if none
+     */
     private Position enPassantHelper(BoardIF board, Position currentPosition, int side) {
         Position validMove = null;
         Position possiblePiece = moveCheck(board, currentPosition, 0, side, true);
@@ -112,7 +120,8 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
             int moveFile = possiblePiece.getFile().getFileNum();
             PieceIF pieceInPos = board.getSquares()[moveRank][moveFile].getPiece(); // this will be null if there is no piece
 
-            if(pieceInPos != null && !pieceInPos.getColor().equals(this.getColor()) && pieceInPos.getMoveType() instanceof PawnMovement) {
+            if(pieceInPos != null && !pieceInPos.getColor().equals(this.getColor()) &&
+                    pieceInPos.getMoveType() instanceof PawnMovement) {
                 String[] moveArr = board.getState().split("#")[1].split(",");
                 String lastMove = moveArr[moveArr.length - 1];
                 Position pos = pieceInPos.getPosition(board);
@@ -132,6 +141,13 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
         return validMove;
     }
 
+    /**
+     * Returns a boolean if en passant is possible from the posToCheck
+     * @param board the current board
+     * @param posToCheck    the position to check if the move is en passant
+     * @param currentPosition   the current position of pawn
+     * @return  if the move is en passant
+     */
     public boolean getEnPassant(BoardIF board, Position posToCheck, Position currentPosition){
         boolean canEnPassant = false;
         Position enPosition = this.enPassant(board, currentPosition);
@@ -157,6 +173,10 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
     @Override
     public void setFirstMove(boolean isFirstMove){ this.isFirstMove = isFirstMove; }
 
+    /**
+     * Gets the direction a pawn moves
+     * @return this.direction
+     */
     public int getDirection() {
         return this.direction;
     }

@@ -245,9 +245,13 @@ public class PlayMoveCLI implements PlayIF {
                 // Remove the to piece from the board
                 board.getSquares()[toR.getIndex()][toF.getFileNum()].clear();
 
+                // The rank of the piece we want to remove
                 Rank pieceToCapRank = Rank.getRankFromIndex(toR.index - pawn.getDirection());
 
+                // The square of the piece to be captured
                 SquareIF capturedSquare = board.getSquares()[pieceToCapRank.index][toF.getFileNum()];
+
+                // The piece that is getting captured
                 PieceIF capturedPiece = capturedSquare.getPiece();
 
                 // Add the piece to the player's captured pieces
@@ -955,7 +959,7 @@ public class PlayMoveCLI implements PlayIF {
             currentPlayer.displayStats();
             getOtherPlayer(currentPlayer).displayStats();
 
-            // Save the game TODO
+            // Save the game
             System.out.println("\nDo you want to save the game? (y/n)");
             Scanner scan = new Scanner(System.in);
             String save = scan.nextLine();

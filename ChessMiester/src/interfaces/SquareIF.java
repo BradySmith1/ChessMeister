@@ -31,5 +31,9 @@ public interface SquareIF {
      */
     public PieceIF getPiece();
 
+    /**
+     * Returns the position of a square
+     * @return position
+     */
     public Position getPosition();
 }

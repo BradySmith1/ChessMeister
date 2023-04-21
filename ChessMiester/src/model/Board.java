@@ -93,7 +93,7 @@ public class Board implements BoardIF {
     }
 
     /**
-     * Creates a memento state of the board to be saved.
+     * Creates the pieces placed part of the memento
      */
     public void createState() {
         StringBuilder stateBuilder = new StringBuilder("{");
@@ -108,7 +108,7 @@ public class Board implements BoardIF {
                     stateBuilder.append(square.getPiece().getType().letter);
                     stateBuilder.append(square.getPiece().getColor().toString().charAt(0));
                     if (i != getWidth() - 1 || j != getHeight() - 1) {
-                        stateBuilder.append(",");
+                        stateBuilder.append(",");   // comma after every piece other than last
                     }
                 }
             }
