@@ -48,6 +48,8 @@ public class PlayMoveCLI implements PlayIF {
 
     private String showMoves; /*show moves*/
 
+    private SettingsIF settings = new SettingsCLI(new Scanner(System.in)); /* settings access */
+
     /**
      * Constructor for the play move dialog.
      *
@@ -123,19 +125,27 @@ public class PlayMoveCLI implements PlayIF {
                     }
                     break;
                 case 2:
-                    boolean undone = this.undo();
-                    if(undone){
-                        this.switchPlayers();
+                    if(settings.getUndo().equals("on")){ // if settings allow undo
+                        boolean undone = this.undo();
+                        if (undone) {
+                            this.switchPlayers();
+                        } else {
+                            System.out.println("\nThere is nothing to undo!");
+                        }
                     }else{
-                        System.out.println("\nThere is nothing to undo!");
+                        System.out.println("Undo is not enabled!");
                     }
                     break;
                 case 3:
-                    boolean redone = this.redo();
-                    if(redone) {
-                        this.switchPlayers();
+                    if(settings.getRedo().equals("on")) { // if settings allow redo
+                        boolean redone = this.redo();
+                        if (redone) {
+                            this.switchPlayers();
+                        } else {
+                            System.out.println("\nThere is nothing to redo!");
+                        }
                     }else{
-                        System.out.println("\nThere is nothing to redo!");
+                        System.out.println("Redo is not enabled!");
                     }
                     break;
                 case 4: // show moves for a piece

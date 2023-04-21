@@ -7,11 +7,14 @@ import enums.GameColor;
 import enums.Rank;
 import interfaces.BoardIF;
 import interfaces.FirstMoveIF;
+import interfaces.SettingsIF;
 import model.Board;
 import model.BoardSaverLoader;
 import model.Piece;
 import model.Position;
 import uicli.BoardColorCLI;
+import uicli.BoardMonoCLI;
+import uicli.SettingsCLI;
 
 import java.util.Random;
 import java.util.List;
@@ -21,6 +24,9 @@ public class TutorialCLI {
 
     private BoardSaverLoader loader = new BoardSaverLoader(); /* create loader to load board */
     private BoardIF board = new Board(new BoardColorCLI()); /* create board to load into */
+
+    /* create settings to get board color */
+    private SettingsIF settings = new SettingsCLI(new Scanner(System.in));
 
     /**
      * This method will be responsible for loading the game, and looping
@@ -53,12 +59,12 @@ public class TutorialCLI {
         String input = "1"; // basic string for user input
 
         while (!input.equals("0")) { // loop game until user wants to quit
+            if(settings.getBoardColor().equals("Mono")){
+                this.board.setDrawStrategy(new BoardMonoCLI());
+            } else {
+                this.board.setDrawStrategy(new BoardColorCLI());
+            }
             this.board.draw(GameColor.WHITE); // draw board
-
-//            System.out.println("=-=-=-=-=-=-=");
-//            System.out.println("current position file: "+ pos.getFile().getFileChar());
-//            System.out.println(pos.getRank().getDisplayNum());
-//            System.out.println("=-=-=-=-=-=-=");
 
             List<Position> moves = piece.getValidMoves(this.board, pos); // get valid moves for bishop
             System.out.print("Enter a move (Enter 0 to quit, " +
