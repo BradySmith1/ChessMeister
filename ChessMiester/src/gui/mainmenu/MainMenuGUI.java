@@ -3,7 +3,7 @@
  *
  * @author Zach Eanes (50%), Kaushal Patel (50%)
  */
-package gui.MainMenu;
+package gui.mainmenu;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -84,7 +84,7 @@ public class MainMenuGUI extends BorderPane {
 
     private ImageView makeLeft(){
         ImageView imageView = new ImageView();
-        imageView.setImage(new Image("gui/MainMenu/img/KingPiece.png"));
+        imageView.setImage(new Image("gui/mainmenu/img/KingPiece.png"));
         imageView.setFitHeight(400);
         imageView.setFitWidth(400);
         imageView.setPreserveRatio(true);
@@ -93,7 +93,7 @@ public class MainMenuGUI extends BorderPane {
 
     private ImageView makeRight(){
         ImageView imageView = new ImageView();
-        imageView.setImage(new Image("gui/MainMenu/img/KingPiece.png"));
+        imageView.setImage(new Image("gui/mainmenu/img/KingPiece.png"));
         imageView.setFitHeight(400);
         imageView.setFitWidth(400);
         imageView.setPreserveRatio(true);

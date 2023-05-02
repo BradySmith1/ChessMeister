@@ -1,4 +1,4 @@
-package gui.PlayerNames;
+package gui.playernames;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,14 +17,14 @@ public class PlayerNamesGUI extends BorderPane {
     /** Scene */
     private Scene scene;
 
-    private static gui.PlayerNames.PlayerNamesGUI instance;
+    private static gui.playernames.PlayerNamesGUI instance;
 
     /**
      * Constructor for the main menu GUI.
      */
-    public static gui.PlayerNames.PlayerNamesGUI getInstance(){
+    public static gui.playernames.PlayerNamesGUI getInstance(){
         if(instance == null){
-            instance = new gui.PlayerNames.PlayerNamesGUI();
+            instance = new gui.playernames.PlayerNamesGUI();
         }
         return instance;
     }

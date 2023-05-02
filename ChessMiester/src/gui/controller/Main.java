@@ -6,13 +6,12 @@
  */
 package gui.controller;
 
-import gui.MainMenu.MainMenuGUI;
-import gui.PlayerNames.PlayerNamesGUI;
 import gui.Tutorial.TutorialMenuGUI;
+import gui.settingsmenu.SettingsMenuGUI;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
+
 public class Main extends Application {
 
     /**
@@ -49,11 +48,19 @@ public class Main extends Application {
 //        stage.getScene().setFill(Color.GREY);
 //        stage.show();
 
-        TutorialMenuGUI tutorialMenu = TutorialMenuGUI.getInstance();
+//        TutorialMenuGUI tutorialMenu = TutorialMenuGUI.getInstance();
+//        // Create ChessMeister Label
+//        stage.setTitle("ChessMeister");
+//
+//        stage.setScene(tutorialMenu.getMenu());
+//        stage.setMaximized(true);
+//        stage.getScene().setFill(Color.GREY);
+//        stage.show();
+        SettingsMenuGUI settingsMenu = SettingsMenuGUI.getInstance();
         // Create ChessMeister Label
         stage.setTitle("ChessMeister");
 
-        stage.setScene(tutorialMenu.getMenu());
+        stage.setScene(settingsMenu.getMenu());
         stage.setMaximized(true);
         stage.getScene().setFill(Color.GREY);
         stage.show();
