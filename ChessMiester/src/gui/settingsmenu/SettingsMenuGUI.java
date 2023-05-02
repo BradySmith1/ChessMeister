@@ -61,7 +61,7 @@ public class SettingsMenuGUI extends GridPane {
         CheckBox unlimitedUndo = new CheckBox("Unlimited Undos");
 
         // Set Alignment
-        this.settingsMenuPane.setAlignment(Pos.CENTER);
+        this.settingsMenuPane.setAlignment(Pos.CENTER); // Change to center and scale up
 
         settingsMenuPane.add(titleLabel, 0, 0, 2, 1);
         settingsMenuPane.add(colorLabel, 0, 1, 1, 1);
