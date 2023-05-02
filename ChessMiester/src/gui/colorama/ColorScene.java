@@ -1,3 +1,10 @@
+/**
+ * This class is responsible for creating the scene for the colorama application.
+ *
+ * @author Zach Eanes (50%), Kaushal Patel (50%)
+ * @version 1.0 (done in sprint 3)
+ */
+
 //package gui.colorama;
 //
 //import application.Main;
