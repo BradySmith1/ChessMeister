@@ -5,6 +5,7 @@
  */
 package gui.settingsmenu;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -44,7 +45,6 @@ public class SettingsMenuGUI extends GridPane {
         Label titleLabel = new Label("Settings");
         titleLabel.setId("topLabel");
         titleLabel.setAlignment(Pos.CENTER);
-
         Label colorLabel = new Label("Colors:");
         colorLabel.setId("middleLabel");
         Label blackSquares = new Label("Black Squares:");
@@ -71,19 +71,7 @@ public class SettingsMenuGUI extends GridPane {
         this.settingsMenuPane.setHgap(50);
         this.settingsMenuPane.setVgap(15);
 
-        // Set sizes
-//        titleLabel.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        colorLabel.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        blackSquares.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        whiteSquares.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        undoLabel.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        enableUndo.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        showMoves.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        saveButton.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-//        exitButton.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-
-
-        settingsMenuPane.add(titleLabel, 0, 0, 2, 1);
+        settingsMenuPane.add(titleLabel, 0, 0, 3, 1);
         settingsMenuPane.add(colorLabel, 0, 1, 1, 1);
         settingsMenuPane.add(blackSquares, 0, 2, 1, 1);
         settingsMenuPane.add(whiteSquares, 0, 3, 1, 1);
@@ -94,8 +82,7 @@ public class SettingsMenuGUI extends GridPane {
         settingsMenuPane.add(saveButton, 0, 6, 1, 1);
         settingsMenuPane.add(exitButton, 1, 6, 2, 1);
 
-
-
+        GridPane.setHalignment(titleLabel, HPos.CENTER);
         // Create a scene object
         this.scene = new Scene(settingsMenuPane);
 
