@@ -5,12 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-
-import java.awt.*;
 
 public class PlayerNamesGUI extends BorderPane {
 
@@ -50,7 +47,6 @@ public class PlayerNamesGUI extends BorderPane {
         // set center alignments
         BorderPane.setAlignment(top, Pos.CENTER);
         BorderPane.setAlignment(center, Pos.CENTER);
-
 
         // Create a scene object
         this.scene = new Scene(playerNamesPane);
