@@ -7,6 +7,7 @@
 package gui.controller;
 
 import gui.MainMenu.MainMenuGUI;
+import gui.PlayerNames.PlayerNamesGUI;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -29,11 +30,20 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) {
-        MainMenuGUI mainMenu = MainMenuGUI.getInstance();
+//        MainMenuGUI mainMenu = MainMenuGUI.getInstance();
+//        // Create ChessMeister Label
+//        stage.setTitle("ChessMeister");
+//
+//        stage.setScene(mainMenu.getMenu());
+//        stage.setMaximized(true);
+//        stage.getScene().setFill(Color.GREY);
+//        stage.show();
+
+        PlayerNamesGUI playerNameMenu = PlayerNamesGUI.getInstance();
         // Create ChessMeister Label
         stage.setTitle("ChessMeister");
 
-        stage.setScene(mainMenu.getMenu());
+        stage.setScene(playerNameMenu.getMenu());
         stage.setMaximized(true);
         stage.getScene().setFill(Color.GREY);
         stage.show();

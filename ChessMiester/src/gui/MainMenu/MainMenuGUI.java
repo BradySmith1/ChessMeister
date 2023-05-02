@@ -80,8 +80,8 @@ public class MainMenuGUI extends BorderPane {
      * Method that creates the top component of the main menu
      */
     private Label makeTop(){
-        topLabel = new Label("Chess Meister");
-        topLabel.setId("welcome-text");
+        Label topLabel = new Label("Chess Meister");
+        topLabel.setId("topLabel");
         return topLabel;
     }
 
