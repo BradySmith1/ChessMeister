@@ -8,6 +8,7 @@ package gui.controller;
 
 import gui.MainMenu.MainMenuGUI;
 import gui.PlayerNames.PlayerNamesGUI;
+import gui.Tutorial.TutorialMenuGUI;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -39,11 +40,20 @@ public class Main extends Application {
 //        stage.getScene().setFill(Color.GREY);
 //        stage.show();
 
-        PlayerNamesGUI playerNameMenu = PlayerNamesGUI.getInstance();
+//        PlayerNamesGUI playerNameMenu = PlayerNamesGUI.getInstance();
+//        // Create ChessMeister Label
+//        stage.setTitle("ChessMeister");
+//
+//        stage.setScene(playerNameMenu.getMenu());
+//        stage.setMaximized(true);
+//        stage.getScene().setFill(Color.GREY);
+//        stage.show();
+
+        TutorialMenuGUI tutorialMenu = TutorialMenuGUI.getInstance();
         // Create ChessMeister Label
         stage.setTitle("ChessMeister");
 
-        stage.setScene(playerNameMenu.getMenu());
+        stage.setScene(tutorialMenu.getMenu());
         stage.setMaximized(true);
         stage.getScene().setFill(Color.GREY);
         stage.show();
