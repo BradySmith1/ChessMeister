@@ -6,6 +6,7 @@
 package gui.Tutorial;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
@@ -43,6 +44,8 @@ public class TutorialMenuGUI extends BorderPane {
     }
 
     private VBox makeCenter(){
-        return new VBox();
+        Button setup = new Button("Board Setup");
+        Button notation = new Button("Understanding Notation");
+
     }
 }
