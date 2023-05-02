@@ -50,14 +50,7 @@
 }
 
 /** Label Styles */
-#topLabel{
-    -fx-font-size: 32px;
-    -fx-font-family: "Helvetica";
-    -fx-fill: #818181;
-    -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.7), 6, 0.0, 0, 2);
-}
-
-#welcome-text {
+#topLabel {
     -fx-font-size: 32px;
     -fx-font-family: "Arial Black";
     -fx-fill: #818181;

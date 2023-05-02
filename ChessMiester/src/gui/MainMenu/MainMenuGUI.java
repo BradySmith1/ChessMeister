@@ -21,11 +21,8 @@ public class MainMenuGUI extends BorderPane {
     /** The main menu pane. */
     BorderPane mainMenuPane;
 
-    /** Scene */
+    /** Scene for the main menu. */
     private Scene scene;
-
-    /** Label */
-    private Label topLabel;
 
     private static MainMenuGUI instance;
 
