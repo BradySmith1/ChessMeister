@@ -55,7 +55,7 @@ public class SettingsMenuGUI extends GridPane {
         undoLabel.setId("middleLabel");
         Label showLabel = new Label("Show Moves");
         showLabel.setId("middleLabel");
-
+        // TODO: implement colorama and add it to colors and black/white squares
         // Buttons for the settings menu
         Button saveButton = new Button("Save");
         saveButton.setId("bottom-button");
