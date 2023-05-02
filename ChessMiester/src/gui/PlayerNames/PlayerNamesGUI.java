@@ -50,6 +50,7 @@ public class PlayerNamesGUI extends BorderPane {
         // set center alignments
         BorderPane.setAlignment(top, Pos.CENTER);
         BorderPane.setAlignment(center, Pos.CENTER);
+        BorderPane.setAlignment(bottom, Pos.CENTER);
 
 
         // Create a scene object
@@ -86,20 +87,24 @@ public class PlayerNamesGUI extends BorderPane {
 
     private AnchorPane makeBottom(){
         //create 2 buttons and set ids
-        javafx.scene.control.Button play = new javafx.scene.control.Button("Play");
-        javafx.scene.control.Button exit = new Button("Exit");
+        Button play = new javafx.scene.control.Button("Play");
+        Button exit = new Button("Exit");
         play.setId("bottom-button");
         exit.setId("bottom-button");
 
-        //create anchor pane and add buttons
-        AnchorPane ap = new AnchorPane(play, exit);
+        // Create the anchor pane
+        AnchorPane ap = new AnchorPane();
 
-        //anchor the settings button
+
+        // Set AnchorPane constraints
         AnchorPane.setBottomAnchor(play, 10.0);
+        AnchorPane.setLeftAnchor(play, 10.0);
 
-        //anchor the exit button
+        AnchorPane.setBottomAnchor(exit, 10.0);
         AnchorPane.setRightAnchor(exit, 10.0);
-        AnchorPane.setRightAnchor(exit, 10.0);
+
+        // Add buttons to Anchor Pane
+        ap.getChildren().addAll(play,exit);
 
         return ap;
     }
