@@ -56,6 +56,7 @@ public class Main extends Application {
 //        stage.setMaximized(true);
 //        stage.getScene().setFill(Color.GREY);
 //        stage.show();
+
         SettingsMenuGUI settingsMenu = SettingsMenuGUI.getInstance();
         // Create ChessMeister Label
         stage.setTitle("ChessMeister");

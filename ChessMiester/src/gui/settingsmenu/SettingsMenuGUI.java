@@ -42,26 +42,46 @@ public class SettingsMenuGUI extends GridPane {
 
         // Labels for the settings menu
         Label titleLabel = new Label("Settings");
+        titleLabel.setId("topLabel");
+        titleLabel.setAlignment(Pos.CENTER);
+
         Label colorLabel = new Label("Colors:");
+        colorLabel.setId("middleLabel");
         Label blackSquares = new Label("Black Squares:");
+        blackSquares.setId("middleLabel");
         Label whiteSquares = new Label("White Squares:");
-        Label undoLabel = new Label("Undo");
-        Label maxUndosLabel = new Label("Max Undos");
+        whiteSquares.setId("middleLabel");
+        Label undoLabel = new Label("Undo/Redo");
+        undoLabel.setId("middleLabel");
+        Label showLabel = new Label("Show Moves");
+        showLabel.setId("middleLabel");
 
         // Buttons for the settings menu
         Button saveButton = new Button("Save");
-        Button exitButton = new Button("Exit");
-
-        // Text fields for the settings menu
-        TextField maxUndosField = new TextField();
+        saveButton.setId("bottom-button");
+        Button exitButton = new Button("Return to Main Menu");
+        exitButton.setId("bottom-button");
 
         // Checkboxes for the settings menu
-        CheckBox showMoves = new CheckBox("Show Moves");
+        CheckBox showMoves = new CheckBox("Enabled");
         CheckBox enableUndo = new CheckBox("Enabled");
-        CheckBox unlimitedUndo = new CheckBox("Unlimited Undos");
 
         // Set Alignment
         this.settingsMenuPane.setAlignment(Pos.CENTER); // Change to center and scale up
+        this.settingsMenuPane.setHgap(50);
+        this.settingsMenuPane.setVgap(15);
+
+        // Set sizes
+//        titleLabel.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        colorLabel.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        blackSquares.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        whiteSquares.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        undoLabel.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        enableUndo.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        showMoves.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        saveButton.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        exitButton.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
 
         settingsMenuPane.add(titleLabel, 0, 0, 2, 1);
         settingsMenuPane.add(colorLabel, 0, 1, 1, 1);
@@ -69,12 +89,10 @@ public class SettingsMenuGUI extends GridPane {
         settingsMenuPane.add(whiteSquares, 0, 3, 1, 1);
         settingsMenuPane.add(undoLabel, 0, 4, 1, 1);
         settingsMenuPane.add(enableUndo, 0, 5, 1, 1);
-        settingsMenuPane.add(unlimitedUndo, 0, 6, 1, 1);
-        settingsMenuPane.add(maxUndosField, 0, 7, 1, 1);
-        settingsMenuPane.add(maxUndosLabel, 1, 7, 1, 1);
-        settingsMenuPane.add(showMoves, 2,2, 1, 1);
-        settingsMenuPane.add(saveButton, 2, 6, 1, 1);
-        settingsMenuPane.add(exitButton, 2, 7, 1, 1);
+        settingsMenuPane.add(showLabel, 1, 4, 1, 1);
+        settingsMenuPane.add(showMoves, 1,5, 1, 1);
+        settingsMenuPane.add(saveButton, 0, 6, 1, 1);
+        settingsMenuPane.add(exitButton, 1, 6, 2, 1);
 
 
 
