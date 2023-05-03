@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import gui.colourselector.components.SliderPane;
 
-public class ColourSelectorGUI extends GridPane {
+public class ColourSelectorGUI extends GridPane implements SliderChangeListener {
 
     /** The selected colour as a hex value (RGB) **/
     String selectedColor;
@@ -59,7 +59,11 @@ public class ColourSelectorGUI extends GridPane {
     /** Scene for the main menu. */
     private Scene scene;
 
+    /** ColourSelectorGUI Instance **/
     private static ColourSelectorGUI instance;
+
+    /** Integer values for the RGB **/
+    int redColour, greenColour, blueColour;
 
     /**
      * Constructor for the main menu GUI.
@@ -73,11 +77,16 @@ public class ColourSelectorGUI extends GridPane {
 
 
     private ColourSelectorGUI(){
+        // Initialize the RGB values to 0
+        this.redColour = 0;
+        this.greenColour = 0;
+        this.blueColour = 0;
+
         // Create a border pane
         this.colourSelectorPane = new GridPane();
 
         // Vertical Spacing for GridPane
-        this.setVgap(20);
+        this.colourSelectorPane.setVgap(20);
 
         // Grid constraints for row
         RowConstraints row0 = new RowConstraints();
@@ -106,7 +115,7 @@ public class ColourSelectorGUI extends GridPane {
 
         // Position Title
         this.titleLabel.setAlignment(Pos.CENTER);
-        setHalignment(this.titleLabel, HPos.CENTER);
+        GridPane.setHalignment(this.titleLabel, HPos.CENTER);
 
         // Top Panel for Colour
         this.colour = new StackPane();
@@ -127,6 +136,11 @@ public class ColourSelectorGUI extends GridPane {
         this.red = new SliderPane("Red", MIN_INTENSITY, MIN_INTENSITY, MAX_INTENSITY);
         this.green = new SliderPane("Green", MIN_INTENSITY, MIN_INTENSITY, MAX_INTENSITY);
         this.blue = new SliderPane("Blue", MIN_INTENSITY, MIN_INTENSITY, MAX_INTENSITY);
+
+        // Register this class as the listener for the sliders
+        this.red.setListener(this);
+        this.green.setListener(this);
+        this.blue.setListener(this);
 
         // Add the sliders to the hbox
         sliders.getChildren().addAll(this.red, this.green, this.blue);
@@ -198,5 +212,24 @@ public class ColourSelectorGUI extends GridPane {
 
         this.hexColour.setText("#" + this.selectedColor);
 
+    }
+
+    /**
+     * Handler for when a slider is changed
+     * @param sliderPane The slider pane with the changed value
+     * @param newValue The new value of the slider pane
+     */
+    @Override
+    public void sliderChanged(SliderPane sliderPane, int newValue) {
+        if (sliderPane == red){
+            this.redColour = newValue;
+        }
+        else if (sliderPane == green){
+            this.greenColour = newValue;
+        }
+        else if (sliderPane == blue){
+            this.blueColour = newValue;
+        }
+        setBackground(this.redColour, this.greenColour, this.blueColour);
     }
 }

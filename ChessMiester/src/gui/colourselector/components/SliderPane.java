@@ -1,5 +1,6 @@
 package gui.colourselector.components;
 
+import gui.colourselector.SliderChangeListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -28,6 +29,9 @@ public class SliderPane extends VBox{
 
     /** The maximum value of the slider **/
     private int max;
+
+    /** The slider change lister **/
+    public SliderChangeListener sliderListener;
 
     /**
      * Constructor for the slider pane
@@ -71,7 +75,8 @@ public class SliderPane extends VBox{
             @Override
             public void changed(ObservableValue<? extends Number> observableValue,
                     Number oldValue, Number newValue) {
-                value.setText(String.format("%.0f", newValue));
+                if(!oldValue.equals(newValue))
+                    set(newValue.intValue());
             }
         });
 
@@ -79,13 +84,16 @@ public class SliderPane extends VBox{
             @Override
             public void changed(ObservableValue<? extends String> observableValue,
                     String oldValue, String newValue) {
-                if(!newValue.matches("\\d*")){
-                    value.setText(newValue.replaceAll("[^\\d]", ""));
+                if(!oldValue.equals(newValue)){
+                    try{
+                        int valueToSet = Integer.parseInt(newValue);
+                        set(valueToSet);
+                        notifyObserver(valueToSet);
+                    }
+                    catch (NumberFormatException ignored){
+
+                    }
                 }
-                if(newValue.equals("")){
-                    value.setText("0");
-                }
-                slider.setValue(Integer.parseInt(value.getText()));
             }
         });
     }
@@ -105,5 +113,13 @@ public class SliderPane extends VBox{
      */
     public int getValue() {
         return (int) this.slider.getValue();
+    }
+
+    public void setListener(SliderChangeListener scl){
+        this.sliderListener = scl;
+    }
+
+    public void notifyObserver(int newValue){
+        this.sliderListener.sliderChanged(this, newValue);
     }
 }

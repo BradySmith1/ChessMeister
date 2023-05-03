@@ -8,6 +8,7 @@ package gui.controller;
 
 import gui.Tutorial.TutorialMenuGUI;
 import gui.colourselector.ColourSelectorGUI;
+import gui.mainmenu.MainMenuGUI;
 import gui.settingsmenu.SettingsMenuGUI;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
