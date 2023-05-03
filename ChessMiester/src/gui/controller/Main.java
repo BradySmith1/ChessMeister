@@ -7,6 +7,7 @@
 package gui.controller;
 
 import gui.Tutorial.TutorialMenuGUI;
+import gui.colourselector.ColourSelectorGUI;
 import gui.settingsmenu.SettingsMenuGUI;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
@@ -57,11 +58,20 @@ public class Main extends Application {
 //        stage.getScene().setFill(Color.GREY);
 //        stage.show();
 
-        SettingsMenuGUI settingsMenu = SettingsMenuGUI.getInstance();
+//        SettingsMenuGUI settingsMenu = SettingsMenuGUI.getInstance();
+//        // Create ChessMeister Label
+//        stage.setTitle("ChessMeister");
+//
+//        stage.setScene(settingsMenu.getMenu());
+//        stage.setMaximized(true);
+//        stage.getScene().setFill(Color.GREY);
+//        stage.show();
+
+        ColourSelectorGUI colorSelectMenu = ColourSelectorGUI.getInstance();
         // Create ChessMeister Label
         stage.setTitle("ChessMeister");
 
-        stage.setScene(settingsMenu.getMenu());
+        stage.setScene(colorSelectMenu.getMenu());
         stage.setMaximized(true);
         stage.getScene().setFill(Color.GREY);
         stage.show();
