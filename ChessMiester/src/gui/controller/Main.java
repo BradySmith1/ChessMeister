@@ -100,6 +100,7 @@ public class Main extends Application {
 
             this.stage.setScene(scene);
             this.stage.show();
+            this.stage.setTitle("ChessMeister");
         } catch(Exception e) {
             e.printStackTrace();
         }
