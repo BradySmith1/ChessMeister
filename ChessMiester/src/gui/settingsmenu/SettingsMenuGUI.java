@@ -5,6 +5,10 @@
  */
 package gui.settingsmenu;
 
+import enums.ToScreen;
+import interfaces.ScreenChangeHandlerIF;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,20 +28,14 @@ public class SettingsMenuGUI extends GridPane {
     /** Scene for the main menu. */
     private Scene scene;
 
-    private static SettingsMenuGUI instance;
+    /** Reference to the implementation for the ScreenChangeHandlerIF **/
+    ScreenChangeHandlerIF screenChanger;
 
-    /**
-     * Constructor for the main menu GUI.
-     */
-    public static SettingsMenuGUI getInstance(){
-        if(instance == null){
-            instance = new SettingsMenuGUI();
-        }
-        return instance;
-    }
+    /** Buttons for the menu **/
+    Button saveButton, exitButton;
 
 
-    private SettingsMenuGUI(){
+    public SettingsMenuGUI(){
         // Create a border pane
         this.settingsMenuPane = new GridPane();
 
@@ -56,11 +54,16 @@ public class SettingsMenuGUI extends GridPane {
         Label showLabel = new Label("Show Moves");
         showLabel.setId("middleLabel");
         // TODO: implement colorama and add it to colors and black/white squares
+
         // Buttons for the settings menu
-        Button saveButton = new Button("Save");
-        saveButton.setId("bottom-button");
-        Button exitButton = new Button("Return to Main Menu");
-        exitButton.setId("bottom-button");
+        this.saveButton = new Button("Save");
+        this.saveButton.setId("bottom-button");
+        this.exitButton = new Button("Return to Main Menu");
+        this.exitButton.setId("bottom-button");
+
+        // Event Handlers for the settings menu
+        this.saveButton.setOnAction(buttonHandler);
+        this.exitButton.setOnAction(buttonHandler);
 
         // Checkboxes for the settings menu
         CheckBox showMoves = new CheckBox("Enabled");
@@ -83,16 +86,39 @@ public class SettingsMenuGUI extends GridPane {
         settingsMenuPane.add(exitButton, 1, 6, 2, 1);
 
         GridPane.setHalignment(titleLabel, HPos.CENTER);
-        // Create a scene object
-        this.scene = new Scene(settingsMenuPane);
 
-        // Get stylesheet
-        this.scene.getStylesheets().add(
-                getClass().getResource("SettingsMenu.css").toExternalForm());
+//        // Get stylesheet
+//        this.scene.getStylesheets().add(
+//                getClass().getResource("SettingsMenu.css").toExternalForm());
     }
     /**
      * Getter for the scene.
      * @return the scene
      */
-    public Scene getMenu(){ return this.scene; }
+    public Pane getRoot(){ return this.settingsMenuPane; }
+
+    /**
+     * Set the handler for screen changes
+     * @param sch The ScreenChangeHandler
+     */
+    public void setScreenChangeHandler(ScreenChangeHandlerIF sch){
+        this.screenChanger = sch;
+    }
+
+    /** Event Handler for buttons **/
+    EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+
+        @Override
+        public void handle(ActionEvent event) {
+            if (screenChanger != null){
+                Object source = event.getSource();
+
+                if (source == saveButton){
+                    System.out.println("Save button pressed");
+                } else if (source == exitButton) {
+                    screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                }
+            }
+        }
+    };
 }

@@ -14,11 +14,4 @@ public interface ScreenChangeHandlerIF {
      */
     public void changeScreen(ToScreen screenChoice);
 
-    /**
-     * The getter for the singleton instance of this class
-     * @param scene the scene to be used
-     * @return the singleton instance
-     */
-    public ScreenChangeHandlerIF getInstance(Scene scene);
-
 }

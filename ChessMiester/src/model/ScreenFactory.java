@@ -14,13 +14,28 @@ import javafx.stage.Screen;
 /**
  * Class that implements ScreenChangeHandlerIF to be used to change screens, this is a singleton
  */
-public class ScreenFactory implements ScreenChangeHandlerIF {
+public final class ScreenFactory implements ScreenChangeHandlerIF {
 
     /** the scene to be passed in first through getInstance, then to be changed by changeScreen() */
     private Scene scene;
 
     /** the singleton instance */
     private static ScreenFactory singleton;
+
+    /** The main menu screen **/
+    private static MainMenuGUI mainMenuScreen;
+
+    /** The player names screen **/
+    private static PlayerNamesGUI definePlayerNamesScreen;
+
+    /** The tutorial screen **/
+    private static TutorialMenuGUI tutorialMenuScreen;
+
+    /** The settings screen **/
+    private static SettingsMenuGUI settingsMenuScreen;
+
+    /** The colour selector screen **/
+    private static ColourSelectorGUI colourSelectorScreen;
 
     /**
      * The constructor for ScreenFactory
@@ -36,7 +51,7 @@ public class ScreenFactory implements ScreenChangeHandlerIF {
      * @param scene the scene to be used
      * @return the singleton instance
      */
-    public ScreenChangeHandlerIF getInstance(Scene scene) {
+    public static ScreenFactory getInstance(Scene scene) {
         if (singleton == null) {
             singleton = new ScreenFactory(scene);
         }
@@ -50,24 +65,50 @@ public class ScreenFactory implements ScreenChangeHandlerIF {
      * @return  a screen that the scene will now be using
      */
     private Pane setScreen(ToScreen screenChoice) {
-        Pane screen = null;
+        Pane screen;
 
         switch (screenChoice){
             case MAIN_MENU :
-                screen = MainMenuGUI.getInstance();
+                if (mainMenuScreen == null) {
+                    mainMenuScreen = new MainMenuGUI();
+                    mainMenuScreen.setScreenChangeHandler(this);
+                }
+                screen = mainMenuScreen.getRoot();
                 break;
             case PLAYER_NAMES :
-                screen = PlayerNamesGUI.getInstance();
+                if (definePlayerNamesScreen == null) {
+                    definePlayerNamesScreen = new PlayerNamesGUI();
+                    definePlayerNamesScreen.setScreenChangeHandler(this);
+                }
+                screen = definePlayerNamesScreen.getRoot();
                 break;
             case SETTINGS_MENU :
-                screen = SettingsMenuGUI.getInstance();
+                if (settingsMenuScreen == null) {
+                    settingsMenuScreen = new SettingsMenuGUI();
+                    settingsMenuScreen.setScreenChangeHandler(this);
+                }
+                screen = settingsMenuScreen.getRoot();
                 break;
             case TUTORIAL_MENU :
-                screen = TutorialMenuGUI.getInstance();
+                if (tutorialMenuScreen == null) {
+                    tutorialMenuScreen = new TutorialMenuGUI();
+                    tutorialMenuScreen.setScreenChangeHandler(this);
+                }
+                screen = tutorialMenuScreen.getRoot();
                 break;
             case COLOUR_SELECTOR:
-                screen = ColourSelectorGUI.getInstance();
+                if (colourSelectorScreen == null) {
+                    colourSelectorScreen = new ColourSelectorGUI();
+                }
+                screen = colourSelectorScreen.getRoot();
+                break;
+            default:
+                screen = null;
+                break;
         }
+        // Apply the screen to the root scene
+        scene.setRoot(screen);
+
         return screen;
     }
 

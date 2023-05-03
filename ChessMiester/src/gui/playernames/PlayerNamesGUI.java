@@ -1,5 +1,9 @@
 package gui.playernames;
 
+import enums.ToScreen;
+import interfaces.ScreenChangeHandlerIF;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class PlayerNamesGUI extends BorderPane {
@@ -17,20 +22,14 @@ public class PlayerNamesGUI extends BorderPane {
     /** Scene */
     private Scene scene;
 
-    private static gui.playernames.PlayerNamesGUI instance;
+    /** Reference to the implementation for the ScreenChangeHandlerIF **/
+    ScreenChangeHandlerIF screenChanger;
 
-    /**
-     * Constructor for the main menu GUI.
-     */
-    public static gui.playernames.PlayerNamesGUI getInstance(){
-        if(instance == null){
-            instance = new gui.playernames.PlayerNamesGUI();
-        }
-        return instance;
-    }
+    /** Buttons for the menu **/
+    Button play, exit;
 
 
-    private PlayerNamesGUI(){
+    public PlayerNamesGUI(){
         // Create a border pane
         this.playerNamesPane = new BorderPane();
 
@@ -49,18 +48,15 @@ public class PlayerNamesGUI extends BorderPane {
         BorderPane.setAlignment(center, Pos.CENTER);
         BorderPane.setAlignment(bottom, Pos.CENTER);
 
-        // Create a scene object
-        this.scene = new Scene(playerNamesPane);
-
-        // Get stylesheet
-        this.scene.getStylesheets().add(
-                getClass().getResource("PlayerNames.css").toExternalForm());
+//        // Get stylesheet
+//        this.scene.getStylesheets().add(
+//                getClass().getResource("PlayerNames.css").toExternalForm());
     }
     /**
      * Getter for the scene.
      * @return the scene
      */
-    public Scene getMenu(){ return this.scene;}
+    public Pane getRoot(){ return this.playerNamesPane;}
 
     private Label makeTop(){
         Label topLabel = new Label("Enter Player Names");
@@ -83,10 +79,14 @@ public class PlayerNamesGUI extends BorderPane {
 
     private AnchorPane makeBottom(){
         //create 2 buttons and set ids
-        Button play = new javafx.scene.control.Button("Play");
-        Button exit = new Button("Exit");
+        this.play = new Button("Play");
+        this.exit = new Button("Exit");
         play.setId("bottom-button");
         exit.setId("bottom-button");
+
+        // Set button actions
+        play.setOnAction(buttonHandler);
+        exit.setOnAction(buttonHandler);
 
         // Create the anchor pane
         AnchorPane ap = new AnchorPane();
@@ -104,4 +104,29 @@ public class PlayerNamesGUI extends BorderPane {
 
         return ap;
     }
+
+    /**
+     * Set the handler for screen changes
+     * @param sch The ScreenChangeHandler
+     */
+    public void setScreenChangeHandler(ScreenChangeHandlerIF sch){
+        this.screenChanger = sch;
+    }
+
+    /** Event Handler for buttons **/
+    EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+
+        @Override
+        public void handle(ActionEvent event) {
+            if (screenChanger != null){
+                Object source = event.getSource();
+
+                if (source == play){
+                    System.out.println("Play button pressed");
+                } else if (source == exit) {
+                    screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                }
+            }
+        }
+    };
 }

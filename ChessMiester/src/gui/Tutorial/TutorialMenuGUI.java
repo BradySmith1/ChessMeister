@@ -5,11 +5,15 @@
  */
 package gui.Tutorial;
 
+import enums.ToScreen;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.geometry.Pos;
+import interfaces.ScreenChangeHandlerIF;
 
 public class TutorialMenuGUI extends BorderPane {
     /** The main menu pane. */
@@ -18,23 +22,16 @@ public class TutorialMenuGUI extends BorderPane {
     /** Scene */
     private Scene scene;
 
-    /** The instance of the tutorial menu GUI. */
-    private static TutorialMenuGUI instance;
+    /** Reference to the implementation for the ScreenChangeHandlerIF **/
+    ScreenChangeHandlerIF screenChanger;
 
-    /**
-     * Gets the instance of the tutorial menu GUI. Uses the singleton design pattern.
-     */
-    public static TutorialMenuGUI getInstance(){
-        if(instance == null){
-            instance = new TutorialMenuGUI();
-        }
-        return instance;
-    }
+    /** Buttons for the menu **/
+    Button setup, notation, organization, check, checkmate, draw, returnButton, king, queen, bishop, knight, rook, pawn;
 
     /**
      * Constructor for the tutorial menu GUI.
      */
-    private TutorialMenuGUI() {
+    public TutorialMenuGUI() {
         // Create a border pane and add title to top
         this.tutorialPane = new BorderPane();
         Label title = new Label("Tutorials");
@@ -47,10 +44,8 @@ public class TutorialMenuGUI extends BorderPane {
         this.tutorialPane.setCenter(center);
 
 
-        this.scene = new Scene(this.tutorialPane);
-
-        this.scene.getStylesheets().add(
-                   getClass().getResource("TutorialMenu.css").toExternalForm());
+//        this.scene.getStylesheets().add(
+//                   getClass().getResource("TutorialMenu.css").toExternalForm());
     }
 
     /**
@@ -75,6 +70,21 @@ public class TutorialMenuGUI extends BorderPane {
         Button knight = new Button("Knight Moves");
         Button rook = new Button("Rook Moves");
         Button pawn = new Button("Pawn Moves");
+
+        // Set button actions
+        setup.setOnAction(buttonHandler);
+        notation.setOnAction(buttonHandler);
+        organization.setOnAction(buttonHandler);
+        check.setOnAction(buttonHandler);
+        checkmate.setOnAction(buttonHandler);
+        draw.setOnAction(buttonHandler);
+        returnButton.setOnAction(buttonHandler);
+        king.setOnAction(buttonHandler);
+        queen.setOnAction(buttonHandler);
+        bishop.setOnAction(buttonHandler);
+        knight.setOnAction(buttonHandler);
+        rook.setOnAction(buttonHandler);
+        pawn.setOnAction(buttonHandler);
 
         // Set button ids
         setup.setId("menu-button");
@@ -120,5 +130,52 @@ public class TutorialMenuGUI extends BorderPane {
     /**
      * Returns the scene.
      */
-    public Scene getMenu(){ return this.scene;}
+    public Pane getRoot(){ return this.tutorialPane;}
+
+    /**
+     * Set the handler for screen changes
+     * @param sch The ScreenChangeHandler
+     */
+    public void setScreenChangeHandler(ScreenChangeHandlerIF sch){
+        this.screenChanger = sch;
+    }
+
+    /** Event Handler for buttons **/
+    EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+
+        @Override
+        public void handle(ActionEvent event) {
+            if (screenChanger != null){
+                Object source = event.getSource();
+
+                if (source == setup) {
+                    System.out.println("Setup button pressed");
+                } else if (source == notation) {
+                    System.out.println("Notation button pressed");
+                } else if (source == organization) {
+                    System.out.println("Organization button pressed");
+                } else if (source == check) {
+                    System.out.println("Check button pressed");
+                } else if (source == checkmate) {
+                    System.out.println("Checkmate button pressed");
+                } else if (source == draw) {
+                    System.out.println("Draw button pressed");
+                } else if (source == king) {
+                    System.out.println("King button pressed");
+                } else if (source == queen) {
+                    System.out.println("Queen button pressed");
+                } else if (source == bishop) {
+                    System.out.println("Bishop button pressed");
+                } else if (source == knight) {
+                    System.out.println("Knight button pressed");
+                } else if (source == rook) {
+                    System.out.println("Rook button pressed");
+                } else if (source == pawn) {
+                    System.out.println("Pawn button pressed");
+                } else if (source == returnButton) {
+                    screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                }
+            }
+        }
+    };
 }

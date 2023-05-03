@@ -59,24 +59,11 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
     /** Scene for the main menu. */
     private Scene scene;
 
-    /** ColourSelectorGUI Instance **/
-    private static ColourSelectorGUI instance;
-
     /** Integer values for the RGB **/
     int redColour, greenColour, blueColour;
 
-    /**
-     * Constructor for the main menu GUI.
-     */
-    public static ColourSelectorGUI getInstance(){
-        if(instance == null){
-            instance = new ColourSelectorGUI();
-        }
-        return instance;
-    }
 
-
-    private ColourSelectorGUI(){
+    public ColourSelectorGUI(){
         // Initialize the RGB values to 0
         this.redColour = 0;
         this.greenColour = 0;
@@ -164,18 +151,15 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         this.colourSelectorPane.add(this.selectButton, 0, 4, 1, 1);
         this.colourSelectorPane.add(this.exitButton, 1, 4, 1, 1);
 
-        // Create a scene object
-        this.scene = new Scene(colourSelectorPane);
-
-        // Get stylesheet
-        this.scene.getStylesheets().add(
-                getClass().getResource("ColourSelector.css").toExternalForm());
+//        // Get stylesheet
+//        this.scene.getStylesheets().add(
+//                getClass().getResource("ColourSelector.css").toExternalForm());
     }
     /**
      * Getter for the scene.
      * @return the scene
      */
-    public Scene getMenu(){ return this.scene; }
+    public Pane getRoot(){ return this.colourSelectorPane; }
 
     /**
      * Set the background of the chooser
