@@ -139,15 +139,15 @@ public class BoardMonoCLI implements BoardStrategy {
         for (int height = 0; height < board.getHeight(); height++) {
             populateRow(board, (board.getHeight() - height) - 1);
             System.out.print("  | ");
-            printLine(false);
+            printLine(true);
             System.out.println("|");
             System.out.print(height + 1 + " | ");
-            for (int width = 0; width < pieces.length; width++) {
+            for (int width = pieces.length - 1; width >= 0; width--) {
                 System.out.print(pieces[width]);
             }
             System.out.println("|");
             System.out.print("  | ");
-            printLine(false);
+            printLine(true);
             System.out.println("|");
             number++;
         }
