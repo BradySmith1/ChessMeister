@@ -88,8 +88,8 @@ public class SettingsMenuGUI extends GridPane {
         GridPane.setHalignment(titleLabel, HPos.CENTER);
 
 //        // Get stylesheet
-//        this.scene.getStylesheets().add(
-//                getClass().getResource("SettingsMenu.css").toExternalForm());
+        this.settingsMenuPane.getStylesheets().add(
+                getClass().getResource("SettingsMenu.css").toExternalForm());
     }
     /**
      * Getter for the scene.

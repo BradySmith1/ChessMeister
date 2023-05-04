@@ -26,7 +26,8 @@ public class TutorialMenuGUI extends BorderPane {
     ScreenChangeHandlerIF screenChanger;
 
     /** Buttons for the menu **/
-    Button setup, notation, organization, check, checkmate, draw, returnButton, king, queen, bishop, knight, rook, pawn;
+    Button setup, notation, organization, check, checkmate, draw, returnButton,
+           king, queen, bishop, knight, rook, pawn;
 
     /**
      * Constructor for the tutorial menu GUI.
@@ -44,8 +45,8 @@ public class TutorialMenuGUI extends BorderPane {
         this.tutorialPane.setCenter(center);
 
 
-//        this.scene.getStylesheets().add(
-//                   getClass().getResource("TutorialMenu.css").toExternalForm());
+        this.tutorialPane.getStylesheets().add(
+                   getClass().getResource("TutorialMenu.css").toExternalForm());
     }
 
     /**

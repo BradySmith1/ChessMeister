@@ -49,8 +49,8 @@ public class PlayerNamesGUI extends BorderPane {
         BorderPane.setAlignment(bottom, Pos.CENTER);
 
 //        // Get stylesheet
-//        this.scene.getStylesheets().add(
-//                getClass().getResource("PlayerNames.css").toExternalForm());
+        this.playerNamesPane.getStylesheets().add(
+                getClass().getResource("PlayerNames.css").toExternalForm());
     }
     /**
      * Getter for the scene.
@@ -66,14 +66,24 @@ public class PlayerNamesGUI extends BorderPane {
 
     private VBox makeCenter(){
         VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
 
+        // create and set ids for labels
         Label player1Label = new Label("Player 1 name");
         Label player2Label = new Label("Player 2 name");
+        player1Label.setId("sub-menu-text");
+        player2Label.setId("sub-menu-text");
 
+        // create and set ids for text fields
         TextField player1Name = new TextField();
         TextField player2Name = new TextField();
+        player1Name.setId("text-box");
+        player2Name.setId("text-box");
+        player1Name.setPromptText("Enter name here!");
+        player2Name.setPromptText("Enter name here!");
 
         vBox.getChildren().addAll(player1Label, player1Name, player2Label, player2Name);
+
         return vBox;
     }
 
