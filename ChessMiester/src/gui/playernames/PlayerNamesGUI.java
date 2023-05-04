@@ -23,7 +23,7 @@ public class PlayerNamesGUI extends BorderPane {
     ScreenChangeHandlerIF screenChanger;
 
     /** Buttons for the menu **/
-    Button play, exit;
+    Button save, exit;
 
     /**
      * Constructor for the player names GUI.
@@ -37,14 +37,8 @@ public class PlayerNamesGUI extends BorderPane {
         center.setId("main-pane");
         this.playerNamesPane.setCenter(center);
 
-        AnchorPane bottom = makeBottom();
-        bottom.setId("main-pane");
-        this.playerNamesPane.setBottom(bottom);
-
         // set center alignments
         BorderPane.setAlignment(center, Pos.CENTER);
-        BorderPane.setAlignment(bottom, Pos.CENTER);
-
         // Get stylesheet
         this.playerNamesPane.getStylesheets().add(
                 getClass().getResource("PlayerNames.css").toExternalForm());
@@ -81,10 +75,13 @@ public class PlayerNamesGUI extends BorderPane {
         player1Name.setPromptText("Enter name here!");
         player2Name.setPromptText("Enter name here!");
 
+        //
+
         // add elements to the vbox
         vBox.getChildren().addAll(title, player1Label, player1Name, player2Label, player2Name);
-
+        vBox.getChildren().addAll(makeBottom());
         vBox.setSpacing(20);
+
         return vBox;
     }
 
@@ -93,31 +90,24 @@ public class PlayerNamesGUI extends BorderPane {
      *
      * @return the bottom pane
      */
-    private AnchorPane makeBottom(){
+    private VBox makeBottom(){
         //create 2 buttons and set ids
-        this.play = new Button("Play");
+        this.save = new Button("Click to Save");
         this.exit = new Button("Return to Main Menu");
-        play.setId("bottom-button");
+        save.setId("menu-button");
         exit.setId("bottom-button");
 
         // Set button actions
-        play.setOnAction(buttonHandler);
+        save.setOnAction(buttonHandler);
         exit.setOnAction(buttonHandler);
 
-        // Create the anchor pane
-        AnchorPane ap = new AnchorPane();
+        // Create the Vbox pane
+        VBox vb = new VBox();
+        vb.setAlignment(Pos.CENTER);
+        vb.setSpacing(20);
+        vb.getChildren().addAll(save, exit);
 
-        // Set AnchorPane constraints
-        AnchorPane.setBottomAnchor(play, 10.0);
-        AnchorPane.setLeftAnchor(play, 10.0);
-
-        AnchorPane.setBottomAnchor(exit, 10.0);
-        AnchorPane.setRightAnchor(exit, 10.0);
-
-        // Add buttons to Anchor Pane
-        ap.getChildren().addAll(play,exit);
-
-        return ap;
+        return vb;
     }
 
     /**
@@ -137,7 +127,7 @@ public class PlayerNamesGUI extends BorderPane {
             if (screenChanger != null){
                 Object source = event.getSource();
 
-                if (source == play){
+                if (source == save){
                     System.out.println("Play button pressed");
                 } else if (source == exit) {
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
