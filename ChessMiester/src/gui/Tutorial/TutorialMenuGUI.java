@@ -33,17 +33,13 @@ public class TutorialMenuGUI extends BorderPane {
      * Constructor for the tutorial menu GUI.
      */
     public TutorialMenuGUI() {
-        // Create a border pane and add title to top
+        // Create a border pane
         this.tutorialPane = new BorderPane();
-        Label title = new Label("Tutorials");
-        title.setId("topLabel");
-        this.tutorialPane.setTop(title);
-        BorderPane.setAlignment(title, Pos.CENTER);
 
-        // Create buttons for the center
+        // Create label and buttons for the center
         VBox center = makeCenter();
         this.tutorialPane.setCenter(center);
-
+        this.tutorialPane.setId("main-pane");
 
         this.tutorialPane.getStylesheets().add(
                    getClass().getResource("TutorialMenu.css").toExternalForm());
@@ -119,9 +115,12 @@ public class TutorialMenuGUI extends BorderPane {
         hb.setSpacing(10);
         hb.setAlignment(Pos.CENTER);
 
-        // Create center vbox and center
+        // Create center vbox and center elements
         VBox center = new VBox();
-        center.getChildren().addAll(hb, returnButton);
+        Label title = new Label("Tutorials");
+        title.setId("topLabel");
+        title.setAlignment(Pos.CENTER);
+        center.getChildren().addAll(title, hb, returnButton);
         center.setAlignment(Pos.CENTER);
         center.setSpacing(20);
 

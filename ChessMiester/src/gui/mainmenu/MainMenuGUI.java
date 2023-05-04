@@ -42,7 +42,7 @@ public class MainMenuGUI extends BorderPane {
         // set parts of the pane
         HBox top = makeTop();
         top.setId("main-pane");
-        this.setTop(top);
+        this.mainMenuPane.setTop(top);
 
         VBox center = makeCenter();
         center.setId("main-pane");

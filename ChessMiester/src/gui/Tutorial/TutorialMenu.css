@@ -60,3 +60,9 @@
             linear-gradient(#6c6b6b 0%, #6c6b6b 20%, #6c6b6b 80%, #6c6b6b 100%),
             linear-gradient(#6c6b6b 0%, #6c6b6b 50%, #6c6b6b 51%, #6c6b6b 100%);
 }
+
+/** Pane Styles */
+/** Pane Styles */
+#main-pane {
+    -fx-background-color: #c0c0c0;
+}
