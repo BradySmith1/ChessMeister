@@ -129,6 +129,8 @@ public class SettingsMenuGUI extends VBox {
         gp.add(colorLabel, 0, 1, 1, 1);
         gp.add(blackSquares, 0, 2, 1, 1);
         gp.add(whiteSquares, 0, 3, 1, 1);
+        gp.add(blackColorBox, 1, 2, 1, 1);
+        gp.add(whiteColorBox, 1, 3, 1, 1);
         gp.add(undoLabel, 0, 4, 1, 1);
         gp.add(enableUndo, 0, 5, 1, 1);
         gp.add(showLabel, 1, 4, 1, 1);
