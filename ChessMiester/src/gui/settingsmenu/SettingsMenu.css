@@ -2,8 +2,7 @@
 #topLabel {
     -fx-font-size: 32px;
     -fx-font-family: "Arial Black";
-    -fx-fill: #818181;
-    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-background-color: #c0c0c0;
 }
 #actiontarget {
     -fx-fill: FIREBRICK;
@@ -14,8 +13,7 @@
 #middleLabel {
     -fx-font-size: 20px;
     -fx-font-family: "Arial Black";
-    -fx-fill: #818181;
-    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-fill: #c0c0c0;
 }
 #actiontarget {
     -fx-fill: FIREBRICK;
