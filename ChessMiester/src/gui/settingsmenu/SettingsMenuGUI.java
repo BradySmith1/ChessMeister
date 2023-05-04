@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 public class SettingsMenuGUI extends GridPane {
 
@@ -80,7 +81,12 @@ public class SettingsMenuGUI extends GridPane {
                 // Set the content of the dialog to the ColourSelectorGUI
                 colourSelectorDialog.getDialogPane().setContent(colourSelectorGUI.getRoot());
 
+                // Show the dialog
                 colourSelectorDialog.showAndWait();
+
+                // Set the color of the black square to the selected color
+                blackColorBox.setFill(colourSelectorGUI.getSelectedColor());
+
             }
         });
 
@@ -88,10 +94,21 @@ public class SettingsMenuGUI extends GridPane {
         whiteColorBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //screenChanger.changeScreen(ToScreen.COLOUR_SELECTOR);
-                Dialog <ColourSelectorGUI> colourSelectorDialog = new Dialog<>();
+                // Instantiate the ColourSelectorGUI class
+                ColourSelectorGUI colourSelectorGUI = new ColourSelectorGUI();
+
+                // Create a new dialog
+                Dialog<ColourSelectorGUI> colourSelectorDialog = new Dialog<>();
                 colourSelectorDialog.setTitle("Colour Selector");
+
+                // Set the content of the dialog to the ColourSelectorGUI
+                colourSelectorDialog.getDialogPane().setContent(colourSelectorGUI.getRoot());
+
+                // Show the dialog
                 colourSelectorDialog.showAndWait();
+
+                // Set the color of the white square to the selected color
+                whiteColorBox.setFill(colourSelectorGUI.getSelectedColor());
             }
         });
 
@@ -149,10 +166,7 @@ public class SettingsMenuGUI extends GridPane {
         public void handle(ActionEvent event) {
             if (screenChanger != null){
                 Object source = event.getSource();
-
-                if (source == saveButton){
-                    System.out.println("Save button pressed");
-                } else if (source == exitButton) {
+                if (source == exitButton) {
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
                 }
             }

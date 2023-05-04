@@ -20,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import gui.colourselector.components.SliderPane;
+import javafx.stage.Stage;
 
 public class ColourSelectorGUI extends GridPane implements SliderChangeListener {
 
@@ -231,10 +232,15 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
             Object source = event.getSource();
 
             if (source == selectButton){
-                System.out.println("Save button pressed");
+                Stage stage = (Stage) selectButton.getScene().getWindow();
+                stage.close();
             } else if (source == exitButton) {
                 System.out.println("Exit button pressed");
             }
         }
     };
+
+    public Color getSelectedColor() {
+        return Color.web("#" + this.selectedColor);
+    }
 }
