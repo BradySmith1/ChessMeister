@@ -59,7 +59,7 @@ public class SettingsMenuGUI extends GridPane {
         this.saveButton = new Button("Save");
         this.saveButton.setId("bottom-button");
         this.exitButton = new Button("Return to Main Menu");
-        this.exitButton.setId("bottom-button");
+        this.exitButton.setId("bottom-button2");
 
         // Event Handlers for the settings menu
         this.saveButton.setOnAction(buttonHandler);
@@ -71,6 +71,7 @@ public class SettingsMenuGUI extends GridPane {
 
         // Set Alignment
         this.settingsMenuPane.setAlignment(Pos.CENTER); // Change to center and scale up
+        this.settingsMenuPane.setId("main-pane");
         this.settingsMenuPane.setHgap(50);
         this.settingsMenuPane.setVgap(15);
 
