@@ -24,7 +24,7 @@ public enum ToScreen {
     VIEW_PLAYED,
 
     /** Reference to LoadGameGUI */
-    LOAD_GAME;
+    LOAD_GAME,
 
     /** Reference to GameBoardGUI */
     GAME_BOARD;

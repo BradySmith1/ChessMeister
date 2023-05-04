@@ -3,6 +3,7 @@ package model;
 import enums.ToScreen;
 import gui.Tutorial.TutorialMenuGUI;
 import gui.colourselector.ColourSelectorGUI;
+import gui.gameboard.GameBoardGUI;
 import gui.loadgame.LoadGameGUI;
 import gui.mainmenu.MainMenuGUI;
 import gui.playernames.PlayerNamesGUI;

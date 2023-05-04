@@ -1,5 +1,6 @@
 package gui.gameboard;
 
+import interfaces.ScreenChangeHandlerIF;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
@@ -18,6 +19,8 @@ public class GameBoardGUI{
     CenterPane center;
 
     BorderPane root;
+
+    ScreenChangeHandlerIF screenChanger;
     public GameBoardGUI(){
         super();
 
@@ -46,4 +49,6 @@ public class GameBoardGUI{
     public Pane getRoot() {
         return root;
     }
+
+    public void setScreenChangeHandler(ScreenChangeHandlerIF sch){ this.screenChanger = sch; }
 }
