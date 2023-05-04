@@ -17,9 +17,9 @@ public class ViewPlayedGUI extends VBox {
     ScreenChangeHandlerIF screenChanger;
 
     /**
-     * The main menu pane.
+     * The load game pane.
      */
-    VBox loadGamePane;
+    VBox viewPlayedPane;
 
     /**
      * Scene for the main menu.
@@ -36,7 +36,7 @@ public class ViewPlayedGUI extends VBox {
      */
     public ViewPlayedGUI() {
         // Create a border pane
-        this.loadGamePane = new VBox();
+        this.viewPlayedPane = new VBox();
 
         // create title
         Label title = new Label("Select Game to Load");
@@ -56,14 +56,14 @@ public class ViewPlayedGUI extends VBox {
         this.mainMenu.setOnAction(buttonHandler);
 
         // add title and buttons to pane
-        this.loadGamePane.getChildren().addAll(title, game1, game2, mainMenu);
-        this.loadGamePane.setId("main-pane");
-        this.loadGamePane.setAlignment(Pos.CENTER);
-        this.loadGamePane.setSpacing(20);
+        this.viewPlayedPane.getChildren().addAll(title, game1, game2, mainMenu);
+        this.viewPlayedPane.setId("main-pane");
+        this.viewPlayedPane.setAlignment(Pos.CENTER);
+        this.viewPlayedPane.setSpacing(20);
 
         // Get stylesheet
-        this.loadGamePane.getStylesheets().add(
-                getClass().getResource("LoadGame.css").toExternalForm());
+        this.viewPlayedPane.getStylesheets().add(
+                getClass().getResource("ViewPlayed.css").toExternalForm());
 
     }
 
@@ -72,7 +72,7 @@ public class ViewPlayedGUI extends VBox {
      *
      * @return the pane for the load game GUI
      */
-    public Pane getRoot() { return this.loadGamePane; }
+    public Pane getRoot() { return this.viewPlayedPane; }
 
     /**
      * Sets the screen change handler for the load game GUI.

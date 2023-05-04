@@ -3,6 +3,7 @@ package model;
 import enums.ToScreen;
 import gui.Tutorial.TutorialMenuGUI;
 import gui.colourselector.ColourSelectorGUI;
+import gui.loadgame.LoadGameGUI;
 import gui.mainmenu.MainMenuGUI;
 import gui.playernames.PlayerNamesGUI;
 import gui.settingsmenu.SettingsMenuGUI;
@@ -36,8 +37,11 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
     /** The colour selector screen **/
     private static ColourSelectorGUI colourSelectorScreen;
 
+    /** The view played screen **/
+    private static ViewPlayedGUI viewPlayedScreen;
+
     /** The load game screen **/
-    private static ViewPlayedGUI loadGameScreen;
+    private static LoadGameGUI loadGameScreen;
 
     /**
      * The constructor for ScreenFactory
@@ -104,8 +108,15 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                 screen = colourSelectorScreen.getRoot();
                 break;
             case VIEW_PLAYED:
+                if (viewPlayedScreen == null) {
+                    viewPlayedScreen = new ViewPlayedGUI();
+                    viewPlayedScreen.setScreenChangeHandler(this);
+                }
+                screen = viewPlayedScreen.getRoot();
+                break;
+            case LOAD_GAME:
                 if (loadGameScreen == null) {
-                    loadGameScreen = new ViewPlayedGUI();
+                    loadGameScreen = new LoadGameGUI();
                     loadGameScreen.setScreenChangeHandler(this);
                 }
                 screen = loadGameScreen.getRoot();

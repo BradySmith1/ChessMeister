@@ -3,20 +3,33 @@
     -fx-background-color: #c0c0c0;
 }
 
-/** TextField Styles */
-#name-menu-text {
-    -fx-font-size: 32px;
-    -fx-font-family: "Arial Black";
-    -fx-background-color: #c0c0c0;
-}
-#sub-menu-text {
+/** Button Styles */
+#menu-button {
+    -fx-background-color:
+            linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
+            linear-gradient(#020b02, #3a3a3a),
+            linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),
+            linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%),
+            linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);
+    -fx-background-insets: 0,1,4,5,6;
+    -fx-background-radius: 9,8,5,4,3;
+    -fx-padding: 15 30 15 30;
+    -fx-font-family: "Helvetica";
     -fx-font-size: 24px;
-    -fx-font-family: "Arial Black";
-    -fx-fill: #818181;
-    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
+    -fx-pref-width: 300;
+}
+#menu-button:armed{
+    -fx-background-color:
+            linear-gradient(#130f0f 0%, #121312 25%, #000000 75%, #000000 100%),
+            linear-gradient(#815757, #815757),
+            linear-gradient(#000000 0%, #000000 20%, #000000 80%, #000000 100%),
+            linear-gradient(#000000 0%, #000000 20%, #000000 80%, #000000 100%),
+            linear-gradient(#805e5e 0%, #805e5e 50%, #805e5e 51%, #805e5e 100%);
 }
 
-/** Button Style */
 #bottom-button {
     -fx-background-color:
             linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
@@ -41,6 +54,19 @@
             linear-gradient(#6c6b6b 0%, #6c6b6b 50%, #6c6b6b 51%, #6c6b6b 100%);
 }
 
+/** Label Styles */
+#topLabel {
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+#actiontarget {
+    -fx-fill: FIREBRICK;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
 /** Text Field Style */
 #text-box {
     -fx-background-color: lightgray;
@@ -54,9 +80,4 @@
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2);
     -fx-border-color: grey;
     -fx-border-width: 2;
-}
-
-#text-box:focused {
-    -fx-background-color: lightgray;
-    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
 }

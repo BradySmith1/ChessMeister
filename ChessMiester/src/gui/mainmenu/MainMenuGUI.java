@@ -198,7 +198,7 @@ public class MainMenuGUI extends BorderPane {
                 } else if (source == definePlayers){
                     screenChanger.changeScreen(ToScreen.PLAYER_NAMES);
                 } else if (source == loadGame) {
-                    screenChanger.changeScreen(null);
+                    screenChanger.changeScreen(ToScreen.LOAD_GAME);
                 } else if (source == playedGames) {
                     screenChanger.changeScreen(ToScreen.VIEW_PLAYED);
                 } else if (source == tutorial) {

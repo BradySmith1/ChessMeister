@@ -21,5 +21,8 @@ public enum ToScreen {
     COLOUR_SELECTOR,
 
     /** Reference to ViewPlayedGUI */
-    VIEW_PLAYED;
+    VIEW_PLAYED,
+
+    /** Reference to LoadGameGUI */
+    LOAD_GAME;
 }
