@@ -9,10 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class PlayerNamesGUI extends BorderPane {
 
@@ -28,19 +25,24 @@ public class PlayerNamesGUI extends BorderPane {
     /** Buttons for the menu **/
     Button play, exit;
 
-
+    /**
+     * Constructor for the player names GUI.
+     */
     public PlayerNamesGUI(){
         // Create a border pane
         this.playerNamesPane = new BorderPane();
 
         // set parts of the pane
-        Label top = makeTop();
+        HBox top = makeTop();
+        top.setId("main-pane");
         this.playerNamesPane.setTop(top);
 
         VBox center = makeCenter();
+        center.setId("main-pane");
         this.playerNamesPane.setCenter(center);
 
         AnchorPane bottom = makeBottom();
+        bottom.setId("main-pane");
         this.playerNamesPane.setBottom(bottom);
 
         // set center alignments
@@ -48,7 +50,7 @@ public class PlayerNamesGUI extends BorderPane {
         BorderPane.setAlignment(center, Pos.CENTER);
         BorderPane.setAlignment(bottom, Pos.CENTER);
 
-//        // Get stylesheet
+        // Get stylesheet
         this.playerNamesPane.getStylesheets().add(
                 getClass().getResource("PlayerNames.css").toExternalForm());
     }
@@ -58,12 +60,25 @@ public class PlayerNamesGUI extends BorderPane {
      */
     public Pane getRoot(){ return this.playerNamesPane;}
 
-    private Label makeTop(){
+    /**
+     * Makes the top pane for the player names menu.
+     *
+     * @return the top pane
+     */
+    private HBox makeTop(){
+        HBox top = new HBox();
         Label topLabel = new Label("Enter Player Names");
         topLabel.setId("name-menu-text");
-        return topLabel;
+        top.getChildren().add(topLabel);
+        top.setAlignment(Pos.CENTER);
+        return top;
     }
 
+    /**
+     * Makes the center pane for the player names menu.
+     *
+     * @return the center pane
+     */
     private VBox makeCenter(){
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
@@ -87,10 +102,15 @@ public class PlayerNamesGUI extends BorderPane {
         return vBox;
     }
 
+    /**
+     * Makes the bottom pane for the player names menu.
+     *
+     * @return the bottom pane
+     */
     private AnchorPane makeBottom(){
         //create 2 buttons and set ids
         this.play = new Button("Play");
-        this.exit = new Button("Exit");
+        this.exit = new Button("Return to Main Menu");
         play.setId("bottom-button");
         exit.setId("bottom-button");
 
@@ -100,7 +120,6 @@ public class PlayerNamesGUI extends BorderPane {
 
         // Create the anchor pane
         AnchorPane ap = new AnchorPane();
-
 
         // Set AnchorPane constraints
         AnchorPane.setBottomAnchor(play, 10.0);
@@ -117,6 +136,7 @@ public class PlayerNamesGUI extends BorderPane {
 
     /**
      * Set the handler for screen changes
+     *
      * @param sch The ScreenChangeHandler
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch){

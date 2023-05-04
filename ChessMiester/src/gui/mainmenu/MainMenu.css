@@ -1,3 +1,8 @@
+/** Pane Styles */
+#main-pane {
+    -fx-background-color: #c0c0c0;
+}
+
 /** Button Styles */
 #menu-button {
     -fx-background-color:
@@ -14,7 +19,8 @@
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
-    -fx-pref-width: 450;
+    -fx-min-width: 300;
+    -fx-pref-width: 500;
 }
 #menu-button:armed{
     -fx-background-color:

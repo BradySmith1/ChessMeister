@@ -32,26 +32,32 @@ public class MainMenuGUI extends BorderPane {
     /** Buttons for the menu **/
     Button versusPlayer, definePlayers, loadGame, playedGames, tutorial, exit, settings;
 
-
-
+    /**
+     * Constructor for the main menu GUI.
+     */
     public MainMenuGUI(){
         // Create a border pane
         this.mainMenuPane = new BorderPane();
 
         // set parts of the pane
-        Label top = makeTop();
+        HBox top = makeTop();
+        top.setId("main-pane");
         this.setTop(top);
 
         VBox center = makeCenter();
+        center.setId("main-pane");
         this.mainMenuPane.setCenter(center);
 
-        ImageView left = makeLeft();
+        VBox left = makeLeft();
+        left.setId("main-pane");
         this.mainMenuPane.setLeft(left);
 
-        ImageView right = makeRight();
+        VBox right = makeRight();
+        right.setId("main-pane");
         this.mainMenuPane.setRight(right);
 
         AnchorPane bottom = makeBottom();
+        bottom.setId("main-pane");
         this.mainMenuPane.setBottom(bottom);
 
         // set center alignments
@@ -59,9 +65,6 @@ public class MainMenuGUI extends BorderPane {
         BorderPane.setAlignment(center, Pos.CENTER);
         BorderPane.setAlignment(left, Pos.CENTER);
         BorderPane.setAlignment(right,Pos.CENTER);
-
-        // Create a scene object
-//        this.scene = new Scene(mainMenuPane);
 
         // Get stylesheet
         this.mainMenuPane.getStylesheets().add(
@@ -76,28 +79,37 @@ public class MainMenuGUI extends BorderPane {
     /**
      * Method that creates the top component of the main menu
      */
-    private Label makeTop(){
-        Label topLabel = new Label("Chess Meister");
+    private HBox makeTop(){
+        HBox top = new HBox();
+        Label topLabel = new Label("Welcome to Chess Meister!");
         topLabel.setId("topLabel");
-        return topLabel;
+        top.getChildren().add(topLabel);
+        top.setAlignment(Pos.CENTER);
+        return top;
     }
 
-    private ImageView makeLeft(){
+    private VBox makeLeft(){
+        VBox left = new VBox();
         ImageView imageView = new ImageView();
         imageView.setImage(new Image("gui/mainmenu/img/KingPiece.png"));
         imageView.setFitHeight(400);
         imageView.setFitWidth(400);
         imageView.setPreserveRatio(true);
-        return imageView;
+        left.getChildren().add(imageView);
+        left.setAlignment(Pos.CENTER_LEFT);
+        return left;
     }
 
-    private ImageView makeRight(){
+    private VBox makeRight(){
+        VBox right = new VBox();
         ImageView imageView = new ImageView();
         imageView.setImage(new Image("gui/mainmenu/img/KingPiece.png"));
         imageView.setFitHeight(400);
         imageView.setFitWidth(400);
         imageView.setPreserveRatio(true);
-        return imageView;
+        right.getChildren().add(imageView);
+        right.setAlignment(Pos.CENTER_RIGHT);
+        return right;
     }
 
     /**
