@@ -43,6 +43,10 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
     /** The load game screen **/
     private static LoadGameGUI loadGameScreen;
 
+    /** The main board screen **/
+    private static GameBoardGUI gameBoardScreen;
+
+
     /**
      * The constructor for ScreenFactory
      * @param scene the scene passed in to be used by ScreenFactory
@@ -120,6 +124,13 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                     loadGameScreen.setScreenChangeHandler(this);
                 }
                 screen = loadGameScreen.getRoot();
+                break;
+            case GAME_BOARD:
+                if (gameBoardScreen == null) {
+                    gameBoardScreen = new GameBoardGUI();
+                    gameBoardScreen.setScreenChangeHandler(this);
+                }
+                screen = gameBoardScreen.getRoot();
                 break;
             default:
                 screen = null;

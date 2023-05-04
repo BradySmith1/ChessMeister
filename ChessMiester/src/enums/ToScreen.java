@@ -25,4 +25,7 @@ public enum ToScreen {
 
     /** Reference to LoadGameGUI */
     LOAD_GAME;
+
+    /** Reference to GameBoardGUI */
+    GAME_BOARD;
 }

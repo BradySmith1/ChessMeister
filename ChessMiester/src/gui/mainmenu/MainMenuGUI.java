@@ -192,7 +192,7 @@ public class MainMenuGUI extends BorderPane {
                 Object source = event.getSource();
 
                 if (source == versusPlayer){
-                    screenChanger.changeScreen(null);
+                    screenChanger.changeScreen(ToScreen.GAME_BOARD);
                 } else if (source == definePlayers){
                     screenChanger.changeScreen(ToScreen.PLAYER_NAMES);
                 } else if (source == loadGame) {
