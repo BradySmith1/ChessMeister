@@ -18,6 +18,8 @@ public enum ToScreen {
     PLAYER_NAMES,
 
     /** Reference to ColourSelectorGUI */
-    COLOUR_SELECTOR;
+    COLOUR_SELECTOR,
 
+    /** Reference to ViewPlayedGUI */
+    VIEW_PLAYED;
 }

@@ -200,7 +200,7 @@ public class MainMenuGUI extends BorderPane {
                 } else if (source == loadGame) {
                     screenChanger.changeScreen(null);
                 } else if (source == playedGames) {
-                    screenChanger.changeScreen(null);
+                    screenChanger.changeScreen(ToScreen.VIEW_PLAYED);
                 } else if (source == tutorial) {
                     screenChanger.changeScreen(ToScreen.TUTORIAL_MENU);
                 } else if (source == settings) {

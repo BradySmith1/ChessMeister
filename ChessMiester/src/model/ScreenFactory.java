@@ -6,13 +6,10 @@ import gui.colourselector.ColourSelectorGUI;
 import gui.mainmenu.MainMenuGUI;
 import gui.playernames.PlayerNamesGUI;
 import gui.settingsmenu.SettingsMenuGUI;
+import gui.viewplayed.ViewPlayedGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.stage.Screen;
-
-import java.io.File;
-
 /**
  * Class that implements ScreenChangeHandlerIF to be used to change screens, this is a singleton
  */
@@ -38,6 +35,9 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
 
     /** The colour selector screen **/
     private static ColourSelectorGUI colourSelectorScreen;
+
+    /** The load game screen **/
+    private static ViewPlayedGUI loadGameScreen;
 
     /**
      * The constructor for ScreenFactory
@@ -102,6 +102,13 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                     colourSelectorScreen = new ColourSelectorGUI();
                 }
                 screen = colourSelectorScreen.getRoot();
+                break;
+            case VIEW_PLAYED:
+                if (loadGameScreen == null) {
+                    loadGameScreen = new ViewPlayedGUI();
+                    loadGameScreen.setScreenChangeHandler(this);
+                }
+                screen = loadGameScreen.getRoot();
                 break;
             default:
                 screen = null;

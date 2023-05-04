@@ -5,11 +5,6 @@
     -fx-fill: #818181;
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
 }
-#actiontarget {
-    -fx-fill: FIREBRICK;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
-}
 
 /** Button Styles */
 #menu-button {
@@ -27,7 +22,8 @@
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
-    -fx-pref-width: 450;
+    -fx-min-width: 300;
+    -fx-pref-width: 500;
 }
 #menu-button:armed{
     -fx-background-color:
@@ -37,6 +33,7 @@
             linear-gradient(#000000 0%, #000000 20%, #000000 80%, #000000 100%),
             linear-gradient(#805e5e 0%, #805e5e 50%, #805e5e 51%, #805e5e 100%);
 }
+
 #bottom-button {
     -fx-background-color:
             linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
