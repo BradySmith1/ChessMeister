@@ -5,6 +5,9 @@
  */
 package gui.colourselector;
 
+import enums.ToScreen;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import gui.colourselector.components.SliderPane;
+import javafx.stage.Stage;
 
 public class ColourSelectorGUI extends GridPane implements SliderChangeListener {
 
@@ -140,6 +144,10 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         this.selectButton.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.exitButton.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
+        // Button Event Handlers
+        this.selectButton.setOnAction(buttonHandler);
+        this.exitButton.setOnAction(buttonHandler);
+
         // Slider and Colour sizes
         sliders.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.colour.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -151,9 +159,9 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         this.colourSelectorPane.add(this.selectButton, 0, 4, 1, 1);
         this.colourSelectorPane.add(this.exitButton, 1, 4, 1, 1);
 
-//        // Get stylesheet
-//        this.scene.getStylesheets().add(
-//                getClass().getResource("ColourSelector.css").toExternalForm());
+        // Get stylesheet
+        this.colourSelectorPane.getStylesheets().add(
+                getClass().getResource("ColourSelector.css").toExternalForm());
     }
     /**
      * Getter for the scene.
@@ -215,5 +223,24 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
             this.blueColour = newValue;
         }
         setBackground(this.redColour, this.greenColour, this.blueColour);
+    }
+
+    EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+
+        @Override
+        public void handle(ActionEvent event) {
+            Object source = event.getSource();
+
+            if (source == selectButton){
+                Stage stage = (Stage) selectButton.getScene().getWindow();
+                stage.close();
+            } else if (source == exitButton) {
+                System.out.println("Exit button pressed");
+            }
+        }
+    };
+
+    public Color getSelectedColor() {
+        return Color.web("#" + this.selectedColor);
     }
 }
