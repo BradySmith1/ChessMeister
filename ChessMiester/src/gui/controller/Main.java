@@ -96,11 +96,10 @@ public class Main extends Application {
 
             ScreenFactory.getInstance(scene);
 
-            ScreenFactory.getInstance(scene);
-
             this.stage.setScene(scene);
-            this.stage.show();
+            this.stage.setFullScreen(true); // man wtf this should work but it doesn't
             this.stage.setTitle("ChessMeister");
+            this.stage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
