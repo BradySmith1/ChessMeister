@@ -70,9 +70,7 @@ public class CenterPane {
             squares[1][i].getChildren().add(view);
         }
         for(int i = 0; i < size; i++){
-            ImageView view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            ImageView view = createView();
             view.setId("blackPawn" + i);
             view.setImage(blackPawnImage);
             squares[6][i].getChildren().add(view);
@@ -173,6 +171,13 @@ public class CenterPane {
             view.setImage(blackKingImage);
         }
         squares[offset][4].getChildren().add(view);
+    }
+
+    private ImageView createView(){
+        ImageView view = new ImageView();
+        view.setFitWidth(50);
+        view.setFitHeight(50);
+        return view;
     }
 
     private String findColor(int row, int col){
