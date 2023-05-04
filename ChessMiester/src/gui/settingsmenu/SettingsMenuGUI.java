@@ -6,19 +6,21 @@
 package gui.settingsmenu;
 
 import enums.ToScreen;
+import gui.colourselector.ColourSelectorGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 public class SettingsMenuGUI extends VBox {
 
@@ -60,6 +62,55 @@ public class SettingsMenuGUI extends VBox {
         this.exitButton = new Button("Return to Main Menu");
         this.exitButton.setId("bottom-button2");
         this.exitButton.setAlignment(Pos.CENTER);
+
+        // Create Rectangles
+        Rectangle blackColorBox = new Rectangle(50, 20, Color.BLACK);
+        Rectangle whiteColorBox = new Rectangle(50, 20, Color.WHITE);
+
+        // Event Handler for the black square
+        blackColorBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // Instantiate the ColourSelectorGUI class
+                ColourSelectorGUI colourSelectorGUI = new ColourSelectorGUI();
+
+                // Create a new dialog
+                Dialog<ColourSelectorGUI> colourSelectorDialog = new Dialog<>();
+                colourSelectorDialog.setTitle("Colour Selector");
+
+                // Set the content of the dialog to the ColourSelectorGUI
+                colourSelectorDialog.getDialogPane().setContent(colourSelectorGUI.getRoot());
+
+                // Show the dialog
+                colourSelectorDialog.showAndWait();
+
+                // Set the color of the black square to the selected color
+                blackColorBox.setFill(colourSelectorGUI.getSelectedColor());
+
+            }
+        });
+
+        // Event Handler for the white square
+        whiteColorBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // Instantiate the ColourSelectorGUI class
+                ColourSelectorGUI colourSelectorGUI = new ColourSelectorGUI();
+
+                // Create a new dialog
+                Dialog<ColourSelectorGUI> colourSelectorDialog = new Dialog<>();
+                colourSelectorDialog.setTitle("Colour Selector");
+
+                // Set the content of the dialog to the ColourSelectorGUI
+                colourSelectorDialog.getDialogPane().setContent(colourSelectorGUI.getRoot());
+
+                // Show the dialog
+                colourSelectorDialog.showAndWait();
+
+                // Set the color of the white square to the selected color
+                whiteColorBox.setFill(colourSelectorGUI.getSelectedColor());
+            }
+        });
 
         // Event Handlers for the settings menu
         this.exitButton.setOnAction(buttonHandler);
@@ -129,4 +180,5 @@ public class SettingsMenuGUI extends VBox {
             }
         }
     };
+
 }
