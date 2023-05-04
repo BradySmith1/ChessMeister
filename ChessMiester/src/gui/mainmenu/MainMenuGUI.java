@@ -48,11 +48,11 @@ public class MainMenuGUI extends BorderPane {
         center.setId("main-pane");
         this.mainMenuPane.setCenter(center);
 
-        VBox left = makeSide("blackKing");
+        VBox left = makeSide("menu_BKing");
         left.setId("main-pane");
         this.mainMenuPane.setLeft(left);
 
-        VBox right = makeSide("whiteKing");
+        VBox right = makeSide("menu_WKing");
         right.setId("main-pane");
         this.mainMenuPane.setRight(right);
 
