@@ -33,10 +33,6 @@ public class PlayerNamesGUI extends BorderPane {
         this.playerNamesPane = new BorderPane();
 
         // set parts of the pane
-        HBox top = makeTop();
-        top.setId("main-pane");
-        this.playerNamesPane.setTop(top);
-
         VBox center = makeCenter();
         center.setId("main-pane");
         this.playerNamesPane.setCenter(center);
@@ -46,7 +42,6 @@ public class PlayerNamesGUI extends BorderPane {
         this.playerNamesPane.setBottom(bottom);
 
         // set center alignments
-        BorderPane.setAlignment(top, Pos.CENTER);
         BorderPane.setAlignment(center, Pos.CENTER);
         BorderPane.setAlignment(bottom, Pos.CENTER);
 
@@ -61,20 +56,6 @@ public class PlayerNamesGUI extends BorderPane {
     public Pane getRoot(){ return this.playerNamesPane;}
 
     /**
-     * Makes the top pane for the player names menu.
-     *
-     * @return the top pane
-     */
-    private HBox makeTop(){
-        HBox top = new HBox();
-        Label topLabel = new Label("Enter Player Names");
-        topLabel.setId("name-menu-text");
-        top.getChildren().add(topLabel);
-        top.setAlignment(Pos.CENTER);
-        return top;
-    }
-
-    /**
      * Makes the center pane for the player names menu.
      *
      * @return the center pane
@@ -84,8 +65,11 @@ public class PlayerNamesGUI extends BorderPane {
         vBox.setAlignment(Pos.CENTER);
 
         // create and set ids for labels
-        Label player1Label = new Label("Player 1 name");
-        Label player2Label = new Label("Player 2 name");
+        Label title = new Label("Player Names");
+        title.setId("name-menu-text");
+        title.setAlignment(Pos.CENTER);
+        Label player1Label = new Label("Player 1 Name");
+        Label player2Label = new Label("Player 2 Name");
         player1Label.setId("sub-menu-text");
         player2Label.setId("sub-menu-text");
 
@@ -97,8 +81,10 @@ public class PlayerNamesGUI extends BorderPane {
         player1Name.setPromptText("Enter name here!");
         player2Name.setPromptText("Enter name here!");
 
-        vBox.getChildren().addAll(player1Label, player1Name, player2Label, player2Name);
+        // add elements to the vbox
+        vBox.getChildren().addAll(title, player1Label, player1Name, player2Label, player2Name);
 
+        vBox.setSpacing(20);
         return vBox;
     }
 
