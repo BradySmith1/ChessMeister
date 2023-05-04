@@ -55,21 +55,21 @@ public class TutorialMenuGUI extends BorderPane {
      */
     private VBox makeCenter(){
         // Create buttons for vbox one
-        Button setup = new Button("Board Setup");
-        Button notation = new Button("Understanding Notation");
-        Button organization = new Button("Board Organization");
-        Button check = new Button("Check");
-        Button checkmate = new Button("Checkmate");
-        Button draw = new Button("Draw");
-        Button returnButton = new Button("Return to Main Menu");
+        this.setup = new Button("Board Setup");
+        this.notation = new Button("Understanding Notation");
+        this.organization = new Button("Board Organization");
+        this.check = new Button("Check");
+        this.checkmate = new Button("Checkmate");
+        this.draw = new Button("Draw");
+        this.returnButton = new Button("Return to Main Menu");
 
         // Create buttons for vbox two
-        Button king = new Button("King Moves");
-        Button queen = new Button("Queen Moves");
-        Button bishop = new Button("Bishop Moves");
-        Button knight = new Button("Knight Moves");
-        Button rook = new Button("Rook Moves");
-        Button pawn = new Button("Pawn Moves");
+        this.king = new Button("King Moves");
+        this.queen = new Button("Queen Moves");
+        this.bishop = new Button("Bishop Moves");
+        this.knight = new Button("Knight Moves");
+        this.rook = new Button("Rook Moves");
+        this.pawn = new Button("Pawn Moves");
 
         // Set button actions
         setup.setOnAction(buttonHandler);
