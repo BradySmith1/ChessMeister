@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 
+import java.io.File;
+
 /**
  * Class that implements ScreenChangeHandlerIF to be used to change screens, this is a singleton
  */
@@ -66,7 +68,6 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
      */
     private Pane setScreen(ToScreen screenChoice) {
         Pane screen;
-
         switch (screenChoice){
             case MAIN_MENU :
                 if (mainMenuScreen == null) {
@@ -106,6 +107,7 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                 screen = null;
                 break;
         }
+
         // Apply the screen to the root scene
         scene.setRoot(screen);
 

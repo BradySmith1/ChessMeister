@@ -64,8 +64,8 @@ public class MainMenuGUI extends BorderPane {
 //        this.scene = new Scene(mainMenuPane);
 
         // Get stylesheet
-//        this.scene.getStylesheets().add(
-//                   getClass().getResource("MainMenu.css").toExternalForm());
+        this.mainMenuPane.getStylesheets().add(
+                   getClass().getResource("MainMenu.css").toExternalForm());
     }
     /**
      * Getter for the scene.
