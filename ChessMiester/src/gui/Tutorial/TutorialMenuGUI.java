@@ -143,6 +143,11 @@ public class TutorialMenuGUI extends BorderPane {
     /** Event Handler for buttons **/
     EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
 
+        /**
+         * Handles the button events.
+         *
+         * @param event the event to handle
+         */
         @Override
         public void handle(ActionEvent event) {
             if (screenChanger != null){

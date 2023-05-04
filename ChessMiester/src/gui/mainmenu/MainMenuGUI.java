@@ -48,11 +48,11 @@ public class MainMenuGUI extends BorderPane {
         center.setId("main-pane");
         this.mainMenuPane.setCenter(center);
 
-        VBox left = makeLeft();
+        VBox left = makeSide("blackKing");
         left.setId("main-pane");
         this.mainMenuPane.setLeft(left);
 
-        VBox right = makeRight();
+        VBox right = makeSide("whiteKing");
         right.setId("main-pane");
         this.mainMenuPane.setRight(right);
 
@@ -88,28 +88,22 @@ public class MainMenuGUI extends BorderPane {
         return top;
     }
 
-    private VBox makeLeft(){
+    /**
+     * Method that creates the left component of the main menu
+     *
+     * @param fileName name of the image to be added
+     * @return the left component as a vbox
+     */
+    private VBox makeSide(String fileName){
         VBox left = new VBox();
         ImageView imageView = new ImageView();
-        imageView.setImage(new Image("gui/mainmenu/img/KingPiece.png"));
-        imageView.setFitHeight(400);
+        imageView.setImage(new Image("gui/mainmenu/img/" + fileName + ".png"));
+        imageView.setFitHeight(500);
         imageView.setFitWidth(400);
         imageView.setPreserveRatio(true);
         left.getChildren().add(imageView);
         left.setAlignment(Pos.CENTER_LEFT);
         return left;
-    }
-
-    private VBox makeRight(){
-        VBox right = new VBox();
-        ImageView imageView = new ImageView();
-        imageView.setImage(new Image("gui/mainmenu/img/KingPiece.png"));
-        imageView.setFitHeight(400);
-        imageView.setFitWidth(400);
-        imageView.setPreserveRatio(true);
-        right.getChildren().add(imageView);
-        right.setAlignment(Pos.CENTER_RIGHT);
-        return right;
     }
 
     /**
@@ -165,7 +159,6 @@ public class MainMenuGUI extends BorderPane {
         this.playedGames.setOnAction(buttonHandler);
         this.tutorial.setOnAction(buttonHandler);
 
-
         // Create a vbox and add buttons
         VBox centerBox = new VBox();
         centerBox.setSpacing(10);
@@ -188,6 +181,11 @@ public class MainMenuGUI extends BorderPane {
     /** Event Handler for buttons **/
     EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
 
+        /**
+         * Method that handles the button events
+         *
+         * @param event the event that is being handled
+         */
         @Override
         public void handle(ActionEvent event) {
             if (screenChanger != null){

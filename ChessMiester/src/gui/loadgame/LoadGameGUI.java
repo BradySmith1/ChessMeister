@@ -1,3 +1,10 @@
+/**
+ * This class is responsible for creating the load game GUI.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
+
 package gui.loadgame;
 
 import enums.ToScreen;
@@ -13,32 +20,25 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 
 public class LoadGameGUI extends VBox {
-    /**
-     * The LoadGameGUI pane.
-     */
+    /** The LoadGameGUI pane. */
     VBox LoadGamePane;
 
-    /**
-     * Scene
-     */
+    /** Scene */
     private Scene scene;
 
-    /**
-     * Reference to the implementation for the ScreenChangeHandlerIF
-     **/
+    /** Reference to the implementation for the ScreenChangeHandlerIF. */
     ScreenChangeHandlerIF screenChanger;
 
-    /**
-     * TextField for the menu
-     **/
+    /** TextField for the menu. */
     TextField file;
 
-    /**
-     * Buttons for the menu
-     **/
+    /** Buttons for the menu. */
     Button load, returnToMain;
 
 
+    /**
+     * Constructor for the load game GUI.
+     */
     public LoadGameGUI() {
         // Create a VBox
         this.LoadGamePane = new VBox();
@@ -89,6 +89,11 @@ public class LoadGameGUI extends VBox {
      * Event handler for the buttons.
      */
     EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+        /**
+         * Handles the button events.
+         *
+         * @param event The event that occurred.
+         */
         @Override
         public void handle(ActionEvent event) {
             if (screenChanger != null) {

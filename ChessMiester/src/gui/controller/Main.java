@@ -6,15 +6,9 @@
  */
 package gui.controller;
 
-import enums.ToScreen;
-import gui.Tutorial.TutorialMenuGUI;
-import gui.colourselector.ColourSelectorGUI;
-import gui.mainmenu.MainMenuGUI;
-import gui.settingsmenu.SettingsMenuGUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.ScreenFactory;
 
@@ -42,62 +36,18 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-//        MainMenuGUI mainMenu = MainMenuGUI.getInstance();
-//        // Create ChessMeister Label
-//        stage.setTitle("ChessMeister");
-//
-//        stage.setScene(mainMenu.getMenu());
-//        stage.setMaximized(true);
-//        stage.getScene().setFill(Color.GREY);
-//        stage.show();
-
-//        PlayerNamesGUI playerNameMenu = PlayerNamesGUI.getInstance();
-//        // Create ChessMeister Label
-//        stage.setTitle("ChessMeister");
-//
-//        stage.setScene(playerNameMenu.getMenu());
-//        stage.setMaximized(true);
-//        stage.getScene().setFill(Color.GREY);
-//        stage.show();
-
-//        TutorialMenuGUI tutorialMenu = TutorialMenuGUI.getInstance();
-//        // Create ChessMeister Label
-//        stage.setTitle("ChessMeister");
-//
-//        stage.setScene(tutorialMenu.getMenu());
-//        stage.setMaximized(true);
-//        stage.getScene().setFill(Color.GREY);
-//        stage.show();
-
-//        SettingsMenuGUI settingsMenu = SettingsMenuGUI.getInstance();
-//        // Create ChessMeister Label
-//        stage.setTitle("ChessMeister");
-//
-//        stage.setScene(settingsMenu.getMenu());
-//        stage.setMaximized(true);
-//        stage.getScene().setFill(Color.GREY);
-//        stage.show();
-
-//        ColourSelectorGUI colorSelectMenu = ColourSelectorGUI.getInstance();
-//        // Create ChessMeister Label
-//        stage.setTitle("ChessMeister");
-//
-//        stage.setScene(colorSelectMenu.getMenu());
-//        stage.setMaximized(true);
-//        stage.getScene().setFill(Color.GREY);
-//        stage.show();
-
         try {
+            // create and factor the stage
             this.stage = primaryStage;
             this.stage.setFullScreen(true);
 
+            // create scene and get from screen factory
             Scene scene = new Scene(new Pane(),800,600);
             this.rootScene = scene;
-
             ScreenFactory.getInstance(scene);
 
+            // set the scene
             this.stage.setScene(scene);
-            this.stage.setFullScreen(true); // man wtf this should work but it doesn't
             this.stage.setTitle("ChessMeister");
             this.stage.show();
         } catch(Exception e) {

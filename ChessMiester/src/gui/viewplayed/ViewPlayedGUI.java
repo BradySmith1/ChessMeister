@@ -1,3 +1,9 @@
+/**
+ * This class is responsible for creating the view played GUI.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 package gui.viewplayed;
 
 import enums.ToScreen;
@@ -11,24 +17,16 @@ import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 public class ViewPlayedGUI extends VBox {
-    /**
-     * Reference to the implementation for the ScreenChangeHandlerIF
-     **/
+    /** Reference to the implementation for the ScreenChangeHandlerIF */
     ScreenChangeHandlerIF screenChanger;
 
-    /**
-     * The load game pane.
-     */
+    /** The load game pane. */
     VBox viewPlayedPane;
 
-    /**
-     * Scene for the main menu.
-     */
+    /** Scene for the main menu. */
     private Scene scene;
 
-    /**
-     * Buttons for the menu
-     **/
+    /** Buttons for the menu */
     Button game1, game2, mainMenu;
 
     /**
@@ -85,6 +83,11 @@ public class ViewPlayedGUI extends VBox {
     /** Event Handler for the buttons */
     EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
 
+        /**
+         * Handles the button events.
+         *
+         * @param event the event to handle
+         */
         @Override
         public void handle(ActionEvent event) {
             if( screenChanger != null){

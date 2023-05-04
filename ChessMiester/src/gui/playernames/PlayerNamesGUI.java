@@ -1,3 +1,9 @@
+/**
+ * This class is responsible for creating the player names GUI.
+ *
+ * @author Zach Eanes (60%), Kaushal Patel (40%)
+ * @version 1.0 (done in sprint 3)
+ */
 package gui.playernames;
 
 import enums.ToScreen;
@@ -43,11 +49,6 @@ public class PlayerNamesGUI extends BorderPane {
         this.playerNamesPane.getStylesheets().add(
                 getClass().getResource("PlayerNames.css").toExternalForm());
     }
-    /**
-     * Getter for the scene.
-     * @return the scene
-     */
-    public Pane getRoot(){ return this.playerNamesPane;}
 
     /**
      * Makes the center pane for the player names menu.
@@ -74,8 +75,6 @@ public class PlayerNamesGUI extends BorderPane {
         player2Name.setId("text-box");
         player1Name.setPromptText("Enter name here!");
         player2Name.setPromptText("Enter name here!");
-
-        //
 
         // add elements to the vbox
         vBox.getChildren().addAll(title, player1Label, player1Name, player2Label, player2Name);
@@ -119,9 +118,21 @@ public class PlayerNamesGUI extends BorderPane {
         this.screenChanger = sch;
     }
 
+    /**
+     * Getter for the scene.
+     *
+     * @return the scene
+     */
+    public Pane getRoot(){ return this.playerNamesPane;}
+
     /** Event Handler for buttons **/
     EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
 
+        /**
+         * Handles the button events.
+         *
+         * @param event the event to be handled
+         */
         @Override
         public void handle(ActionEvent event) {
             if (screenChanger != null){
