@@ -6,19 +6,20 @@
 package gui.settingsmenu;
 
 import enums.ToScreen;
+import gui.colourselector.ColourSelectorGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class SettingsMenuGUI extends GridPane {
 
@@ -61,6 +62,39 @@ public class SettingsMenuGUI extends GridPane {
         this.exitButton = new Button("Return to Main Menu");
         this.exitButton.setId("bottom-button2");
 
+        // Create Rectangles
+        Rectangle blackColorBox = new Rectangle(50, 20, Color.BLACK);
+        Rectangle whiteColorBox = new Rectangle(50, 20, Color.WHITE);
+
+        // Event Handler for the black square
+        blackColorBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // Instantiate the ColourSelectorGUI class
+                ColourSelectorGUI colourSelectorGUI = new ColourSelectorGUI();
+
+                // Create a new dialog
+                Dialog<ColourSelectorGUI> colourSelectorDialog = new Dialog<>();
+                colourSelectorDialog.setTitle("Colour Selector");
+
+                // Set the content of the dialog to the ColourSelectorGUI
+                colourSelectorDialog.getDialogPane().setContent(colourSelectorGUI.getRoot());
+
+                colourSelectorDialog.showAndWait();
+            }
+        });
+
+        // Event Handler for the white square
+        whiteColorBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //screenChanger.changeScreen(ToScreen.COLOUR_SELECTOR);
+                Dialog <ColourSelectorGUI> colourSelectorDialog = new Dialog<>();
+                colourSelectorDialog.setTitle("Colour Selector");
+                colourSelectorDialog.showAndWait();
+            }
+        });
+
         // Event Handlers for the settings menu
         this.saveButton.setOnAction(buttonHandler);
         this.exitButton.setOnAction(buttonHandler);
@@ -79,6 +113,8 @@ public class SettingsMenuGUI extends GridPane {
         settingsMenuPane.add(colorLabel, 0, 1, 1, 1);
         settingsMenuPane.add(blackSquares, 0, 2, 1, 1);
         settingsMenuPane.add(whiteSquares, 0, 3, 1, 1);
+        settingsMenuPane.add(blackColorBox, 1, 2, 1, 1);
+        settingsMenuPane.add(whiteColorBox, 1, 3, 1, 1);
         settingsMenuPane.add(undoLabel, 0, 4, 1, 1);
         settingsMenuPane.add(enableUndo, 0, 5, 1, 1);
         settingsMenuPane.add(showLabel, 1, 4, 1, 1);
@@ -122,4 +158,5 @@ public class SettingsMenuGUI extends GridPane {
             }
         }
     };
+
 }
