@@ -77,6 +77,12 @@ public class SettingsMenuGUI extends VBox {
 
         // Event Handler for the black square
         blackColorBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            /**
+             * Handler for the mouse event
+             *
+             * @param event The mouse event
+             */
             @Override
             public void handle(MouseEvent event) {
                 // Instantiate the ColourSelectorGUI class

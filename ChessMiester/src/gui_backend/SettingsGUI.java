@@ -1,3 +1,10 @@
+/**
+ * This class is responsible for defining the settings for the GUI
+ * implementation of a chess game.
+ *
+ * @author Kaushal Patel (70%), Zach Eanes (30%)
+ * @version 1.0 (done in sprint 3)
+ */
 package gui_backend;
 
 import javafx.scene.paint.Color;

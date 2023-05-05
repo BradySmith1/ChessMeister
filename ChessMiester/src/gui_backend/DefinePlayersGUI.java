@@ -1,3 +1,10 @@
+/**
+ * This class is responsible for the GUI implementation for the defining
+ * players for the chess game.
+ *
+ * @author Kaushal Patel (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 package gui_backend;
 
 import enums.GameColor;
@@ -25,6 +32,7 @@ public class DefinePlayersGUI {
 
     /**
      * Sets the name of player 1.
+     *
      * @param name the name of player 1
      */
     public void setPlayer1Name(String name) {
@@ -33,6 +41,7 @@ public class DefinePlayersGUI {
 
     /**
      * Sets the name of player 2.
+     *
      * @param name the name of player 2
      */
     public void setPlayer2Name(String name) {
@@ -41,6 +50,7 @@ public class DefinePlayersGUI {
 
     /**
      * Gets the name of player 1.
+     *
      * @return the name of player 1
      */
     public String getPlayer1Name() {
@@ -49,6 +59,7 @@ public class DefinePlayersGUI {
 
     /**
      * Gets the name of player 2.
+     *
      * @return the name of player 2
      */
     public String getPlayer2Name() {
