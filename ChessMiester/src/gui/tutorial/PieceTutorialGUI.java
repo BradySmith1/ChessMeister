@@ -5,7 +5,7 @@
 package gui.tutorial;
 
 import enums.ToScreen;
-import gui.gameboard.CenterPane;
+import gui.gameboard.CenterPaneGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
@@ -51,9 +51,9 @@ public class PieceTutorialGUI {
      * @param pieceName name of the piece to initialize the board with
      * @return the center pane
      */
-    private CenterPane makeCenter(String pieceName){
+    private CenterPaneGUI makeCenter(String pieceName){
         // initialize the center pane
-        CenterPane center = new CenterPane();
+        CenterPaneGUI center = new CenterPaneGUI();
         // TODO: load the game based on pieceName
 
         return center;

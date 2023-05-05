@@ -6,7 +6,6 @@
  */
 
 package gui.gameboard;
-import enums.ToScreen;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,7 +19,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class TopPane {
+public class TopPaneGUI {
     /** The root pane for the right pane. */
     GridPane root;
 
@@ -33,7 +32,7 @@ public class TopPane {
     /**
      * Constructor for the right pane.
      */
-    public TopPane(){
+    public TopPaneGUI(){
 
         //Creation of the grid pane.
         root = new GridPane();

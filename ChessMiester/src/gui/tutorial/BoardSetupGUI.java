@@ -7,7 +7,7 @@
 package gui.tutorial;
 
 import enums.ToScreen;
-import gui.gameboard.CenterPane;
+import gui.gameboard.CenterPaneGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -61,7 +61,7 @@ public class BoardSetupGUI {
         hb.setAlignment(Pos.CENTER);
 
         // create board
-        CenterPane board = new CenterPane();
+        CenterPaneGUI board = new CenterPaneGUI();
         hb.getChildren().add(board.getRoot());
 
         // create back button

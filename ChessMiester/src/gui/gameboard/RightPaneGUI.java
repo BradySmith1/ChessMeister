@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class RightPane {
+public class RightPaneGUI {
     /** The root pane for the right pane. */
     VBox root;
 
@@ -23,7 +23,7 @@ public class RightPane {
     /**
      * Constructor for the right pane.
      */
-    public RightPane(){
+    public RightPaneGUI(){
         root = new VBox();
 
         player2 = new Label("Player 2:");

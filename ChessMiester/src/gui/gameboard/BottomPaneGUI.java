@@ -15,7 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-public class BottomPane {
+public class BottomPaneGUI {
     /** The root pane for the bottom pane. */
     AnchorPane root;
     /** Label for the pane */
@@ -27,7 +27,7 @@ public class BottomPane {
     /** Reference to the implementation for the ScreenChangeHandlerIF **/
     ScreenChangeHandlerIF screenChanger;
 
-    public BottomPane(){
+    public BottomPaneGUI(){
         root = new AnchorPane();
         playerSelect = new Label("Player 1 Selected D7 (Hardcoded)");
         playerSelect.setId("topLabel");
