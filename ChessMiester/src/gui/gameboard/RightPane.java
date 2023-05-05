@@ -12,13 +12,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class RightPane {
     /** The root pane for the right pane. */
-    AnchorPane root;
+    VBox root;
 
     /** The label for player 2. */
     Label player2;
@@ -36,34 +35,21 @@ public class RightPane {
      * Constructor for the right pane.
      */
     public RightPane(){
-        root = new AnchorPane();
+        root = new VBox();
 
-        VBox vBox = new VBox();
         player2 = new Label("Player 2:");
         capturedPieces = new Label("Captured:");
 
-        vBox.getChildren().add(player2);
-        vBox.getChildren().add(capturedPieces);
-
-        AnchorPane ap = new AnchorPane(vBox);
-        AnchorPane.setTopAnchor(vBox, 0.0);
-
-        exitButton = new Button("Return to Main Menu");
-        exitButton.setId("bottom-button");
-
-        // Set the action for the buttons
-        exitButton.setOnAction(buttonHandler);
-
-        //Adds the buttons to the anchor pane.
-        ap.getChildren().add(exitButton);
-        AnchorPane.setBottomAnchor(exitButton, 0.0);
-
-        root.getChildren().add(ap);
+        root.getChildren().add(player2);
+        root.getChildren().add(capturedPieces);
     }
 
-    public Pane getRoot(){
-        return root;
-    }
+    /**
+     * Getter for the root pane.
+     *
+     * @return the root pane.
+     */
+    public Pane getRoot(){ return root; }
 
     /**
      * Sets the screen changer for the main menu.
