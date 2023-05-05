@@ -83,7 +83,7 @@ public class TopPane {
                 } else if (source == redo) {
                     System.out.println("Redo");
                 } else if (source == settings) {
-                    screenChanger.changeScreen(ToScreen.SETTINGS_MENU);
+                    screenChanger.changeScreen(ToScreen.SETTINGS_MENU, ToScreen.GAME_BOARD);
                 }
             }
         }

@@ -201,7 +201,8 @@ public class MainMenuGUI extends BorderPane {
                 } else if (source == tutorial) {
                     screenChanger.changeScreen(ToScreen.TUTORIAL_MENU);
                 } else if (source == settings) {
-                    screenChanger.changeScreen(ToScreen.SETTINGS_MENU);
+                    System.out.println();
+                    screenChanger.changeScreen(ToScreen.SETTINGS_MENU, ToScreen.MAIN_MENU);
                 } else if (source == exit) {
                     System.exit(1);
                 }

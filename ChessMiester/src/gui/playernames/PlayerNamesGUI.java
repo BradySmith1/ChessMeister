@@ -7,6 +7,7 @@
 package gui.playernames;
 
 import enums.ToScreen;
+import gui_backend.DefinePlayersGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,10 +32,19 @@ public class PlayerNamesGUI extends BorderPane {
     /** Buttons for the menu **/
     Button save, exit;
 
+    /** Text fields for the player names **/
+    TextField player1Name, player2Name;
+
+    /** DefinePlayersGUI object */
+    private DefinePlayersGUI definePlayersGUI;
+
     /**
      * Constructor for the player names GUI.
      */
     public PlayerNamesGUI(){
+        // Initialize the definePlayersGUI
+        definePlayersGUI = new DefinePlayersGUI();
+
         // Create a border pane
         this.playerNamesPane = new BorderPane();
 
@@ -69,12 +79,13 @@ public class PlayerNamesGUI extends BorderPane {
         player2Label.setId("sub-menu-text");
 
         // create and set ids for text fields
-        TextField player1Name = new TextField();
-        TextField player2Name = new TextField();
+        this.player1Name = new TextField();
+        this.player2Name = new TextField();
         player1Name.setId("text-box");
         player2Name.setId("text-box");
         player1Name.setPromptText("Enter name here!");
         player2Name.setPromptText("Enter name here!");
+
 
         // add elements to the vbox
         vBox.getChildren().addAll(title, player1Label, player1Name, player2Label, player2Name);
@@ -139,7 +150,22 @@ public class PlayerNamesGUI extends BorderPane {
                 Object source = event.getSource();
 
                 if (source == save){
-                    System.out.println("Play button pressed");
+                    if(!player1Name.getText().isEmpty()){
+                        definePlayersGUI.setPlayer1Name(player1Name.getText());
+                    }
+                    else{
+                        definePlayersGUI.setPlayer1Name("Player 1");
+                    }
+                    if(!player2Name.getText().isEmpty()){
+                        definePlayersGUI.setPlayer2Name(player2Name.getText());
+                    }
+                    else{
+                        definePlayersGUI.setPlayer2Name("Player 2");
+                    }
+
+                    // TODO show player names for debyg
+                    System.out.println("Player 1 name: " + definePlayersGUI.getPlayer1Name());
+                    System.out.println("Player 2 name: " + definePlayersGUI.getPlayer2Name());
                 } else if (source == exit) {
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
                 }

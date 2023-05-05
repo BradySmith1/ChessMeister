@@ -20,6 +20,9 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
     /** the scene to be passed in first through getInstance, then to be changed by changeScreen() */
     private Scene scene;
 
+    /** The previous screen **/
+    private ToScreen previousScreen;
+
     /** the singleton instance */
     private static ScreenFactory singleton;
 
@@ -46,6 +49,7 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
 
     /** The main board screen **/
     private static GameBoardGUI gameBoardScreen;
+
 
 
     /**
@@ -147,10 +151,33 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
     /**
      * Method that sets the scenes root to a new scene
      * @param screenChoice  the ToScreen enum reference
+     * @param previousScreen the ToScreen enum reference of the previous screen
+     */
+    @Override
+    public void changeScreen(ToScreen screenChoice, ToScreen previousScreen) {
+        Pane root = setScreen(screenChoice);
+        this.previousScreen = previousScreen;
+        scene.setRoot(root);
+    }
+
+    /**
+     * Method that sets the scenes root to a new scene
+     * @param screenChoice  the ToScreen enum reference
      */
     @Override
     public void changeScreen(ToScreen screenChoice) {
         Pane root = setScreen(screenChoice);
         scene.setRoot(root);
     }
+
+    /**
+     * Method that returns an enum representing the previous scene
+     *
+     * @return the ToScreen enum reference of the previous screen
+     */
+    @Override
+    public ToScreen getPreviousScreen() {
+        return this.previousScreen;
+    }
+
 }

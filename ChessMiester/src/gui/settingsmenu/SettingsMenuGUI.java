@@ -7,6 +7,7 @@ package gui.settingsmenu;
 
 import enums.ToScreen;
 import gui.colourselector.ColourSelectorGUI;
+import gui_backend.SettingsGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,19 +28,26 @@ public class SettingsMenuGUI extends VBox {
     /** The main menu pane. */
     VBox settingsMenuPane;
 
-    /** Scene for the main menu. */
-    private Scene scene;
-
     /** Reference to the implementation for the ScreenChangeHandlerIF **/
     ScreenChangeHandlerIF screenChanger;
 
     /** Buttons for the menu **/
     Button exitButton;
 
+    /** Checkboxes for the menu **/
+    CheckBox enableUndo, showMoves;
+
+    /** Settings for the board TODO **/
+    SettingsGUI settings;
+
+
     /**
      * Constructor for the main menu GUI.
      */
     public SettingsMenuGUI(){
+        // Instantiate the settings for the board
+        this.settings = new SettingsGUI();
+
         // Create a border pane
         GridPane gp = new GridPane();
 
@@ -87,6 +95,11 @@ public class SettingsMenuGUI extends VBox {
                 // Set the color of the black square to the selected color
                 blackColorBox.setFill(colourSelectorGUI.getSelectedColor());
 
+                // TODO: Set the color of the black square in the game
+                settings.setBlackSquareColor(colourSelectorGUI.getSelectedColor());
+
+                System.out.println("Black Square Color: " + settings.getBlackSquareColor());
+
             }
         });
 
@@ -109,6 +122,9 @@ public class SettingsMenuGUI extends VBox {
 
                 // Set the color of the white square to the selected color
                 whiteColorBox.setFill(colourSelectorGUI.getSelectedColor());
+                settings.setWhiteSquareColor(colourSelectorGUI.getSelectedColor());
+
+                System.out.println("White Square Color: " + settings.getWhiteSquareColor());
             }
         });
 
@@ -116,8 +132,12 @@ public class SettingsMenuGUI extends VBox {
         this.exitButton.setOnAction(buttonHandler);
 
         // Checkboxes for the settings menu
-        CheckBox showMoves = new CheckBox("Enabled");
-        CheckBox enableUndo = new CheckBox("Enabled");
+        this.showMoves = new CheckBox("Enabled");
+        this.enableUndo = new CheckBox("Enabled");
+
+        // Action Event Handler for the checkboxes
+        showMoves.setOnAction(checkBoxHandler);
+        enableUndo.setOnAction(checkBoxHandler);
 
         // Set Alignment
         gp.setAlignment(Pos.CENTER); // Change to center and scale up
@@ -177,9 +197,34 @@ public class SettingsMenuGUI extends VBox {
                 Object source = event.getSource();
 
                 if (source == exitButton) {
-                    screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                    if (screenChanger.getPreviousScreen() == ToScreen.MAIN_MENU) {
+                        screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                    }
+                    else if (screenChanger.getPreviousScreen() == ToScreen.GAME_BOARD){
+                        screenChanger.changeScreen(ToScreen.GAME_BOARD);
+                    }
                 }
             }
+        }
+    };
+
+    /**
+     * Event Handler for the checkboxes
+     */
+    EventHandler<ActionEvent> checkBoxHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            Object source = event.getSource();
+
+            if (source == showMoves) {
+                settings.setShowMoves(showMoves.isSelected());
+            }
+            else if (source == enableUndo){
+                settings.setUndoRedo(enableUndo.isSelected());
+            }
+
+            System.out.println("Show Moves: " + settings.getShowMoves());
+            System.out.println("Undo/Redo: " + settings.getUndoRedo());
         }
     };
 
