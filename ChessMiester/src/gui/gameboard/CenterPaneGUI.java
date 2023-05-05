@@ -60,15 +60,21 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
 
     private void setConstraints() {
         for(int i = 0; i < size; i++){
-            root.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
-            root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
+            root.getColumnConstraints().add(new ColumnConstraints(5,
+                    Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS,
+                    HPos.CENTER, true));
+            root.getRowConstraints().add(new RowConstraints(5,
+                    Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS,
+                    VPos.CENTER, true));
         }
     }
 
     private void populateSquares() throws FileNotFoundException, MalformedURLException {
-        String url = new File("src/gui/gameboard/images/WhitePawn.png").toURI().toURL().toExternalForm();
+        String url = new File("src/gui/gameboard/images/WhitePawn.png").toURI()
+                .toURL().toExternalForm();
         Image whitePawnImage = new Image(url);
-        url = new File("src/gui/gameboard/images/BlackPawn.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/BlackPawn.png").toURI()
+                .toURL().toExternalForm();
         Image blackPawnImage = new Image(url);
         for(int i = 0; i < size; i++) {
             PieceGUI view = squares[1][i].getPiece();
@@ -85,29 +91,41 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     }
 
     private void setPieces(GameColor color, int offset) throws MalformedURLException {
-        String url = new File("src/gui/gameboard/images/WhiteRook.png").toURI().toURL().toExternalForm();
+        String url = new File("src/gui/gameboard/images/WhiteRook.png").toURI()
+                .toURL().toExternalForm();
         Image whiteRookImage = new Image(url);
-        url = new File("src/gui/gameboard/images/WhiteKnightLeft.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/WhiteKnightLeft.png").toURI()
+                .toURL().toExternalForm();
         Image whiteKnightLeftImage = new Image(url);
-        url = new File("src/gui/gameboard/images/WhiteBishop.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/WhiteBishop.png").toURI()
+                .toURL().toExternalForm();
         Image whiteBishopImage = new Image(url);
-        url = new File("src/gui/gameboard/images/WhiteQueen.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/WhiteQueen.png").toURI()
+                .toURL().toExternalForm();
         Image whiteQueenImage = new Image(url);
-        url = new File("src/gui/gameboard/images/WhiteKing.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/WhiteKing.png").toURI()
+                .toURL().toExternalForm();
         Image whiteKingImage = new Image(url);
-        url = new File("src/gui/gameboard/images/WhiteKnightRight.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/WhiteKnightRight.png").toURI()
+                .toURL().toExternalForm();
         Image whiteKnightRightImage = new Image(url);
-        url = new File("src/gui/gameboard/images/BlackRook.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/BlackRook.png").toURI()
+                .toURL().toExternalForm();
         Image blackRookImage = new Image(url);
-        url = new File("src/gui/gameboard/images/BlackKnightLeft.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/BlackKnightLeft.png").toURI()
+                .toURL().toExternalForm();
         Image blackKnightLeftImage = new Image(url);
-        url = new File("src/gui/gameboard/images/BlackBishop.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/BlackBishop.png").toURI()
+                .toURL().toExternalForm();
         Image blackBishopImage = new Image(url);
-        url = new File("src/gui/gameboard/images/BlackQueen.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/BlackQueen.png").toURI()
+                .toURL().toExternalForm();
         Image blackQueenImage = new Image(url);
-        url = new File("src/gui/gameboard/images/BlackKing.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/BlackKing.png").toURI()
+                .toURL().toExternalForm();
         Image blackKingImage = new Image(url);
-        url = new File("src/gui/gameboard/images/BlackKnightRight.png").toURI().toURL().toExternalForm();
+        url = new File("src/gui/gameboard/images/BlackKnightRight.png").toURI()
+                .toURL().toExternalForm();
         Image blackKnightRightImage = new Image(url);
         if(color == GameColor.BLACK){
             PieceGUI view = squares[offset][0].getPiece();
