@@ -6,6 +6,10 @@
  */
 package gui.gameboard;
 
+import enums.ToScreen;
+import interfaces.ScreenChangeHandlerIF;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -25,6 +29,9 @@ public class RightPane {
     /** The button to exit the game. */
     Button exitButton;
 
+    /** Reference to the implementation for the ScreenChangeHandlerIF **/
+    ScreenChangeHandlerIF screenChanger;
+
     /**
      * Constructor for the right pane.
      */
@@ -43,7 +50,11 @@ public class RightPane {
 
         exitButton = new Button("Return to Main Menu");
         exitButton.setId("bottom-button");
-        //exitButton.setOnAction(buttonHandle);
+
+        // Set the action for the buttons
+        exitButton.setOnAction(buttonHandler);
+
+        //Adds the buttons to the anchor pane.
         ap.getChildren().add(exitButton);
         AnchorPane.setBottomAnchor(exitButton, 0.0);
 
@@ -53,4 +64,31 @@ public class RightPane {
     public Pane getRoot(){
         return root;
     }
+
+    /**
+     * Sets the screen changer for the main menu.
+     *
+     * @param sch the screen changer
+     */
+    public void setScreenChangeHandler(ScreenChangeHandlerIF sch) {
+        this.screenChanger = sch;
+    }
+
+    EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+
+        /**
+         * Handle the button clicks
+         *
+         * @param event the event
+         */
+        @Override
+        public void handle(ActionEvent event) {
+            if (screenChanger != null) {
+                Object source = event.getSource();
+                if (source == exitButton){
+                    screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                }
+            }
+        }
+    };
 }

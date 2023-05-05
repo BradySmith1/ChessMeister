@@ -94,10 +94,10 @@ public class ViewPlayedGUI extends VBox {
                 Object source = event.getSource();
 
                 if(source == game1){
-                    screenChanger.changeScreen(null);
+                    System.out.println("Game 1");
                 }
                 else if(source == game2){
-                    screenChanger.changeScreen(null);
+                    System.out.println("Game 2");
                 }
                 else if(source == mainMenu){
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);

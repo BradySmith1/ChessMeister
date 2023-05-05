@@ -1,4 +1,7 @@
 package gui.gameboard;
+import enums.ToScreen;
+import interfaces.ScreenChangeHandlerIF;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -56,7 +59,7 @@ public class TopPane {
     /**
      * Sets the screen changer for the main menu.
      *
-     * @param screenChanger the screen changer
+     * @param sch the screen changer
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch) {
         this.screenChanger = sch;
@@ -73,9 +76,7 @@ public class TopPane {
         public void handle(ActionEvent event) {
             if (screenChanger != null) {
                 Object source = event.getSource();
-                if (source == load) {
-                    System.out.println("Load");
-                } else if (source == save) {
+                if (source == save) {
                     System.out.println("Save");
                 } else if (source == undo) {
                     System.out.println("Undo");

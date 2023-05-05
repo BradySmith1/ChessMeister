@@ -57,6 +57,7 @@ public class GameBoardGUI{
 
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch){
         this.screenChanger = sch;
-        top.setScreenChangeHandler(screenChanger);
+        top.setScreenChangeHandler(this.screenChanger);
+        right.setScreenChangeHandler(this.screenChanger);
     }
 }
