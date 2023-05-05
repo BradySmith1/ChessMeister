@@ -27,7 +27,7 @@ public class ChessNotationGUI {
     ScreenChangeHandlerIF screenChanger;
 
     /** the return button */
-    Button returnButton;
+    Button cont, returnButton;
 
     /**
      * Constructor for the chess notation GUI.
@@ -57,7 +57,7 @@ public class ChessNotationGUI {
                 Now, let's see if you have the right understanding! We're gonna highlight a \s
                 few squares, and just enter what square they are. \s\s
                 
-                Press 'ENTER' to continue whenever you're ready.
+                Click Continue to continue whenever you're ready.
                 """);
         text.setId("tutorialText");
         hb.getChildren().add(text);
@@ -79,14 +79,21 @@ public class ChessNotationGUI {
         chessNotationPane.getChildren().add(hb);
         chessNotationPane.setId("main-pane");
 
+        // add continue button
+        cont = new Button("Continue");
+        cont.setId("menu-button");
+        cont.setOnAction(e -> screenChanger.changeScreen(ToScreen.CHESS_NOTATION));
+        //TODO chess notation quiz
+
         // add return button
         returnButton = new Button("Return");
         returnButton.setId("bottom-button");
         returnButton.setOnAction(e -> screenChanger.changeScreen(ToScreen.TUTORIAL_MENU));
 
         // add the return button to the VBox
-        chessNotationPane.getChildren().add(returnButton);
+        chessNotationPane.getChildren().addAll(cont, returnButton);
         chessNotationPane.setAlignment(Pos.CENTER);
+        chessNotationPane.setSpacing(20);
 
         // add css
         this.chessNotationPane.getStylesheets().add(

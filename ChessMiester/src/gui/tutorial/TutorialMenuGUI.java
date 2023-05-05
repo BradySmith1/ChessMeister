@@ -159,13 +159,13 @@ public class TutorialMenuGUI extends BorderPane {
                 } else if (source == notation) {
                     screenChanger.changeScreen(ToScreen.CHESS_NOTATION);
                 } else if (source == organization) {
-                    System.out.println("Organization button pressed");
+                    screenChanger.changeScreen(ToScreen.BOARD_ORGANIZATION);
                 } else if (source == check) {
-                    System.out.println("Check button pressed");
+                    screenChanger.changeScreen(ToScreen.CHECK);
                 } else if (source == checkmate) {
-                    System.out.println("Checkmate button pressed");
+                    screenChanger.changeScreen(ToScreen.CHECKMATE);
                 } else if (source == draw) {
-                    System.out.println("Draw button pressed");
+                    screenChanger.changeScreen(ToScreen.DRAW);
                 } else if (source == king) {
                     System.out.println("King button pressed");
                 } else if (source == queen) {

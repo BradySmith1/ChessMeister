@@ -1,15 +1,13 @@
 package model;
 
 import enums.ToScreen;
-import gui.tutorial.ChessNotationGUI;
-import gui.tutorial.TutorialMenuGUI;
+import gui.tutorial.*;
 import gui.colourselector.ColourSelectorGUI;
 import gui.gameboard.GameBoardGUI;
 import gui.loadgame.LoadGameGUI;
 import gui.mainmenu.MainMenuGUI;
 import gui.playernames.PlayerNamesGUI;
 import gui.settingsmenu.SettingsMenuGUI;
-import gui.tutorial.BoardSetupGUI;
 import gui.viewplayed.ViewPlayedGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.Scene;
@@ -56,6 +54,18 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
 
     /** The chess notation screen */
     private static ChessNotationGUI chessNotationScreen;
+
+    /** The chess organization screen */
+    private static BoardOrganizationGUI boardOrganizationScreen;
+
+    /** The check tutorial screen */
+    private static CheckGUI checkTutorialScreen;
+
+    /** The checkmate tutorial screen */
+    private static CheckmateGUI checkmateTutorialScreen;
+
+    /** The draw tutorial screen */
+    private static DrawGUI drawTutorialScreen;
 
 
     /**
@@ -156,6 +166,34 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                     chessNotationScreen.setScreenChangeHandler(this);
                 }
                 screen = chessNotationScreen.getRoot();
+                break;
+            case BOARD_ORGANIZATION:
+                if (boardOrganizationScreen == null) {
+                    boardOrganizationScreen = new BoardOrganizationGUI();
+                    boardOrganizationScreen.setScreenChangeHandler(this);
+                }
+                screen = boardOrganizationScreen.getRoot();
+                break;
+            case CHECK:
+                if (checkTutorialScreen == null) {
+                    checkTutorialScreen = new CheckGUI();
+                    checkTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = checkTutorialScreen.getRoot();
+                break;
+            case CHECKMATE:
+                if (checkmateTutorialScreen == null) {
+                    checkmateTutorialScreen = new CheckmateGUI();
+                    checkmateTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = checkmateTutorialScreen.getRoot();
+                break;
+            case DRAW:
+                if (drawTutorialScreen == null) {
+                    drawTutorialScreen = new DrawGUI();
+                    drawTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = drawTutorialScreen.getRoot();
                 break;
             default:
                 screen = null;

@@ -33,5 +33,17 @@ public enum ToScreen {
     BOARD_SETUP,
 
     /** Reference to ChessNotationGUI */
-    CHESS_NOTATION;
+    CHESS_NOTATION,
+
+    /** Reference to BoardOrganizationGUI */
+    BOARD_ORGANIZATION,
+
+    /** Reference to CheckGUI */
+    CHECK,
+
+    /** Reference to CheckmateGUI */
+    CHECKMATE,
+
+    /** Reference to DrawGUI */
+    DRAW;
 }
