@@ -27,5 +27,11 @@ public enum ToScreen {
     LOAD_GAME,
 
     /** Reference to GameBoardGUI */
-    GAME_BOARD;
+    GAME_BOARD,
+
+    /** Reference to BoardSetupGUI */
+    BOARD_SETUP,
+
+    /** Reference to ChessNotationGUI */
+    CHESS_NOTATION;
 }

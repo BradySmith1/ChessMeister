@@ -3,7 +3,7 @@
  *
  * @author Zach Eanes (100%)
  */
-package gui.Tutorial;
+package gui.tutorial;
 
 import enums.ToScreen;
 import javafx.event.ActionEvent;
@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.geometry.Pos;
 import interfaces.ScreenChangeHandlerIF;
+import javafx.scene.text.Text;
 
 public class TutorialMenuGUI extends BorderPane {
     /** The main menu pane. */
@@ -154,9 +155,9 @@ public class TutorialMenuGUI extends BorderPane {
                 Object source = event.getSource();
 
                 if (source == setup) {
-                    System.out.println("Setup button pressed");
+                    screenChanger.changeScreen(ToScreen.BOARD_SETUP);
                 } else if (source == notation) {
-                    System.out.println("Notation button pressed");
+                    screenChanger.changeScreen(ToScreen.CHESS_NOTATION);
                 } else if (source == organization) {
                     System.out.println("Organization button pressed");
                 } else if (source == check) {

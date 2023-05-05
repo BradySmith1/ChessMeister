@@ -1,17 +1,21 @@
 package model;
 
 import enums.ToScreen;
-import gui.Tutorial.TutorialMenuGUI;
+import gui.tutorial.ChessNotationGUI;
+import gui.tutorial.TutorialMenuGUI;
 import gui.colourselector.ColourSelectorGUI;
 import gui.gameboard.GameBoardGUI;
 import gui.loadgame.LoadGameGUI;
 import gui.mainmenu.MainMenuGUI;
 import gui.playernames.PlayerNamesGUI;
 import gui.settingsmenu.SettingsMenuGUI;
+import gui.tutorial.BoardSetupGUI;
 import gui.viewplayed.ViewPlayedGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+
 /**
  * Class that implements ScreenChangeHandlerIF to be used to change screens, this is a singleton
  */
@@ -46,6 +50,12 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
 
     /** The main board screen **/
     private static GameBoardGUI gameBoardScreen;
+
+    /** The board setup screen **/
+    private static BoardSetupGUI boardSetupScreen;
+
+    /** The chess notation screen */
+    private static ChessNotationGUI chessNotationScreen;
 
 
     /**
@@ -132,6 +142,20 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                     gameBoardScreen.setScreenChangeHandler(this);
                 }
                 screen = gameBoardScreen.getRoot();
+                break;
+            case BOARD_SETUP:
+                if (boardSetupScreen == null) {
+                    boardSetupScreen = new BoardSetupGUI();
+                    boardSetupScreen.setScreenChangeHandler(this);
+                }
+                screen = boardSetupScreen.getRoot();
+                break;
+            case CHESS_NOTATION:
+                if (chessNotationScreen == null) {
+                    chessNotationScreen = new ChessNotationGUI();
+                    chessNotationScreen.setScreenChangeHandler(this);
+                }
+                screen = chessNotationScreen.getRoot();
                 break;
             default:
                 screen = null;
