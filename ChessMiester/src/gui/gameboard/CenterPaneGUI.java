@@ -162,8 +162,8 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             popup.show();
             root.addEventFilter(MouseEvent.ANY, this);
         }else{
-            SquareGUI newClicked = (SquareGUI) mouse.getSource();
-            if(clicked.getPiece().getPieceImage() != null){ //TODO need to integrate valid moves into here.
+            SquareGUI newClicked = (SquareGUI) mouse.getSource(); //TODO need to integrate valid moves into here.
+            if(clicked.getPiece().getPieceImage() != null && clicked != newClicked){
                 newClicked.getPiece().setPieceImage(clicked.getPiece().getPieceImage());
                 clicked.getPiece().setPieceImage(null);
             }
