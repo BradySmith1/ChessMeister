@@ -28,17 +28,15 @@ public class PieceGUI extends ImageView{
         this(null);
     }
 
-    /**
-     * Defines the piece typing based on the type of the piece.
-     */
-    private void moveTypeFactory() {
-        switch (type) {
-            case King -> moveType = new KingMovement(getColor());
-            case Pawn -> moveType = new PawnMovement(getColor());
-            case Rook -> moveType = new RookMovement(getColor());
-            case Queen -> moveType = new QueenMovement(getColor());
-            case Bishop -> moveType = new BishopMovement(getColor());
-            case Knight -> moveType = new KnightMovement(getColor());
+    public void setPieceImage(Image image) {
+        this.image = image;
+        this.setImage(this.image);
+        if(this.image == null){
+            type = null;
+            color = null;
+            moveType = null;
+        }else{
+            setType();
         }
     }
 
@@ -62,6 +60,20 @@ public class PieceGUI extends ImageView{
         setColor();
     }
 
+    /**
+     * Defines the piece typing based on the type of the piece.
+     */
+    private void moveTypeFactory() {
+        switch (type) {
+            case King -> moveType = new KingMovement(getColor());
+            case Pawn -> moveType = new PawnMovement(getColor());
+            case Rook -> moveType = new RookMovement(getColor());
+            case Queen -> moveType = new QueenMovement(getColor());
+            case Bishop -> moveType = new BishopMovement(getColor());
+            case Knight -> moveType = new KnightMovement(getColor());
+        }
+    }
+
     public void setColor() {
         String path = image.getUrl();
         int lastSlash = path.lastIndexOf('/') + 1;
@@ -75,18 +87,6 @@ public class PieceGUI extends ImageView{
 
     public Image getPieceImage() {
         return image;
-    }
-
-    public void setPieceImage(Image image) {
-        this.image = image;
-        this.setImage(this.image);
-        if(this.image == null){
-            type = null;
-            color = null;
-            moveType = null;
-        }else{
-            setType();
-        }
     }
 
     public ChessPieceType getType() {

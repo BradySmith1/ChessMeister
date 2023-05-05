@@ -44,7 +44,7 @@ public class SquareGUI extends StackPane implements GameBoardObserver {
             db.setContent(content);
             event.consume();
         });
-        this.setOnDragOver(event -> {
+        this.setOnDragOver(event -> { //TODO integrate with valid moves.
             if(event.getGestureSource() != this){
                 event.acceptTransferModes(TransferMode.MOVE);
             }

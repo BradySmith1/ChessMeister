@@ -24,4 +24,8 @@ public class RightPaneGUI {
     public Pane getRoot(){
         return root;
     }
+
+    public Label getLabel(){return player2;}
+
+    public Label getCapturedPieces(){return capturedPieces;}
 }

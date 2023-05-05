@@ -163,7 +163,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             root.addEventFilter(MouseEvent.ANY, this);
         }else{
             SquareGUI newClicked = (SquareGUI) mouse.getSource();
-            if(clicked.getPiece().getPieceImage() != null){
+            if(clicked.getPiece().getPieceImage() != null){ //TODO need to integrate valid moves into here.
                 newClicked.getPiece().setPieceImage(clicked.getPiece().getPieceImage());
                 clicked.getPiece().setPieceImage(null);
             }
@@ -185,7 +185,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
 
     @Override
     public void notifyRightClick(Event event) {
-        //highlight(); TODO
+        //highlight(); TODO integrate highlighting.
     }
 
     @Override

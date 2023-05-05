@@ -20,4 +20,6 @@ public class BottomPaneGUI {
     public Pane getRoot(){
         return root;
     }
+
+    public Label getLabel(){return playerSelect;}
 }
