@@ -46,6 +46,7 @@ public class GameBoardGUI{
         root.setRight(right.getRoot());
         root.setCenter(center.getRoot());
 
+
         // add the stylesheet and images
         root.getStylesheets().add(getClass().getResource("gameBoard.css").toExternalForm());
     }
