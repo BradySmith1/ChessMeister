@@ -21,6 +21,7 @@ public class GameBoardGUI{
     BorderPane root;
 
     ScreenChangeHandlerIF screenChanger;
+
     public GameBoardGUI(){
         super();
 
@@ -53,5 +54,8 @@ public class GameBoardGUI{
         return root;
     }
 
-    public void setScreenChangeHandler(ScreenChangeHandlerIF sch){ this.screenChanger = sch; }
+    public void setScreenChangeHandler(ScreenChangeHandlerIF sch){
+        this.screenChanger = sch;
+        top.setScreenChangeHandler(screenChanger);
+    }
 }

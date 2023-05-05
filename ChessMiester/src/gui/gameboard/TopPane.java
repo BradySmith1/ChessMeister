@@ -1,5 +1,9 @@
 package gui.gameboard;
 
+import enums.ToScreen;
+import interfaces.ScreenChangeHandlerIF;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -11,17 +15,27 @@ public class TopPane {
 
     Button load, save, undo, redo, settings;
 
+    /** Reference to the implementation for the ScreenChangeHandlerIF **/
+    ScreenChangeHandlerIF screenChanger;
+
     public TopPane(){
 
         //Creation of the grid pane.
         root = new GridPane();
 
         //Creation of the buttons.
-        load = new Button("Load");
-        save = new Button("Save");
-        undo = new Button("Undo");
-        redo = new Button("Redo");
-        settings = new Button("Settings");
+        this.load = new Button("Load");
+        this.save = new Button("Save");
+        this.undo = new Button("Undo");
+        this.redo = new Button("Redo");
+        this.settings = new Button("Settings");
+
+        // Set the action for the buttons
+        this.load.setOnAction(buttonHandler);
+        this.save.setOnAction(buttonHandler);
+        this.undo.setOnAction(buttonHandler);
+        this.redo.setOnAction(buttonHandler);
+        this.settings.setOnAction(buttonHandler);
 
         //Sets the max size of the button to fill the grid space.
         load.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -45,4 +59,42 @@ public class TopPane {
     public Pane getRoot(){
         return root;
     }
+
+
+    /**
+     * Sets the screen changer for the main menu.
+     *
+     * @param screenChanger the screen changer
+     */
+    public void setScreenChangeHandler(ScreenChangeHandlerIF sch) {
+        this.screenChanger = sch;
+    }
+
+    EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+
+        /**
+         * Handle the button clicks
+         *
+         * @param event the event
+         */
+        @Override
+        public void handle(ActionEvent event) {
+            if (screenChanger != null) {
+                Object source = event.getSource();
+                if (source == load) {
+                    System.out.println("Load");
+                } else if (source == save) {
+                    System.out.println("Save");
+                } else if (source == undo) {
+                    System.out.println("Undo");
+                } else if (source == redo) {
+                    System.out.println("Redo");
+                } else if (source == settings) {
+                    screenChanger.changeScreen(ToScreen.SETTINGS_MENU);
+                }
+            }
+        }
+    };
+
+
 }
