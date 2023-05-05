@@ -15,8 +15,10 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 
 public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent> {
 
@@ -39,7 +41,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         setConstraints();
         try{
             populateSquares();
-        }catch(FileNotFoundException fnfe){
+        }catch(FileNotFoundException | MalformedURLException fnfe){
             System.out.println("Error: File not found.");
         }
 
@@ -63,70 +65,84 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         }
     }
 
-    private void populateSquares() throws FileNotFoundException {
-        Image whitePawnImage = new Image(new FileInputStream("src/gui/gameboard/images/WhitePawn.png"));
-        Image blackPawnImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackPawn.png"));
+    private void populateSquares() throws FileNotFoundException, MalformedURLException {
+        String url = new File("src/gui/gameboard/images/WhitePawn.png").toURI().toURL().toExternalForm();
+        Image whitePawnImage = new Image(url);
+        url = new File("src/gui/gameboard/images/BlackPawn.png").toURI().toURL().toExternalForm();
+        Image blackPawnImage = new Image(url);
         for(int i = 0; i < size; i++) {
-            ImageView view = squares[1][i].getImageView();
-            view.setImage(blackPawnImage);
+            PieceGUI view = squares[1][i].getPiece();
+            view.setPieceImage(blackPawnImage);
             view.setId("pawn" + i);
         }
         for(int i = 0; i < size; i++){
-            ImageView view = squares[6][i].getImageView();
-            view.setImage(whitePawnImage);
+            PieceGUI view = squares[6][i].getPiece();
+            view.setPieceImage(whitePawnImage);
             view.setId("pawn" + i);
         }
         setPieces(GameColor.WHITE, 0);
         setPieces(GameColor.BLACK, size-1);
     }
 
-    private void setPieces(GameColor color, int offset) throws FileNotFoundException {
-        Image whiteRookImage = new Image(new FileInputStream("src/gui/gameboard/images/WhiteRook.png"));
-        Image whiteKnightLeftImage = new Image(new FileInputStream("src/gui/gameboard/images/WhiteKnightLeft.png"));
-        Image whiteBishopImage = new Image(new FileInputStream("src/gui/gameboard/images/WhiteBishop.png"));
-        Image whiteQueenImage = new Image(new FileInputStream("src/gui/gameboard/images/WhiteQueen.png"));
-        Image whiteKingImage = new Image(new FileInputStream("src/gui/gameboard/images/WhiteKing.png"));
-        Image whiteKnightRightImage = new Image(new FileInputStream("src/gui/gameboard/images/WhiteKnightRight.png"));
-        Image blackRookImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackRook.png"));
-        Image blackKnightLeftImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackKnightLeft.png"));
-        Image blackBishopImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackBishop.png"));
-        Image blackQueenImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackQueen.png"));
-        Image blackKingImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackKing.png"));
-        Image blackKnightRightImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackKnightRight.png"));
+    private void setPieces(GameColor color, int offset) throws MalformedURLException {
+        String url = new File("src/gui/gameboard/images/WhiteRook.png").toURI().toURL().toExternalForm();
+        Image whiteRookImage = new Image(url);
+        url = new File("src/gui/gameboard/images/WhiteKnightLeft.png").toURI().toURL().toExternalForm();
+        Image whiteKnightLeftImage = new Image(url);
+        url = new File("src/gui/gameboard/images/WhiteBishop.png").toURI().toURL().toExternalForm();
+        Image whiteBishopImage = new Image(url);
+        url = new File("src/gui/gameboard/images/WhiteQueen.png").toURI().toURL().toExternalForm();
+        Image whiteQueenImage = new Image(url);
+        url = new File("src/gui/gameboard/images/WhiteKing.png").toURI().toURL().toExternalForm();
+        Image whiteKingImage = new Image(url);
+        url = new File("src/gui/gameboard/images/WhiteKnightRight.png").toURI().toURL().toExternalForm();
+        Image whiteKnightRightImage = new Image(url);
+        url = new File("src/gui/gameboard/images/BlackRook.png").toURI().toURL().toExternalForm();
+        Image blackRookImage = new Image(url);
+        url = new File("src/gui/gameboard/images/BlackKnightLeft.png").toURI().toURL().toExternalForm();
+        Image blackKnightLeftImage = new Image(url);
+        url = new File("src/gui/gameboard/images/BlackBishop.png").toURI().toURL().toExternalForm();
+        Image blackBishopImage = new Image(url);
+        url = new File("src/gui/gameboard/images/BlackQueen.png").toURI().toURL().toExternalForm();
+        Image blackQueenImage = new Image(url);
+        url = new File("src/gui/gameboard/images/BlackKing.png").toURI().toURL().toExternalForm();
+        Image blackKingImage = new Image(url);
+        url = new File("src/gui/gameboard/images/BlackKnightRight.png").toURI().toURL().toExternalForm();
+        Image blackKnightRightImage = new Image(url);
         if(color == GameColor.BLACK){
-            ImageView view = squares[offset][0].getImageView();
-            view.setImage(whiteRookImage);
-            view = squares[offset][size-2].getImageView();
-            view.setImage(whiteKnightLeftImage);
-            view = squares[offset][1].getImageView();
-            view.setImage(whiteKnightRightImage);
-            view = squares[offset][size-3].getImageView();
-            view.setImage(whiteBishopImage);
-            view = squares[offset][2].getImageView();
-            view.setImage(whiteBishopImage);
-            view = squares[offset][size-1].getImageView();
-            view.setImage(whiteRookImage);
-            view = squares[offset][size-4].getImageView();
-            view.setImage(whiteQueenImage);
-            view = squares[offset][3].getImageView();
-            view.setImage(whiteKingImage);
+            PieceGUI view = squares[offset][0].getPiece();
+            view.setPieceImage(whiteRookImage);
+            view = squares[offset][size-2].getPiece();
+            view.setPieceImage(whiteKnightLeftImage);
+            view = squares[offset][1].getPiece();
+            view.setPieceImage(whiteKnightRightImage);
+            view = squares[offset][size-3].getPiece();
+            view.setPieceImage(whiteBishopImage);
+            view = squares[offset][2].getPiece();
+            view.setPieceImage(whiteBishopImage);
+            view = squares[offset][size-1].getPiece();
+            view.setPieceImage(whiteRookImage);
+            view = squares[offset][size-4].getPiece();
+            view.setPieceImage(whiteQueenImage);
+            view = squares[offset][3].getPiece();
+            view.setPieceImage(whiteKingImage);
         }else{
-            ImageView view = squares[offset][0].getImageView();
-            view.setImage(blackRookImage);
-            view = squares[offset][size-2].getImageView();
-            view.setImage(blackKnightLeftImage);
-            view = squares[offset][1].getImageView();
-            view.setImage(blackKnightRightImage);
-            view = squares[offset][size-3].getImageView();
-            view.setImage(blackBishopImage);
-            view = squares[offset][2].getImageView();
-            view.setImage(blackBishopImage);
-            view = squares[offset][size-1].getImageView();
-            view.setImage(blackRookImage);
-            view = squares[offset][size-4].getImageView();
-            view.setImage(blackQueenImage);
-            view = squares[offset][3].getImageView();
-            view.setImage(blackKingImage);
+            PieceGUI view = squares[offset][0].getPiece();
+            view.setPieceImage(blackRookImage);
+            view = squares[offset][size-2].getPiece();
+            view.setPieceImage(blackKnightLeftImage);
+            view = squares[offset][1].getPiece();
+            view.setPieceImage(blackKnightRightImage);
+            view = squares[offset][size-3].getPiece();
+            view.setPieceImage(blackBishopImage);
+            view = squares[offset][2].getPiece();
+            view.setPieceImage(blackBishopImage);
+            view = squares[offset][size-1].getPiece();
+            view.setPieceImage(blackRookImage);
+            view = squares[offset][size-4].getPiece();
+            view.setPieceImage(blackQueenImage);
+            view = squares[offset][3].getPiece();
+            view.setPieceImage(blackKingImage);
         }
     }
 
@@ -147,9 +163,9 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             root.addEventFilter(MouseEvent.ANY, this);
         }else{
             SquareGUI newClicked = (SquareGUI) mouse.getSource();
-            if(clicked.getImageView().getImage() != null){
-                newClicked.getImageView().setImage(clicked.getImageView().getImage());
-                clicked.getImageView().setImage(null);
+            if(clicked.getPiece().getPieceImage() != null){
+                newClicked.getPiece().setPieceImage(clicked.getPiece().getPieceImage());
+                clicked.getPiece().setPieceImage(null);
             }
             popup.close();
             clicked = null;

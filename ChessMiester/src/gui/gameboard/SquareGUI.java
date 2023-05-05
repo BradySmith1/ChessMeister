@@ -2,38 +2,25 @@ package gui.gameboard;
 
 import enums.Files;
 import enums.Rank;
-import gui.gameboard.GameBoardObserver;
 import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.input.*;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.Position;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class SquareGUI extends StackPane implements GameBoardObserver {
 
     private final Position position;
 
-    private ImageView imageView;
-
-    private Image oldImage;
+    private PieceGUI piece;
 
     GameBoardObserver observer;
 
     public SquareGUI(int row, int col){
         super();
         position = new Position(Rank.getRankFromIndex(row), Files.getFileFromFileNum(col));
-        oldImage = null;
-        imageView = new ImageView();
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
-        this.getChildren().add(imageView);
+        piece = new PieceGUI();
+        this.getChildren().add(piece);
         String color;
         color = findColor(row, col);
         this.setStyle("-fx-background-color: " + color + ";");
@@ -66,7 +53,7 @@ public class SquareGUI extends StackPane implements GameBoardObserver {
             Dragboard db = event.getDragboard();
             boolean success = false;
             if(db.hasImage()){
-                this.imageView.setImage(db.getImage());
+                this.piece.setImage(db.getImage());
                 success = true;
             }
             event.setDropCompleted(success);
@@ -74,7 +61,7 @@ public class SquareGUI extends StackPane implements GameBoardObserver {
         });
         this.setOnDragDone(event -> {
             if (event.getTransferMode() == TransferMode.MOVE){
-                this.imageView.setImage(null);
+                this.piece.setImage(null);
             }
             event.consume();
         });
@@ -104,8 +91,12 @@ public class SquareGUI extends StackPane implements GameBoardObserver {
         return position;
     }
 
-    public ImageView getImageView(){
-        return imageView;
+    public PieceGUI getPiece(){
+        return piece;
+    }
+
+    public void setPiece(PieceGUI piece){
+        this.piece = piece;
     }
 
     public void addObserver(GameBoardObserver observer){
