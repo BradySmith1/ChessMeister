@@ -57,6 +57,7 @@ public class Main extends Application {
 
     /**
      * Change the root scene for the application
+     *
      * @param root The root scene to set
      */
     private void setScreen(Pane root){

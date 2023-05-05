@@ -1,3 +1,9 @@
+/**
+ * This class is responsible for creating the game board GUI.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 package gui.gameboard;
 
 import interfaces.ScreenChangeHandlerIF;
@@ -6,19 +12,30 @@ import javafx.scene.layout.BorderPane;
 
 public class GameBoardGUI{
 
+    /** the top pane */
     private TopPaneGUI top;
 
+    /** the bottom pane */
     private BottomPaneGUI bottom;
 
+    /** the left pane */
     private LeftPaneGUI left;
 
+    /** the right pane */
     private RightPaneGUI right;
 
+    /** the center pane */
     private CenterPaneGUI center;
 
+    /** the root pane */
     private BorderPane root;
 
+    /** the screen change handler */
     ScreenChangeHandlerIF screenChanger;
+
+    /**
+     * Constructor for the game board GUI.
+     */
     public GameBoardGUI(){
         super();
 
@@ -47,9 +64,16 @@ public class GameBoardGUI{
         root.getStylesheets().add(getClass().getResource("gameBoard.css").toExternalForm());
     }
 
-    public Pane getRoot() {
-        return root;
-    }
+    /**
+     * Returns the root pane.
+     *
+     * @return the root pane
+     */
+    public Pane getRoot() { return root; }
 
+    /**
+     * Sets the screen change handler.
+     * @param sch the screen change handler
+     */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch){ this.screenChanger = sch; }
 }
