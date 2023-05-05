@@ -40,20 +40,16 @@ public class ViewPlayedGUI extends VBox {
         Label title = new Label("Select Game to Load");
         title.setId("topLabel");
 
-        // create game buttons
-        this.game1 = new Button("Scholar's Mate");
-        this.game2 = new Button("Stalemate");
-        this.game1.setId("menu-button");
-        this.game2.setId("menu-button");
-        this.game1.setOnAction(buttonHandler);
-        this.game2.setOnAction(buttonHandler);
+        // Create the buttons
+        this.createButtons();
 
-        // return to main menu button
-        this.mainMenu = new Button("Return to Main Menu");
-        this.mainMenu.setId("bottom-button");
-        this.mainMenu.setOnAction(buttonHandler);
+        // Set button ids
+        this.setButtonIds();
 
-        // add title and buttons to pane
+        // Set button actions
+        this.setButtonActions();
+
+        // Add components to the pane
         this.viewPlayedPane.getChildren().addAll(title, game1, game2, mainMenu);
         this.viewPlayedPane.setId("main-pane");
         this.viewPlayedPane.setAlignment(Pos.CENTER);
@@ -106,5 +102,23 @@ public class ViewPlayedGUI extends VBox {
 
         }
     };
+
+    private void createButtons(){
+        this.game1 = new Button("Scholar's Mate");
+        this.game2 = new Button("Stalemate");
+        this.mainMenu = new Button("Return to Main Menu");
+    }
+
+    private void setButtonIds(){
+        this.game1.setId("menu-button");
+        this.game2.setId("menu-button");
+        this.mainMenu.setId("bottom-button");
+    }
+
+    private void setButtonActions(){
+        this.game1.setOnAction(buttonHandler);
+        this.game2.setOnAction(buttonHandler);
+        this.mainMenu.setOnAction(buttonHandler);
+    }
 
 }

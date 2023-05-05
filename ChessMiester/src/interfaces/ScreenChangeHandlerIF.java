@@ -2,6 +2,7 @@ package interfaces;
 
 import enums.ToScreen;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 
 /**
  * Interface to be coded to for the functionality of changing screens
@@ -26,5 +27,12 @@ public interface ScreenChangeHandlerIF {
      * @return the ToScreen enum reference of the previous screen
      */
     public ToScreen getPreviousScreen();
+
+    /**
+     * Method that returns a selected scene
+     *
+     * @return the selected scene
+     */
+    public Pane getGuiScene(ToScreen screenChoice);
 
 }

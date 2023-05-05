@@ -107,17 +107,31 @@ public class LoadGameGUI extends VBox {
          */
         @Override
         public void handle(ActionEvent event) {
+            // Check if the screen change handler is set
             if (screenChanger != null) {
+                // Get the source of the event
                 Object source = event.getSource();
 
+                // Check which button was pressed
                 if (source == load) {
+                    // Create a file chooser
                     FileChooser fileChooser = new FileChooser();
+
+                    // Set the initial directory
                     fileChooser.setInitialDirectory(
                             new File(System.getProperty("user.dir") + "/src/SavedGames"));
+
+                    // Set the extension filter
                     FileChooser.ExtensionFilter extFilter =
                         new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
+
+                    // Add the extension filter
                     fileChooser.getExtensionFilters().add(extFilter);
+
+                    // Show the file chooser
                     File selectedFile = fileChooser.showOpenDialog(load.getScene().getWindow());
+
+                    // Check if a file was selected, if so, set the text field
                     if (selectedFile != null) {
                         System.out.println(selectedFile.getAbsolutePath());
                         file.setText(selectedFile.getName());

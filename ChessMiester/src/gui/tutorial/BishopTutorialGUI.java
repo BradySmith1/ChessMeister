@@ -35,17 +35,8 @@ public class BishopTutorialGUI {
         bishopPane = new VBox();
         bishopPane.setId("main-pane");
 
-        // get bishop image and add to pane
-        try{
-            Image bishop = new Image(new FileInputStream(
-                    "src/gui/gameboard/images/WhiteBishop.png"));
-            ImageView bishopView = new ImageView(bishop);
-            bishopView.setFitHeight(100);
-            bishopView.setFitWidth(100);
-            bishopPane.getChildren().add(bishopView);
-        }catch(Exception e){
-            System.out.println("Error: File not found.");
-        }
+        // Add Bishop image
+        this.addImage();
 
         // Create a text object
         Text text = new Text("""
@@ -92,4 +83,17 @@ public class BishopTutorialGUI {
      * @param sch the screen changer
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch) { this.screenChanger = sch; }
+
+    private void addImage(){
+        try{
+            Image bishop = new Image(new FileInputStream(
+                    "src/gui/gameboard/images/WhiteBishop.png"));
+            ImageView bishopView = new ImageView(bishop);
+            bishopView.setFitHeight(100);
+            bishopView.setFitWidth(100);
+            bishopPane.getChildren().add(bishopView);
+        }catch(Exception e){
+            System.out.println("Error: File not found.");
+        }
+    }
 }

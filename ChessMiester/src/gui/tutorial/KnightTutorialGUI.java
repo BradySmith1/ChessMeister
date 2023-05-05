@@ -35,17 +35,9 @@ public class KnightTutorialGUI {
         knightPane = new VBox();
         knightPane.setId("main-pane");
 
-        // get knight image and add to pane
-        try{
-            Image knight = new Image(new FileInputStream(
-                    "src/gui/gameboard/images/WhiteKnightLeft.png"));
-            ImageView knightView = new ImageView(knight);
-            knightView.setFitHeight(100);
-            knightView.setFitWidth(100);
-            knightPane.getChildren().add(knightView);
-        }catch(Exception e){
-            System.out.println("Error: File not found.");
-        }
+        // Add Knight image
+        this.addImage();
+
 
         // Create a text object
         Text text = new Text("""
@@ -93,4 +85,18 @@ public class KnightTutorialGUI {
      * @param sch the screen changer
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch) { this.screenChanger = sch; }
+
+    private void addImage(){
+        // get knight image and add to pane
+        try{
+            Image knight = new Image(new FileInputStream(
+                    "src/gui/gameboard/images/WhiteKnightLeft.png"));
+            ImageView knightView = new ImageView(knight);
+            knightView.setFitHeight(100);
+            knightView.setFitWidth(100);
+            knightPane.getChildren().add(knightView);
+        }catch(Exception e){
+            System.out.println("Error: File not found.");
+        }
+    }
 }

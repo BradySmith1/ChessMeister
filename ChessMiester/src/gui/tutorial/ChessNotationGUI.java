@@ -67,16 +67,8 @@ public class ChessNotationGUI {
         text.setId("tutorialText");
         hb.getChildren().add(text);
 
-        // add image for notation
-        try{
-            ImageView img = new ImageView(new Image(
-                    new FileInputStream("src/gui/tutorial/boardNotation.jpg")));
-            img.setFitHeight(400);
-            img.setFitWidth(400);
-            hb.getChildren().add(img);
-        } catch (Exception e) {
-            System.out.println("Error loading image");
-        }
+        // Add Notation image
+        this.addImage(hb);
 
         hb.setAlignment(Pos.CENTER);
         // add the HBox to the VBox
@@ -117,4 +109,16 @@ public class ChessNotationGUI {
      * @return the chess notation pane
      */
     public VBox getRoot() { return chessNotationPane; }
+
+    private void addImage(HBox hb){
+        try{
+            ImageView img = new ImageView(new Image(
+                    new FileInputStream("src/gui/tutorial/boardNotation.jpg")));
+            img.setFitHeight(400);
+            img.setFitWidth(400);
+            hb.getChildren().add(img);
+        } catch (Exception e) {
+            System.out.println("Error loading image");
+        }
+    }
 }

@@ -30,7 +30,7 @@ public class PlayerNamesGUI extends BorderPane {
     ScreenChangeHandlerIF screenChanger;
 
     /** Buttons for the menu **/
-    Button save, exit;
+    Button exit, play;
 
     /** Text fields for the player names **/
     TextField player1Name, player2Name;
@@ -79,12 +79,7 @@ public class PlayerNamesGUI extends BorderPane {
         player2Label.setId("sub-menu-text");
 
         // create and set ids for text fields
-        this.player1Name = new TextField();
-        this.player2Name = new TextField();
-        player1Name.setId("text-box");
-        player2Name.setId("text-box");
-        player1Name.setPromptText("Enter name here!");
-        player2Name.setPromptText("Enter name here!");
+        this.createPlayerFields();
 
 
         // add elements to the vbox
@@ -102,20 +97,20 @@ public class PlayerNamesGUI extends BorderPane {
      */
     private VBox makeBottom(){
         //create 2 buttons and set ids
-        this.save = new Button("Click to Save");
         this.exit = new Button("Return to Main Menu");
-        save.setId("menu-button");
+        this.play = new Button("Click to Play");
+        play.setId("menu-button");
         exit.setId("bottom-button");
 
         // Set button actions
-        save.setOnAction(buttonHandler);
         exit.setOnAction(buttonHandler);
+        play.setOnAction(buttonHandler);
 
         // Create the Vbox pane
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(20);
-        vb.getChildren().addAll(save, exit);
+        vb.getChildren().addAll(play, exit);
 
         return vb;
     }
@@ -149,7 +144,9 @@ public class PlayerNamesGUI extends BorderPane {
             if (screenChanger != null){
                 Object source = event.getSource();
 
-                if (source == save){
+                if (source == exit) {
+                    screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                } else if (source == play) {
                     if(!player1Name.getText().isEmpty()){
                         definePlayersGUI.setPlayer1Name(player1Name.getText());
                     }
@@ -162,14 +159,18 @@ public class PlayerNamesGUI extends BorderPane {
                     else{
                         definePlayersGUI.setPlayer2Name("Player 2");
                     }
-
-                    // TODO show player names for debyg
-                    System.out.println("Player 1 name: " + definePlayersGUI.getPlayer1Name());
-                    System.out.println("Player 2 name: " + definePlayersGUI.getPlayer2Name());
-                } else if (source == exit) {
-                    screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                    screenChanger.changeScreen(ToScreen.GAME_BOARD);
                 }
             }
         }
     };
+
+    private void createPlayerFields(){
+        this.player1Name = new TextField();
+        this.player2Name = new TextField();
+        player1Name.setId("text-box");
+        player2Name.setId("text-box");
+        player1Name.setPromptText("Enter name here!");
+        player2Name.setPromptText("Enter name here!");
+    }
 }

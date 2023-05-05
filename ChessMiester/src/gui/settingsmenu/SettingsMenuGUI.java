@@ -40,6 +40,9 @@ public class SettingsMenuGUI extends VBox {
     /** Settings for the board TODO **/
     SettingsGUI settings;
 
+    /** Colored Rectangles for the settings menu **/
+    Rectangle blackColorBox, whiteColorBox;
+
 
     /**
      * Constructor for the main menu GUI.
@@ -52,90 +55,26 @@ public class SettingsMenuGUI extends VBox {
         GridPane gp = new GridPane();
 
         // Labels for the settings menu
-        Label titleLabel = new Label("Settings");
-        titleLabel.setId("topLabel");
+        Label titleLabel = createLabel("Settings", "topLabel");
         titleLabel.setAlignment(Pos.CENTER);
-        Label colorLabel = new Label("Colors:");
-        colorLabel.setId("middleLabel");
-        Label blackSquares = new Label("Black Squares:");
-        blackSquares.setId("middleLabel");
-        Label whiteSquares = new Label("White Squares:");
-        whiteSquares.setId("middleLabel");
-        Label undoLabel = new Label("Undo/Redo");
-        undoLabel.setId("middleLabel");
-        Label showLabel = new Label("Show Moves");
-        showLabel.setId("middleLabel");
+        Label colorLabel = createLabel("Colors:", "middleLabel");
+        Label blackSquares = createLabel("Black Squares:", "middleLabel");
+        Label whiteSquares = createLabel("White Squares:", "middleLabel");
+        Label undoLabel = createLabel("Undo/Redo", "middleLabel");
+        Label showLabel = createLabel("Show Moves", "middleLabel");
 
-        // Buttons for the settings menu
-        this.exitButton = new Button("Return");
-        this.exitButton.setId("bottom-button2");
-        this.exitButton.setAlignment(Pos.CENTER);
+        // Create exit button for the settings menu
+        this.createExitButton();
 
         // Create Rectangles
-        Rectangle blackColorBox = new Rectangle(50, 20, Color.BLACK);
-        Rectangle whiteColorBox = new Rectangle(50, 20, Color.WHITE);
+        this.blackColorBox = new Rectangle(50, 20, Color.BLACK);
+        this.whiteColorBox = new Rectangle(50, 20, Color.WHITE);
 
-        // Event Handler for the black square
-        blackColorBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        // Handle Event for the black square
+        this.handleBlackSquareEvent(blackColorBox);
+        this.handleBlackSquareEvent(whiteColorBox);
 
-            /**
-             * Handler for the mouse event
-             *
-             * @param event The mouse event
-             */
-            @Override
-            public void handle(MouseEvent event) {
-                // Instantiate the ColourSelectorGUI class
-                ColourSelectorGUI colourSelectorGUI = new ColourSelectorGUI();
 
-                // Create a new dialog
-                Dialog<ColourSelectorGUI> colourSelectorDialog = new Dialog<>();
-                colourSelectorDialog.setTitle("Colour Selector");
-
-                // Set the content of the dialog to the ColourSelectorGUI
-                colourSelectorDialog.getDialogPane().setContent(colourSelectorGUI.getRoot());
-
-                // Show the dialog
-                colourSelectorDialog.showAndWait();
-
-                // Set the color of the black square to the selected color
-                blackColorBox.setFill(colourSelectorGUI.getSelectedColor());
-
-                // TODO: Set the color of the black square in the game
-                settings.setBlackSquareColor(colourSelectorGUI.getSelectedColor());
-
-                System.out.println("Black Square Color: " + settings.getBlackSquareColor());
-
-            }
-        });
-
-        // Event Handler for the white square
-        whiteColorBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                // Instantiate the ColourSelectorGUI class
-                ColourSelectorGUI colourSelectorGUI = new ColourSelectorGUI();
-
-                // Create a new dialog
-                Dialog<ColourSelectorGUI> colourSelectorDialog = new Dialog<>();
-                colourSelectorDialog.setTitle("Colour Selector");
-
-                // Set the content of the dialog to the ColourSelectorGUI
-                colourSelectorDialog.getDialogPane().setContent(colourSelectorGUI.getRoot());
-
-                // Show the dialog
-                colourSelectorDialog.showAndWait();
-
-                // Set the color of the white square to the selected color
-                whiteColorBox.setFill(colourSelectorGUI.getSelectedColor());
-                settings.setWhiteSquareColor(colourSelectorGUI.getSelectedColor());
-
-                System.out.println("White Square Color: " + settings.getWhiteSquareColor());
-            }
-        });
-
-        // Event Handlers for the settings menu
-        this.exitButton.setOnAction(buttonHandler);
 
         // Checkboxes for the settings menu
         this.showMoves = new CheckBox("Enabled");
@@ -151,6 +90,7 @@ public class SettingsMenuGUI extends VBox {
         gp.setHgap(50);
         gp.setVgap(15);
 
+        // Add all the nodes to the grid pane
         gp.add(titleLabel, 0, 0, 3, 1);
         gp.add(colorLabel, 0, 1, 1, 1);
         gp.add(blackSquares, 0, 2, 1, 1);
@@ -234,4 +174,50 @@ public class SettingsMenuGUI extends VBox {
         }
     };
 
+    private void createExitButton(){
+        // Buttons for the settings menu
+        this.exitButton = new Button("Return");
+        this.exitButton.setId("bottom-button2");
+        this.exitButton.setAlignment(Pos.CENTER);
+
+        // Event Handlers for the settings menu
+        this.exitButton.setOnAction(buttonHandler);
+    }
+
+    private Label createLabel(String text, String id){
+        Label label = new Label(text);
+        label.setId(id);
+        return label;
+    }
+
+    private void handleBlackSquareEvent(Rectangle colorBox){
+        colorBox.setOnMouseClicked(event -> {
+            // Instantiate the ColourSelectorGUI class
+            ColourSelectorGUI colourSelectorGUI = new ColourSelectorGUI();
+
+            // Create a new dialog
+            Dialog<ColourSelectorGUI> colourSelectorDialog = new Dialog<>();
+            colourSelectorDialog.setTitle("Colour Selector");
+
+            // Set the content of the dialog to the ColourSelectorGUI
+            colourSelectorDialog.getDialogPane().setContent(colourSelectorGUI.getRoot());
+
+            // Show the dialog
+            colourSelectorDialog.showAndWait();
+
+            // Set the color of the black square to the selected color
+            colorBox.setFill(colourSelectorGUI.getSelectedColor());
+
+            if (colorBox == blackColorBox){
+                settings.setBlackSquareColor(colourSelectorGUI.getSelectedColor());
+            }
+            else if (colorBox == whiteColorBox){
+                settings.setWhiteSquareColor(colourSelectorGUI.getSelectedColor());
+            }
+        });
+    }
+
+    public SettingsGUI getSettings() {
+        return settings;
+    }
 }

@@ -266,4 +266,9 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         popup.setX(event.getScreenX() + 10); //700
         popup.setY(event.getScreenY() + 10); //150
     }
+
+    // TODO Kaushal: This is the method that will return the squares from the center
+    public SquareGUI[][] getSquares() {
+    	return squares;
+    }
 }

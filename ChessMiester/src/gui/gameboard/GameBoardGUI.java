@@ -6,6 +6,9 @@
  */
 package gui.gameboard;
 
+import enums.ToScreen;
+import gui.settingsmenu.SettingsMenuGUI;
+import gui_backend.SquareGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
@@ -60,6 +63,7 @@ public class GameBoardGUI{
         root.setRight(right.getRoot());
         root.setCenter(center.getRoot());
 
+
         // add the stylesheet and images
         root.getStylesheets().add(getClass().getResource("gameBoard.css").toExternalForm());
     }
@@ -76,7 +80,29 @@ public class GameBoardGUI{
      * @param sch the screen change handler
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch){
+        this.screenChanger = sch;
         top.setScreenChangeHandler(this.screenChanger);
         bottom.setScreenChangeHandler(this.screenChanger);
+
+        // TODO
+        System.out.println((this.getSettings().getSettings().getBlackSquareColor()));
+        System.out.println((this.getSettings().getSettings().getWhiteSquareColor()));
+        System.out.println((this.getSettings().getSettings().getUndoRedo()));
+        System.out.println((this.getSettings().getSettings().getShowMoves()));
+
+        // TODO Remove this
+        for(int row = 0; row < 8; row++){
+            for(int col = 0; col < 8; col++){
+                if (row + col % 2 == 0) {
+                    this.center.getSquares()[row][col].setStyle("-fx-background-color: " + this.getSettings().getSettings().getWhiteSquareColor() + ";");
+                } else {
+                    this.center.getSquares()[row][col].setStyle("-fx-background-color: " + this.getSettings().getSettings().getBlackSquareColor() + ";");
+                }
+            }
+        }
+    }
+
+    private SettingsMenuGUI getSettings(){
+        return (SettingsMenuGUI) this.screenChanger.getGuiScene(ToScreen.SETTINGS_MENU);
     }
 }
