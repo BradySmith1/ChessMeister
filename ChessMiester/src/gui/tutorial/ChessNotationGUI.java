@@ -10,6 +10,7 @@ package gui.tutorial;
 import enums.ToScreen;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -37,6 +38,10 @@ public class ChessNotationGUI {
         HBox hb = new HBox();
         hb.setSpacing(20);
         hb.setId("main-pane");
+
+        // create a title
+        Label title = new Label("Chess Notation");
+        title.setId("topLabel");
 
         Text text = new Text("""
                 Chess notation is a system that allows players to record and communicate the \s
@@ -76,7 +81,6 @@ public class ChessNotationGUI {
         hb.setAlignment(Pos.CENTER);
         // add the HBox to the VBox
         chessNotationPane = new VBox();
-        chessNotationPane.getChildren().add(hb);
         chessNotationPane.setId("main-pane");
 
         // add continue button
@@ -91,7 +95,7 @@ public class ChessNotationGUI {
         returnButton.setOnAction(e -> screenChanger.changeScreen(ToScreen.TUTORIAL_MENU));
 
         // add the return button to the VBox
-        chessNotationPane.getChildren().addAll(cont, returnButton);
+        chessNotationPane.getChildren().addAll(title, hb, cont, returnButton);
         chessNotationPane.setAlignment(Pos.CENTER);
         chessNotationPane.setSpacing(20);
 

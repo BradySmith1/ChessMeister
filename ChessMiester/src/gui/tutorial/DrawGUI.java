@@ -10,6 +10,7 @@ import enums.ToScreen;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -32,9 +33,9 @@ public class DrawGUI {
         drawPane.setId("main-pane");
 
         // Create a label
-        Text label = new Text("Draw");
-        label.setId("topLabel");
-        drawPane.getChildren().add(label);
+        Label title = new Label("Draw");
+        title.setId("topLabel");
+        drawPane.getChildren().add(title);
 
         // Create a text object
         Text text = new Text("""

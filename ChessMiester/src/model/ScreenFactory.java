@@ -85,6 +85,9 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
     /** The pawn tutorial screen */
     private static PawnTutorialGUI pawnTutorialScreen;
 
+    /** The piece tutorial screen */
+    private static PieceTutorialGUI pieceTutorialScreen;
+
     /**
      * The constructor for ScreenFactory
      * @param scene the scene passed in to be used by ScreenFactory
@@ -253,6 +256,13 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                     pawnTutorialScreen.setScreenChangeHandler(this);
                 }
                 screen = pawnTutorialScreen.getRoot();
+                break;
+            case PIECE_TUTORIAL:
+                if (pieceTutorialScreen == null) {
+                    pieceTutorialScreen = new PieceTutorialGUI("king"); //TODO figure this out
+                    pieceTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = pieceTutorialScreen.getRoot();
                 break;
             default:
                 screen = null;

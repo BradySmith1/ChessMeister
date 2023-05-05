@@ -71,7 +71,7 @@ public class PawnTutorialGUI {
         // create continue button
         cont = new Button("Continue");
         cont.setId("menu-button");
-        cont.setOnAction(e -> screenChanger.changeScreen(ToScreen.PAWN_TUTORIAL));
+        cont.setOnAction(e -> screenChanger.changeScreen(ToScreen.PIECE_TUTORIAL));
         pawnPane.getChildren().add(cont);
         //TODO implement menu to make pawn tutorial
 

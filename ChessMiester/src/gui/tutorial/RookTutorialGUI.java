@@ -63,7 +63,7 @@ public class RookTutorialGUI {
         // create continue button
         cont = new Button("Continue");
         cont.setId("menu-button");
-        cont.setOnAction(e -> screenChanger.changeScreen(ToScreen.ROOK_TUTORIAL));
+        cont.setOnAction(e -> screenChanger.changeScreen(ToScreen.PIECE_TUTORIAL));
         rookPane.getChildren().add(cont);
         //TODO implement menu to make rook tutorial
 

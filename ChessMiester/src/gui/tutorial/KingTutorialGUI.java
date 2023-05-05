@@ -68,7 +68,7 @@ public class KingTutorialGUI {
         // create continue button
         cont = new Button("Continue");
         cont.setId("menu-button");
-        cont.setOnAction(e -> screenChanger.changeScreen(ToScreen.KING_TUTORIAL));
+        cont.setOnAction(e -> screenChanger.changeScreen(ToScreen.PIECE_TUTORIAL));
         kingPane.getChildren().add(cont);
         //TODO implement menu to make king tutorial
 

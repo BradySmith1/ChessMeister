@@ -63,5 +63,8 @@ public enum ToScreen {
     KNIGHT_TUTORIAL,
 
     /* Reference to PawnTutorialGUI */
-    PAWN_TUTORIAL;
+    PAWN_TUTORIAL,
+
+    /* Reference to PieceTutorialGUI */
+    PIECE_TUTORIAL;
 }

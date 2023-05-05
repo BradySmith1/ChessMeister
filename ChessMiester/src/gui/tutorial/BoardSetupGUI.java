@@ -11,6 +11,7 @@ import gui.gameboard.CenterPane;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -41,8 +42,8 @@ public class BoardSetupGUI {
         hb.setId("main-pane");
 
         // Create a label
-        Text label = new Text("Board Setup");
-        label.setId("topLabel");
+        Label title = new Label("Board Setup");
+        title.setId("topLabel");
 
         // Create a text object
         Text text = new Text("""
@@ -70,7 +71,7 @@ public class BoardSetupGUI {
 
         // create a vbox
         boardSetupPane = new VBox();
-        boardSetupPane.getChildren().addAll(label, hb, returnButton);
+        boardSetupPane.getChildren().addAll(title, hb, returnButton);
         boardSetupPane.setAlignment(Pos.CENTER);
         boardSetupPane.setSpacing(20);
         boardSetupPane.setId("main-pane");

@@ -77,3 +77,15 @@
 #main-pane {
     -fx-background-color: #c0c0c0;
 }
+#top, #bottom {
+    -fx-background-color: #989898;
+    -fx-padding: 15 30 15 30;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
+    -fx-pref-width: 450;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+}
