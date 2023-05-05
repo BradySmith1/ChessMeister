@@ -1,27 +1,39 @@
 package gui.gameboard;
 
 import enums.GameColor;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Scene;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class CenterPaneGUI {
+public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent> {
 
     private GridPane root;
 
     private SquareGUI[][] squares;
 
+    private SquareGUI clicked;
+
+    private Stage popup;
+
     final int size = 8;
 
     public CenterPaneGUI(){
         root = new GridPane();
-
+        clicked = null;
+        popup = null;
         squares = new SquareGUI[size][size];
         initSquares();
         setConstraints();
@@ -37,6 +49,7 @@ public class CenterPaneGUI {
         for(int row = 0; row < size; row++){
             for(int col = 0; col < size; col++){
                 SquareGUI square = new SquareGUI(row, col);
+                square.addObserver(this);
                 root.add(square, col, row, 1, 1);
                 squares[row][col] = square;
             }
@@ -117,7 +130,51 @@ public class CenterPaneGUI {
         }
     }
 
+    private void clickMove(MouseEvent mouse) {
+
+        if(clicked == null){
+            clicked = (SquareGUI) mouse.getSource();
+            popup = new Stage();
+            popup.initStyle(StageStyle.UNDECORATED);
+            VBox box = new VBox();
+            Label moveLabel = new Label("Move Piece");
+            box.getChildren().add(moveLabel);
+            Scene stageScene = new Scene(box, 70, 20);
+            popup.setScene(stageScene);
+            popup.setX(mouse.getScreenX() + 10);
+            popup.setY(mouse.getScreenY() + 10);
+            popup.show();
+            root.addEventFilter(MouseEvent.ANY, this);
+        }else{
+            SquareGUI newClicked = (SquareGUI) mouse.getSource();
+            if(clicked.getImageView().getImage() != null){
+                newClicked.getImageView().setImage(clicked.getImageView().getImage());
+                clicked.getImageView().setImage(null);
+            }
+            popup.close();
+            clicked = null;
+            popup = null;
+            root.removeEventFilter(MouseEvent.ANY, this);
+        }
+    }
+
     public Pane getRoot(){
         return root;
+    }
+
+    @Override
+    public void notifyLeftClick(Event event) {
+        clickMove((MouseEvent) event);
+    }
+
+    @Override
+    public void notifyRightClick(Event event) {
+        //highlight(); TODO
+    }
+
+    @Override
+    public void handle(MouseEvent event) {
+        popup.setX(event.getScreenX() + 10); //700
+        popup.setY(event.getScreenY() + 10); //150
     }
 }
