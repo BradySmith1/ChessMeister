@@ -1,7 +1,8 @@
-package gui.gameboard;
+package gui_backend;
 
 import enums.Files;
 import enums.Rank;
+import gui.gameboard.GameBoardObserver;
 import javafx.event.Event;
 import javafx.scene.input.*;
 import javafx.scene.layout.StackPane;

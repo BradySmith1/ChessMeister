@@ -1,4 +1,4 @@
-package gui.gameboard;
+package gui_backend;
 
 import enums.ChessPieceType;
 import enums.GameColor;
