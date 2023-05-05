@@ -18,6 +18,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+
+import java.io.File;
 
 public class LoadGameGUI extends VBox {
     /** The LoadGameGUI pane. */
@@ -33,7 +37,7 @@ public class LoadGameGUI extends VBox {
     TextField file;
 
     /** Buttons for the menu. */
-    Button load, returnToMain;
+    Button load, returnToMain, play;
 
 
     /**
@@ -51,13 +55,20 @@ public class LoadGameGUI extends VBox {
         // create text field
         this.file = new TextField();
         this.file.setId("text-box");
-        this.file.setAlignment(Pos.CENTER);
+        this.file.setEditable(false);
+        //this.file.setAlignment(Pos.CENTER);
 
         // create button for loading
         this.load = new Button("Load");
         this.load.setId("menu-button");
         this.load.setAlignment(Pos.CENTER);
         this.load.setOnAction(buttonHandler);
+
+        // create button for playing
+        this.play = new Button("Play");
+        this.play.setId("menu-button");
+        this.play.setAlignment(Pos.CENTER);
+        this.play.setOnAction(buttonHandler);
 
         // create button for returning to main menu
         this.returnToMain = new Button("Return to Main Menu");
@@ -66,7 +77,7 @@ public class LoadGameGUI extends VBox {
         this.returnToMain.setOnAction(buttonHandler);
 
         // add all elements to the VBox
-        this.LoadGamePane.getChildren().addAll(title, this.file, this.load, this.returnToMain);
+        this.LoadGamePane.getChildren().addAll(title, this.file, this.load, this.play, this.returnToMain);
         this.LoadGamePane.setSpacing(20);
         this.LoadGamePane.setAlignment(Pos.CENTER);
         this.LoadGamePane.setId("main-pane");
@@ -100,9 +111,20 @@ public class LoadGameGUI extends VBox {
                 Object source = event.getSource();
 
                 if (source == load) {
-                    screenChanger.changeScreen(null);
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/src/SavedGames"));
+                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
+                    fileChooser.getExtensionFilters().add(extFilter);
+                    File selectedFile = fileChooser.showOpenDialog(load.getScene().getWindow());
+                    if (selectedFile != null) {
+                        System.out.println(selectedFile.getAbsolutePath());
+                        file.setText(selectedFile.getName());
+
+                    }
                 } else if (source == returnToMain) {
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                } else if (source == play) {
+                    screenChanger.changeScreen(ToScreen.GAME_BOARD);
                 }
             }
         }

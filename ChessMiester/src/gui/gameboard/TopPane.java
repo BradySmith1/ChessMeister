@@ -8,6 +8,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 public class TopPane {
     GridPane root;
@@ -77,7 +82,22 @@ public class TopPane {
             if (screenChanger != null) {
                 Object source = event.getSource();
                 if (source == save) {
-                    System.out.println("Save");
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")  + "/src/SavedGames"));
+                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
+                    fileChooser.getExtensionFilters().add(extFilter);
+                    File selectedFile = fileChooser.showSaveDialog(save.getScene().getWindow());
+                    if (selectedFile != null) {
+                        // PrintWriter to write to the file
+                        try {
+                            PrintWriter writer = new PrintWriter(selectedFile);
+                            writer.println("This is some text that will be written to the file.");
+                            writer.close();
+                            System.out.println("File saved: " + selectedFile.getAbsolutePath());
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 } else if (source == undo) {
                     System.out.println("Undo");
                 } else if (source == redo) {
