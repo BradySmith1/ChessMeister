@@ -311,4 +311,18 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
         return this.previousScreen;
     }
 
+    /**
+     * Method that returns a selected scene
+     *
+     * @return the selected scene
+     */
+    public Pane getGuiScene(ToScreen screenChoice) {
+        Pane returnScreen = null;
+        if (screenChoice == ToScreen.SETTINGS_MENU){
+            returnScreen = settingsMenuScreen;
+        } else if (screenChoice == ToScreen.PLAYER_NAMES) {
+            returnScreen = definePlayerNamesScreen;
+        }
+        return returnScreen;
+    }
 }

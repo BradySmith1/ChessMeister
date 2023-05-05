@@ -35,17 +35,8 @@ public class KingTutorialGUI {
         kingPane = new VBox();
         kingPane.setId("main-pane");
 
-        // get king image and add to pane
-        try{
-            Image king = new Image(new FileInputStream(
-                    "src/gui/gameboard/images/WhiteKing.png"));
-            ImageView kingView = new ImageView(king);
-            kingView.setFitHeight(100);
-            kingView.setFitWidth(100);
-            kingPane.getChildren().add(kingView);
-        }catch(Exception e){
-            System.out.println("Error: File not found.");
-        }
+        // Add King image
+        this.addImage();
 
         // Create a text object
         Text text = new Text("""
@@ -84,6 +75,8 @@ public class KingTutorialGUI {
                 getClass().getResource("TutorialMenu.css").toExternalForm());
     }
 
+
+
     /**
      * Returns the check pane.
      *
@@ -97,4 +90,17 @@ public class KingTutorialGUI {
      * @param sch the screen changer
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch) { this.screenChanger = sch; }
+
+    private void addImage() {
+        try{
+            Image king = new Image(new FileInputStream(
+                    "src/gui/gameboard/images/WhiteKing.png"));
+            ImageView kingView = new ImageView(king);
+            kingView.setFitHeight(100);
+            kingView.setFitWidth(100);
+            kingPane.getChildren().add(kingView);
+        }catch(Exception e){
+            System.out.println("Error: File not found.");
+        }
+    }
 }

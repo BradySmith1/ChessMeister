@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import movements.*;
 
-public class PieceGUI extends ImageView{
+public class  PieceGUI extends ImageView{
     private Image image;
     private ChessPieceType type;
     private GameColor color;

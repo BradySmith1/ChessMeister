@@ -29,7 +29,7 @@ public class MainMenuGUI extends BorderPane {
     private Scene scene;
 
     /** Buttons for the menu **/
-    Button versusPlayer, definePlayers, loadGame, playedGames, tutorial, exit, settings;
+    Button versusPlayer, loadGame, playedGames, tutorial, exit, settings;
 
     /**
      * Constructor for the main menu GUI.
@@ -109,15 +109,14 @@ public class MainMenuGUI extends BorderPane {
      * This method is used to create the bottom section of our main menu.
      */
     private AnchorPane makeBottom(){
-        //create 2 buttons and set ids
-        this.settings = new Button("Settings");
-        this.exit = new Button("Exit");
-        this.settings.setId("bottom-button");
-        this.exit.setId("bottom-button");
+        // Create buttons
+        this.createBottomButtons();
+
+        // Set button ids
+        this.setBottomButtonsIds();
 
         // Set on action for the two buttons
-        this.settings.setOnAction(buttonHandler);
-        this.exit.setOnAction(buttonHandler);
+        this.setBottomButtonActions();
 
         //create anchor pane and add buttons
         AnchorPane ap = new AnchorPane(this.settings, this.exit);
@@ -138,31 +137,19 @@ public class MainMenuGUI extends BorderPane {
      */
     private VBox makeCenter(){
         // Create buttons
-        this.versusPlayer = new Button("Play Chess");
-        this.definePlayers = new Button("Define Players");
-        this.loadGame = new Button("Load Game");
-        this.playedGames = new Button("View Played Games");
-        this.tutorial = new Button("View Tutorials");
+        this.createCenterButtons();
 
         // Set button ids
-        this.versusPlayer.setId("menu-button");
-        this.definePlayers.setId("menu-button");
-        this.loadGame.setId("menu-button");
-        this.playedGames.setId("menu-button");
-        this.tutorial.setId("menu-button");
+        this.setCenterButtonIds();
 
         // Set on actions for the buttons
-        this.versusPlayer.setOnAction(buttonHandler);
-        this.definePlayers.setOnAction(buttonHandler);
-        this.loadGame.setOnAction(buttonHandler);
-        this.playedGames.setOnAction(buttonHandler);
-        this.tutorial.setOnAction(buttonHandler);
+        this.setCenterButtonActions();
 
         // Create a vbox and add buttons
         VBox centerBox = new VBox();
         centerBox.setSpacing(10);
-        centerBox.getChildren().addAll(this.versusPlayer, this.definePlayers,
-                this.loadGame, this.playedGames, this.tutorial);
+        centerBox.getChildren().addAll(this.versusPlayer, this.loadGame, this.playedGames,
+                this.tutorial);
 
         // Center buttons in Vbox
         centerBox.setAlignment(javafx.geometry.Pos.CENTER);
@@ -191,8 +178,6 @@ public class MainMenuGUI extends BorderPane {
                 Object source = event.getSource();
 
                 if (source == versusPlayer){
-                    screenChanger.changeScreen(ToScreen.GAME_BOARD);
-                } else if (source == definePlayers){
                     screenChanger.changeScreen(ToScreen.PLAYER_NAMES);
                 } else if (source == loadGame) {
                     screenChanger.changeScreen(ToScreen.LOAD_GAME);
@@ -209,4 +194,40 @@ public class MainMenuGUI extends BorderPane {
             }
         }
     };
+
+    private void createCenterButtons(){
+        this.versusPlayer = new Button("Play Chess");
+        this.loadGame = new Button("Load Game");
+        this.playedGames = new Button("View Played Games");
+        this.tutorial = new Button("View Tutorials");
+    }
+
+    private void setCenterButtonIds(){
+        this.versusPlayer.setId("menu-button");
+        this.loadGame.setId("menu-button");
+        this.playedGames.setId("menu-button");
+        this.tutorial.setId("menu-button");
+    }
+
+    private void setCenterButtonActions(){
+        this.versusPlayer.setOnAction(buttonHandler);
+        this.loadGame.setOnAction(buttonHandler);
+        this.playedGames.setOnAction(buttonHandler);
+        this.tutorial.setOnAction(buttonHandler);
+    }
+
+    private void createBottomButtons(){
+        this.settings = new Button("Settings");
+        this.exit = new Button("Exit");
+    }
+
+    private void setBottomButtonsIds(){
+        this.settings.setId("bottom-button");
+        this.exit.setId("bottom-button");
+    }
+
+    private void setBottomButtonActions(){
+        this.settings.setOnAction(buttonHandler);
+        this.exit.setOnAction(buttonHandler);
+    }
 }
