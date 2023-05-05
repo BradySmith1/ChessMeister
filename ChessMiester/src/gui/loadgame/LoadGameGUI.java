@@ -112,8 +112,10 @@ public class LoadGameGUI extends VBox {
 
                 if (source == load) {
                     FileChooser fileChooser = new FileChooser();
-                    fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/src/SavedGames"));
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
+                    fileChooser.setInitialDirectory(
+                            new File(System.getProperty("user.dir") + "/src/SavedGames"));
+                    FileChooser.ExtensionFilter extFilter =
+                        new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
                     fileChooser.getExtensionFilters().add(extFilter);
                     File selectedFile = fileChooser.showOpenDialog(load.getScene().getWindow());
                     if (selectedFile != null) {
