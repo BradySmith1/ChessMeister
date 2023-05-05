@@ -6,11 +6,6 @@
  */
 package gui.gameboard;
 
-import enums.ToScreen;
-import interfaces.ScreenChangeHandlerIF;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -25,8 +20,6 @@ public class RightPane {
     /** The label for the captured pieces. */
     Label capturedPieces;
 
-
-
     /**
      * Constructor for the right pane.
      */
@@ -34,10 +27,15 @@ public class RightPane {
         root = new VBox();
 
         player2 = new Label("Player 2:");
+        player2.setId("topLabel");
         capturedPieces = new Label("Captured:");
+        capturedPieces.setId("topLabel");
 
         root.getChildren().add(player2);
         root.getChildren().add(capturedPieces);
+        root.setId("right");
+        root.setSpacing(50);
+        root.setMaxSize(300, 800);
     }
 
     /**

@@ -1,27 +1,35 @@
+/**
+ * This creates the center pane for the chess board GUI.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 package gui.gameboard;
 
-import enums.ChessPieceType;
 import enums.GameColor;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
-import model.Piece;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class CenterPane {
-
+    /** The root pane for the center pane. */
     GridPane root;
 
+    /** The squares for the chess board. */
     StackPane[][] squares;
 
+    /** The size of the chess board. */
     final int size = 8;
 
+    /**
+     * Constructor for the center pane.
+     */
     public CenterPane(){
         root = new GridPane();
 
@@ -33,9 +41,11 @@ public class CenterPane {
         }catch(FileNotFoundException fnfe){
             System.out.println("Error: File not found.");
         }
-
     }
 
+    /**
+     * This method initializes the squares for the chess board.
+     */
     private void initSquares(){
         for(int row = 0; row < size; row++){
             for(int col = 0; col < size; col++){
@@ -51,6 +61,9 @@ public class CenterPane {
         }
     }
 
+    /**
+     * This method sets the constraints for the panes in the chess board.
+     */
     private void setConstraints() {
         for(int i = 0; i < size; i++){
             root.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
@@ -58,6 +71,11 @@ public class CenterPane {
         }
     }
 
+    /**
+     * This method populates the squares with proper pieces to start the game.
+     *
+     * @throws FileNotFoundException if the file is not found.
+     */
     private void populateSquares() throws FileNotFoundException {
         Image whitePawnImage = new Image(new FileInputStream("src/gui/gameboard/images/WhitePawn.png"));
         Image blackPawnImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackPawn.png"));
@@ -79,6 +97,13 @@ public class CenterPane {
         setPieces(GameColor.BLACK, size-1);
     }
 
+    /**
+     * This method sets all pieces for the chess board.
+     *
+     * @param color the color of the pieces.
+     * @param offset the offset for the pieces.
+     * @throws FileNotFoundException
+     */
     private void setPieces(GameColor color, int offset) throws FileNotFoundException {
         Image whiteRookImage = new Image(new FileInputStream("src/gui/gameboard/images/WhiteRook.png"));
         Image whiteKnightLeftImage = new Image(new FileInputStream("src/gui/gameboard/images/WhiteKnightLeft.png"));
@@ -173,6 +198,11 @@ public class CenterPane {
         squares[offset][4].getChildren().add(view);
     }
 
+    /**
+     * This method creates a view for the chess board.
+     *
+     * @return the view for the chess board.
+     */
     private ImageView createView(){
         ImageView view = new ImageView();
         view.setFitWidth(50);
@@ -188,7 +218,10 @@ public class CenterPane {
         return color;
     }
 
-    public Pane getRoot(){
-        return root;
-    }
+    /**
+     * This method returns the root of the chess board.
+     *
+     * @return the root of the chess board.
+     */
+    public Pane getRoot(){ return root; }
 }

@@ -3,7 +3,7 @@
  *
  * @author Zach Eanes (100%)
  */
-package gui.Tutorial;
+package gui.tutorial;
 
 import enums.ToScreen;
 import javafx.event.ActionEvent;
@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.geometry.Pos;
 import interfaces.ScreenChangeHandlerIF;
+import javafx.scene.text.Text;
 
 public class TutorialMenuGUI extends BorderPane {
     /** The main menu pane. */
@@ -154,29 +155,29 @@ public class TutorialMenuGUI extends BorderPane {
                 Object source = event.getSource();
 
                 if (source == setup) {
-                    System.out.println("Setup button pressed");
+                    screenChanger.changeScreen(ToScreen.BOARD_SETUP);
                 } else if (source == notation) {
-                    System.out.println("Notation button pressed");
+                    screenChanger.changeScreen(ToScreen.CHESS_NOTATION);
                 } else if (source == organization) {
-                    System.out.println("Organization button pressed");
+                    screenChanger.changeScreen(ToScreen.BOARD_ORGANIZATION);
                 } else if (source == check) {
-                    System.out.println("Check button pressed");
+                    screenChanger.changeScreen(ToScreen.CHECK);
                 } else if (source == checkmate) {
-                    System.out.println("Checkmate button pressed");
+                    screenChanger.changeScreen(ToScreen.CHECKMATE);
                 } else if (source == draw) {
-                    System.out.println("Draw button pressed");
+                    screenChanger.changeScreen(ToScreen.DRAW);
                 } else if (source == king) {
-                    System.out.println("King button pressed");
+                    screenChanger.changeScreen(ToScreen.KING_TUTORIAL);
                 } else if (source == queen) {
-                    System.out.println("Queen button pressed");
+                    screenChanger.changeScreen(ToScreen.QUEEN_TUTORIAL);
                 } else if (source == bishop) {
-                    System.out.println("Bishop button pressed");
+                    screenChanger.changeScreen(ToScreen.BISHOP_TUTORIAL);
                 } else if (source == knight) {
-                    System.out.println("Knight button pressed");
+                    screenChanger.changeScreen(ToScreen.KNIGHT_TUTORIAL);
                 } else if (source == rook) {
-                    System.out.println("Rook button pressed");
+                    screenChanger.changeScreen(ToScreen.ROOK_TUTORIAL);
                 } else if (source == pawn) {
-                    System.out.println("Pawn button pressed");
+                    screenChanger.changeScreen(ToScreen.PAWN_TUTORIAL);
                 } else if (source == returnButton) {
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
                 }

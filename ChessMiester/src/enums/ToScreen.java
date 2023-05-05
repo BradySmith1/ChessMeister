@@ -27,5 +27,44 @@ public enum ToScreen {
     LOAD_GAME,
 
     /** Reference to GameBoardGUI */
-    GAME_BOARD;
+    GAME_BOARD,
+
+    /** Reference to BoardSetupGUI */
+    BOARD_SETUP,
+
+    /** Reference to ChessNotationGUI */
+    CHESS_NOTATION,
+
+    /** Reference to BoardOrganizationGUI */
+    BOARD_ORGANIZATION,
+
+    /** Reference to CheckGUI */
+    CHECK,
+
+    /** Reference to CheckmateGUI */
+    CHECKMATE,
+
+    /** Reference to DrawGUI */
+    DRAW,
+
+    /** Reference to KingTutorialGUI */
+    KING_TUTORIAL,
+
+    /** Reference to QueenTutorialGUI */
+    QUEEN_TUTORIAL,
+
+    /** Reference to BishopTutorialGUI */
+    BISHOP_TUTORIAL,
+
+    /* Reference to RookTutorialGUI */
+    ROOK_TUTORIAL,
+
+    /* Reference to KnightTutorialGUI */
+    KNIGHT_TUTORIAL,
+
+    /* Reference to PawnTutorialGUI */
+    PAWN_TUTORIAL,
+
+    /* Reference to PieceTutorialGUI */
+    PIECE_TUTORIAL;
 }

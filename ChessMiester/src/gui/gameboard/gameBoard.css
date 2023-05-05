@@ -1,6 +1,5 @@
-#top{
-    -fx-background-color:
-            linear-gradient(#262626 0%, #343534 20%, #6b6a6b 60%, #8a8a8a 100%);
+#top, #bottom {
+    -fx-background-color: #989898;
     -fx-padding: 15 30 15 30;
     -fx-font-family: "Helvetica";
     -fx-font-size: 24px;
@@ -8,22 +7,12 @@
     -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
     -fx-pref-width: 450;
-}
-
-#bottom{
-    -fx-background-color:
-            linear-gradient(#8a8a8a 0%, #6b6a6b 40%, #343534 80%, #262626 100%);
-    -fx-padding: 15 30 15 30;
-    -fx-font-family: "Helvetica";
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
-    -fx-pref-width: 450;
+    -fx-border-color: black;
+    -fx-border-width: 2;
 }
 
 #left, #right {
-    -fx-background-color: #8a8a8a;
+    -fx-background-color: #c0c0c0;
     -fx-padding: 15 30 15 30;
     -fx-font-family: "Helvetica";
     -fx-font-size: 24px;
@@ -31,6 +20,13 @@
     -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
     -fx-pref-width: 450;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+}
+
+/** Pane Styles */
+#main-pane {
+    -fx-background-color: #c0c0c0;
 }
 
 /** Button Styles */
@@ -56,4 +52,17 @@
             linear-gradient(#020b02, #3a3a3a),
             linear-gradient(#6c6b6b 0%, #6c6b6b 20%, #6c6b6b 80%, #6c6b6b 100%),
             linear-gradient(#6c6b6b 0%, #6c6b6b 50%, #6c6b6b 51%, #6c6b6b 100%);
+}
+
+/** Label Styles */
+#topLabel {
+    -fx-font-size: 24px;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+#actiontarget {
+    -fx-fill: FIREBRICK;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }

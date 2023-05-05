@@ -1,7 +1,7 @@
 package model;
 
 import enums.ToScreen;
-import gui.Tutorial.TutorialMenuGUI;
+import gui.tutorial.*;
 import gui.colourselector.ColourSelectorGUI;
 import gui.gameboard.GameBoardGUI;
 import gui.loadgame.LoadGameGUI;
@@ -12,6 +12,8 @@ import gui.viewplayed.ViewPlayedGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+
 /**
  * Class that implements ScreenChangeHandlerIF to be used to change screens, this is a singleton
  */
@@ -50,6 +52,44 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
     /** The main board screen **/
     private static GameBoardGUI gameBoardScreen;
 
+    /** The board setup screen **/
+    private static BoardSetupGUI boardSetupScreen;
+
+    /** The chess notation screen */
+    private static ChessNotationGUI chessNotationScreen;
+
+    /** The chess organization screen */
+    private static BoardOrganizationGUI boardOrganizationScreen;
+
+    /** The check tutorial screen */
+    private static CheckGUI checkTutorialScreen;
+
+    /** The checkmate tutorial screen */
+    private static CheckmateGUI checkmateTutorialScreen;
+
+    /** The draw tutorial screen */
+    private static DrawGUI drawTutorialScreen;
+
+    /** The king tutorial screen */
+    private static KingTutorialGUI kingTutorialScreen;
+
+    /** The queen tutorial screen */
+    private static QueenTutorialGUI queenTutorialScreen;
+
+    /** The bishop tutorial screen */
+    private static BishopTutorialGUI bishopTutorialScreen;
+
+    /** The knight tutorial screen */
+    private static KnightTutorialGUI knightTutorialScreen;
+
+    /** The rook tutorial screen */
+    private static RookTutorialGUI rookTutorialScreen;
+
+    /** The pawn tutorial screen */
+    private static PawnTutorialGUI pawnTutorialScreen;
+
+    /** The piece tutorial screen */
+    private static PieceTutorialGUI pieceTutorialScreen;
 
 
     /**
@@ -136,6 +176,97 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                     gameBoardScreen.setScreenChangeHandler(this);
                 }
                 screen = gameBoardScreen.getRoot();
+                break;
+            case BOARD_SETUP:
+                if (boardSetupScreen == null) {
+                    boardSetupScreen = new BoardSetupGUI();
+                    boardSetupScreen.setScreenChangeHandler(this);
+                }
+                screen = boardSetupScreen.getRoot();
+                break;
+            case CHESS_NOTATION:
+                if (chessNotationScreen == null) {
+                    chessNotationScreen = new ChessNotationGUI();
+                    chessNotationScreen.setScreenChangeHandler(this);
+                }
+                screen = chessNotationScreen.getRoot();
+                break;
+            case BOARD_ORGANIZATION:
+                if (boardOrganizationScreen == null) {
+                    boardOrganizationScreen = new BoardOrganizationGUI();
+                    boardOrganizationScreen.setScreenChangeHandler(this);
+                }
+                screen = boardOrganizationScreen.getRoot();
+                break;
+            case CHECK:
+                if (checkTutorialScreen == null) {
+                    checkTutorialScreen = new CheckGUI();
+                    checkTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = checkTutorialScreen.getRoot();
+                break;
+            case CHECKMATE:
+                if (checkmateTutorialScreen == null) {
+                    checkmateTutorialScreen = new CheckmateGUI();
+                    checkmateTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = checkmateTutorialScreen.getRoot();
+                break;
+            case DRAW:
+                if (drawTutorialScreen == null) {
+                    drawTutorialScreen = new DrawGUI();
+                    drawTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = drawTutorialScreen.getRoot();
+                break;
+            case KING_TUTORIAL:
+                if (kingTutorialScreen == null) {
+                    kingTutorialScreen = new KingTutorialGUI();
+                    kingTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = kingTutorialScreen.getRoot();
+                break;
+            case QUEEN_TUTORIAL:
+                if (queenTutorialScreen == null) {
+                    queenTutorialScreen = new QueenTutorialGUI();
+                    queenTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = queenTutorialScreen.getRoot();
+                break;
+            case BISHOP_TUTORIAL:
+                if (bishopTutorialScreen == null) {
+                    bishopTutorialScreen = new BishopTutorialGUI();
+                    bishopTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = bishopTutorialScreen.getRoot();
+                break;
+            case ROOK_TUTORIAL:
+                if (rookTutorialScreen == null) {
+                    rookTutorialScreen = new RookTutorialGUI();
+                    rookTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = rookTutorialScreen.getRoot();
+                break;
+            case KNIGHT_TUTORIAL:
+                if (knightTutorialScreen == null) {
+                    knightTutorialScreen = new KnightTutorialGUI();
+                    knightTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = knightTutorialScreen.getRoot();
+                break;
+            case PAWN_TUTORIAL:
+                if (pawnTutorialScreen == null) {
+                    pawnTutorialScreen = new PawnTutorialGUI();
+                    pawnTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = pawnTutorialScreen.getRoot();
+                break;
+            case PIECE_TUTORIAL:
+                if (pieceTutorialScreen == null) {
+                    pieceTutorialScreen = new PieceTutorialGUI("king"); //TODO figure this out
+                    pieceTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = pieceTutorialScreen.getRoot();
                 break;
             default:
                 screen = null;
