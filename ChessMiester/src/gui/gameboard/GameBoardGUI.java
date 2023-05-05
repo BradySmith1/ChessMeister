@@ -1,24 +1,22 @@
 package gui.gameboard;
 
 import interfaces.ScreenChangeHandlerIF;
-import javafx.application.Application;
-import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 
 public class GameBoardGUI{
 
-    TopPane top;
+    private TopPaneGUI top;
 
-    BottomPane bottom;
+    private BottomPaneGUI bottom;
 
-    LeftPane left;
+    private LeftPaneGUI left;
 
-    RightPane right;
+    private RightPaneGUI right;
 
-    CenterPane center;
+    private CenterPaneGUI center;
 
-    BorderPane root;
+    private BorderPane root;
 
     ScreenChangeHandlerIF screenChanger;
 
@@ -28,15 +26,15 @@ public class GameBoardGUI{
         root = new BorderPane();
 
         //Initialize the Panes.
-        top = new TopPane();
+        top = new TopPaneGUI();
         top.getRoot().setId("top");
-        bottom = new BottomPane();
+        bottom = new BottomPaneGUI();
         bottom.getRoot().setId("bottom");
-        left = new LeftPane();
+        left = new LeftPaneGUI();
         left.getRoot().setId("left");
-        right = new RightPane();
+        right = new RightPaneGUI();
         right.getRoot().setId("right");
-        center = new CenterPane();
+        center = new CenterPaneGUI();
         center.getRoot().setId("center");
 
         //add the panes to the root

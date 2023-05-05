@@ -23,7 +23,7 @@ public enum ChessPieceType {
      * @param letter single letter used as shorthand for the piece itself
      * @param type   full name/type for the piece itself.
      */
-    private ChessPieceType(char letter, String type){
+    ChessPieceType(char letter, String type){
         this.letter = letter;
         this.type = type;
     }

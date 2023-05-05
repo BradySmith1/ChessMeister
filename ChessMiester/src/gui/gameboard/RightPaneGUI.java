@@ -44,4 +44,8 @@ public class RightPane {
      * @return the root pane.
      */
     public Pane getRoot(){ return root; }
+
+    public Label getLabel(){return player2;}
+
+    public Label getCapturedPieces(){return capturedPieces;}
 }
