@@ -5,7 +5,7 @@
  * @author Brady Smith (100%)
  * @version 1.0 (done in sprint 3)
  */
-package gui.gameboard;
+package gui_backend;
 
 import enums.ChessPieceType;
 import enums.GameColor;
