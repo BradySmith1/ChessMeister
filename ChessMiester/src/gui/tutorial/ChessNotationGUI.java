@@ -57,7 +57,7 @@ public class ChessNotationGUI {
                 Now, let's see if you have the right understanding! We're gonna highlight a \s
                 few squares, and just enter what square they are. \s\s
                 
-                Click Continue to continue whenever you're ready.
+                Click continue whenever you're ready to try it out!\s\s
                 """);
         text.setId("tutorialText");
         hb.getChildren().add(text);

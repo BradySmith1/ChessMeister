@@ -31,6 +31,11 @@ public class CheckGUI {
         checkPane = new VBox();
         checkPane.setId("main-pane");
 
+        // Create a label
+        Text label = new Text("Check");
+        label.setId("topLabel");
+        checkPane.getChildren().add(label);
+
         // Create a text object
         Text text = new Text("""
                 Check is a condition in chess where a player's king is under attack by an \s

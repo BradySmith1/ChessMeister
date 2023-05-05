@@ -67,6 +67,23 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
     /** The draw tutorial screen */
     private static DrawGUI drawTutorialScreen;
 
+    /** The king tutorial screen */
+    private static KingTutorialGUI kingTutorialScreen;
+
+    /** The queen tutorial screen */
+    private static QueenTutorialGUI queenTutorialScreen;
+
+    /** The bishop tutorial screen */
+    private static BishopTutorialGUI bishopTutorialScreen;
+
+    /** The knight tutorial screen */
+    private static KnightTutorialGUI knightTutorialScreen;
+
+    /** The rook tutorial screen */
+    private static RookTutorialGUI rookTutorialScreen;
+
+    /** The pawn tutorial screen */
+    private static PawnTutorialGUI pawnTutorialScreen;
 
     /**
      * The constructor for ScreenFactory
@@ -194,6 +211,48 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                     drawTutorialScreen.setScreenChangeHandler(this);
                 }
                 screen = drawTutorialScreen.getRoot();
+                break;
+            case KING_TUTORIAL:
+                if (kingTutorialScreen == null) {
+                    kingTutorialScreen = new KingTutorialGUI();
+                    kingTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = kingTutorialScreen.getRoot();
+                break;
+            case QUEEN_TUTORIAL:
+                if (queenTutorialScreen == null) {
+                    queenTutorialScreen = new QueenTutorialGUI();
+                    queenTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = queenTutorialScreen.getRoot();
+                break;
+            case BISHOP_TUTORIAL:
+                if (bishopTutorialScreen == null) {
+                    bishopTutorialScreen = new BishopTutorialGUI();
+                    bishopTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = bishopTutorialScreen.getRoot();
+                break;
+            case ROOK_TUTORIAL:
+                if (rookTutorialScreen == null) {
+                    rookTutorialScreen = new RookTutorialGUI();
+                    rookTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = rookTutorialScreen.getRoot();
+                break;
+            case KNIGHT_TUTORIAL:
+                if (knightTutorialScreen == null) {
+                    knightTutorialScreen = new KnightTutorialGUI();
+                    knightTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = knightTutorialScreen.getRoot();
+                break;
+            case PAWN_TUTORIAL:
+                if (pawnTutorialScreen == null) {
+                    pawnTutorialScreen = new PawnTutorialGUI();
+                    pawnTutorialScreen.setScreenChangeHandler(this);
+                }
+                screen = pawnTutorialScreen.getRoot();
                 break;
             default:
                 screen = null;

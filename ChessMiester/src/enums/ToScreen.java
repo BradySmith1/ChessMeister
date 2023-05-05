@@ -45,5 +45,23 @@ public enum ToScreen {
     CHECKMATE,
 
     /** Reference to DrawGUI */
-    DRAW;
+    DRAW,
+
+    /** Reference to KingTutorialGUI */
+    KING_TUTORIAL,
+
+    /** Reference to QueenTutorialGUI */
+    QUEEN_TUTORIAL,
+
+    /** Reference to BishopTutorialGUI */
+    BISHOP_TUTORIAL,
+
+    /* Reference to RookTutorialGUI */
+    ROOK_TUTORIAL,
+
+    /* Reference to KnightTutorialGUI */
+    KNIGHT_TUTORIAL,
+
+    /* Reference to PawnTutorialGUI */
+    PAWN_TUTORIAL;
 }

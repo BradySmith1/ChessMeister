@@ -31,6 +31,11 @@ public class CheckmateGUI {
         checkMatePane = new VBox();
         checkMatePane.setId("main-pane");
 
+        // Create a label
+        Text label = new Text("Checkmate");
+        label.setId("topLabel");
+        checkMatePane.getChildren().add(label);
+
         // Create a text object
         Text text = new Text("""
                 Checkmate is a condition in chess where a player's king is under attack by an \s

@@ -40,6 +40,10 @@ public class BoardSetupGUI {
         hb.setSpacing(20);
         hb.setId("main-pane");
 
+        // Create a label
+        Text label = new Text("Board Setup");
+        label.setId("topLabel");
+
         // Create a text object
         Text text = new Text("""
                 Above is how a board will look when it's loaded. The board is 8x8,and each square\s
@@ -66,7 +70,7 @@ public class BoardSetupGUI {
 
         // create a vbox
         boardSetupPane = new VBox();
-        boardSetupPane.getChildren().addAll(hb, returnButton);
+        boardSetupPane.getChildren().addAll(label, hb, returnButton);
         boardSetupPane.setAlignment(Pos.CENTER);
         boardSetupPane.setSpacing(20);
         boardSetupPane.setId("main-pane");

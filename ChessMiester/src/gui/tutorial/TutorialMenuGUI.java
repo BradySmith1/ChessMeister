@@ -167,17 +167,17 @@ public class TutorialMenuGUI extends BorderPane {
                 } else if (source == draw) {
                     screenChanger.changeScreen(ToScreen.DRAW);
                 } else if (source == king) {
-                    System.out.println("King button pressed");
+                    screenChanger.changeScreen(ToScreen.KING_TUTORIAL);
                 } else if (source == queen) {
-                    System.out.println("Queen button pressed");
+                    screenChanger.changeScreen(ToScreen.QUEEN_TUTORIAL);
                 } else if (source == bishop) {
-                    System.out.println("Bishop button pressed");
+                    screenChanger.changeScreen(ToScreen.BISHOP_TUTORIAL);
                 } else if (source == knight) {
-                    System.out.println("Knight button pressed");
+                    screenChanger.changeScreen(ToScreen.KNIGHT_TUTORIAL);
                 } else if (source == rook) {
-                    System.out.println("Rook button pressed");
+                    screenChanger.changeScreen(ToScreen.ROOK_TUTORIAL);
                 } else if (source == pawn) {
-                    System.out.println("Pawn button pressed");
+                    screenChanger.changeScreen(ToScreen.PAWN_TUTORIAL);
                 } else if (source == returnButton) {
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
                 }

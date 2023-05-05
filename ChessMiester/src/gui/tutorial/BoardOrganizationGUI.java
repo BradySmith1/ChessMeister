@@ -15,7 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
+import javafx.scene.control.Label;
 public class BoardOrganizationGUI {
     /**
      * The board organization pane.
@@ -38,6 +38,10 @@ public class BoardOrganizationGUI {
         HBox hb = new HBox();
         hb.setSpacing(20);
         hb.setId("main-pane");
+
+        // Create a label
+        Label label = new Label("Board Organization");
+        label.setId("topLabel");
 
         // Create a text object
         Text text = new Text("""
@@ -76,7 +80,7 @@ public class BoardOrganizationGUI {
 
         // create a vbox
         boardOrganizationPane = new VBox();
-        boardOrganizationPane.getChildren().addAll(hb, returnButton);
+        boardOrganizationPane.getChildren().addAll(label, hb, returnButton);
         boardOrganizationPane.setAlignment(Pos.CENTER);
         boardOrganizationPane.setSpacing(20);
         boardOrganizationPane.setId("main-pane");

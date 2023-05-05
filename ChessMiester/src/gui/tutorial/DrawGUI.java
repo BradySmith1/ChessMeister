@@ -31,6 +31,11 @@ public class DrawGUI {
         drawPane = new VBox();
         drawPane.setId("main-pane");
 
+        // Create a label
+        Text label = new Text("Draw");
+        label.setId("topLabel");
+        drawPane.getChildren().add(label);
+
         // Create a text object
         Text text = new Text("""
                 A draw is a result in chess where neither player wins or loses. \s
