@@ -1,0 +1,110 @@
+/**
+ * This class is responsible for creating the view played GUI.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
+package gui.viewplayed;
+
+import enums.ToScreen;
+import interfaces.ScreenChangeHandlerIF;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+public class ViewPlayedGUI extends VBox {
+    /** Reference to the implementation for the ScreenChangeHandlerIF */
+    ScreenChangeHandlerIF screenChanger;
+
+    /** The load game pane. */
+    VBox viewPlayedPane;
+
+    /** Scene for the main menu. */
+    private Scene scene;
+
+    /** Buttons for the menu */
+    Button game1, game2, mainMenu;
+
+    /**
+     * Constructor for the load games GUI.
+     */
+    public ViewPlayedGUI() {
+        // Create a border pane
+        this.viewPlayedPane = new VBox();
+
+        // create title
+        Label title = new Label("Select Game to Load");
+        title.setId("topLabel");
+
+        // create game buttons
+        this.game1 = new Button("Scholar's Mate");
+        this.game2 = new Button("Stalemate");
+        this.game1.setId("menu-button");
+        this.game2.setId("menu-button");
+        this.game1.setOnAction(buttonHandler);
+        this.game2.setOnAction(buttonHandler);
+
+        // return to main menu button
+        this.mainMenu = new Button("Return to Main Menu");
+        this.mainMenu.setId("bottom-button");
+        this.mainMenu.setOnAction(buttonHandler);
+
+        // add title and buttons to pane
+        this.viewPlayedPane.getChildren().addAll(title, game1, game2, mainMenu);
+        this.viewPlayedPane.setId("main-pane");
+        this.viewPlayedPane.setAlignment(Pos.CENTER);
+        this.viewPlayedPane.setSpacing(20);
+
+        // Get stylesheet
+        this.viewPlayedPane.getStylesheets().add(
+                getClass().getResource("ViewPlayed.css").toExternalForm());
+
+    }
+
+    /**
+     * Returns the root of the load game GUI.
+     *
+     * @return the pane for the load game GUI
+     */
+    public Pane getRoot() { return this.viewPlayedPane; }
+
+    /**
+     * Sets the screen change handler for the load game GUI.
+     *
+     * @param sch the screen change handler to use
+     */
+    public void setScreenChangeHandler(ScreenChangeHandlerIF sch) { this.screenChanger = sch; }
+
+
+    /** Event Handler for the buttons */
+    EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+
+        /**
+         * Handles the button events.
+         *
+         * @param event the event to handle
+         */
+        @Override
+        public void handle(ActionEvent event) {
+            if( screenChanger != null){
+                Object source = event.getSource();
+
+                if(source == game1){
+                    System.out.println("Game 1");
+                }
+                else if(source == game2){
+                    System.out.println("Game 2");
+                }
+                else if(source == mainMenu){
+                    screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                }
+            }
+
+        }
+    };
+
+}
