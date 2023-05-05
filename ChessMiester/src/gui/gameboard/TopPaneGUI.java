@@ -1,17 +1,16 @@
 package gui.gameboard;
 
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public class TopPane {
-    GridPane root;
+public class TopPaneGUI {
+    private GridPane root;
 
-    Button load, save, undo, redo, settings;
+    private Button load, save, undo, redo, settings;
 
-    public TopPane(){
+    public TopPaneGUI(){
 
         //Creation of the grid pane.
         root = new GridPane();

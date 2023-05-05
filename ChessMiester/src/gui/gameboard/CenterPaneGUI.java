@@ -1,31 +1,28 @@
 package gui.gameboard;
 
-import enums.ChessPieceType;
 import enums.GameColor;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
-import model.Piece;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class CenterPane {
+public class CenterPaneGUI {
 
-    GridPane root;
+    private GridPane root;
 
-    StackPane[][] squares;
+    private SquareGUI[][] squares;
 
     final int size = 8;
 
-    public CenterPane(){
+    public CenterPaneGUI(){
         root = new GridPane();
 
-        squares = new StackPane[size][size];
+        squares = new SquareGUI[size][size];
         initSquares();
         setConstraints();
         try{
@@ -39,12 +36,7 @@ public class CenterPane {
     private void initSquares(){
         for(int row = 0; row < size; row++){
             for(int col = 0; col < size; col++){
-                StackPane square = new StackPane();
-                String color;
-                color = findColor(row, col);
-                square.setStyle("-fx-background-color: " + color + ";");
-                square.setPrefHeight(50);
-                square.setPrefWidth(50);
+                SquareGUI square = new SquareGUI(row, col);
                 root.add(square, col, row, 1, 1);
                 squares[row][col] = square;
             }
@@ -62,18 +54,14 @@ public class CenterPane {
         Image whitePawnImage = new Image(new FileInputStream("src/gui/gameboard/images/WhitePawn.png"));
         Image blackPawnImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackPawn.png"));
         for(int i = 0; i < size; i++) {
-            ImageView view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            ImageView view = squares[1][i].getImageView();
+            view.setImage(blackPawnImage);
             view.setId("pawn" + i);
-            view.setImage(whitePawnImage);
-            squares[1][i].getChildren().add(view);
         }
         for(int i = 0; i < size; i++){
-            ImageView view = createView();
-            view.setId("blackPawn" + i);
-            view.setImage(blackPawnImage);
-            squares[6][i].getChildren().add(view);
+            ImageView view = squares[6][i].getImageView();
+            view.setImage(whitePawnImage);
+            view.setId("pawn" + i);
         }
         setPieces(GameColor.WHITE, 0);
         setPieces(GameColor.BLACK, size-1);
@@ -92,100 +80,41 @@ public class CenterPane {
         Image blackQueenImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackQueen.png"));
         Image blackKingImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackKing.png"));
         Image blackKnightRightImage = new Image(new FileInputStream("src/gui/gameboard/images/BlackKnightRight.png"));
-        ImageView view = new ImageView();
-        view.setFitHeight(50);
-        view.setFitWidth(50);
-        if(color == GameColor.WHITE){
+        if(color == GameColor.BLACK){
+            ImageView view = squares[offset][0].getImageView();
             view.setImage(whiteRookImage);
-            squares[offset][0].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
-            view.setImage(whiteRookImage);
-            squares[offset][size-1].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][size-2].getImageView();
             view.setImage(whiteKnightLeftImage);
-            squares[offset][1].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][1].getImageView();
             view.setImage(whiteKnightRightImage);
-            squares[offset][size-2].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][size-3].getImageView();
             view.setImage(whiteBishopImage);
-            squares[offset][2].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][2].getImageView();
+            view.setImage(whiteBishopImage);
+            view = squares[offset][size-1].getImageView();
             view.setImage(whiteRookImage);
-            squares[offset][size-3].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][size-4].getImageView();
             view.setImage(whiteQueenImage);
-            squares[offset][3].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][3].getImageView();
             view.setImage(whiteKingImage);
         }else{
+            ImageView view = squares[offset][0].getImageView();
             view.setImage(blackRookImage);
-            squares[offset][0].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
-            view.setImage(blackRookImage);
-            squares[offset][size-1].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][size-2].getImageView();
             view.setImage(blackKnightLeftImage);
-            squares[offset][1].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][1].getImageView();
             view.setImage(blackKnightRightImage);
-            squares[offset][size-2].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][size-3].getImageView();
             view.setImage(blackBishopImage);
-            squares[offset][2].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][2].getImageView();
+            view.setImage(blackBishopImage);
+            view = squares[offset][size-1].getImageView();
             view.setImage(blackRookImage);
-            squares[offset][size-3].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][size-4].getImageView();
             view.setImage(blackQueenImage);
-            squares[offset][3].getChildren().add(view);
-            view = new ImageView();
-            view.setFitHeight(50);
-            view.setFitWidth(50);
+            view = squares[offset][3].getImageView();
             view.setImage(blackKingImage);
         }
-        squares[offset][4].getChildren().add(view);
-    }
-
-    private ImageView createView(){
-        ImageView view = new ImageView();
-        view.setFitWidth(50);
-        view.setFitHeight(50);
-        return view;
-    }
-
-    private String findColor(int row, int col){
-        String color = "black";
-        if((row + col) % 2 == 0){
-            color = "white";
-        }
-        return color;
     }
 
     public Pane getRoot(){

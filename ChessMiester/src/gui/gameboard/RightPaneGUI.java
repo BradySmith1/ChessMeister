@@ -4,14 +4,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class RightPane {
-    VBox root;
+public class RightPaneGUI {
+    private VBox root;
 
-    Label player2;
+    private Label player2;
 
-    Label capturedPieces;
+    private Label capturedPieces;
 
-    public RightPane(){
+    public RightPaneGUI(){
         root = new VBox();
 
         player2 = new Label("Player 2:");

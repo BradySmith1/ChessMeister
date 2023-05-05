@@ -5,12 +5,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
-public class BottomPane {
+public class BottomPaneGUI {
 
-    FlowPane root;
-    Label playerSelect;
+    private FlowPane root;
+    private Label playerSelect;
 
-    public BottomPane(){
+    public BottomPaneGUI(){
         root = new FlowPane();
         playerSelect = new Label("Player 1 Selected D7 (Hardcoded)");
         root.getChildren().add(playerSelect);
