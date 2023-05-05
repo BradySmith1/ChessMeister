@@ -45,6 +45,7 @@ public class BottomPane {
         AnchorPane.setBottomAnchor(exitButton, 0.0);
         AnchorPane.setRightAnchor(exitButton, 0.0);
         // Set the action for the buttons
+        this.settings.setOnAction(buttonHandler);
         this.exitButton.setOnAction(buttonHandler);
 
         root.getChildren().addAll(settings, exitButton);
@@ -85,6 +86,8 @@ public class BottomPane {
                 Object source = event.getSource();
                 if (source == exitButton){
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
+                } else if (source == settings) {
+                    screenChanger.changeScreen(ToScreen.SETTINGS_MENU, ToScreen.GAME_BOARD);
                 }
             }
         }

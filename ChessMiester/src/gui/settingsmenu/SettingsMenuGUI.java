@@ -67,7 +67,7 @@ public class SettingsMenuGUI extends VBox {
         showLabel.setId("middleLabel");
 
         // Buttons for the settings menu
-        this.exitButton = new Button("Return to Main Menu");
+        this.exitButton = new Button("Return");
         this.exitButton.setId("bottom-button2");
         this.exitButton.setAlignment(Pos.CENTER);
 
