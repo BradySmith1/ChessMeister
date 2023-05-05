@@ -21,6 +21,11 @@ public class TopPane {
         redo = new Button("Redo");
         settings = new Button("Settings");
 
+        save.setId("bottom-button");
+        undo.setId("bottom-button");
+        redo.setId("bottom-button");
+        settings.setId("bottom-button");
+
         //Sets the max size of the button to fill the grid space.
         save.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         undo.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
