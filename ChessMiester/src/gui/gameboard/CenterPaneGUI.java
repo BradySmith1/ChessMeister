@@ -1,3 +1,9 @@
+/**
+ * This class is responsible for creating the center pane of the chess board.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 package gui.gameboard;
 
 import enums.GameColor;
@@ -21,17 +27,24 @@ import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 
 public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent> {
-
+    /** The root pane. */
     private GridPane root;
 
+    /** The squares on the board. */
     private SquareGUI[][] squares;
 
+    /** The square that was clicked. */
     private SquareGUI clicked;
 
+    /** The popup stage. */
     private Stage popup;
 
+    /** The size of the board. */
     final int size = 8;
 
+    /**
+     * Constructor for the center pane.
+     */
     public CenterPaneGUI(){
         root = new GridPane();
         clicked = null;
@@ -47,6 +60,9 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
 
     }
 
+    /**
+     * Initializes the squares for the board
+     */
     private void initSquares(){
         for(int row = 0; row < size; row++){
             for(int col = 0; col < size; col++){
@@ -58,6 +74,9 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         }
     }
 
+    /**
+     * Sets the constraints for the board squares.
+     */
     private void setConstraints() {
         for(int i = 0; i < size; i++){
             root.getColumnConstraints().add(new ColumnConstraints(5,
@@ -69,6 +88,12 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         }
     }
 
+    /**
+     * Sets all the pieces in their starting positions.
+     *
+     * @throws FileNotFoundException if file not found
+     * @throws MalformedURLException if URL is malformed
+     */
     private void populateSquares() throws FileNotFoundException, MalformedURLException {
         String url = new File("src/gui/gameboard/images/WhitePawn.png").toURI()
                 .toURL().toExternalForm();
@@ -90,6 +115,13 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         setPieces(GameColor.BLACK, size-1);
     }
 
+    /**
+     * Helper method to set pieces on the board.
+     *
+     * @param color The color of the pieces
+     * @param offset The offset for the pieces
+     * @throws MalformedURLException if URL is malformed
+     */
     private void setPieces(GameColor color, int offset) throws MalformedURLException {
         String url = new File("src/gui/gameboard/images/WhiteRook.png").toURI()
                 .toURL().toExternalForm();
@@ -164,6 +196,11 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         }
     }
 
+    /**
+     * Enables user to click to move a piece on the chess board.
+     *
+     * @param mouse The mouse event
+     */
     private void clickMove(MouseEvent mouse) {
 
         if(clicked == null){
@@ -192,20 +229,38 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         }
     }
 
-    public Pane getRoot(){
-        return root;
-    }
+    /**
+     * Returns the root of the game board.
+     *
+     * @return The root of the game board
+     */
+    public Pane getRoot(){ return root; }
 
+    /**
+     * Notifies the view that the left mouse button has been clicked.
+     *
+     * @param event The mouse event
+     */
     @Override
     public void notifyLeftClick(Event event) {
         clickMove((MouseEvent) event);
     }
 
+    /**
+     * Notifies the view that the right mouse button has been clicked.
+     *
+     * @param event The mouse event
+     */
     @Override
     public void notifyRightClick(Event event) {
         //highlight(); TODO integrate highlighting.
     }
 
+    /**
+     * Handles the mouse event.
+     *
+     * @param event The mouse event
+     */
     @Override
     public void handle(MouseEvent event) {
         popup.setX(event.getScreenX() + 10); //700

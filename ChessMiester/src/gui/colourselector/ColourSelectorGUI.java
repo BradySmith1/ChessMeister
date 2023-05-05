@@ -1,21 +1,16 @@
 /**
  * This class is the GUI implementation for the main menu.
  *
- * @author Zach Eanes (50%), Kaushal Patel (50%)
+ * @author Kaushal Patel (100%)
  */
 package gui.colourselector;
 
-import enums.ToScreen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
@@ -67,6 +62,9 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
     int redColour, greenColour, blueColour;
 
 
+    /**
+     * Constructor for the Colour Selector GUI.
+     */
     public ColourSelectorGUI(){
         // Initialize the RGB values to 0
         this.redColour = 0;
@@ -165,12 +163,14 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
     }
     /**
      * Getter for the scene.
+     *
      * @return the scene
      */
     public Pane getRoot(){ return this.colourSelectorPane; }
 
     /**
      * Set the background of the chooser
+     *
      * @param r The red intensity 0..255
      * @param g The green intensity 0..255
      * @param b The blue intensity 0..255
@@ -208,6 +208,7 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
 
     /**
      * Handler for when a slider is changed
+     *
      * @param sliderPane The slider pane with the changed value
      * @param newValue The new value of the slider pane
      */
@@ -225,8 +226,16 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         setBackground(this.redColour, this.greenColour, this.blueColour);
     }
 
+    /**
+     * Handler for when a button is pressed
+     */
     EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
 
+        /**
+         * Handle the button press
+         *
+         * @param event The event that triggered the handler
+         */
         @Override
         public void handle(ActionEvent event) {
             Object source = event.getSource();
@@ -240,6 +249,11 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         }
     };
 
+    /**
+     * Getter for the selected color
+     *
+     * @return The selected color
+     */
     public Color getSelectedColor() {
         return Color.web("#" + this.selectedColor);
     }
