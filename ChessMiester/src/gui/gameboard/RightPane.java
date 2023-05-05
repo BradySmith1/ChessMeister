@@ -25,11 +25,7 @@ public class RightPane {
     /** The label for the captured pieces. */
     Label capturedPieces;
 
-    /** The button to exit the game. */
-    Button exitButton;
 
-    /** Reference to the implementation for the ScreenChangeHandlerIF **/
-    ScreenChangeHandlerIF screenChanger;
 
     /**
      * Constructor for the right pane.
@@ -50,31 +46,4 @@ public class RightPane {
      * @return the root pane.
      */
     public Pane getRoot(){ return root; }
-
-    /**
-     * Sets the screen changer for the main menu.
-     *
-     * @param sch the screen changer
-     */
-    public void setScreenChangeHandler(ScreenChangeHandlerIF sch) {
-        this.screenChanger = sch;
-    }
-
-    EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
-
-        /**
-         * Handle the button clicks
-         *
-         * @param event the event
-         */
-        @Override
-        public void handle(ActionEvent event) {
-            if (screenChanger != null) {
-                Object source = event.getSource();
-                if (source == exitButton){
-                    screenChanger.changeScreen(ToScreen.MAIN_MENU);
-                }
-            }
-        }
-    };
 }
