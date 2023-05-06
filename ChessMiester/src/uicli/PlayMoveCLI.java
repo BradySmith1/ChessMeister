@@ -6,6 +6,7 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 import interfaces.*;
+import model.Board;
 import model.BoardSaverLoader;
 import model.Piece;
 import model.Position;
@@ -119,7 +120,7 @@ public class PlayMoveCLI implements PlayIF {
                 case 1:
                     boolean successfulRun = this.gameLoop(); // see if the move was successful
                     if (successfulRun){
-                        this.board.getDrawStrategy().setHighlight(false);
+                        ((Board)this.board).getDrawStrategy().setHighlight(false);
                         switchPlayers(); // switch players
                         this.checkForCheckmate(); // check for checkmate
                     }
@@ -412,7 +413,7 @@ public class PlayMoveCLI implements PlayIF {
         // display captured pieces for other
         this.getOtherPlayer(currentPlayer).displayCapturedPieces();
         System.out.println(); // line printed for formatting
-        this.board.draw(currentPlayer.getColor());   // display the board
+        ((Board)this.board).draw(currentPlayer.getColor());   // display the board
         System.out.println();
         //display captured pieces for current
         this.currentPlayer.displayCapturedPieces();
@@ -849,7 +850,7 @@ public class PlayMoveCLI implements PlayIF {
             PieceIF piece = this.board.getPiece(fromRank, fromFile);
             List<Position> validMoves = piece.getValidMoves(this.board,
                                                             new Position(fromRank, fromFile));
-            this.board.highlight(this.board, (ArrayList<Position>) validMoves,
+            ((Board)this.board).highlight(this.board, (ArrayList<Position>) validMoves,
                                  currentPlayer.getColor());
         }
     }

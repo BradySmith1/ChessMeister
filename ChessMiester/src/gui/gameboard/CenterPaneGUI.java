@@ -6,9 +6,13 @@
  */
 package gui.gameboard;
 
+import enums.Files;
 import enums.GameColor;
+import enums.Rank;
 import gui_backend.PieceGUI;
 import gui_backend.SquareGUI;
+import interfaces.BoardIF;
+import interfaces.BoardStrategy;
 import interfaces.PieceIF;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -30,7 +34,7 @@ import java.util.List;
 
 import model.Position;
 
-public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent> {
+public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent>, BoardIF {
     /** The root pane. */
     private GridPane root;
 
@@ -53,8 +57,8 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         root = new GridPane();
         clicked = null;
         popup = null;
-        squares = new SquareGUI[size][size];
-        initSquares();
+        initBoard();
+        setup();
         setConstraints();
         try{
             populateSquares();
@@ -64,10 +68,15 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
 
     }
 
+    @Override
+    public void initBoard(){
+        squares = new SquareGUI[size][size];
+    }
+
     /**
      * Initializes the squares for the board
      */
-    private void initSquares(){
+    public void setup(){
         for(int row = 0; row < size; row++){
             for(int col = 0; col < size; col++){
                 SquareGUI square = new SquareGUI(row, col);
@@ -106,12 +115,12 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                 .toURL().toExternalForm();
         Image blackPawnImage = new Image(url);
         for(int i = 0; i < size; i++) {
-            PieceGUI view = squares[1][i].getPiece();
+            PieceGUI view = (PieceGUI) squares[1][i].getPiece();
             view.setPieceImage(blackPawnImage);
             view.setId("pawn" + i);
         }
         for(int i = 0; i < size; i++){
-            PieceGUI view = squares[6][i].getPiece();
+            PieceGUI view = (PieceGUI) squares[6][i].getPiece();
             view.setPieceImage(whitePawnImage);
             view.setId("pawn" + i);
         }
@@ -164,38 +173,38 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                 .toURL().toExternalForm();
         Image blackKnightRightImage = new Image(url);
         if(color == GameColor.BLACK){
-            PieceGUI view = squares[offset][0].getPiece();
+            PieceGUI view = (PieceGUI) squares[offset][0].getPiece();
             view.setPieceImage(whiteRookImage);
-            view = squares[offset][size-2].getPiece();
+            view = (PieceGUI) squares[offset][size-2].getPiece();
             view.setPieceImage(whiteKnightLeftImage);
-            view = squares[offset][1].getPiece();
+            view = (PieceGUI) squares[offset][1].getPiece();
             view.setPieceImage(whiteKnightRightImage);
-            view = squares[offset][size-3].getPiece();
+            view = (PieceGUI) squares[offset][size-3].getPiece();
             view.setPieceImage(whiteBishopImage);
-            view = squares[offset][2].getPiece();
+            view = (PieceGUI) squares[offset][2].getPiece();
             view.setPieceImage(whiteBishopImage);
-            view = squares[offset][size-1].getPiece();
+            view = (PieceGUI) squares[offset][size-1].getPiece();
             view.setPieceImage(whiteRookImage);
-            view = squares[offset][size-4].getPiece();
+            view = (PieceGUI) squares[offset][size-4].getPiece();
             view.setPieceImage(whiteQueenImage);
-            view = squares[offset][3].getPiece();
+            view = (PieceGUI) squares[offset][3].getPiece();
             view.setPieceImage(whiteKingImage);
         }else{
-            PieceGUI view = squares[offset][0].getPiece();
+            PieceGUI view = (PieceGUI) squares[offset][0].getPiece();
             view.setPieceImage(blackRookImage);
-            view = squares[offset][size-2].getPiece();
+            view = (PieceGUI) squares[offset][size-2].getPiece();
             view.setPieceImage(blackKnightLeftImage);
-            view = squares[offset][1].getPiece();
+            view = (PieceGUI) squares[offset][1].getPiece();
             view.setPieceImage(blackKnightRightImage);
-            view = squares[offset][size-3].getPiece();
+            view = (PieceGUI) squares[offset][size-3].getPiece();
             view.setPieceImage(blackBishopImage);
-            view = squares[offset][2].getPiece();
+            view = (PieceGUI) squares[offset][2].getPiece();
             view.setPieceImage(blackBishopImage);
-            view = squares[offset][size-1].getPiece();
+            view = (PieceGUI) squares[offset][size-1].getPiece();
             view.setPieceImage(blackRookImage);
-            view = squares[offset][size-4].getPiece();
+            view = (PieceGUI) squares[offset][size-4].getPiece();
             view.setPieceImage(blackQueenImage);
-            view = squares[offset][3].getPiece();
+            view = (PieceGUI) squares[offset][3].getPiece();
             view.setPieceImage(blackKingImage);
         }
     }
@@ -222,8 +231,8 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             root.addEventFilter(MouseEvent.ANY, this);
         }else{
             SquareGUI newClicked = (SquareGUI) mouse.getSource(); //TODO need to integrate valid moves into here.
-            if(clicked.getPiece().getPieceImage() != null && clicked != newClicked){
-                newClicked.getPiece().setPieceImage(clicked.getPiece().getPieceImage());
+            if(clicked.getPiece().getImage() != null && clicked != newClicked){
+                newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
                 clicked.getPiece().setPieceImage(null);
             }
             popup.close();
@@ -257,10 +266,9 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      */
     @Override
     public void notifyRightClick(Event event) {
-        //highlight(); TODO integrate highlighting.
-        SquareGUI clickedSquare = (SquareGUI) event.getSource();
-        if (clickedSquare.getPiece().getPieceImage() != null) {
-            PieceGUI piece = clickedSquare.getPiece();
+        SquareGUI clickedSquare = (SquareGUI) event.getSource(); //TODO integrate highlighting.
+        if (clickedSquare.getPiece().getImage() != null) {
+            PieceGUI piece = (PieceGUI) clickedSquare.getPiece();
             //List<Position> validMoves = piece.getMoveType().getValidMoves(squares, clickedSquare.getPosition());
             //for (Position position : validMoves) {
             //    squares[position.getRank().getIndex()][position.getFile().getFileNum()].highlight();
@@ -283,5 +291,45 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     // TODO Kaushal: This is the method that will return the squares from the center
     public SquareGUI[][] getSquares() {
     	return squares;
+    }
+
+    @Override
+    public int getWidth() {
+        return this.size;
+    }
+
+    @Override
+    public int getHeight() {
+        return this.size;
+    }
+
+    @Override
+    public PieceIF getPiece(Rank r, Files f) {
+        return squares[r.getIndex()][f.getFileNum()].getPiece();
+    }
+
+    @Override
+    public PieceIF getPiece(int row, char col) {
+        return squares[row][col].getPiece();
+    }
+
+    @Override
+    public void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR) {
+
+    }
+
+    @Override
+    public BoardMementoIF createMemento() {
+        return null;
+    }
+
+    @Override
+    public String getState() {
+        return null;
+    }
+
+    @Override
+    public void loadFromMemento(BoardMementoIF boardMemento) {
+
     }
 }

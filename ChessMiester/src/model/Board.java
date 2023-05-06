@@ -133,7 +133,6 @@ public class Board implements BoardIF {
      *
      * @param playerColor the color of the player to orient the board
      */
-    @Override
     public void draw(GameColor playerColor) {
         drawStrategy.draw(this, playerColor);
     }
@@ -164,7 +163,6 @@ public class Board implements BoardIF {
      *
      * @param d the BoardStrategy object that defines the drawing strategy to use.
      */
-    @Override
     public void setDrawStrategy(BoardStrategy d) {
         drawStrategy = d;
     }

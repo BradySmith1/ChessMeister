@@ -9,14 +9,10 @@ package gui.gameboard;
 import enums.ToScreen;
 import gui.playernames.PlayerNamesGUI;
 import gui.settingsmenu.SettingsMenuGUI;
-import gui_backend.DefinePlayersGUI;
-import gui_backend.SquareGUI;
 import interfaces.PlayerIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import model.Square;
 
 public class GameBoardGUI{
 

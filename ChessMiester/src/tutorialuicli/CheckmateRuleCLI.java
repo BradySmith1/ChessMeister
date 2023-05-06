@@ -59,7 +59,7 @@ public class CheckmateRuleCLI implements RulesIF {
 
         BoardSaverLoader loader = new BoardSaverLoader(); //create a new BoardSaverLoader object
         BoardMementoCaretaker caretaker = loader.loadGameFromFile("checkmateTutorial");
-        BoardIF board = new Board();
+        Board board = new Board();
         board.loadFromMemento(caretaker.peek());
 
         //set draw strategy according to settings

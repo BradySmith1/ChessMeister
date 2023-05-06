@@ -59,15 +59,15 @@ public class TutorialCLI {
 
         // set the board color based on settings
         if(color.equals("Mono")){
-            this.board.setDrawStrategy(new BoardMonoCLI());
+            ((Board)this.board).setDrawStrategy(new BoardMonoCLI());
         } else {
-            this.board.setDrawStrategy(new BoardColorCLI());
+            ((Board)this.board).setDrawStrategy(new BoardColorCLI());
         }
 
         String input = "1"; // basic string for user input
 
         while (!input.equals("0")) { // loop game until user wants to quit
-            this.board.draw(GameColor.WHITE); // draw board
+            ((Board)this.board).draw(GameColor.WHITE); // draw board
 
             List<Position> moves = piece.getValidMoves(this.board, pos); // get valid moves for bishop
             System.out.print("Enter a move (Enter 0 to quit, " +

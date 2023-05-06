@@ -3,8 +3,8 @@ package uicli;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.BoardStrategy;
-import interfaces.SquareIF;
 import model.Position;
+import interfaces.SquareIF;
 import model.Square;
 
 import java.util.ArrayList;
@@ -67,9 +67,9 @@ public class BoardMonoCLI implements BoardStrategy {
      * @param height the height of the board.
      */
     private void populateRow(BoardIF board, int height) {
-        SquareIF[][] squares = board.getSquares();
+        interfaces.SquareIF[][] squares = board.getSquares();
         for (int width = 0; width < board.getWidth(); width++) {
-            Square square = (Square) squares[height][width];
+            SquareIF square = (SquareIF) squares[height][width];
             printPiece(square, width);
         }
         populateLine();
@@ -178,7 +178,7 @@ public class BoardMonoCLI implements BoardStrategy {
      * @param square the square to print.
      * @param index  the index of the piece in the array.
      */
-    private void printPiece(Square square, int index) {
+    private void printPiece(SquareIF square, int index) {
         boolean squareHighlighted = false;
         // Print the rank numbers.
         if (square.getPiece() != null) {
@@ -194,7 +194,7 @@ public class BoardMonoCLI implements BoardStrategy {
             if (squareHighlighted) {
                 pieces[index] = ("---" + pieceString + "---");
             } else {
-                if (square.isWhite()) {
+                if (((Square) square).isWhite()) {
                     pieces[index] = ("   " + pieceString + "   ");
                 } else {
                     pieces[index] = ("###" + pieceString + "###");
@@ -207,7 +207,7 @@ public class BoardMonoCLI implements BoardStrategy {
             if (squareHighlighted) {
                 pieces[index] = ("---------");
             } else {
-                if (square.isWhite()) {
+                if (((Square) square).isWhite()) {
                     pieces[index] = ("         ");
                 } else {
                     pieces[index] = ("#########");
@@ -222,7 +222,7 @@ public class BoardMonoCLI implements BoardStrategy {
      * @param square the square to check.
      * @return true if the square is highlighted, false otherwise.
      */
-    private boolean checkHighlight(Square square) {
+    private boolean checkHighlight(SquareIF square) {
         boolean result = false;
         for (Position position : highlighted) {
             if (square.getPosition().equals(position)) {

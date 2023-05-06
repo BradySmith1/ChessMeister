@@ -41,12 +41,10 @@ public class Square extends BlackAndWhite implements SquareIF {
      * Sets a piece on the square.
      *
      * @param piece The piece to set on the square.
-     * @return The piece that was previously on the square, if any.
      */
     @Override
-    public PieceIF setPiece(PieceIF piece){
+    public void setPiece(PieceIF piece){
         this.piece = piece;
-        return piece;
     }
 
     /**

@@ -28,25 +28,11 @@ public interface BoardIF{
     void setup();
 
     /**
-     * Draws the game board.
-     *
-     * @param playerColor the color of the player.
-     */
-    public void draw(GameColor playerColor);
-
-    /**
      * Returns a 2D array of squares on the game board.
      *
      * @return a 2D array of SquareIF objects representing the squares on the board.
      */
     SquareIF[][] getSquares();
-
-    /**
-     * Sets the drawing strategy for the game board.
-     *
-     * @param d the BoardStrategy object that defines the drawing strategy to use.
-     */
-    void setDrawStrategy(BoardStrategy d);
 
     /**
      * Returns the width of the game board.
@@ -112,21 +98,6 @@ public interface BoardIF{
      */
     void loadFromMemento(Board.BoardMementoIF boardMemento);
 
-    /**
-     * Highlights the given arraylist of positions on the board.
-     *
-     * @param board the board to highlight
-     * @param array the arraylist of positions to highlight
-     * @param color the color of the orientation of the board
-     */
-    void highlight(BoardIF board, ArrayList<Position> array, GameColor color);
-
-    /**
-     * Returns the draw strategy.
-     *
-     * @return the draw strategy
-     */
-    BoardStrategy getDrawStrategy();
     /**
      * Interface for the memento.
      */
