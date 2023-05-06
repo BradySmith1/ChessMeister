@@ -38,7 +38,7 @@ public class NotationQuizGUI implements GameBoardObserver {
     String location;
 
     /**
-     * Constructor for the piece tutorial gui.
+     * Constructor for the notation quiz gui.
      */
     public NotationQuizGUI() {
         // Create a BorderPane
@@ -218,6 +218,11 @@ public class NotationQuizGUI implements GameBoardObserver {
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch) { this.screenChanger = sch; }
 
 
+    /**
+     * This method is called when the user clicks on a square.
+     *
+     * @param event the event that was fired
+     */
     @Override
     public void notifyLeftClick(Event event) {
         SquareGUI square = (SquareGUI) event.getSource();
@@ -244,6 +249,11 @@ public class NotationQuizGUI implements GameBoardObserver {
 
     }
 
+    /**
+     * This method is called when the user right clicks on a square.
+     *
+     * @param event the event that was fired
+     */
     @Override
     public void notifyRightClick(Event event) {
         // ignore
