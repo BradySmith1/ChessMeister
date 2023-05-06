@@ -87,6 +87,7 @@ public class GameBoardGUI{
         // TODO
         System.out.println((this.getSettings().getSettings().getBlackSquareColor()));
         System.out.println((this.getSettings().getSettings().getWhiteSquareColor()));
+        System.out.println((this.getSettings().getSettings().getHighlightColor()));
         System.out.println((this.getSettings().getSettings().getUndoRedo()));
         System.out.println((this.getSettings().getSettings().getShowMoves()));
 

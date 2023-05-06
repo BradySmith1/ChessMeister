@@ -41,7 +41,7 @@ public class SettingsMenuGUI extends VBox {
     SettingsGUI settings;
 
     /** Colored Rectangles for the settings menu **/
-    Rectangle blackColorBox, whiteColorBox;
+    Rectangle highlightColorBox, blackColorBox, whiteColorBox;
 
 
     /**
@@ -57,7 +57,7 @@ public class SettingsMenuGUI extends VBox {
         // Labels for the settings menu
         Label titleLabel = createLabel("Settings", "topLabel");
         titleLabel.setAlignment(Pos.CENTER);
-        Label colorLabel = createLabel("Colors:", "middleLabel");
+        Label colorLabel = createLabel("Highlight Color:", "middleLabel");
         Label blackSquares = createLabel("Black Squares:", "middleLabel");
         Label whiteSquares = createLabel("White Squares:", "middleLabel");
         Label undoLabel = createLabel("Undo/Redo", "middleLabel");
@@ -67,14 +67,14 @@ public class SettingsMenuGUI extends VBox {
         this.createExitButton();
 
         // Create Rectangles
+        this.highlightColorBox = new Rectangle(50, 20, Color.LIGHTPINK);
         this.blackColorBox = new Rectangle(50, 20, Color.BLACK);
         this.whiteColorBox = new Rectangle(50, 20, Color.WHITE);
 
         // Handle Event for the black square
+        this.handleBlackSquareEvent(highlightColorBox);
         this.handleBlackSquareEvent(blackColorBox);
         this.handleBlackSquareEvent(whiteColorBox);
-
-
 
         // Checkboxes for the settings menu
         this.showMoves = new CheckBox("Enabled");
@@ -95,6 +95,7 @@ public class SettingsMenuGUI extends VBox {
         gp.add(colorLabel, 0, 1, 1, 1);
         gp.add(blackSquares, 0, 2, 1, 1);
         gp.add(whiteSquares, 0, 3, 1, 1);
+        gp.add(highlightColorBox, 1, 1, 1, 1);
         gp.add(blackColorBox, 1, 2, 1, 1);
         gp.add(whiteColorBox, 1, 3, 1, 1);
         gp.add(undoLabel, 0, 4, 1, 1);
@@ -213,6 +214,8 @@ public class SettingsMenuGUI extends VBox {
             }
             else if (colorBox == whiteColorBox){
                 settings.setWhiteSquareColor(colourSelectorGUI.getSelectedColor());
+            } else if(colorBox == highlightColorBox){
+                settings.setHighlightColor(colourSelectorGUI.getSelectedColor());
             }
         });
     }

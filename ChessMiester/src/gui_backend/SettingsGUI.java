@@ -16,6 +16,9 @@ public class SettingsGUI {
     /** The white square color. */
     private Color whiteSquareColor;
 
+    /** The highlight color. */
+    private Color highlightColor;
+
     /** Undo/redo option. */
     private boolean undoRedo;
 
@@ -28,6 +31,7 @@ public class SettingsGUI {
     public SettingsGUI() {
         this.blackSquareColor = Color.BLACK;
         this.whiteSquareColor = Color.WHITE;
+        this.highlightColor = Color.LIGHTPINK;
         this.undoRedo = false;
         this.showMoves = false;
     }
@@ -70,6 +74,20 @@ public class SettingsGUI {
     }
 
     /**
+     * Gets the highlight color.
+     *
+     * @return the highlight color
+     */
+    public Color getHighlightColor() { return this.highlightColor; }
+
+    /**
+     * Sets the highlight color.
+     *
+     * @param color the new highlight color
+     */
+    public void setHighlightColor(Color color) { this.highlightColor = color; }
+
+    /**
      * Gets the undo/redo option.
      *
      * @return the undo/redo option
@@ -92,16 +110,12 @@ public class SettingsGUI {
      *
      * @return the show moves option
      */
-    public boolean getShowMoves() {
-        return this.showMoves;
-    }
+    public boolean getShowMoves() { return this.showMoves; }
 
     /**
      * Sets the show moves option.
      *
      * @param showMoves the new show moves option
      */
-    public void setShowMoves(boolean showMoves) {
-        this.showMoves = showMoves;
-    }
+    public void setShowMoves(boolean showMoves) { this.showMoves = showMoves; }
 }
