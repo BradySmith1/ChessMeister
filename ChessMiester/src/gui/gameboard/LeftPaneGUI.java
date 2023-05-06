@@ -93,7 +93,11 @@ public class LeftPaneGUI {
      */
     public Label getCapturedPieces(){return capturedPieces;}
 
-
+    /**
+     * Sets the label for player 1.
+     *
+     * @param name the name of the player
+     */
     public void setLabel(String name){
         player1.setText(name);
     }

@@ -76,10 +76,25 @@ public class RightPaneGUI {
      */
     public Pane getRoot(){ return root; }
 
+    /**
+     * Getter for the label.
+     *
+     * @return the label
+     */
     public Label getLabel(){return player2;}
 
+    /**
+     * Getter for the captured pieces label.
+     *
+     * @return the captured pieces label
+     */
     public Label getCapturedPieces(){return capturedPieces;}
 
+    /**
+     * Setter for the label.
+     *
+     * @param name the name
+     */
     public void setLabel(String name){
         player2.setText(name);
     }
