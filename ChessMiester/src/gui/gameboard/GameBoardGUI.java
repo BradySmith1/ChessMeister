@@ -60,9 +60,9 @@ public class GameBoardGUI{
         top.getRoot().setId("top");
         bottom = new BottomPaneGUI();
         bottom.getRoot().setId("bottom");
-        left = new LeftPaneGUI();
+        left = new LeftPaneGUI(this.player1);
         left.getRoot().setId("left");
-        right = new RightPaneGUI();
+        right = new RightPaneGUI(this.player2);
         right.getRoot().setId("right");
         center = new CenterPaneGUI();
         center.getRoot().setId("center");
