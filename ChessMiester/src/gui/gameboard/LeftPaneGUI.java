@@ -40,7 +40,7 @@ public class LeftPaneGUI {
         player1 = new Label("Player 1: " + player.getName());
         player1.setId("topLabel");
         capturedPieces = new Label("Captured:");
-        TilePane captured = makeCaptured();
+        TilePane captured = makeCaptured(player);
         capturedPieces.setId("topLabel");
 
         root.getChildren().add(player1);
@@ -66,8 +66,8 @@ public class LeftPaneGUI {
 
         ArrayList<PieceIF> pieces = player.getCapturedPieces();
         for (PieceIF pieceIF : pieces) {
-            Image piece = pieceIF.getImage();
-            captured.getChildren().add(new ImageView(piece));
+            //Image piece = pieceIF.getImage();
+            //captured.getChildren().add(new ImageView(piece));
         }
         return captured;
     }
