@@ -8,7 +8,6 @@
 package gui_backend;
 
 import enums.Files;
-import enums.GameColor;
 import enums.Rank;
 import gui.gameboard.GameBoardObserver;
 import interfaces.PieceIF;
@@ -183,9 +182,5 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
     public void setColor(Color color) {
         long alphaRGB = Long.parseLong(color.toString().substring(2), 16);
         this.setStyle("-fx-background-color: " + String.format("#%08X", alphaRGB) + ";");
-    }
-
-    public void highlight() {
-        this.setColor(Color.rgb(0, 255, 0, 0.5));
     }
 }

@@ -9,6 +9,7 @@ package gui.gameboard;
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
+import gui.settingsmenu.SettingsMenuGUI;
 import gui_backend.PieceGUI;
 import gui_backend.SquareGUI;
 import interfaces.BoardIF;
@@ -24,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -34,7 +36,7 @@ import java.util.List;
 
 import model.Position;
 
-public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent>, BoardIF {
+public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent>, BoardIF, CenterPaneObserver {
     /** The root pane. */
     private GridPane root;
 
@@ -49,6 +51,12 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
 
     /** The size of the board. */
     final int size = 8;
+
+    /** Center pane observer. */
+    private CenterPaneObserver observer;
+
+    /** The highlight color. */
+    private Color highlightColor;
 
     /**
      * Constructor for the center pane.
@@ -256,6 +264,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      */
     @Override
     public void notifyLeftClick(Event event) {
+        this.notifyPane();
         clickMove((MouseEvent) event);
     }
 
@@ -266,12 +275,13 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      */
     @Override
     public void notifyRightClick(Event event) {
+        this.notifyPane();
         SquareGUI clickedSquare = (SquareGUI) event.getSource(); //TODO integrate highlighting.
         if (clickedSquare.getPiece().getImage() != null) {
             PieceGUI piece = (PieceGUI) clickedSquare.getPiece();
             List<Position> validMoves = piece.getMoveType().getValidMoves(this, clickedSquare.getPosition());
             for (Position position : validMoves) {
-               squares[position.getRank().getIndex()][position.getFile().getFileNum()].highlight();
+               squares[position.getRank().getIndex()][position.getFile().getFileNum()].setColor(this.highlightColor);
             }
 
         }
@@ -332,5 +342,27 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     @Override
     public void loadFromMemento(BoardMementoIF boardMemento) {
 
+    }
+
+
+    /**
+     * Adds an observer to the center pane.
+     *
+     * @param observer the observer to be added
+     */
+    public void addObserver(CenterPaneObserver observer){
+        this.observer = observer;
+    }
+
+    /**
+     * Notifies the observer that the pane has been updated.
+     */
+    @Override
+    public void notifyPane() {
+       this.observer.notifyPane();
+    }
+
+    public void setHighlightColor(Color color) {
+    	this.highlightColor = color;
     }
 }

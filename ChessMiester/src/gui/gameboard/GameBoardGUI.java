@@ -14,7 +14,7 @@ import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 
-public class GameBoardGUI{
+public class GameBoardGUI implements CenterPaneObserver{
 
     /** the top pane */
     private TopPaneGUI top;
@@ -46,7 +46,7 @@ public class GameBoardGUI{
     /**
      * Constructor for the game board GUI.
      */
-    public GameBoardGUI(){
+    public GameBoardGUI() {
         super();
 
         root = new BorderPane();
@@ -62,6 +62,9 @@ public class GameBoardGUI{
         right.getRoot().setId("right");
         center = new CenterPaneGUI();
         center.getRoot().setId("center");
+
+        // Add the observers
+        center.addObserver(this);
 
         //add the panes to the root
         root.setTop(top.getRoot());
@@ -123,9 +126,14 @@ public class GameBoardGUI{
         this.settings = getSettings();
         System.out.println("SHOW MOVES: " + this.settings.getSettings().getShowMoves());
         System.out.println("SHOW UNDO/REDO: " + this.settings.getSettings().getUndoRedo());
-        System.out.println("SHOW THE WHITEY: " + this.settings.getSettings().getWhiteSquareColor());
-        System.out.println("SHOW THE BLACKY: " + this.settings.getSettings().getBlackSquareColor());
+        System.out.println("SHOW THE WHITE: " + this.settings.getSettings().getWhiteSquareColor());
+        System.out.println("SHOW THE BLACK: " + this.settings.getSettings().getBlackSquareColor());
         System.out.println("SHOW THE HIGHLIGHT: " + this.settings.getSettings().getHighlightColor());
+
+        this.center.setHighlightColor(this.settings.getSettings().getHighlightColor());
+        //this.top.setShowMoves(this.settings.getSettings().getShowMoves());
+        System.out.println("UPDATE SETTINGS: " + this.settings.getSettings().getUndoRedo());
+        this.top.setShowUndoRedo(this.settings.getSettings().getUndoRedo());
 
         updateBoard();
     }
@@ -141,5 +149,13 @@ public class GameBoardGUI{
                 }
             }
         }
+    }
+
+    /**
+     * Notifies the observer that the pane has been updated.
+     */
+    @Override
+    public void notifyPane() {
+        this.screenChanger.notifyBoard();
     }
 }

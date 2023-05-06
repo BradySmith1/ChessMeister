@@ -10,6 +10,7 @@ import interfaces.ScreenChangeHandlerIF;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -28,6 +29,9 @@ public class TopPaneGUI {
 
     /** Reference to the implementation for the ScreenChangeHandlerIF **/
     ScreenChangeHandlerIF screenChanger;
+
+    /** Boolean for undo and redo*/
+    private boolean undoRedo;
 
     /**
      * Constructor for the right pane.
@@ -115,14 +119,26 @@ public class TopPaneGUI {
                             e.printStackTrace();
                         }
                     }
-                } else if (source == undo) {
+                } else if (source == undo && undoRedo) {
                     System.out.println("Undo");
-                } else if (source == redo) {
+                } else if (source == redo && undoRedo) {
                     System.out.println("Redo");
+                } else if (source == undo || source == redo && !undoRedo) {
+                    createAlert("Undo/Redo");
                 }
             }
         }
     };
 
+    public void setShowUndoRedo(boolean undoRedo) {
+        this.undoRedo = undoRedo;
+    }
 
+    private void createAlert(String title){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(title + " is not available");
+        alert.setContentText(title + " is disable in settings");
+        alert.showAndWait();
+    }
 }
