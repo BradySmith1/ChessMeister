@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import model.Position;
 import javafx.scene.image.ImageView;
+import model.Square;
 
 import java.util.List;
 
@@ -61,6 +62,9 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
         });
         this.setOnDragDetected(event -> {
             ImageView imageView = (ImageView) this.getChildren().get(0);
+            if(imageView.getImage() == null){
+                return;
+            }
             Dragboard db = this.startDragAndDrop(TransferMode.MOVE);
 
             ClipboardContent content = new ClipboardContent();
@@ -70,13 +74,12 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
         });
         this.setOnDragOver(event -> { //TODO integrate with valid moves.
             List<Position> validMoves = notifyPieceMoving(event);
-            SquareGUI hoveredSquare = (SquareGUI) event.getSource();
             boolean valid = false;
             for (Position validMove : validMoves) {
                 if (validMove == null) {
                     continue;
                 }
-                if (validMove.equals(hoveredSquare.getPosition())) {
+                if (validMove.equals(this.position)) {
                     valid = true;
                     break;
                 }
@@ -86,14 +89,12 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
             }
         });
         this.setOnDragDropped(event -> {
-            Dragboard db = event.getDragboard();
-            boolean success = false;
-            if(db.hasImage()){
-                SquareGUI gui = (SquareGUI) event.getGestureSource();
-                this.piece.setPieceImage(gui.getPiece().getImage());
-                success = true;
+            SquareGUI source = (SquareGUI) event.getGestureSource();
+            if(this.piece.getImage() != null){
+                notifyAddCapturedPiece(this.piece);
             }
-            event.setDropCompleted(success);
+            this.piece.setPieceImage(source.getPiece().getImage());
+            event.setDropCompleted(true);
             event.consume();
         });
         this.setOnDragDone(event -> {
@@ -192,6 +193,15 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
     @Override
     public void notifyRightClick(Event event) {
         observer.notifyRightClick(event);
+    }
+
+    /**
+     * Notifies the observer that a piece has been captured.
+     *
+     * @param piece the piece that was captured
+     */
+    public void notifyAddCapturedPiece(PieceIF piece){
+        observer.notifyAddCapturedPiece(piece);
     }
 
     /**

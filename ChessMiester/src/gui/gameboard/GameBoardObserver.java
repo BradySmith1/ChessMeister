@@ -7,6 +7,7 @@
  */
 package gui.gameboard;
 
+import interfaces.PieceIF;
 import javafx.event.Event;
 import model.Position;
 
@@ -34,4 +35,11 @@ public interface GameBoardObserver {
      * @param event the event that occurred
      */
     List<Position> notifyPieceMoving(Event event);
+
+    /**
+     * Notifies the observer that a piece has been captured.
+     *
+     * @param piece the piece that was captured.
+     */
+    void notifyAddCapturedPiece(PieceIF piece);
 }

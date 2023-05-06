@@ -8,6 +8,7 @@
 package gui.gameboard;
 
 import gui.settingsmenu.SettingsMenuGUI;
+import interfaces.PieceIF;
 
 public interface CenterPaneObserver {
 
@@ -15,4 +16,11 @@ public interface CenterPaneObserver {
      * Notifies the observer that the pane has been updated.
      */
     void notifyPane();
+
+    /**
+     * Notifies the observer that a piece has been captured.
+     *
+     * @param piece the piece that was captured.
+     */
+    void notifyAddCapturedPiece(PieceIF piece);
 }

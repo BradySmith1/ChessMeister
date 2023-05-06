@@ -395,6 +395,15 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
        this.observer.notifyPane();
     }
 
+    /**
+     * Notifies the observer that a piece has been captured.
+     *
+     * @param piece the piece that has been captured
+     */
+    public void notifyAddCapturedPiece(PieceIF piece){
+        observer.notifyAddCapturedPiece(piece);
+    }
+
     public void setHighlightColor(Color color) {
         this.highlightColor = color;
     }

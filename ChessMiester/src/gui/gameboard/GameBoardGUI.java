@@ -9,6 +9,7 @@ package gui.gameboard;
 import enums.ToScreen;
 import gui.playernames.PlayerNamesGUI;
 import gui.settingsmenu.SettingsMenuGUI;
+import interfaces.PieceIF;
 import interfaces.PlayerIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.layout.Pane;
@@ -160,5 +161,20 @@ public class GameBoardGUI implements CenterPaneObserver{
     @Override
     public void notifyPane() {
         this.screenChanger.notifyBoard();
+    }
+
+    /**
+     * Notifies the observer that a piece has been captured.
+     * @param piece the piece that was captured
+     */
+    public void notifyAddCapturedPiece(PieceIF piece){
+        if (piece.getColor() == this.player1.getColor()){
+            this.player2.addCapturedPiece(piece);
+        }
+        else{
+            this.player1.addCapturedPiece(piece);
+        }
+        this.left = new LeftPaneGUI();
+        this.right = new RightPaneGUI();
     }
 }
