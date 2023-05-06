@@ -46,7 +46,7 @@ public interface MovementIF extends BlackAndWhiteIF{
                     [currentFile + file];
             PieceIF currentPiece = currentSquare.getPiece();
             //check if there is an empty square or an enemy piece1
-            if (currentPiece == null || capture && !currentPiece.getColor().equals(getColor())) {
+            if (currentPiece == null || currentPiece.getImage() == null || capture && !currentPiece.getColor().equals(getColor())) {
                 //the move is possible so add it
                 movePossible = currentSquare.getPosition();
             }

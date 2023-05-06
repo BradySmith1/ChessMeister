@@ -91,8 +91,8 @@ public class PieceGUI extends ImageView implements PieceIF {
             case("Queen") -> type = ChessPieceType.Queen;
             case("Rook") -> type = ChessPieceType.Rook;
         }
-        moveTypeFactory();
         setColor();
+        moveTypeFactory();
     }
 
     /**
@@ -118,8 +118,8 @@ public class PieceGUI extends ImageView implements PieceIF {
         int lastChar = path.lastIndexOf('/') + 6;
         path = path.substring(lastSlash, lastChar);
         switch(path){
-            case("Black") -> this.color = GameColor.WHITE;
-            case("White") -> this.color = GameColor.BLACK;
+            case("Black") -> this.color = GameColor.BLACK;
+            case("White") -> this.color = GameColor.WHITE;
         }
     }
 

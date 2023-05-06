@@ -94,7 +94,7 @@ public class KingTutorialGUI {
     private void addImage() {
         try{
             Image king = new Image(new FileInputStream(
-                    "src/gui/gameboard/images/WhiteKing.png"));
+                    "src/gui/gameboard/images/WhiteQueen.png"));
             ImageView kingView = new ImageView(king);
             kingView.setFitHeight(100);
             kingView.setFitWidth(100);

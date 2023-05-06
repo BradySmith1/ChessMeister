@@ -145,10 +145,10 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         url = new File("src/gui/gameboard/images/WhiteBishop.png").toURI()
                 .toURL().toExternalForm();
         Image whiteBishopImage = new Image(url);
-        url = new File("src/gui/gameboard/images/WhiteQueen.png").toURI()
+        url = new File("src/gui/gameboard/images/WhiteKing.png").toURI()
                 .toURL().toExternalForm();
         Image whiteQueenImage = new Image(url);
-        url = new File("src/gui/gameboard/images/WhiteKing.png").toURI()
+        url = new File("src/gui/gameboard/images/WhiteQueen.png").toURI()
                 .toURL().toExternalForm();
         Image whiteKingImage = new Image(url);
         url = new File("src/gui/gameboard/images/WhiteKnightRight.png").toURI()
@@ -163,10 +163,10 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         url = new File("src/gui/gameboard/images/BlackBishop.png").toURI()
                 .toURL().toExternalForm();
         Image blackBishopImage = new Image(url);
-        url = new File("src/gui/gameboard/images/BlackQueen.png").toURI()
+        url = new File("src/gui/gameboard/images/BlackKing.png").toURI()
                 .toURL().toExternalForm();
         Image blackQueenImage = new Image(url);
-        url = new File("src/gui/gameboard/images/BlackKing.png").toURI()
+        url = new File("src/gui/gameboard/images/BlackQueen.png").toURI()
                 .toURL().toExternalForm();
         Image blackKingImage = new Image(url);
         url = new File("src/gui/gameboard/images/BlackKnightRight.png").toURI()
@@ -269,10 +269,10 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         SquareGUI clickedSquare = (SquareGUI) event.getSource(); //TODO integrate highlighting.
         if (clickedSquare.getPiece().getImage() != null) {
             PieceGUI piece = (PieceGUI) clickedSquare.getPiece();
-            //List<Position> validMoves = piece.getMoveType().getValidMoves(squares, clickedSquare.getPosition());
-            //for (Position position : validMoves) {
-            //    squares[position.getRank().getIndex()][position.getFile().getFileNum()].highlight();
-            //}
+            List<Position> validMoves = piece.getMoveType().getValidMoves(this, clickedSquare.getPosition());
+            for (Position position : validMoves) {
+               squares[position.getRank().getIndex()][position.getFile().getFileNum()].highlight();
+            }
 
         }
     }
@@ -313,6 +313,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         return squares[row][col].getPiece();
     }
 
+    //All memento stuff
     @Override
     public void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR) {
 

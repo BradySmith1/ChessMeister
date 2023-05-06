@@ -82,7 +82,7 @@ public class KnightMovement extends BlackAndWhite implements MovementIF {
                                                               [currentFile + file];
             PieceIF currentPiece = currentSquare.getPiece();
             //check if there is an empty square or an enemy piece
-            if (currentPiece == null || !currentPiece.getColor().equals(getColor())) {
+            if (currentPiece == null || currentPiece.getImage() == null || !currentPiece.getColor().equals(getColor())) {
                 //the move is possible so add it
                 movePossible = currentSquare.getPosition();
             }

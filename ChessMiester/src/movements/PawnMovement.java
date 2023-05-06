@@ -83,9 +83,10 @@ public class PawnMovement extends BlackAndWhite implements MovementIF, FirstMove
             moveRank = place.getRank().getIndex();
             moveFile = place.getFile().getFileNum();
             pieceInPos = board.getSquares()[moveRank][moveFile].getPiece(); // this will be null if there is no piece
-            if (pieceInPos != null) {   // if there is a piece where we are going
-                validMove = place;
+            if (pieceInPos == null || pieceInPos.getImage() == null) {   // if there is a piece where we are going
+                return validMove;
             }
+            validMove = place;
         }
         return validMove;
     }

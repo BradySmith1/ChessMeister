@@ -905,7 +905,8 @@ public class PlayMoveCLI implements PlayIF {
                 }
                 //check if there is a piece in the way
                 if (board.getSquares()[fromR.getIndex()]
-                        [tempF.getFileNum()].getPiece() != null) {
+                        [tempF.getFileNum()].getPiece() != null || board.getSquares()[fromR.getIndex()]
+                        [tempF.getFileNum()].getPiece().getImage() != null) {
                     canCastle = false;
                     //flag = false;
                 }
@@ -923,7 +924,8 @@ public class PlayMoveCLI implements PlayIF {
                 }
                 //check if there is a piece in the way
                 if (board.getSquares()[fromR.getIndex()]
-                        [tempF.getFileNum()].getPiece() != null) {
+                        [tempF.getFileNum()].getPiece() != null || board.getSquares()[fromR.getIndex()]
+                        [tempF.getFileNum()].getPiece().getImage() != null) {
                     canCastle = false;
                 }
                 tempF = Files.values()[tempF.getFileNum() - 1];

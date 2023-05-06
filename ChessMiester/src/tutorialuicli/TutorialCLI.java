@@ -7,6 +7,7 @@ import enums.GameColor;
 import enums.Rank;
 import interfaces.BoardIF;
 import interfaces.FirstMoveIF;
+import interfaces.PieceIF;
 import interfaces.SettingsIF;
 import model.Board;
 import model.BoardSaverLoader;
@@ -170,7 +171,9 @@ public class TutorialCLI {
             Files randFile = getRandomFile(); // get random file
             Rank randRank = getRandomRank(); // get random rank
             // check to make sure it's a dark tile and it's empty
-            if(board.getSquares()[randRank.getIndex()][randFile.getFileNum()].getPiece() == null){
+            PieceIF temp =
+                    board.getSquares()[randRank.getIndex()][randFile.getFileNum()].getPiece();
+            if(temp == null || temp.getImage() == null){
                 //wlog, a1, a3, a5, a7 are dark tiles
                 if ((randFile.equals(Files.A) || randFile.equals(Files.C) ||
                         randFile.equals(Files.E) || randFile.equals(Files.G))){

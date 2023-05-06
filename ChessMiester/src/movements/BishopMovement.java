@@ -83,7 +83,9 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
             PieceIF currPiece = currSquare.getPiece(); // get piece on current square
 
-            if(currSquare.getPiece() == null){ // if the square is empty
+            if(currSquare.getPiece() == null || currSquare.getPiece().getImage() == null){ // if
+                // the square is
+                // empty
                 validMovesUpRight.add(currSquare.getPosition());
             }
             else if(!currPiece.getColor().equals(getColor())){ // if the piece is an enemy piece
@@ -121,7 +123,7 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
             PieceIF currPiece =  currSquare.getPiece(); // get piece on current square
 
-            if (currSquare.getPiece() == null) { // if the square is empty
+            if (currSquare.getPiece() == null || currSquare.getPiece().getImage() == null) { // if the square is empty
                 validMovesUpLeft.add(currSquare.getPosition());
             } else if (!currPiece.getColor().equals(getColor())) {
                 validMovesUpLeft.add(currSquare.getPosition());
@@ -157,7 +159,7 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
             PieceIF currPiece = currSquare.getPiece(); // get piece on current square
 
-            if (currSquare.getPiece() == null) { // if the square is empty
+            if (currSquare.getPiece() == null || currSquare.getPiece().getImage() == null) { // if the square is empty
                 validMovesDownRight.add(currSquare.getPosition());
             } else if (!currPiece.getColor().equals(getColor())) { // if the piece is enemy piece
                 validMovesDownRight.add(currSquare.getPosition());
@@ -193,7 +195,7 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
             PieceIF currPiece = currSquare.getPiece(); // get piece on current square
 
-            if(currSquare.getPiece() == null){ // if the square is empty
+            if(currSquare.getPiece() == null || currSquare.getPiece().getImage() == null){ // if the square is empty
                 validMovesDownLeft.add(currSquare.getPosition());
             }
             else if(!currPiece.getColor().equals(getColor())){ // if the piece is an enemy piece
