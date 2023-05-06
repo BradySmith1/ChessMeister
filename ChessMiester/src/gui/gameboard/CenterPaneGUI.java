@@ -211,10 +211,10 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
         SquareGUI clickedSquare = (SquareGUI) event.getSource();
         if (clickedSquare.getPiece().getPieceImage() != null) {
             PieceGUI piece = clickedSquare.getPiece();
-            List<Position> validMoves = piece.getMoveType().getValidMoves(squares, clickedSquare.getPosition());
-            for (Position position : validMoves) {
-                squares[position.getRank().getIndex()][position.getFile().getFileNum()].highlight();
-            }
+            //List<Position> validMoves = piece.getMoveType().getValidMoves(squares, clickedSquare.getPosition());
+            //for (Position position : validMoves) {
+            //    squares[position.getRank().getIndex()][position.getFile().getFileNum()].highlight();
+            //}
 
         }
     }
