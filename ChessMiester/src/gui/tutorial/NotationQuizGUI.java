@@ -148,7 +148,7 @@ public class NotationQuizGUI implements GameBoardObserver {
         rank8.setId("rank");
 
         // add rank identifiers to vbox
-        vb.getChildren().addAll(rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8);
+        vb.getChildren().addAll(rank8, rank7, rank6, rank5, rank4, rank3, rank2, rank1);
         vb.setSpacing(60);
         vb.setMinWidth(100);
         return vb;
@@ -232,6 +232,7 @@ public class NotationQuizGUI implements GameBoardObserver {
             alert.setContentText("You clicked on " + location + "!");
             alert.showAndWait();
             screenChanger.changeScreen(ToScreen.NOTATION_QUIZ);
+            this.quizPane.setTop(makeTop());
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
