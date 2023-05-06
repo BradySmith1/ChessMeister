@@ -176,13 +176,13 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                     settingsMenuScreen = new SettingsMenuGUI();
                     settingsMenuScreen.setScreenChangeHandler(this);
                 }
-                System.out.println("Previous screen: " + this.previousScreen);
                 if (this.previousScreen != ToScreen.SETTINGS_MENU) {
                     previousScreen = ToScreen.GAME_BOARD;
                     gameBoardScreen = new GameBoardGUI();
                     gameBoardScreen.setScreenChangeHandler(this);
                 }
                 screen = gameBoardScreen.getRoot();
+                this.notifyBoard();
                 break;
             case BOARD_SETUP:
                 if (boardSetupScreen == null) {
