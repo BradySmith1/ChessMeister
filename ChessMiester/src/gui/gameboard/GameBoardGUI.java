@@ -5,6 +5,7 @@ import gui.playernames.PlayerNamesGUI;
 import gui.settingsmenu.SettingsMenuGUI;
 import gui_backend.DefinePlayersGUI;
 import gui_backend.SquareGUI;
+import interfaces.PlayerIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
@@ -29,7 +30,9 @@ public class GameBoardGUI{
 
     private SettingsMenuGUI settings;
 
-    private  PlayerNamesGUI player;
+    private PlayerIF player1;
+
+    private PlayerIF player2;
 
     public GameBoardGUI(){
         super();
@@ -70,12 +73,15 @@ public class GameBoardGUI{
 
         // Get settings and get players
         this.settings = getSettings();
-        this.player = getPlayer();
+        this.player1 = this.getPlayer().getPlayer().getPlayer1();
+        this.player2 = this.getPlayer().getPlayer().getPlayer2();
+        this.left.setLabel(this.player1.getName());
+        this.right.setLabel(this.player2.getName());
 
         System.out.println(this.settings.getSettings().getShowMoves());
         System.out.println(this.settings.getSettings().getUndoRedo());
-        System.out.println(this.player.getPlayer().getPlayer1Name());
-        System.out.println(this.player.getPlayer().getPlayer2Name());
+        System.out.println(this.player1.getName());
+        System.out.println(this.player2.getName());
 
         this.screenChanger.notifyBoard();
 

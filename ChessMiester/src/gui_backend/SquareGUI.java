@@ -119,4 +119,8 @@ public class SquareGUI extends StackPane implements GameBoardObserver {
         long alphaRGB = Long.parseLong(color.toString().substring(2), 16);
         this.setStyle("-fx-background-color: " + String.format("#%08X", alphaRGB) + ";");
     }
+
+    public void highlight() {
+        this.setColor(Color.rgb(0, 255, 0, 0.5));
+    }
 }

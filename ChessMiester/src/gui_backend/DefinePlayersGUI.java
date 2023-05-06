@@ -54,4 +54,20 @@ public class DefinePlayersGUI {
     public String getPlayer2Name() {
         return player2.getName();
     }
+
+    /**
+     * Gets player 1.
+     * @return player 1
+     */
+    public PlayerIF getPlayer1() {
+        return player1;
+    }
+
+    /**
+     * Gets player 2.
+     * @return player 2
+     */
+    public PlayerIF getPlayer2() {
+        return player2;
+    }
 }

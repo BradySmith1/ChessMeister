@@ -33,4 +33,8 @@ public class LeftPaneGUI {
     public Label getLabel(){return player1;}
 
     public Label getCapturedPieces(){return capturedPieces;}
+
+    public void setLabel(String name){
+        player1.setText(name);
+    }
 }
