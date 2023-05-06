@@ -112,7 +112,7 @@ public class SettingsMenuGUI extends VBox {
 
         GridPane.setHalignment(titleLabel, HPos.CENTER);
 
-//        // Get stylesheet
+        // Get stylesheet
         this.settingsMenuPane.getStylesheets().add(
                 getClass().getResource("SettingsMenu.css").toExternalForm());
     }

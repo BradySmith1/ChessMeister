@@ -129,6 +129,7 @@ public class GameBoardGUI{
         System.out.println("SHOW UNDO/REDO: " + this.settings.getSettings().getUndoRedo());
         System.out.println("SHOW THE WHITEY: " + this.settings.getSettings().getWhiteSquareColor());
         System.out.println("SHOW THE BLACKY: " + this.settings.getSettings().getBlackSquareColor());
+        System.out.println("SHOW THE HIGHLIGHT: " + this.settings.getSettings().getHighlightColor());
 
         updateBoard();
     }
