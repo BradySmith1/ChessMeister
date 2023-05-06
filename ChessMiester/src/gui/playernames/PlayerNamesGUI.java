@@ -159,7 +159,7 @@ public class PlayerNamesGUI extends BorderPane {
                     else{
                         definePlayersGUI.setPlayer2Name("Player 2");
                     }
-                    screenChanger.changeScreen(ToScreen.GAME_BOARD);
+                    screenChanger.changeScreen(ToScreen.GAME_BOARD, ToScreen.MAIN_MENU);
                 }
             }
         }
@@ -172,5 +172,13 @@ public class PlayerNamesGUI extends BorderPane {
         player2Name.setId("text-box");
         player1Name.setPromptText("Enter name here!");
         player2Name.setPromptText("Enter name here!");
+    }
+
+    /**
+     * Getter for the DefinePlayersGUI object
+     * @return the DefinePlayersGUI object
+     */
+    public DefinePlayersGUI getPlayer() {
+    	return this.definePlayersGUI;
     }
 }

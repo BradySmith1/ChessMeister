@@ -147,7 +147,9 @@ public class SettingsMenuGUI extends VBox {
                         screenChanger.changeScreen(ToScreen.MAIN_MENU);
                     }
                     else if (screenChanger.getPreviousScreen() == ToScreen.GAME_BOARD){
-                        screenChanger.changeScreen(ToScreen.GAME_BOARD);
+                        screenChanger.changeScreen(ToScreen.GAME_BOARD, ToScreen.SETTINGS_MENU);
+                        // Notifies the board of the changes
+                        screenChanger.notifyBoard();
                     }
                 }
             }
@@ -168,9 +170,6 @@ public class SettingsMenuGUI extends VBox {
             else if (source == enableUndo){
                 settings.setUndoRedo(enableUndo.isSelected());
             }
-
-            System.out.println("Show Moves: " + settings.getShowMoves());
-            System.out.println("Undo/Redo: " + settings.getUndoRedo());
         }
     };
 

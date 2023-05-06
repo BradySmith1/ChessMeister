@@ -35,4 +35,9 @@ public interface ScreenChangeHandlerIF {
      */
     public Pane getGuiScene(ToScreen screenChoice);
 
+    /**
+     * Method that updates the board for settings
+     */
+    public void notifyBoard();
+
 }
