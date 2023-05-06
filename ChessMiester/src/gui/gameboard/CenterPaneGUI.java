@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -307,8 +308,9 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      * @param event The mouse event
      */
     public List<Position> notifyPieceMoving(Event event){
+        DragEvent dragEvent = (DragEvent) event;
         List<Position> validMoves = null;
-        SquareGUI clickedSquare = (SquareGUI) event.getSource();
+        SquareGUI clickedSquare = (SquareGUI) dragEvent.getGestureSource();
         if (clickedSquare.getPiece().getImage() != null) {
             PieceGUI piece = (PieceGUI) clickedSquare.getPiece();
             validMoves = piece.getMoveType().getValidMoves(this,
