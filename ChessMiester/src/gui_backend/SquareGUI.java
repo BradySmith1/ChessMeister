@@ -20,6 +20,8 @@ import javafx.scene.paint.Color;
 import model.Position;
 import javafx.scene.image.ImageView;
 
+import java.util.List;
+
 public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF {
 
     /** The position of the square. */
@@ -66,7 +68,19 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
             event.consume();
         });
         this.setOnDragOver(event -> { //TODO integrate with valid moves.
-            if(event.getGestureSource() != this){
+            List<Position> validMoves = notifyPieceMoving(event);
+            SquareGUI hoveredSquare = (SquareGUI) event.getSource();
+            boolean valid = false;
+            for (Position validMove : validMoves) {
+                if (validMove == null) {
+                    continue;
+                }
+                if (validMove.equals(hoveredSquare.getPosition())) {
+                    valid = true;
+                    break;
+                }
+            }
+            if(event.getGestureSource() != this && valid){
                 event.acceptTransferModes(TransferMode.MOVE);
             }
         });
@@ -177,6 +191,16 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
     @Override
     public void notifyRightClick(Event event) {
         observer.notifyRightClick(event);
+    }
+
+    /**
+     * Notifies the observer that a drag has occurred.
+     *
+     * @param event the event that occurred
+     */
+    @Override
+    public List<Position> notifyPieceMoving(Event event) {
+        return observer.notifyPieceMoving(event);
     }
 
     public void setColor(Color color) {

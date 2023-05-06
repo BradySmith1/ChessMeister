@@ -8,6 +8,9 @@
 package gui.gameboard;
 
 import javafx.event.Event;
+import model.Position;
+
+import java.util.List;
 
 public interface GameBoardObserver {
 
@@ -24,4 +27,11 @@ public interface GameBoardObserver {
      * @param event the event that occurred
      */
     void notifyRightClick(Event event);
+
+    /**
+     * Notifies the observer that a piece is being moved.
+     *
+     * @param event the event that occurred
+     */
+    List<Position> notifyPieceMoving(Event event);
 }

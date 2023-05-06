@@ -9,11 +9,9 @@ package gui.gameboard;
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
-import gui.settingsmenu.SettingsMenuGUI;
 import gui_backend.PieceGUI;
 import gui_backend.SquareGUI;
 import interfaces.BoardIF;
-import interfaces.BoardStrategy;
 import interfaces.PieceIF;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -238,10 +236,26 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             popup.show();
             root.addEventFilter(MouseEvent.ANY, this);
         }else{
-            SquareGUI newClicked = (SquareGUI) mouse.getSource(); //TODO need to integrate valid moves into here.
-            if(clicked.getPiece().getImage() != null && clicked != newClicked){
-                newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
-                clicked.getPiece().setPieceImage(null);
+            List<Position> validMoves;
+            if (clicked.getPiece().getImage() != null) {
+                PieceGUI piece = (PieceGUI) clicked.getPiece();
+                validMoves = piece.getMoveType().getValidMoves(this,
+                        clicked.getPosition());
+                SquareGUI newClicked = (SquareGUI) mouse.getSource(); //TODO need to integrate valid moves into here.
+                boolean valid = false;
+                for (Position validMove : validMoves) {
+                    if (validMove == null) {
+                        continue;
+                    }
+                    if (validMove.equals(newClicked.getPosition())) {
+                        valid = true;
+                        break;
+                    }
+                }
+                if(valid){
+                    newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
+                    clicked.getPiece().setPieceImage(null);
+                }
             }
             popup.close();
             clicked = null;
@@ -286,6 +300,23 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
 
         }
     }
+
+    /**
+     * Notifies the view that the mouse has moved.
+     *
+     * @param event The mouse event
+     */
+    public List<Position> notifyPieceMoving(Event event){
+        List<Position> validMoves = null;
+        SquareGUI clickedSquare = (SquareGUI) event.getSource();
+        if (clickedSquare.getPiece().getImage() != null) {
+            PieceGUI piece = (PieceGUI) clickedSquare.getPiece();
+            validMoves = piece.getMoveType().getValidMoves(this,
+                    clickedSquare.getPosition());
+        }
+        return validMoves;
+    }
+
 
     /**
      * Handles the mouse event.
