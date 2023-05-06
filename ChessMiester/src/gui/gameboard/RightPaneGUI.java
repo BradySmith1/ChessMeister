@@ -63,8 +63,8 @@ public class RightPaneGUI {
 
         ArrayList<PieceIF> pieces = player.getCapturedPieces();
         for (PieceIF pieceIF : pieces) {
-            //Image piece = pieceIF.getImage();
-            //captured.getChildren().add(new ImageView(piece));
+            Image piece = pieceIF.getImage();
+            captured.getChildren().add(new ImageView(piece));
         }
         return captured;
     }

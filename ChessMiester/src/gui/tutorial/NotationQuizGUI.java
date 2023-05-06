@@ -13,6 +13,7 @@ import enums.ToScreen;
 import gui.gameboard.CenterPaneGUI;
 import gui.gameboard.GameBoardObserver;
 import gui_backend.SquareGUI;
+import interfaces.PieceIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.event.Event;
 import javafx.scene.control.Alert;
@@ -22,7 +23,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
+import model.Position;
 import tutorialuicli.NotationCLI;
+
+import java.util.List;
 
 public class NotationQuizGUI implements GameBoardObserver {
     /** Pane for the quiz tutorial gui */
@@ -106,7 +110,7 @@ public class NotationQuizGUI implements GameBoardObserver {
     private CenterPaneGUI makeCenter(){
         // initialize the center pane
         CenterPaneGUI center = new CenterPaneGUI();
-        center.initSquares();
+        center.setup();
 
         // iterate squares and add observers
         for (int i = 0; i < 8; i++){
@@ -257,6 +261,16 @@ public class NotationQuizGUI implements GameBoardObserver {
     @Override
     public void notifyRightClick(Event event) {
         // ignore
+    }
+
+    @Override
+    public List<Position> notifyPieceMoving(Event event) {
+        return null;
+    }
+
+    @Override
+    public void notifyAddCapturedPiece(PieceIF piece) {
+        return;
     }
 
 

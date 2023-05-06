@@ -58,10 +58,6 @@ public class GameBoardGUI implements CenterPaneObserver{
         top.getRoot().setId("top");
         bottom = new BottomPaneGUI();
         bottom.getRoot().setId("bottom");
-        left = new LeftPaneGUI(this.player1);
-        left.getRoot().setId("left");
-        right = new RightPaneGUI(this.player2);
-        right.getRoot().setId("right");
         center = new CenterPaneGUI();
         center.getRoot().setId("center");
 
@@ -71,8 +67,6 @@ public class GameBoardGUI implements CenterPaneObserver{
         //add the panes to the root
         root.setTop(top.getRoot());
         root.setBottom(bottom.getRoot());
-        root.setLeft(left.getRoot());
-        root.setRight(right.getRoot());
         root.setCenter(center.getRoot());
 
         // add the stylesheet and images
@@ -101,8 +95,12 @@ public class GameBoardGUI implements CenterPaneObserver{
         this.player2 = this.getPlayer().getPlayer().getPlayer2();
         this.player1.assignPieces(center);
         this.player2.assignPieces(center);
-        this.left.setLabel(this.player1.getName());
-        this.right.setLabel(this.player2.getName());
+        left = new LeftPaneGUI(this.player1);
+        left.getRoot().setId("left");
+        right = new RightPaneGUI(this.player2);
+        right.getRoot().setId("right");
+        root.setLeft(left.getRoot());
+        root.setRight(right.getRoot());
 
         System.out.println(this.settings.getSettings().getShowMoves());
         System.out.println(this.settings.getSettings().getUndoRedo());
@@ -174,7 +172,7 @@ public class GameBoardGUI implements CenterPaneObserver{
         else{
             this.player1.addCapturedPiece(piece);
         }
-        this.left = new LeftPaneGUI();
-        this.right = new RightPaneGUI();
+        this.left = new LeftPaneGUI(player1);
+        this.right = new RightPaneGUI(player2);
     }
 }

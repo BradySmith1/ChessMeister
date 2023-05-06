@@ -45,6 +45,7 @@ public class LeftPaneGUI {
 
         root.getChildren().add(player1);
         root.getChildren().add(capturedPieces);
+        root.getChildren().add(captured);
         root.setId("left");
         root.setSpacing(50);
         root.setMaxSize(300, 800);
@@ -66,8 +67,8 @@ public class LeftPaneGUI {
 
         ArrayList<PieceIF> pieces = player.getCapturedPieces();
         for (PieceIF pieceIF : pieces) {
-            //Image piece = pieceIF.getImage();
-            //captured.getChildren().add(new ImageView(piece));
+            Image piece = pieceIF.getImage();
+            captured.getChildren().add(new ImageView(piece));
         }
         return captured;
     }
