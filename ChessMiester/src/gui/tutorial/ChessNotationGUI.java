@@ -78,7 +78,7 @@ public class ChessNotationGUI {
         // add continue button
         cont = new Button("Continue");
         cont.setId("menu-button");
-        cont.setOnAction(e -> screenChanger.changeScreen(ToScreen.CHESS_NOTATION));
+        cont.setOnAction(e -> screenChanger.changeScreen(ToScreen.NOTATION_QUIZ));
         //TODO chess notation quiz
 
         // add return button

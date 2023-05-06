@@ -67,7 +67,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     /**
      * Initializes the squares for the board
      */
-    private void initSquares(){
+    public void initSquares(){
         for(int row = 0; row < size; row++){
             for(int col = 0; col < size; col++){
                 SquareGUI square = new SquareGUI(row, col);

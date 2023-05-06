@@ -91,6 +91,9 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
     /** The piece tutorial screen */
     private static PieceTutorialGUI pieceTutorialScreen;
 
+    /** The notation quiz screen */
+    private static NotationQuizGUI notationQuizScreen;
+
 
     /**
      * The constructor for ScreenFactory
@@ -274,6 +277,13 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                     pieceTutorialScreen.setScreenChangeHandler(this);
                 }
                 screen = pieceTutorialScreen.getRoot();
+                break;
+            case NOTATION_QUIZ:
+                if (notationQuizScreen == null) {
+                    notationQuizScreen = new NotationQuizGUI();
+                    notationQuizScreen.setScreenChangeHandler(this);
+                }
+                screen = notationQuizScreen.getRoot();
                 break;
             default:
                 screen = null;
