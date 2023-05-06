@@ -60,10 +60,11 @@ public class MainMenuGUI extends BorderPane {
         this.mainMenuPane.setBottom(bottom);
 
         // set center alignments
-        BorderPane.setAlignment(top, Pos.CENTER);
+        BorderPane.setAlignment(top, Pos.BOTTOM_CENTER);
         BorderPane.setAlignment(center, Pos.CENTER);
         BorderPane.setAlignment(left, Pos.CENTER);
         BorderPane.setAlignment(right,Pos.CENTER);
+        top.setMinHeight(200);
 
         // Get stylesheet
         this.mainMenuPane.getStylesheets().add(
