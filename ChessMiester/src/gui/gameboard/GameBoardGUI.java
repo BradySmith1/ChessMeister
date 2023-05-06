@@ -6,9 +6,17 @@
  */
 package gui.gameboard;
 
+import enums.ToScreen;
+import gui.playernames.PlayerNamesGUI;
+import gui.settingsmenu.SettingsMenuGUI;
+import gui_backend.DefinePlayersGUI;
+import gui_backend.SquareGUI;
+import interfaces.PlayerIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import model.Square;
 
 public class GameBoardGUI{
 
@@ -32,6 +40,12 @@ public class GameBoardGUI{
 
     /** the screen change handler */
     ScreenChangeHandlerIF screenChanger;
+
+    private SettingsMenuGUI settings;
+
+    private PlayerIF player1;
+
+    private PlayerIF player2;
 
     /**
      * Constructor for the game board GUI.
@@ -76,7 +90,59 @@ public class GameBoardGUI{
      * @param sch the screen change handler
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch){
+        this.screenChanger = sch;
         top.setScreenChangeHandler(this.screenChanger);
         bottom.setScreenChangeHandler(this.screenChanger);
+
+        // Get settings and get players
+        this.settings = getSettings();
+        this.player1 = this.getPlayer().getPlayer().getPlayer1();
+        this.player2 = this.getPlayer().getPlayer().getPlayer2();
+        this.left.setLabel(this.player1.getName());
+        this.right.setLabel(this.player2.getName());
+
+        System.out.println(this.settings.getSettings().getShowMoves());
+        System.out.println(this.settings.getSettings().getUndoRedo());
+        System.out.println(this.player1.getName());
+        System.out.println(this.player2.getName());
+
+        this.screenChanger.notifyBoard();
+
+
+    }
+
+    private SettingsMenuGUI getSettings(){
+        return (SettingsMenuGUI) this.screenChanger.getGuiScene(ToScreen.SETTINGS_MENU);
+    }
+
+    private PlayerNamesGUI getPlayer(){
+        return (PlayerNamesGUI) this.screenChanger.getGuiScene(ToScreen.PLAYER_NAMES);
+    }
+
+
+    /**
+     * Updates the settings.
+     */
+    public void updateSettings(){
+        this.settings = getSettings();
+        System.out.println("SHOW MOVES: " + this.settings.getSettings().getShowMoves());
+        System.out.println("SHOW UNDO/REDO: " + this.settings.getSettings().getUndoRedo());
+        System.out.println("SHOW THE WHITEY: " + this.settings.getSettings().getWhiteSquareColor());
+        System.out.println("SHOW THE BLACKY: " + this.settings.getSettings().getBlackSquareColor());
+
+        updateBoard();
+    }
+
+    private void updateBoard(){
+        for (int row = 0; row < 8; row++){
+            for (int col = 0; col < 8; col++){
+                if ((row + col) % 2 == 0){
+                    this.center.getSquares()[row][col].setColor(this.settings.getSettings().getWhiteSquareColor());
+                }
+                else{
+                    this.center.getSquares()[row][col].setColor(this.settings.getSettings().getBlackSquareColor());
+                }
+            }
+        }
     }
 }

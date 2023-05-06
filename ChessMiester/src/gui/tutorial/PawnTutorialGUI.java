@@ -35,17 +35,8 @@ public class PawnTutorialGUI {
         pawnPane = new VBox();
         pawnPane.setId("main-pane");
 
-        // get pawn image and add to pane
-        try{
-            Image pawn = new Image(new FileInputStream(
-                    "src/gui/gameboard/images/WhitePawn.png"));
-            ImageView pawnView = new ImageView(pawn);
-            pawnView.setFitHeight(100);
-            pawnView.setFitWidth(100);
-            pawnPane.getChildren().add(pawnView);
-        }catch(Exception e){
-            System.out.println("Error: File not found.");
-        }
+        // Add image to pawn
+        this.addImage();
 
         // Create a text object
         Text text = new Text("""
@@ -100,4 +91,18 @@ public class PawnTutorialGUI {
      * @param sch the screen changer
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch) { this.screenChanger = sch; }
+
+    public void addImage(){
+        // get pawn image and add to pane
+        try{
+            Image pawn = new Image(new FileInputStream(
+                    "src/gui/gameboard/images/WhitePawn.png"));
+            ImageView pawnView = new ImageView(pawn);
+            pawnView.setFitHeight(100);
+            pawnView.setFitWidth(100);
+            pawnPane.getChildren().add(pawnView);
+        }catch(Exception e){
+            System.out.println("Error: File not found.");
+        }
+    }
 }

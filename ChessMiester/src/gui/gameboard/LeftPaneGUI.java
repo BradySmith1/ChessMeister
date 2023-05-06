@@ -57,5 +57,10 @@ public class LeftPaneGUI {
      *
      * @return the label for the captured pieces
      */
-    public Label getCapturedPieces(){ return capturedPieces; }
+    public Label getCapturedPieces(){return capturedPieces;}
+
+
+    public void setLabel(String name){
+        player1.setText(name);
+    }
 }

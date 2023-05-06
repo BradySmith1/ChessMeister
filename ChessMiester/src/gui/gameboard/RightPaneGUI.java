@@ -48,4 +48,8 @@ public class RightPaneGUI {
     public Label getLabel(){return player2;}
 
     public Label getCapturedPieces(){return capturedPieces;}
+
+    public void setLabel(String name){
+        player2.setText(name);
+    }
 }

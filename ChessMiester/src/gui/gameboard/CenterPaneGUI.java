@@ -9,6 +9,7 @@ package gui.gameboard;
 import enums.GameColor;
 import gui_backend.PieceGUI;
 import gui_backend.SquareGUI;
+import interfaces.PieceIF;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -25,6 +26,9 @@ import javafx.stage.StageStyle;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.util.List;
+
+import model.Position;
 
 public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent> {
     /** The root pane. */
@@ -254,6 +258,15 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     @Override
     public void notifyRightClick(Event event) {
         //highlight(); TODO integrate highlighting.
+        SquareGUI clickedSquare = (SquareGUI) event.getSource();
+        if (clickedSquare.getPiece().getPieceImage() != null) {
+            PieceGUI piece = clickedSquare.getPiece();
+            //List<Position> validMoves = piece.getMoveType().getValidMoves(squares, clickedSquare.getPosition());
+            //for (Position position : validMoves) {
+            //    squares[position.getRank().getIndex()][position.getFile().getFileNum()].highlight();
+            //}
+
+        }
     }
 
     /**
@@ -265,5 +278,10 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     public void handle(MouseEvent event) {
         popup.setX(event.getScreenX() + 10); //700
         popup.setY(event.getScreenY() + 10); //150
+    }
+
+    // TODO Kaushal: This is the method that will return the squares from the center
+    public SquareGUI[][] getSquares() {
+    	return squares;
     }
 }

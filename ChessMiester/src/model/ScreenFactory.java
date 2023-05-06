@@ -171,7 +171,14 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                 screen = loadGameScreen.getRoot();
                 break;
             case GAME_BOARD:
-                if (gameBoardScreen == null) {
+                // Create settings as it will be needed
+                if (settingsMenuScreen == null) {
+                    settingsMenuScreen = new SettingsMenuGUI();
+                    settingsMenuScreen.setScreenChangeHandler(this);
+                }
+                System.out.println("Previous screen: " + this.previousScreen);
+                if (this.previousScreen != ToScreen.SETTINGS_MENU) {
+                    previousScreen = ToScreen.GAME_BOARD;
                     gameBoardScreen = new GameBoardGUI();
                     gameBoardScreen.setScreenChangeHandler(this);
                 }
@@ -286,8 +293,8 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
      */
     @Override
     public void changeScreen(ToScreen screenChoice, ToScreen previousScreen) {
-        Pane root = setScreen(screenChoice);
         this.previousScreen = previousScreen;
+        Pane root = setScreen(screenChoice);
         scene.setRoot(root);
     }
 
@@ -311,4 +318,22 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
         return this.previousScreen;
     }
 
+    /**
+     * Method that returns a selected scene
+     *
+     * @return the selected scene
+     */
+    public Pane getGuiScene(ToScreen screenChoice) {
+        Pane returnScreen = null;
+        if (screenChoice == ToScreen.SETTINGS_MENU){
+            returnScreen = settingsMenuScreen;
+        } else if (screenChoice == ToScreen.PLAYER_NAMES) {
+            returnScreen = definePlayerNamesScreen;
+        }
+        return returnScreen;
+    }
+
+    public void notifyBoard(){
+        gameBoardScreen.updateSettings();
+    }
 }

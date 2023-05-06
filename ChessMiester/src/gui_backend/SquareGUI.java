@@ -13,6 +13,7 @@ import gui.gameboard.GameBoardObserver;
 import javafx.event.Event;
 import javafx.scene.input.*;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import model.Position;
 import javafx.scene.image.ImageView;
 
@@ -167,4 +168,12 @@ public class SquareGUI extends StackPane implements GameBoardObserver {
         observer.notifyRightClick(event);
     }
 
+    public void setColor(Color color) {
+        long alphaRGB = Long.parseLong(color.toString().substring(2), 16);
+        this.setStyle("-fx-background-color: " + String.format("#%08X", alphaRGB) + ";");
+    }
+
+    public void highlight() {
+        this.setColor(Color.rgb(0, 255, 0, 0.5));
+    }
 }
