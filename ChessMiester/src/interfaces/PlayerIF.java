@@ -109,4 +109,11 @@ public interface PlayerIF {
      * @return The number of moves the player has made.
      */
     public int getMoveCount();
+
+    /**
+     * Getter for the captured pieces.
+     *
+     * @return the captured pieces
+     */
+    public ArrayList<PieceIF> getCapturedPieces();
 }
