@@ -13,6 +13,7 @@ import interfaces.PlayerIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
+import model.Player;
 
 public class GameBoardGUI implements CenterPaneObserver{
 
@@ -97,6 +98,8 @@ public class GameBoardGUI implements CenterPaneObserver{
         this.settings = getSettings();
         this.player1 = this.getPlayer().getPlayer().getPlayer1();
         this.player2 = this.getPlayer().getPlayer().getPlayer2();
+        this.player1.assignPieces(center);
+        this.player2.assignPieces(center);
         this.left.setLabel(this.player1.getName());
         this.right.setLabel(this.player2.getName());
 
