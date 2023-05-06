@@ -331,7 +331,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
 
     // TODO Kaushal: This is the method that will return the squares from the center
     public SquareGUI[][] getSquares() {
-    	return squares;
+        return squares;
     }
 
     @Override
@@ -394,6 +394,6 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     }
 
     public void setHighlightColor(Color color) {
-    	this.highlightColor = color;
+        this.highlightColor = color;
     }
 }

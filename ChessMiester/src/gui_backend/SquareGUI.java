@@ -9,6 +9,7 @@ package gui_backend;
 
 import enums.Files;
 import enums.Rank;
+import gui.gameboard.CenterPaneObserver;
 import gui.gameboard.GameBoardObserver;
 import interfaces.PieceIF;
 import interfaces.SquareIF;
