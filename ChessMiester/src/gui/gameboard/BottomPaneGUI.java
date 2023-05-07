@@ -27,12 +27,12 @@ public class BottomPaneGUI {
     /** Reference to the implementation for the ScreenChangeHandlerIF **/
     ScreenChangeHandlerIF screenChanger;
 
-    public BottomPaneGUI(){
+    public BottomPaneGUI(String name){
         root = new AnchorPane();
-        playerSelect = new Label("Player 1 Selected D7 (Hardcoded)");
+        this.playerSelect = new Label(name + "'s turn!");
         playerSelect.setId("topLabel");
-        root.getChildren().add(playerSelect);
-        AnchorPane.setLeftAnchor(playerSelect, 475.0);
+        root.getChildren().add(this.playerSelect);
+        AnchorPane.setLeftAnchor(this.playerSelect, 600.0);
 
         //Creation of the buttons.
         settings = new Button("Settings");
@@ -92,4 +92,13 @@ public class BottomPaneGUI {
             }
         }
     };
+
+    /**
+     * Updates the bottom pane.
+     *
+     * @param currPlayer the current player
+     */
+    public void updateBottomPane(String currPlayer) {
+        playerSelect.setText(currPlayer + "'s turn!");
+    }
 }

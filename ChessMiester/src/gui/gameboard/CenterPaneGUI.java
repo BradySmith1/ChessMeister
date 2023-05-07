@@ -283,6 +283,8 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                             this.player2.assignPieces(this);
 
                             this.switchPlayers();   // TODO This is called here when a confirmed move is made
+                            // TODO call bottom pane and update player display message
+                            this.notifyBottomPane(this.currentPlayer.getName());
                             System.out.println(this.currentPlayer.getName());
                             this.gameStateCheck();
                         }
@@ -507,7 +509,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
 
     /**
      * alerts system to switch players
-     * @param player the player who's turn it is
+     * @param player the player whose turn it is
      */
     public void alertPlayerSwitch(PlayerIF player){
         System.out.printf("Player %s's turn\n",
@@ -676,4 +678,10 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                 "gameBoard.css").toExternalForm());
     }
 
+    /**
+     * notifies bottom pane to update
+     */
+    public void notifyBottomPane(String currPlayer){
+        this.observer.notifyBottomPane(currPlayer);
+    }
 }
