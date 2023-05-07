@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import model.Player;
 
-public class GameBoardGUI implements CenterPaneObserver{
+public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
 
     /** the top pane */
     private TopPaneGUI top;
@@ -33,9 +33,6 @@ public class GameBoardGUI implements CenterPaneObserver{
     /** the center pane */
     private CenterPaneGUI center;
 
-    /** the root pane */
-    private BorderPane root;
-
     /** the screen change handler */
     ScreenChangeHandlerIF screenChanger;
 
@@ -51,9 +48,6 @@ public class GameBoardGUI implements CenterPaneObserver{
     public GameBoardGUI() {
         super();
 
-        //Initialize the root pane.
-        root = new BorderPane();
-
 
         //Initialize the Panes.
         this.top = new TopPaneGUI();
@@ -67,12 +61,12 @@ public class GameBoardGUI implements CenterPaneObserver{
         center.addObserver(this);
 
         //add the panes to the root
-        root.setTop(top.getRoot());
-        root.setBottom(bottom.getRoot());
-        root.setCenter(center.getRoot());
+        this.setTop(top.getRoot());
+        this.setBottom(bottom.getRoot());
+        this.setCenter(center.getRoot());
 
         // add the stylesheet and images
-        root.getStylesheets().add(getClass().getResource("gameBoard.css").toExternalForm());
+        this.getStylesheets().add(getClass().getResource("gameBoard.css").toExternalForm());
     }
 
     /**
@@ -80,7 +74,7 @@ public class GameBoardGUI implements CenterPaneObserver{
      *
      * @return the root pane
      */
-    public Pane getRoot() { return root; }
+    public Pane getRoot() { return this; }
 
     /**
      * Sets the screen change handler.
@@ -98,16 +92,17 @@ public class GameBoardGUI implements CenterPaneObserver{
         this.player1.assignPieces(center);
         this.player2.assignPieces(center);
 
-        // Set the players to the center pane
-        this.center.setPlayer1(this.player1);
-        this.center.setPlayer2(this.player2);
-
         left = new LeftPaneGUI(this.player1);
         left.getRoot().setId("left");
         right = new RightPaneGUI(this.player2);
         right.getRoot().setId("right");
-        root.setLeft(left.getRoot());
-        root.setRight(right.getRoot());
+
+        // Set the players to the center pane
+        this.center.setPlayer1(this.player1);
+        this.center.setPlayer2(this.player2);
+
+        this.setLeft(left.getRoot());
+        this.setRight(right.getRoot());
 
         // Set the constraints of the left and right panes
 
@@ -181,7 +176,7 @@ public class GameBoardGUI implements CenterPaneObserver{
         else{
             this.player1.addCapturedPiece(piece);
         }
-        this.left = new LeftPaneGUI(player1);
-        this.right = new RightPaneGUI(player2);
+        ((LeftPaneGUI) this.getLeft()).makeCaptured(player1);
+        ((RightPaneGUI) this.getRight()).makeCaptured(player2);
     }
 }

@@ -18,9 +18,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public class RightPaneGUI {
-    /** The root pane for the right pane. */
-    VBox root;
+public class RightPaneGUI extends VBox{
 
     /** The label for player 2. */
     Label player2;
@@ -28,38 +26,37 @@ public class RightPaneGUI {
     /** The label for the captured pieces. */
     Label capturedPieces;
 
+    private TilePane captured;
+
     /**
      * Constructor for the right pane.
      *
      * @param player the player
      */
     public RightPaneGUI(PlayerIF player){
-        root = new VBox();
-
         player2 = new Label("Player 2: " + player.getName());
         player2.setId("topLabel");
         capturedPieces = new Label("Captured:");
         capturedPieces.setId("topLabel");
-        TilePane captured = makeCaptured(player);
+        this.captured = new TilePane();
 
-        root.getChildren().addAll(player2, capturedPieces, captured);
-        root.setId("right");
-        root.setSpacing(50);
-        root.setMaxSize(300, 800);
+        this.getChildren().addAll(player2, capturedPieces, captured);
+        this.setId("right");
+        this.setSpacing(50);
+        this.setMaxSize(300, 800);
     }
 
     /**
      * Makes the captured pieces pane.
      *
      * @param player the player
-     * @return the captured pieces pane
      */
-    private TilePane makeCaptured(PlayerIF player){
-        TilePane captured = new TilePane();
+    public void makeCaptured(PlayerIF player){
+        TilePane captured = (TilePane) this.getChildren().get(2);
         captured.setPrefColumns(2);
         captured.setPrefRows(8);
         captured.setMaxSize(300, 800);
-        captured.setMinSize(300, 400);    //TODO this is a temporary fix for the resizing issue
+        captured.setMinSize(300, 400); //TODO this is a temporary fix for the resizing issue
         captured.setId("main-pain");
 
         ArrayList<PieceIF> pieces = player.getCapturedPieces();
@@ -67,17 +64,15 @@ public class RightPaneGUI {
             Image piece = pieceIF.getImage();
             // TOOD Testing why it is not displaying the captured pieces
             ImageView imageView = new ImageView(piece);
-            imageView.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
-            imageView.setFitHeight(50);
             imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
+            imageView.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
 
-            Platform.runLater(() -> captured.getChildren().add(imageView));
-            //captured.getChildren().add(imageView);
+            captured.getChildren().add(imageView);
         }
 
         // TODO Testing why it is not displaying the captured pieces
         captured.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
-        return captured;
     }
 
     /**
@@ -85,7 +80,7 @@ public class RightPaneGUI {
      *
      * @return the root pane.
      */
-    public Pane getRoot(){ return root; }
+    public Pane getRoot(){ return this; }
 
     /**
      * Getter for the label.

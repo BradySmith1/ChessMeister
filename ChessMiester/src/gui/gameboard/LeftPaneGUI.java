@@ -20,9 +20,7 @@ import model.Piece;
 
 import java.util.ArrayList;
 
-public class LeftPaneGUI {
-    /** The root pane. */
-    private VBox root;
+public class LeftPaneGUI extends VBox{
 
     /** The label for player 1. */
     private Label player1;
@@ -30,36 +28,36 @@ public class LeftPaneGUI {
     /** The label for the captured pieces. */
     private Label capturedPieces;
 
+    private TilePane captured;
+
     /**
      * Constructor for the left pane.
      *
      * @param player the player
      */
     public LeftPaneGUI(PlayerIF player){
-        root = new VBox();
 
         player1 = new Label("Player 1: " + player.getName());
         player1.setId("topLabel");
         capturedPieces = new Label("Captured:");
-        TilePane captured = makeCaptured(player);
+        this.captured = new TilePane();
         capturedPieces.setId("topLabel");
 
-        root.getChildren().add(player1);
-        root.getChildren().add(capturedPieces);
-        root.getChildren().add(captured);
-        root.setId("left");
-        root.setSpacing(50);
-        root.setMaxSize(300, 800);
+        this.getChildren().add(player1);
+        this.getChildren().add(capturedPieces);
+        this.getChildren().add(captured);
+        this.setId("left");
+        this.setSpacing(50);
+        this.setMaxSize(300, 800);
     }
 
     /**
      * Makes the captured pieces pane.
      *
      * @param player the player
-     * @return the captured pieces pane
      */
-    private TilePane makeCaptured(PlayerIF player){
-        TilePane captured = new TilePane();
+    public void makeCaptured(PlayerIF player){
+        TilePane captured = (TilePane) this.getChildren().get(2);
         captured.setPrefColumns(2);
         captured.setPrefRows(8);
         captured.setMaxSize(300, 800);
@@ -67,18 +65,19 @@ public class LeftPaneGUI {
         captured.setId("main-pain");
 
         ArrayList<PieceIF> pieces = player.getCapturedPieces();
-        for (PieceIF pieceIF : pieces) {
-            Image piece = pieceIF.getImage();
+        for (int i = 0; i < pieces.size(); i++) {
+            Image piece = pieces.get(i).getImage();
             // TOOD Testing why it is not displaying the captured pieces
             ImageView imageView = new ImageView(piece);
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
             imageView.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
 
-            Platform.runLater(() -> captured.getChildren().add(imageView));
+            captured.getChildren().add(imageView);
         }
 
         // TODO Testing why it is not displaying the captured pieces
         captured.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
-        return captured;
     }
 
     /**
@@ -86,7 +85,7 @@ public class LeftPaneGUI {
      *
      * @return the root pane
      */
-    public Pane getRoot(){ return root; }
+    public Pane getRoot(){ return this; }
 
     /**
      * Returns the label for player 1.

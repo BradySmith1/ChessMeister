@@ -20,9 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class TopPaneGUI {
-    /** The root pane for the right pane. */
-    GridPane root;
+public class TopPaneGUI extends GridPane{
 
     /** The buttons for the pane */
     Button save, undo, redo;
@@ -37,9 +35,6 @@ public class TopPaneGUI {
      * Constructor for the right pane.
      */
     public TopPaneGUI(){
-
-        //Creation of the grid pane.
-        root = new GridPane();
 
         //Creation of the buttons.
         save = new Button("Save");
@@ -62,13 +57,13 @@ public class TopPaneGUI {
         redo.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         //Adds the buttons to the grid.
-        root.add(save, 0,  0, 1, 1);
-        root.add(undo, 1, 0, 1, 1);
-        root.add(redo, 2, 0,1,  1);
+        this.add(save, 0,  0, 1, 1);
+        this.add(undo, 1, 0, 1, 1);
+        this.add(redo, 2, 0,1,  1);
 
         //Attributes for the grid pane.
-        root.setHgap(45);
-        root.setAlignment(Pos.CENTER);
+        this.setHgap(45);
+        this.setAlignment(Pos.CENTER);
     }
 
     /**
@@ -77,7 +72,7 @@ public class TopPaneGUI {
      * @return the root pane.
      */
     public Pane getRoot(){
-        return root;
+        return this;
     }
 
 
