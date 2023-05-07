@@ -39,19 +39,7 @@ public class StateValidation {
         boolean inCheck = checkCondition(playerOther, player.getKing().getPosition(board), board);
 
         if (inCheck) {
-            // Check to see if the king can move to a position where it is not in check.
-            // Get the king of the player.
-            PieceGUI king = (PieceGUI) player.getKing();
-
-            // Get the list of valid moves for the king.
-            List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition(board));
-
-            // For each position in the list of valid moves, check to see if the king is in check.
-            for (Position position : kingValidMoves) {
-                if (!checkCondition(player, position, board)) {
-                    canMoveOutOfCheck = true;
-                }
-            }
+            canMoveOutOfCheck = canMoveOutOfCheck(player, playerOther, board);
 
             ArrayList<PieceIF> pieces = player.getPieces();
             // Check to see if any of the pieces can block the checkmate.
@@ -94,4 +82,24 @@ public class StateValidation {
         }
         return !inCheck && stalemate;
     }
+
+    public static boolean canMoveOutOfCheck(PlayerIF player, PlayerIF playerOther, BoardIF board) {
+        // Check to see if the king can move to a position where it is not in check.
+        boolean canMoveOutOfCheck = false;
+
+        // Get the king of the player.
+        PieceGUI king = (PieceGUI) player.getKing();
+
+        // Get the list of valid moves for the king.
+        List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition(board));
+
+        // For each position in the list of valid moves, check to see if the king is in check.
+        for (Position position : kingValidMoves) {
+            if (!checkCondition(playerOther, position, board)) {
+                canMoveOutOfCheck = true;
+            }
+        }
+
+        return canMoveOutOfCheck;
     }
+}

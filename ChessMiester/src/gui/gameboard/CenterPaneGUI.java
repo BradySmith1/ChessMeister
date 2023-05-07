@@ -270,9 +270,13 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                     this.alertPlayerSwitch(this.currentPlayer);
                     // TODO temporary testing purposes
                     if (this.movingOwnPiece()) {
-                        boolean legalState = this.gameStateCheck();
-                        if (legalState) {
+                        //boolean legalState = this.gameStateCheck();
+                        //boolean legalState = !StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), this.currentPlayer.getKing().getPosition(this), this);
+                       // System.out.println(legalState + " that move will cause you to get in check");
+                        Image image;
+                        //if (legalState) {
                             if (this.determineCapture(newClicked)) {this.capturePiece(newClicked);}
+                            image = clicked.getPiece().getImage();
                             newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
                             clicked.getPiece().setPieceImage(null);
 
@@ -280,13 +284,22 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                             this.player1.assignPieces(this);
                             this.player2.assignPieces(this);
 
-                            this.switchPlayers();   // TODO This is called here when a confirmed move is made
-                            System.out.println(this.currentPlayer.getName());
-                            this.gameStateCheck();
-                        }
-                        else{
-                            this.illegalMoveAlert("Illegal move. Try again.");
-                        }
+                            if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), this.currentPlayer.getKing().getPosition(this), this)) {
+                                // Undo the move
+                                newClicked.getPiece().setPieceImage(null);
+                                clicked.getPiece().setPieceImage(image);
+
+                                this.illegalMoveAlert("Cannot move into check!");
+                            }
+                            else{
+                                this.switchPlayers();   // TODO This is called here when a confirmed move is made
+                                System.out.println(this.currentPlayer.getName());
+                                this.gameStateCheck();
+                            }
+                        //}
+                        //else{
+                         //   this.illegalMoveAlert("Cannot move into check!");
+                        //}
                     }
                 }
             }
@@ -489,6 +502,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             // If the current player is in check but not checkmate, then the game state is semi-legal
             else{
                 this.illegalMoveAlert("You are in check! You must move out of check!");
+                legalState = StateValidation.canMoveOutOfCheck(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this);
             }
         }
             // If the current player is not in check, then it is possible that the game is stalemate.
@@ -577,10 +591,11 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     }
 
     private void illegalMoveAlert(String message){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Alert");
-        alert.setHeaderText("Board State Error");
+        alert.setHeaderText("Board State");
         alert.setContentText(message);
+        alert.showAndWait();
     }
 
 }
