@@ -11,13 +11,16 @@ import enums.GameColor;
 import enums.Rank;
 import gui_backend.PieceGUI;
 import gui_backend.SquareGUI;
+import gui_backend.StateValidation;
 import interfaces.BoardIF;
 import interfaces.PieceIF;
+import interfaces.PlayerIF;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -56,6 +59,14 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
 
     /** The highlight color. */
     private Color highlightColor;
+
+    /** Players */
+    private PlayerIF player1, player2;
+
+    /** Current player */
+    private PlayerIF currentPlayer;
+
+    /**
 
     /**
      * Constructor for the center pane.
@@ -222,7 +233,6 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      * @param mouse The mouse event
      */
     private void clickMove(MouseEvent mouse) {
-
         if(clicked == null){
             clicked = (SquareGUI) mouse.getSource();
             popup = new Stage();
@@ -254,8 +264,25 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                     }
                 }
                 if(valid){
-                    newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
-                    clicked.getPiece().setPieceImage(null);
+                    // TODO Temporary code to test switching players
+                    this.alertPlayerSwitch(this.currentPlayer);
+                    // TODO temporary testing purposes
+                    if (this.movingOwnPiece()) {
+                        //boolean legalState = this.gameStateCheck();
+                        //if (legalState) {
+                            if (this.determineCapture(newClicked)) {this.capturePiece(newClicked);}
+                            newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
+                            clicked.getPiece().setPieceImage(null);
+
+                            // FIXME Reassign player pieces b/c after a move is made, the players list needs to update with the new piece
+                            this.player1.assignPieces(this);
+                            this.player2.assignPieces(this);
+
+                            this.switchPlayers();   // TODO This is called here when a confirmed move is made
+                            System.out.println(this.currentPlayer.getName());
+                            this.gameStateCheck();
+                        //}
+                    }
                 }
             }
             popup.close();
@@ -407,4 +434,79 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     public void setHighlightColor(Color color) {
         this.highlightColor = color;
     }
+
+    /**
+     * Returns the other player based on the current player.
+     * @param player the current player
+     * @return the other player
+     */
+    private PlayerIF getOtherPlayer(PlayerIF player){
+        return player == player1 ? player2 : player1;
+    }
+
+    private void switchPlayers(){
+        this.currentPlayer = getOtherPlayer(this.currentPlayer);
+    }
+
+    public void setPlayer1(PlayerIF player1) {
+        this.player1 = player1;
+        this.currentPlayer = player1;
+    }
+
+    public void setPlayer2(PlayerIF player2) {
+        this.player2 = player2;
+    }
+
+    public void alertPlayerSwitch(PlayerIF player){
+        System.out.printf("Player %s's turn\n", player.getColor() == GameColor.WHITE ? "White" : "Black");
+    }
+
+    /**
+     * Checks to see if the game state is legal before making a move
+     * @return true if a move can be made, false otherwise
+     */
+    private boolean gameStateCheck(){
+        boolean legalState = true;
+        System.out.println("Trying to move : " + clicked.getPiece().getColor() + " Piece --> Current player is : " + this.currentPlayer.getColor());
+        // Check to see if the player wanting to make the move is in check --> isInCheck = true if current player is in check, false otherwise
+        boolean isInCheck = StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), this.currentPlayer.getKing().getPosition(this), this);
+
+        // If the current player is in check, then check to see if the current player is in checkmate
+        if (isInCheck) {
+            // Checkmate check: Inside IF STMT when current player is in checkmate
+            if (StateValidation.checkMateCondition(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this)) {
+                legalState = false;
+                System.out.println("Checkmate");
+            }
+            // If the current player is in check but not checkmate, then the game state is semi-legal
+            else{
+                System.out.println("Check");
+            }
+        }
+            // If the current player is not in check, then it is possible that the game is stalemate.
+//            } else if (StateValidation.stalemateCondition(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this)) {
+//                System.out.println("Stalemate");
+//                legalState = false;
+//            }
+        return legalState;
+    }
+
+    /**
+     * Check to see if the piece we are trying to move is our piece
+     * @return True if the piece we are trying to move is ours, false otherwise
+     */
+    private boolean movingOwnPiece(){
+        // Check to see if the piece we are trying to move is the current player's piece, if it is then do further checks
+        return this.clicked.getPiece().getColor() == this.currentPlayer.getColor();
+    }
+
+    private boolean determineCapture(SquareGUI newClicked){
+        return newClicked.getPiece().getImage() != null;
+    }
+
+    private void capturePiece(SquareGUI square){
+        this.currentPlayer.addCapturedPiece(square.getPiece());
+        this.getOtherPlayer(this.currentPlayer).getPieces().remove(square.getPiece());
+    }
+
 }

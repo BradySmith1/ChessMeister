@@ -51,15 +51,17 @@ public class GameBoardGUI implements CenterPaneObserver{
     public GameBoardGUI() {
         super();
 
+        //Initialize the root pane.
         root = new BorderPane();
 
+
         //Initialize the Panes.
-        top = new TopPaneGUI();
-        top.getRoot().setId("top");
-        bottom = new BottomPaneGUI();
-        bottom.getRoot().setId("bottom");
-        center = new CenterPaneGUI();
-        center.getRoot().setId("center");
+        this.top = new TopPaneGUI();
+        this.top.getRoot().setId("top");
+        this.bottom = new BottomPaneGUI();
+        this.bottom.getRoot().setId("bottom");
+        this.center = new CenterPaneGUI();
+        this.center.getRoot().setId("center");
 
         // Add the observers
         center.addObserver(this);
@@ -95,12 +97,19 @@ public class GameBoardGUI implements CenterPaneObserver{
         this.player2 = this.getPlayer().getPlayer().getPlayer2();
         this.player1.assignPieces(center);
         this.player2.assignPieces(center);
+
+        // Set the players to the center pane
+        this.center.setPlayer1(this.player1);
+        this.center.setPlayer2(this.player2);
+
         left = new LeftPaneGUI(this.player1);
         left.getRoot().setId("left");
         right = new RightPaneGUI(this.player2);
         right.getRoot().setId("right");
         root.setLeft(left.getRoot());
         root.setRight(right.getRoot());
+
+        // Set the constraints of the left and right panes
 
         System.out.println(this.settings.getSettings().getShowMoves());
         System.out.println(this.settings.getSettings().getUndoRedo());
@@ -126,15 +135,15 @@ public class GameBoardGUI implements CenterPaneObserver{
      */
     public void updateSettings(){
         this.settings = getSettings();
-        System.out.println("SHOW MOVES: " + this.settings.getSettings().getShowMoves());
-        System.out.println("SHOW UNDO/REDO: " + this.settings.getSettings().getUndoRedo());
-        System.out.println("SHOW THE WHITE: " + this.settings.getSettings().getWhiteSquareColor());
-        System.out.println("SHOW THE BLACK: " + this.settings.getSettings().getBlackSquareColor());
-        System.out.println("SHOW THE HIGHLIGHT: " + this.settings.getSettings().getHighlightColor());
+//        System.out.println("SHOW MOVES: " + this.settings.getSettings().getShowMoves());
+//        System.out.println("SHOW UNDO/REDO: " + this.settings.getSettings().getUndoRedo());
+//        System.out.println("SHOW THE WHITE: " + this.settings.getSettings().getWhiteSquareColor());
+//        System.out.println("SHOW THE BLACK: " + this.settings.getSettings().getBlackSquareColor());
+//        System.out.println("SHOW THE HIGHLIGHT: " + this.settings.getSettings().getHighlightColor());
 
         this.center.setHighlightColor(this.settings.getSettings().getHighlightColor());
         //this.top.setShowMoves(this.settings.getSettings().getShowMoves());
-        System.out.println("UPDATE SETTINGS: " + this.settings.getSettings().getUndoRedo());
+//        System.out.println("UPDATE SETTINGS: " + this.settings.getSettings().getUndoRedo());
         this.top.setShowUndoRedo(this.settings.getSettings().getUndoRedo());
 
         updateBoard();

@@ -58,7 +58,7 @@ public class RightPaneGUI {
         captured.setPrefColumns(2);
         captured.setPrefRows(8);
         captured.setMaxSize(300, 800);
-        captured.setMinSize(300, 800);
+        captured.setMinSize(300, 0);    //TODO this is a temporary fix for the resizing issue
         captured.setId("main-pain");
 
         ArrayList<PieceIF> pieces = player.getCapturedPieces();

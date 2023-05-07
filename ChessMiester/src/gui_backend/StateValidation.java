@@ -18,7 +18,7 @@ public class StateValidation {
         // Get the list of valid moves for all the enemy pieces on the board.
         for (PieceIF piece : otherPlayer.getPieces()) {
             // Cast the piece to a Piece object.
-            Piece p = (Piece) piece;
+            PieceGUI p = (PieceGUI) piece;
             // Get the list of valid moves for the piece.
             List<Position> validMoves = p.getValidMoves(board, piece.getPosition(board));
 
@@ -30,6 +30,7 @@ public class StateValidation {
         return isCheck;
     }
 
+
     public static boolean checkMateCondition(PlayerIF player, PlayerIF playerOther, BoardIF board) {
         // Check to see if the king is in check.
         boolean checkmate = false;
@@ -40,25 +41,16 @@ public class StateValidation {
         if (inCheck) {
             // Check to see if the king can move to a position where it is not in check.
             // Get the king of the player.
-            PieceIF king = player.getKing();
+            PieceGUI king = (PieceGUI) player.getKing();
 
             // Get the list of valid moves for the king.
             List<Position> kingValidMoves = king.getValidMoves(board, king.getPosition(board));
 
             // For each position in the list of valid moves, check to see if the king is in check.
             for (Position position : kingValidMoves) {
-                // Emulate the move of the king to each position in the list of valid moves.
-                /*this.move(player, king.getPosition(board).getFile(),
-                        king.getPosition(board).getRank(), position.getFile(), position.getRank());
-
-                // Check to see if there is a check.
-                if (!checkCondition(player, king.getPosition(board), board)) {
+                if (!checkCondition(player, position, board)) {
                     canMoveOutOfCheck = true;
                 }
-                undo(); // TODO
-                king = player.getKing();*/ //TODO instead of refering to kings actual position, refer to simulated position.
-
-                //undoMoveFromCheck();
             }
 
             ArrayList<PieceIF> pieces = player.getPieces();
@@ -71,21 +63,35 @@ public class StateValidation {
                         pieces.get(i).getPosition(board));
 
                 for (Position position : validMoves) {
-                    /*// Emulate the move of the piece to each position in the list of valid moves.
-                    // Check to see if there is a check.
-                    this.move(player,pieces.get(i).getPosition(board).getFile(),
-                            pieces.get(i).getPosition(board).getRank(), position.getFile(),
-                            position.getRank());
-
-                    if (checkCondition(player, king.getPosition(board))) {
-                        canBlockCheck = true; //TODO instead of refering to kings actual position, refer to simulated position.
+                    if (checkCondition(player, position, board)) {
+                        canBlockCheck = true;
                     }
-                    undo();
-                    king = player.getKing();*/
                 }
-                }
-                checkmate = canMoveOutOfCheck && canBlockCheck;
             }
-            return checkmate;
+                checkmate = canMoveOutOfCheck && canBlockCheck;
         }
+            return checkmate;
+    }
+
+    public static boolean stalemateCondition(PlayerIF currentPlayer, PlayerIF otherPlayer, BoardIF board) {
+        // A draw should be declared if the king is not in check and there are no valid moves for the player
+        boolean inCheck = checkCondition(otherPlayer, currentPlayer.getKing().getPosition(board), board);
+        boolean stalemate = true;
+
+        // If the king is not in check, then check to see if there are any valid moves for the player.
+        if (!inCheck) {
+            for (PieceIF piece : currentPlayer.getPieces()) {
+                // Cast the piece to a Piece object.
+                PieceGUI p = (PieceGUI) piece;
+
+                // Get the list of valid moves for the piece.
+                List<Position> validMoves = p.getValidMoves(board, piece.getPosition(board));
+
+                if (validMoves.size() > 0) {
+                    stalemate = false;
+                }
+            }
+        }
+        return !inCheck && stalemate;
+    }
     }

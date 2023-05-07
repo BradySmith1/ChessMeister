@@ -2,6 +2,7 @@ package interfaces;
 
 import enums.ChessPieceType;
 import enums.GameColor;
+import gui_backend.SquareGUI;
 import javafx.scene.image.Image;
 import model.Position;
 import model.Square;
@@ -71,7 +72,7 @@ public interface PieceIF extends BlackAndWhiteIF {
             for (int j = 0; j < squares[i].length; j++) {
                 temp = squares[i][j].getPiece();
                 if (temp == this) {
-                    Square square = (Square) squares[i][j];
+                    SquareGUI square = (SquareGUI) squares[i][j];
                     position = square.getPosition();
                 }
             }

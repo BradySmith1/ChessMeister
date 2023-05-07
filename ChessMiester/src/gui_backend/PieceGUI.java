@@ -152,7 +152,7 @@ public class PieceGUI extends ImageView implements PieceIF {
 
     @Override
     public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
-        return null;
+        return moveType.getValidMoves(board, currentPosition);
     }
 
     @Override
