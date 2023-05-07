@@ -484,10 +484,10 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             }
         }
             // If the current player is not in check, then it is possible that the game is stalemate.
-//            } else if (StateValidation.stalemateCondition(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this)) {
-//                System.out.println("Stalemate");
-//                legalState = false;
-//            }
+        else if (StateValidation.stalemateCondition(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this)) {
+                System.out.println("Stalemate");
+                legalState = false;
+        }
         return legalState;
     }
 
@@ -505,8 +505,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     }
 
     private void capturePiece(SquareGUI square){
-        this.currentPlayer.addCapturedPiece(square.getPiece());
-        this.getOtherPlayer(this.currentPlayer).getPieces().remove(square.getPiece());
+        notifyAddCapturedPiece(square.getPiece());
     }
 
 }

@@ -63,12 +63,12 @@ public class StateValidation {
                         pieces.get(i).getPosition(board));
 
                 for (Position position : validMoves) {
-                    if (checkCondition(player, position, board)) {
+                    if (!checkCondition(player, position, board)) {
                         canBlockCheck = true;
                     }
                 }
             }
-                checkmate = canMoveOutOfCheck && canBlockCheck;
+            checkmate = !canMoveOutOfCheck && !canBlockCheck;
         }
             return checkmate;
     }

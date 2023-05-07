@@ -8,6 +8,7 @@ package gui.gameboard;
 
 import interfaces.PieceIF;
 import interfaces.PlayerIF;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -58,14 +59,24 @@ public class RightPaneGUI {
         captured.setPrefColumns(2);
         captured.setPrefRows(8);
         captured.setMaxSize(300, 800);
-        captured.setMinSize(300, 0);    //TODO this is a temporary fix for the resizing issue
+        captured.setMinSize(300, 400);    //TODO this is a temporary fix for the resizing issue
         captured.setId("main-pain");
 
         ArrayList<PieceIF> pieces = player.getCapturedPieces();
         for (PieceIF pieceIF : pieces) {
             Image piece = pieceIF.getImage();
-            captured.getChildren().add(new ImageView(piece));
+            // TOOD Testing why it is not displaying the captured pieces
+            ImageView imageView = new ImageView(piece);
+            imageView.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+
+            Platform.runLater(() -> captured.getChildren().add(imageView));
+            //captured.getChildren().add(imageView);
         }
+
+        // TODO Testing why it is not displaying the captured pieces
+        captured.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
         return captured;
     }
 
