@@ -30,6 +30,9 @@ public class LeftPaneGUI {
     /** The label for the captured pieces. */
     private Label capturedPieces;
 
+    /** The left tile pane. */
+    private TilePane captured = new TilePane();
+
     /**
      * Constructor for the left pane.
      *
@@ -41,7 +44,8 @@ public class LeftPaneGUI {
         player1 = new Label("Player 1: " + player.getName());
         player1.setId("topLabel");
         capturedPieces = new Label("Captured:");
-        TilePane captured = makeCaptured(player);
+        this.makeCaptured(player);
+        this.setProperties();
         capturedPieces.setId("topLabel");
 
         root.getChildren().add(player1);
@@ -56,29 +60,20 @@ public class LeftPaneGUI {
      * Makes the captured pieces pane.
      *
      * @param player the player
-     * @return the captured pieces pane
      */
-    private TilePane makeCaptured(PlayerIF player){
-        TilePane captured = new TilePane();
-        captured.setPrefColumns(2);
-        captured.setPrefRows(8);
-        captured.setMaxSize(300, 800);
-        captured.setMinSize(300, 400); //TODO this is a temporary fix for the resizing issue
-        captured.setId("main-pain");
-
+    private void makeCaptured(PlayerIF player){
         ArrayList<PieceIF> pieces = player.getCapturedPieces();
-        for (PieceIF pieceIF : pieces) {
-            Image piece = pieceIF.getImage();
-            // TOOD Testing why it is not displaying the captured pieces
-            ImageView imageView = new ImageView(piece);
-            imageView.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
-
-            Platform.runLater(() -> captured.getChildren().add(imageView));
+        for (PieceIF piece : pieces) {
+            System.out.println("------------------");
+            System.out.println("About to add a piece to the captured pane");
+            System.out.println("The piece is: " + piece.getColor() + " " + piece.getType());
+            System.out.println("------------------");
+            Image pieceToAdd = piece.getImage();
+            ImageView imageView = new ImageView(pieceToAdd);
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            captured.getChildren().add(imageView);
         }
-
-        // TODO Testing why it is not displaying the captured pieces
-        captured.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
-        return captured;
     }
 
     /**
@@ -109,5 +104,18 @@ public class LeftPaneGUI {
      */
     public void setLabel(String name){
         player1.setText(name);
+    }
+
+    /**
+     * Sets the properties of the tile pane for visual aid
+     */
+    public void setProperties() {
+        captured.setPrefColumns(2);
+        captured.setPrefRows(8);
+        captured.setMaxSize(300, 800);
+        captured.setMinSize(300, 400);    //TODO this is a temporary fix for the resizing issue
+        captured.setId("main-pane");
+        // TODO Testing why it is not displaying the captured pieces
+        captured.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
     }
 }

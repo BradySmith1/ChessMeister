@@ -15,7 +15,7 @@ public interface CenterPaneObserver {
     /**
      * Notifies the observer that the pane has been updated.
      */
-    void notifyPane();
+    void notifyPane(boolean notify);
 
     /**
      * Notifies the observer that a piece has been captured.

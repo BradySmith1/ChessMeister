@@ -164,10 +164,17 @@ public class GameBoardGUI implements CenterPaneObserver{
 
     /**
      * Notifies the observer that the pane has been updated.
+     *
+     * @param notify true if the pane has been updated, false if wanting to switch to a different pane
      */
     @Override
-    public void notifyPane() {
-        this.screenChanger.notifyBoard();
+    public void notifyPane(boolean notify) {
+        if (notify){
+            this.screenChanger.notifyBoard();
+        }
+        else{
+            this.screenChanger.changeScreen(ToScreen.MAIN_MENU);
+        }
     }
 
     /**
@@ -177,11 +184,14 @@ public class GameBoardGUI implements CenterPaneObserver{
     public void notifyAddCapturedPiece(PieceIF piece){
         if (piece.getColor() == this.player1.getColor()){
             this.player2.addCapturedPiece(piece);
+            this.right = new RightPaneGUI(player2);
+            this.root.setRight(right.getRoot());
         }
-        else{
+        else if (piece.getColor() == this.player2.getColor()){
             this.player1.addCapturedPiece(piece);
+            this.left = new LeftPaneGUI(player1);
+            this.root.setLeft(left.getRoot());
         }
-        this.left = new LeftPaneGUI(player1);
-        this.right = new RightPaneGUI(player2);
+
     }
 }

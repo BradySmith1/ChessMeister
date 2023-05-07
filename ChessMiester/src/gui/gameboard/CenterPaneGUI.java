@@ -15,19 +15,20 @@ import gui_backend.StateValidation;
 import interfaces.BoardIF;
 import interfaces.PieceIF;
 import interfaces.PlayerIF;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -35,6 +36,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Optional;
 
 import model.Position;
 
@@ -268,8 +270,8 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                     this.alertPlayerSwitch(this.currentPlayer);
                     // TODO temporary testing purposes
                     if (this.movingOwnPiece()) {
-                        //boolean legalState = this.gameStateCheck();
-                        //if (legalState) {
+                        boolean legalState = this.gameStateCheck();
+                        if (legalState) {
                             if (this.determineCapture(newClicked)) {this.capturePiece(newClicked);}
                             newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
                             clicked.getPiece().setPieceImage(null);
@@ -281,7 +283,10 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                             this.switchPlayers();   // TODO This is called here when a confirmed move is made
                             System.out.println(this.currentPlayer.getName());
                             this.gameStateCheck();
-                        //}
+                        }
+                        else{
+                            this.illegalMoveAlert("Illegal move. Try again.");
+                        }
                     }
                 }
             }
@@ -306,7 +311,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      */
     @Override
     public void notifyLeftClick(Event event) {
-        this.notifyPane();
+        this.notifyPane(true);
         clickMove((MouseEvent) event);
     }
 
@@ -317,7 +322,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      */
     @Override
     public void notifyRightClick(Event event) {
-        this.notifyPane();
+        this.notifyPane(true);
         SquareGUI clickedSquare = (SquareGUI) event.getSource(); //TODO integrate highlighting.
         if (clickedSquare.getPiece().getImage() != null) {
             PieceGUI piece = (PieceGUI) clickedSquare.getPiece();
@@ -418,8 +423,8 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      * Notifies the observer that the pane has been updated.
      */
     @Override
-    public void notifyPane() {
-       this.observer.notifyPane();
+    public void notifyPane(boolean notify) {
+       this.observer.notifyPane(notify);
     }
 
     /**
@@ -476,17 +481,22 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             // Checkmate check: Inside IF STMT when current player is in checkmate
             if (StateValidation.checkMateCondition(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this)) {
                 legalState = false;
-                System.out.println("Checkmate");
+                this.currentPlayer.increaseLosses();
+                this.getOtherPlayer(this.currentPlayer).increaseWins();
+                gameEndAlert("The game has ended by Checkmate. " + this.getOtherPlayer(this.currentPlayer).getName() + " has won!");
+
             }
             // If the current player is in check but not checkmate, then the game state is semi-legal
             else{
-                System.out.println("Check");
+                this.illegalMoveAlert("You are in check! You must move out of check!");
             }
         }
             // If the current player is not in check, then it is possible that the game is stalemate.
         else if (StateValidation.stalemateCondition(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this)) {
-                System.out.println("Stalemate");
                 legalState = false;
+                this.currentPlayer.increaseDraws();
+                this.getOtherPlayer(this.currentPlayer).increaseDraws();
+                gameEndAlert("The game has ended by Stalemate. It is a draw!");
         }
         return legalState;
     }
@@ -505,7 +515,72 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     }
 
     private void capturePiece(SquareGUI square){
+        System.out.println("Capturing piece at " + square.getPosition().toString());
+        System.out.println("Captured piece is " + square.getPiece().getType() + " " + square.getPiece().getColor());
         notifyAddCapturedPiece(square.getPiece());
+    }
+
+    private void gameEndAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Game Over");
+        alert.setHeaderText("Game Over");
+
+        // Size the alert window
+        alert.getDialogPane().setMinHeight(800);
+        alert.getDialogPane().setMinWidth(800);
+
+        VBox dialogPaneContent = new VBox();
+        dialogPaneContent.setSpacing(10);
+        dialogPaneContent.setAlignment(Pos.CENTER);
+
+        // Add the message and player stats to the VBox
+        Text messageText = new Text(message + "\n" + "Click OK to return to the main menu.");
+        Text currentPlayerStats = new Text(this.currentPlayer.getName() + "'s Stats: " +
+                "\nWins: " + this.currentPlayer.getWins() +
+                "\nLosses: " + this.currentPlayer.getLosses() +
+                "\nDraws: " + this.currentPlayer.getDraws());
+
+        Text otherPlayerStats = new Text(this.getOtherPlayer(this.currentPlayer).getName() + "'s Stats: " +
+                "\nWins: " + this.getOtherPlayer(this.currentPlayer).getWins() +
+                "\nLosses: " + this.getOtherPlayer(this.currentPlayer).getLosses() +
+                "\nDraws: " + this.getOtherPlayer(this.currentPlayer).getDraws());
+
+        // Add the message and player stats to the VBox
+        dialogPaneContent.getChildren().addAll(messageText, currentPlayerStats, otherPlayerStats);
+
+        // Create the OK button
+        Button okButton = new Button("OK");
+        okButton.setMaxHeight(50);
+        okButton.setMaxWidth(100);
+
+        // Set the action of the OK button
+        okButton.setOnAction(event -> {
+            alert.close();
+            this.notifyPane(false);
+        });
+
+        // Add the OK button to the VBox
+        dialogPaneContent.getChildren().add(okButton);
+
+        // Set the VBox as the content of the dialog pane
+        alert.getDialogPane().setContent(dialogPaneContent);
+
+        // Remove the default OK button
+        alert.getButtonTypes().setAll(ButtonType.CLOSE);
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.CLOSE)).setVisible(false);
+
+        // Add the cancel button
+        alert.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        alert.getDialogPane().lookupButton(ButtonType.CANCEL).setVisible(false);
+
+        alert.showAndWait();
+    }
+
+    private void illegalMoveAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Alert");
+        alert.setHeaderText("Board State Error");
+        alert.setContentText(message);
     }
 
 }
