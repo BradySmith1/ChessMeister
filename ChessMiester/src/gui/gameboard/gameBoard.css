@@ -66,3 +66,10 @@
     -fx-font-weight: bold;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
+
+#text{
+    -fx-font-size: 18px;
+    -fx-font-family: "Arial Black";
+    -fx-fill: black;
+    -fx-font-weight: bold;
+}

@@ -58,7 +58,7 @@ public class GameBoardGUI implements CenterPaneObserver{
         //Initialize the Panes.
         this.top = new TopPaneGUI();
         this.top.getRoot().setId("top");
-        this.bottom = new BottomPaneGUI();
+        this.bottom = new BottomPaneGUI("Player 1");
         this.bottom.getRoot().setId("bottom");
         this.center = new CenterPaneGUI();
         this.center.getRoot().setId("center");
@@ -102,6 +102,9 @@ public class GameBoardGUI implements CenterPaneObserver{
         this.center.setPlayer1(this.player1);
         this.center.setPlayer2(this.player2);
 
+        // sets bottom pane to reflect p1 name
+        this.bottom.updateBottomPane(this.player1.getName());
+
         left = new LeftPaneGUI(this.player1);
         left.getRoot().setId("left");
         right = new RightPaneGUI(this.player2);
@@ -121,10 +124,18 @@ public class GameBoardGUI implements CenterPaneObserver{
 
     }
 
+    /**
+     * getter method for the settings menu.
+     * @return the settings menu
+     */
     private SettingsMenuGUI getSettings(){
         return (SettingsMenuGUI) this.screenChanger.getGuiScene(ToScreen.SETTINGS_MENU);
     }
 
+    /**
+     * getter method for the player names.
+     * @return the player names
+     */
     private PlayerNamesGUI getPlayer(){
         return (PlayerNamesGUI) this.screenChanger.getGuiScene(ToScreen.PLAYER_NAMES);
     }
@@ -149,6 +160,9 @@ public class GameBoardGUI implements CenterPaneObserver{
         updateBoard();
     }
 
+    /**
+     * Updates the board.
+     */
     private void updateBoard(){
         for (int row = 0; row < 8; row++){
             for (int col = 0; col < 8; col++){
@@ -192,6 +206,15 @@ public class GameBoardGUI implements CenterPaneObserver{
             this.left = new LeftPaneGUI(player1);
             this.root.setLeft(left.getRoot());
         }
+    }
 
+    /**
+     * Notifies the observer that the bottom pane should be updated.
+     *
+     * @param currPlayer the current player
+     */
+    @Override
+    public void notifyBottomPane(String currPlayer) {
+        this.bottom.updateBottomPane(currPlayer);
     }
 }
