@@ -60,16 +60,14 @@ public class RightPaneGUI extends VBox{
         captured.setId("main-pain");
 
         ArrayList<PieceIF> pieces = player.getCapturedPieces();
-        for (PieceIF pieceIF : pieces) {
-            Image piece = pieceIF.getImage();
-            // TOOD Testing why it is not displaying the captured pieces
-            ImageView imageView = new ImageView(piece);
-            imageView.setFitWidth(50);
-            imageView.setFitHeight(50);
-            imageView.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
+        Image piece = pieces.get(pieces.size() - 1).getImage();
+        // TOOD Testing why it is not displaying the captured pieces
+        ImageView imageView = new ImageView(piece);
+        imageView.setFitWidth(50);
+        imageView.setFitHeight(50);
+        imageView.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
 
-            captured.getChildren().add(imageView);
-        }
+        captured.getChildren().add(imageView);
 
         // TODO Testing why it is not displaying the captured pieces
         captured.setStyle("-fx-border-color: red; -fx-border-width: 5px;");

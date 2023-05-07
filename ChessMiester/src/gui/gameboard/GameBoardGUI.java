@@ -9,6 +9,7 @@ package gui.gameboard;
 import enums.ToScreen;
 import gui.playernames.PlayerNamesGUI;
 import gui.settingsmenu.SettingsMenuGUI;
+import gui_backend.PieceGUI;
 import interfaces.PieceIF;
 import interfaces.PlayerIF;
 import interfaces.ScreenChangeHandlerIF;
@@ -170,13 +171,14 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
      * @param piece the piece that was captured
      */
     public void notifyAddCapturedPiece(PieceIF piece){
-        if (piece.getColor() == this.player1.getColor()){
-            this.player2.addCapturedPiece(piece);
+        PieceIF pieceCopy = new PieceGUI(piece.getImage());
+        if (pieceCopy.getColor() == this.player1.getColor()){
+            this.player2.addCapturedPiece(pieceCopy);
+            ((RightPaneGUI) this.getRight()).makeCaptured(player2);
         }
         else{
-            this.player1.addCapturedPiece(piece);
+            this.player1.addCapturedPiece(pieceCopy);
+            ((LeftPaneGUI) this.getLeft()).makeCaptured(player1);
         }
-        ((LeftPaneGUI) this.getLeft()).makeCaptured(player1);
-        ((RightPaneGUI) this.getRight()).makeCaptured(player2);
     }
 }
