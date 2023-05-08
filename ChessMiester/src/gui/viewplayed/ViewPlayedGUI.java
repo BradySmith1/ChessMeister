@@ -6,7 +6,11 @@
  */
 package gui.viewplayed;
 
+import controller.BoardMementoCaretaker;
 import enums.ToScreen;
+import gui.gameboard.CenterPaneGUI;
+import gui.gameboard.GameBoardGUI;
+import gui.playernames.PlayerNamesGUI;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +20,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import model.BoardSaverLoader;
+
+import java.io.File;
+import java.util.ArrayList;
+
 public class ViewPlayedGUI extends VBox {
     /** Reference to the implementation for the ScreenChangeHandlerIF */
     ScreenChangeHandlerIF screenChanger;
@@ -90,10 +99,38 @@ public class ViewPlayedGUI extends VBox {
                 Object source = event.getSource();
 
                 if(source == game1){
-                    System.out.println("Game 1");
+                    BoardSaverLoader loader = new BoardSaverLoader(); // obj to load file
+                    ArrayList<Object> list = loader.loadGameFromFile(new File(
+                            "./src/SavedGames/scholarsMateGame.txt"));
+                    BoardMementoCaretaker caretaker = (BoardMementoCaretaker) list.get(0);
+                    String player1 = (String) list.get(1);
+                    String player2 = (String) list.get(2);
+                    screenChanger.changeScreen(ToScreen.PLAYER_NAMES);
+                    PlayerNamesGUI players = (PlayerNamesGUI) screenChanger.getGuiScene(ToScreen.PLAYER_NAMES);
+                    players.getPlayer().setPlayer1Name(player1);
+                    players.getPlayer().setPlayer2Name(player2);
+                    screenChanger.changeScreen(ToScreen.GAME_BOARD);
+                    CenterPaneGUI center =
+                            ((CenterPaneGUI)((GameBoardGUI)screenChanger.getGuiScene(ToScreen.GAME_BOARD)).getCenter());
+                    center.setBoardMementoCaretaker(caretaker);
+                    center.loadFromMemento(caretaker.peek());
                 }
                 else if(source == game2){
-                    System.out.println("Game 2");
+                    BoardSaverLoader loader = new BoardSaverLoader(); // obj to load file
+                    ArrayList<Object> list = loader.loadGameFromFile(new File(
+                            "./src/SavedGames/scholarsMateGame.txt"));
+                    BoardMementoCaretaker caretaker = (BoardMementoCaretaker) list.get(0);
+                    String player1 = (String) list.get(1);
+                    String player2 = (String) list.get(2);
+                    screenChanger.changeScreen(ToScreen.PLAYER_NAMES);
+                    PlayerNamesGUI players = (PlayerNamesGUI) screenChanger.getGuiScene(ToScreen.PLAYER_NAMES);
+                    players.getPlayer().setPlayer1Name(player1);
+                    players.getPlayer().setPlayer2Name(player2);
+                    screenChanger.changeScreen(ToScreen.GAME_BOARD);
+                    CenterPaneGUI center =
+                            ((CenterPaneGUI)((GameBoardGUI)screenChanger.getGuiScene(ToScreen.GAME_BOARD)).getCenter());
+                    center.setBoardMementoCaretaker(caretaker);
+                    center.loadFromMemento(caretaker.peek());
                 }
                 else if(source == mainMenu){
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
@@ -103,18 +140,27 @@ public class ViewPlayedGUI extends VBox {
         }
     };
 
+    /**
+     * Creates the buttons for the load game GUI.
+     */
     private void createButtons(){
         this.game1 = new Button("Scholar's Mate");
         this.game2 = new Button("Stalemate");
         this.mainMenu = new Button("Return to Main Menu");
     }
 
+    /**
+     * Sets the ids for the buttons.
+     */
     private void setButtonIds(){
         this.game1.setId("menu-button");
         this.game2.setId("menu-button");
         this.mainMenu.setId("bottom-button");
     }
 
+    /**
+     * Sets the actions for the buttons (directed to the button handler).
+     */
     private void setButtonActions(){
         this.game1.setOnAction(buttonHandler);
         this.game2.setOnAction(buttonHandler);
