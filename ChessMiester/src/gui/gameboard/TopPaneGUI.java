@@ -6,22 +6,25 @@
  */
 
 package gui.gameboard;
+import interfaces.PieceIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import model.Position;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.List;
 
-public class TopPaneGUI {
-    /** The root pane for the right pane. */
-    GridPane root;
+public class TopPaneGUI extends GridPane implements GameBoardObserver{
 
     /** The buttons for the pane */
     Button save, undo, redo;
@@ -29,13 +32,15 @@ public class TopPaneGUI {
     /** Reference to the implementation for the ScreenChangeHandlerIF **/
     ScreenChangeHandlerIF screenChanger;
 
+    /** Boolean for undo and redo*/
+    private boolean undoRedo;
+
+    GameBoardObserver observer;
+
     /**
      * Constructor for the right pane.
      */
     public TopPaneGUI(){
-
-        //Creation of the grid pane.
-        root = new GridPane();
 
         //Creation of the buttons.
         save = new Button("Save");
@@ -58,13 +63,13 @@ public class TopPaneGUI {
         redo.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         //Adds the buttons to the grid.
-        root.add(save, 0,  0, 1, 1);
-        root.add(undo, 1, 0, 1, 1);
-        root.add(redo, 2, 0,1,  1);
+        this.add(save, 0,  0, 1, 1);
+        this.add(undo, 1, 0, 1, 1);
+        this.add(redo, 2, 0,1,  1);
 
         //Attributes for the grid pane.
-        root.setHgap(45);
-        root.setAlignment(Pos.CENTER);
+        this.setHgap(45);
+        this.setAlignment(Pos.CENTER);
     }
 
     /**
@@ -73,7 +78,7 @@ public class TopPaneGUI {
      * @return the root pane.
      */
     public Pane getRoot(){
-        return root;
+        return this;
     }
 
 
@@ -108,21 +113,115 @@ public class TopPaneGUI {
                         // PrintWriter to write to the file
                         try {
                             PrintWriter writer = new PrintWriter(selectedFile);
-                            writer.println("This is some text that will be written to the file.");
+                            notifySaveGame(writer);
                             writer.close();
                             System.out.println("File saved: " + selectedFile.getAbsolutePath());
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
                     }
-                } else if (source == undo) {
-                    System.out.println("Undo");
-                } else if (source == redo) {
-                    System.out.println("Redo");
+                } else if (source == undo && undoRedo) {
+                    notifyUndo();
+                } else if (source == redo && undoRedo) {
+                    notifyRedo();
+                } else if (source == undo || source == redo && !undoRedo) {
+                    createAlert("Undo/Redo");
                 }
             }
         }
     };
 
+    /**
+     * Add a observer
+     * @param observer the observer
+     */
+    public void addObserver(GameBoardObserver observer) {
+        this.observer = observer;
+    }
 
+    /**
+     * Sets the status of undo and redo.
+     * @param undoRedo the status of undo and redo
+     */
+    public void setShowUndoRedo(boolean undoRedo) {
+        this.undoRedo = undoRedo;
+    }
+
+    /**
+     * Creates an alert for the user
+     * @param title the title of the alert
+     */
+    private void createAlert(String title){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(title + " is not available");
+        alert.setContentText(title + " is disable in settings");
+        alert.showAndWait();
+    }
+
+    /**
+     * Notify the observer to left click
+     * @param event the event that occurred
+     */
+    @Override
+    public void notifyLeftClick(Event event) {
+
+    }
+
+    /**
+     * Notify the observer to right click
+     * @param event the event that occurred
+     */
+    @Override
+    public void notifyRightClick(Event event) {
+
+    }
+
+    /**
+     * Notify the observer to move the piece
+     * @param event the event that occurred
+     * @return the list of positions
+     */
+    @Override
+    public List<Position> notifyPieceMoving(Event event) {
+        return null;
+    }
+
+    /**
+     * Notify the observer to add a captured piece
+     * @param piece the piece that was captured.
+     */
+    @Override
+    public void notifyAddCapturedPiece(PieceIF piece) {
+
+    }
+
+    /**
+     * Notify the observer to load the board
+     * @param event the event
+     */
+    @Override
+    public void notifyBoardLoader(Event event) {
+
+    }
+
+    /**
+     * Notify the observer to undo the move
+     */
+    @Override
+    public void notifyUndo() {
+        observer.notifyUndo();
+    }
+
+    /**
+     * Notify the observer to redo the move
+     */
+    @Override
+    public void notifyRedo() {
+        observer.notifyRedo();
+    }
+
+    public void notifySaveGame(PrintWriter writer) {
+        observer.notifySaveGame(writer);
+    }
 }

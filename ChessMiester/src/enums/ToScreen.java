@@ -66,5 +66,8 @@ public enum ToScreen {
     PAWN_TUTORIAL,
 
     /* Reference to PieceTutorialGUI */
-    PIECE_TUTORIAL;
+    PIECE_TUTORIAL,
+
+    /* Reference to the NotationQuizGUI */
+    NOTATION_QUIZ;
 }

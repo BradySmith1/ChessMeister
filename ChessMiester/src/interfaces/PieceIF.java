@@ -1,7 +1,12 @@
 package interfaces;
 
 import enums.ChessPieceType;
+import enums.GameColor;
+import gui_backend.SquareGUI;
+import javafx.scene.image.Image;
 import model.Position;
+import model.Square;
+
 import java.util.List;
 
 /**
@@ -20,11 +25,29 @@ public interface PieceIF extends BlackAndWhiteIF {
     ChessPieceType getType();
 
     /**
-     * Sets the type of the piece.
+     * method to get the movement type for the piece
      *
-     * @param type the type of the piece.
+     * @return a class that implements MovementIF that represents the moves this piece can do
      */
-    void setType(ChessPieceType type);
+    MovementIF getMoveType();
+
+    /**
+     * Gets the image of the piece.
+     * @return the image of the piece.
+     */
+    Image getImage();
+
+    /**
+     * Sets the image of the piece.
+     * @param image the image of the piece.
+     */
+    void setPieceImage(Image image);
+
+    /**
+     * Gets the color of the piece.
+     * @return the color of the piece.
+     */
+    GameColor getColor();
 
     /**
      * Returns a list of MovePositions that are valid & legal on the board.
@@ -41,12 +64,19 @@ public interface PieceIF extends BlackAndWhiteIF {
      * @param board the board the piece is on.
      * @return the position of the piece.
      */
-    Position getPosition(BoardIF board);
-
-    /**
-     * method to get the movement type for the piece
-     *
-     * @return a class that implements MovementIF that represents the moves this piece can do
-     */
-    MovementIF getMoveType();
+    default Position getPosition(BoardIF board){
+        Position position = null;
+        SquareIF[][] squares = board.getSquares();
+        PieceIF temp;
+        for(int i = 0; i < squares.length; i++) {
+            for (int j = 0; j < squares[i].length; j++) {
+                temp = squares[i][j].getPiece();
+                if (temp == this) {
+                    SquareIF square = squares[i][j];
+                    position = square.getPosition();
+                }
+            }
+        }
+        return position;
+    }
 }

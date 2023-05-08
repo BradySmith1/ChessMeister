@@ -67,7 +67,7 @@ public class CheckRuleCLI implements RulesIF {
         /* Load in the board and go through game loop */
         BoardSaverLoader loader = new BoardSaverLoader(); // create loader to load board
         BoardMementoCaretaker caretaker = loader.loadGameFromFile("checkTutorial");
-        BoardIF board = new Board();
+        Board board = new Board();
         board.loadFromMemento(caretaker.peek());
 
         // set draw strategy according to settings

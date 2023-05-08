@@ -15,9 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-public class BottomPaneGUI {
-    /** The root pane for the bottom pane. */
-    AnchorPane root;
+public class BottomPaneGUI extends AnchorPane {
     /** Label for the pane */
     Label playerSelect;
 
@@ -28,10 +26,9 @@ public class BottomPaneGUI {
     ScreenChangeHandlerIF screenChanger;
 
     public BottomPaneGUI(){
-        root = new AnchorPane();
         playerSelect = new Label("Player 1 Selected D7 (Hardcoded)");
         playerSelect.setId("topLabel");
-        root.getChildren().add(playerSelect);
+        this.getChildren().add(playerSelect);
         AnchorPane.setLeftAnchor(playerSelect, 475.0);
 
         //Creation of the buttons.
@@ -48,7 +45,7 @@ public class BottomPaneGUI {
         this.settings.setOnAction(buttonHandler);
         this.exitButton.setOnAction(buttonHandler);
 
-        root.getChildren().addAll(settings, exitButton);
+        this.getChildren().addAll(settings, exitButton);
 
     }
 
@@ -58,7 +55,7 @@ public class BottomPaneGUI {
      * @return the root pane
      */
     public Pane getRoot(){
-        return root;
+        return this;
     }
 
     /**

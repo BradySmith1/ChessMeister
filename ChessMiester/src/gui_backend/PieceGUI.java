@@ -9,12 +9,17 @@ package gui_backend;
 
 import enums.ChessPieceType;
 import enums.GameColor;
+import interfaces.BoardIF;
 import interfaces.MovementIF;
+import interfaces.PieceIF;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import model.Position;
 import movements.*;
 
-public class PieceGUI extends ImageView{
+import java.util.List;
+
+public class PieceGUI extends ImageView implements PieceIF {
     /** the image of the piece */
     private Image image;
 
@@ -37,10 +42,10 @@ public class PieceGUI extends ImageView{
         this.setFitWidth(50);
         this.setFitHeight(50);
         this.image = image;
-        if(image != null){
-            setPieceImage(image);
+        if(this.image != null){
+            setPieceImage(this.image);
         }
-        this.setImage(this.image);
+        this.setPieceImage(this.image);
     }
 
     /**
@@ -86,8 +91,8 @@ public class PieceGUI extends ImageView{
             case("Queen") -> type = ChessPieceType.Queen;
             case("Rook") -> type = ChessPieceType.Rook;
         }
-        moveTypeFactory();
         setColor();
+        moveTypeFactory();
     }
 
     /**
@@ -113,8 +118,8 @@ public class PieceGUI extends ImageView{
         int lastChar = path.lastIndexOf('/') + 6;
         path = path.substring(lastSlash, lastChar);
         switch(path){
-            case("Black") -> this.color = GameColor.WHITE;
-            case("White") -> this.color = GameColor.BLACK;
+            case("Black") -> this.color = GameColor.BLACK;
+            case("White") -> this.color = GameColor.WHITE;
         }
     }
 
@@ -143,6 +148,21 @@ public class PieceGUI extends ImageView{
      */
     public GameColor getColor() {
         return color;
+    }
+
+    @Override
+    public List<Position> getValidMoves(BoardIF board, Position currentPosition) {
+        return moveType.getValidMoves(board, currentPosition);
+    }
+
+    @Override
+    public boolean isBlack() {
+        return color == GameColor.BLACK;
+    }
+
+    @Override
+    public boolean isWhite() {
+        return color == GameColor.WHITE ;
     }
 
     /**

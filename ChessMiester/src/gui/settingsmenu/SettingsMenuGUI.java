@@ -148,7 +148,7 @@ public class SettingsMenuGUI extends VBox {
                         screenChanger.changeScreen(ToScreen.MAIN_MENU);
                     }
                     else if (screenChanger.getPreviousScreen() == ToScreen.GAME_BOARD){
-                        screenChanger.changeScreen(ToScreen.GAME_BOARD);
+                        screenChanger.changeScreen(ToScreen.GAME_BOARD, ToScreen.SETTINGS_MENU);
                     }
                 }
             }

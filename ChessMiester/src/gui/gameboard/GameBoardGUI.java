@@ -9,16 +9,15 @@ package gui.gameboard;
 import enums.ToScreen;
 import gui.playernames.PlayerNamesGUI;
 import gui.settingsmenu.SettingsMenuGUI;
-import gui_backend.DefinePlayersGUI;
-import gui_backend.SquareGUI;
+import gui_backend.PieceGUI;
+import interfaces.PieceIF;
 import interfaces.PlayerIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import model.Square;
+import model.Player;
 
-public class GameBoardGUI{
+public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
 
     /** the top pane */
     private TopPaneGUI top;
@@ -35,9 +34,6 @@ public class GameBoardGUI{
     /** the center pane */
     private CenterPaneGUI center;
 
-    /** the root pane */
-    private BorderPane root;
-
     /** the screen change handler */
     ScreenChangeHandlerIF screenChanger;
 
@@ -50,32 +46,29 @@ public class GameBoardGUI{
     /**
      * Constructor for the game board GUI.
      */
-    public GameBoardGUI(){
+    public GameBoardGUI() {
         super();
 
-        root = new BorderPane();
 
         //Initialize the Panes.
-        top = new TopPaneGUI();
-        top.getRoot().setId("top");
-        bottom = new BottomPaneGUI();
-        bottom.getRoot().setId("bottom");
-        left = new LeftPaneGUI();
-        left.getRoot().setId("left");
-        right = new RightPaneGUI();
-        right.getRoot().setId("right");
-        center = new CenterPaneGUI();
-        center.getRoot().setId("center");
+        this.top = new TopPaneGUI();
+        this.top.getRoot().setId("top");
+        this.bottom = new BottomPaneGUI();
+        this.bottom.getRoot().setId("bottom");
+        this.center = new CenterPaneGUI();
+        this.center.setId("center");
+
+        // Add the observers
+        center.addObserver(this);
+        top.addObserver(center);
 
         //add the panes to the root
-        root.setTop(top.getRoot());
-        root.setBottom(bottom.getRoot());
-        root.setLeft(left.getRoot());
-        root.setRight(right.getRoot());
-        root.setCenter(center.getRoot());
+        this.setTop(top.getRoot());
+        this.setBottom(bottom.getRoot());
+        this.setCenter(center);
 
         // add the stylesheet and images
-        root.getStylesheets().add(getClass().getResource("gameBoard.css").toExternalForm());
+        this.getStylesheets().add(getClass().getResource("gameBoard.css").toExternalForm());
     }
 
     /**
@@ -83,7 +76,7 @@ public class GameBoardGUI{
      *
      * @return the root pane
      */
-    public Pane getRoot() { return root; }
+    public Pane getRoot() { return this; }
 
     /**
      * Sets the screen change handler.
@@ -98,8 +91,22 @@ public class GameBoardGUI{
         this.settings = getSettings();
         this.player1 = this.getPlayer().getPlayer().getPlayer1();
         this.player2 = this.getPlayer().getPlayer().getPlayer2();
-        this.left.setLabel(this.player1.getName());
-        this.right.setLabel(this.player2.getName());
+        this.player1.assignPieces(center);
+        this.player2.assignPieces(center);
+
+        left = new LeftPaneGUI(this.player1);
+        left.getRoot().setId("left");
+        right = new RightPaneGUI(this.player2);
+        right.getRoot().setId("right");
+
+        // Set the players to the center pane
+        this.center.setPlayer1(this.player1);
+        this.center.setPlayer2(this.player2);
+
+        this.setLeft(left.getRoot());
+        this.setRight(right.getRoot());
+
+        // Set the constraints of the left and right panes
 
         System.out.println(this.settings.getSettings().getShowMoves());
         System.out.println(this.settings.getSettings().getUndoRedo());
@@ -125,11 +132,16 @@ public class GameBoardGUI{
      */
     public void updateSettings(){
         this.settings = getSettings();
-        System.out.println("SHOW MOVES: " + this.settings.getSettings().getShowMoves());
-        System.out.println("SHOW UNDO/REDO: " + this.settings.getSettings().getUndoRedo());
-        System.out.println("SHOW THE WHITEY: " + this.settings.getSettings().getWhiteSquareColor());
-        System.out.println("SHOW THE BLACKY: " + this.settings.getSettings().getBlackSquareColor());
-        System.out.println("SHOW THE HIGHLIGHT: " + this.settings.getSettings().getHighlightColor());
+//        System.out.println("SHOW MOVES: " + this.settings.getSettings().getShowMoves());
+//        System.out.println("SHOW UNDO/REDO: " + this.settings.getSettings().getUndoRedo());
+//        System.out.println("SHOW THE WHITE: " + this.settings.getSettings().getWhiteSquareColor());
+//        System.out.println("SHOW THE BLACK: " + this.settings.getSettings().getBlackSquareColor());
+//        System.out.println("SHOW THE HIGHLIGHT: " + this.settings.getSettings().getHighlightColor());
+
+        this.center.setHighlightColor(this.settings.getSettings().getHighlightColor());
+        //this.top.setShowMoves(this.settings.getSettings().getShowMoves());
+//        System.out.println("UPDATE SETTINGS: " + this.settings.getSettings().getUndoRedo());
+        this.top.setShowUndoRedo(this.settings.getSettings().getUndoRedo());
 
         updateBoard();
     }
@@ -146,4 +158,33 @@ public class GameBoardGUI{
             }
         }
     }
+
+    /**
+     * Notifies the observer that the pane has been updated.
+     */
+    @Override
+    public void notifyPane() {
+        this.screenChanger.notifyBoard();
+    }
+
+    /**
+     * Notifies the observer that a piece has been captured.
+     * @param piece the piece that was captured
+     */
+    public void notifyAddCapturedPiece(PieceIF piece){
+        if(piece == null){
+            ((RightPaneGUI) this.getRight()).makeCaptured(player2);
+            ((LeftPaneGUI) this.getLeft()).makeCaptured(player1);
+        }else{
+            PieceIF pieceCopy = new PieceGUI(piece.getImage());
+            if (pieceCopy.getColor() == this.player1.getColor()){
+                this.player2.addCapturedPiece(pieceCopy);
+                ((RightPaneGUI) this.getRight()).makeCaptured(player2);
+            }
+            else{
+                this.player1.addCapturedPiece(pieceCopy);
+                ((LeftPaneGUI) this.getLeft()).makeCaptured(player1);
+            }
+        }
+        }
 }

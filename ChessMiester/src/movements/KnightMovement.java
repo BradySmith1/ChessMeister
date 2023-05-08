@@ -9,10 +9,10 @@ package movements;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
+import interfaces.PieceIF;
 import model.BlackAndWhite;
-import model.Piece;
 import model.Position;
-import model.Square;
+import interfaces.SquareIF;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -74,14 +74,14 @@ public class KnightMovement extends BlackAndWhite implements MovementIF {
         int currentFile = currentPosition.getFile().getFileNum(); //current file of piece
 
         //check for knight move up 1, right 2
-        if (currentRank + rank < board.getHeight() && currentFile + file < board.getWidth() &&
+        if (currentRank + rank < board.getBoardHeight() && currentFile + file < board.getBoardWidth() &&
             currentRank + rank >= 0 && currentFile + file >= 0) {
             //get the square of the move and the piece in the square
-            Square currentSquare = (Square) board.getSquares()[currentRank + rank]
+            SquareIF currentSquare = board.getSquares()[currentRank + rank]
                                                               [currentFile + file];
-            Piece currentPiece = (Piece) currentSquare.getPiece();
+            PieceIF currentPiece = currentSquare.getPiece();
             //check if there is an empty square or an enemy piece
-            if (currentPiece == null || !currentPiece.getColor().equals(getColor())) {
+            if (currentPiece == null || currentPiece.getImage() == null || !currentPiece.getColor().equals(getColor())) {
                 //the move is possible so add it
                 movePossible = currentSquare.getPosition();
             }

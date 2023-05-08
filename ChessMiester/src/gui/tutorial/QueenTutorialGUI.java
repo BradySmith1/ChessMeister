@@ -37,7 +37,7 @@ public class QueenTutorialGUI {
 
         try{
             Image queen = new Image(new FileInputStream(
-                    "src/gui/gameboard/images/WhiteQueen.png"));
+                    "src/gui/gameboard/images/WhiteKing.png"));
             ImageView queenView = new ImageView(queen);
             queenView.setFitHeight(100);
             queenView.setFitWidth(100);

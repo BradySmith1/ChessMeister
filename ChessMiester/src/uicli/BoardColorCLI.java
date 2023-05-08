@@ -3,9 +3,8 @@ package uicli;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.BoardStrategy;
-import interfaces.SquareIF;
-import javafx.geometry.Pos;
 import model.Position;
+import interfaces.SquareIF;
 import model.Square;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class BoardColorCLI implements BoardStrategy {
     public void draw(BoardIF board, GameColor playerColor) {
         String background = WHITE_BACK;
         //draws the board
-        SquareIF[][] squares = board.getSquares();
+        interfaces.SquareIF[][] squares = board.getSquares();
         if(playerColor == GameColor.BLACK){
             //printWhite(board, squares, background);
             printBlack(board, squares, background);
@@ -74,16 +73,16 @@ public class BoardColorCLI implements BoardStrategy {
      * @param squares    the array of squares on the board.
      * @param background the background color of the square.
      */
-    private void printWhite(BoardIF board, SquareIF[][] squares, String background) {
+    private void printWhite(BoardIF board, interfaces.SquareIF[][] squares, String background) {
         int number = 8;
         String temp_background = background;
         boolean squareHighlighted = false;
         //draws the board
-        for(int height = 0; height < board.getHeight(); height++){
+        for(int height = 0; height < board.getBoardHeight(); height++){
             System.out.print(number + " ");
             //draws the squares
-            for(int width = 0; width < board.getWidth(); width++){
-                Square square = (Square) squares[height][width];
+            for(int width = 0; width < board.getBoardWidth(); width++){
+                SquareIF square = (SquareIF) squares[height][width];
                 if(highlight){
                     squareHighlighted = checkHighlight(square);
                 }
@@ -95,7 +94,8 @@ public class BoardColorCLI implements BoardStrategy {
                 else{
                     printPiece(square, background);
                 }
-                background = square.getColor() == GameColor.WHITE ? BLACK_BACK : WHITE_BACK;
+                background =  ((Square) square).getColor() == GameColor.WHITE ? BLACK_BACK :
+                        WHITE_BACK;
             }
             background = background.equals(WHITE_BACK) ? BLACK_BACK : WHITE_BACK;
             System.out.print("\u001b[0m\n"); //ends the line. code is for reset
@@ -111,15 +111,15 @@ public class BoardColorCLI implements BoardStrategy {
      * @param squares    the array of squares on the board.
      * @param background the background color of the square.
      */
-    private void printBlack(BoardIF board, SquareIF[][] squares, String background) {
+    private void printBlack(BoardIF board, interfaces.SquareIF[][] squares, String background) {
         int number = 1;
         String temp_background = background;
         boolean squareHighlighted = false;
-        for(int height = board.getHeight() - 1; height >= 0; height--){
-            System.out.print((board.getHeight() - height) + " "); // wrong
+        for(int height = board.getBoardHeight() - 1; height >= 0; height--){
+            System.out.print((board.getBoardHeight() - height) + " "); // wrong
             //draws the squares
-            for(int width = board.getWidth() - 1; width >= 0; width--){
-                Square square = (Square) squares[height][width];
+            for(int width = board.getBoardWidth() - 1; width >= 0; width--){
+                SquareIF square = (SquareIF) squares[height][width];
                 if(highlight){
                     squareHighlighted = checkHighlight(square);
                 }
@@ -131,7 +131,7 @@ public class BoardColorCLI implements BoardStrategy {
                 else{
                     printPiece(square, background);
                 }
-                background = square.getColor() == GameColor.WHITE ? BLACK_BACK : WHITE_BACK;
+                background = ((Square) square).getColor() == GameColor.WHITE ? BLACK_BACK : WHITE_BACK;
             }
             background = background.equals(WHITE_BACK) ? BLACK_BACK : WHITE_BACK;
             System.out.print("\u001b[0m\n"); //ends the line. code is for reset
@@ -146,7 +146,7 @@ public class BoardColorCLI implements BoardStrategy {
      * @param square     the square that the piece is on.
      * @param background the background color of the square.
      */
-    private void printPiece(Square square, String background) {
+    private void printPiece(SquareIF square, String background) {
         String unicode;
         //draws the piece
         if (square.getPiece() != null) {
@@ -168,7 +168,7 @@ public class BoardColorCLI implements BoardStrategy {
      * @param square the square to check.
      * @return true if the square is highlighted, false otherwise.
      */
-    private boolean checkHighlight(Square square) {
+    private boolean checkHighlight(SquareIF square) {
         boolean result = false;
         for (Position position : highlighted) {
             if (square.getPosition().equals(position)) {

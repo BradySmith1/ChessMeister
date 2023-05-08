@@ -1,5 +1,6 @@
 package interfaces;
 
+import enums.GameColor;
 import model.Position;
 
 /**
@@ -20,9 +21,8 @@ public interface SquareIF {
      * Sets a piece on the square.
      *
      * @param piece The piece to set on the square.
-     * @return The piece that was previously on the square, if any.
      */
-    public PieceIF setPiece(PieceIF piece);
+    public void setPiece(PieceIF piece);
 
     /**
      * Returns the piece that is currently on the square, if any.
@@ -37,4 +37,5 @@ public interface SquareIF {
      * @return position of the square
      */
     public Position getPosition();
+
 }

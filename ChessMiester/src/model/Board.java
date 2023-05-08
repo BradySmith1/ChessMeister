@@ -5,7 +5,6 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 import interfaces.*;
-import movements.PawnMovement;
 import uicli.BoardMonoCLI;
 
 import java.util.ArrayList;
@@ -90,8 +89,8 @@ public class Board implements BoardIF {
      */
     public void createState() {
         StringBuilder stateBuilder = new StringBuilder("{");
-        for (int i = 0; i < getWidth(); i++) {
-            for (int j = 0; j < getHeight(); j++) {
+        for (int i = 0; i < getBoardWidth(); i++) {
+            for (int j = 0; j < getBoardHeight(); j++) {
                 Square square = ((Square) squares[i][j]);
                 if (square.getPiece() != null) {
 
@@ -101,7 +100,7 @@ public class Board implements BoardIF {
                     stateBuilder.append(":");
                     stateBuilder.append(square.getPiece().getType().letter);
                     stateBuilder.append(square.getPiece().getColor().toString().charAt(0));
-                    if (i != getWidth() - 1 || j != getHeight() - 1) {
+                    if (i != getBoardWidth() - 1 || j != getBoardHeight() - 1) {
                         stateBuilder.append(",");   // comma after every piece other than last
                     }
                 }
@@ -133,7 +132,6 @@ public class Board implements BoardIF {
      *
      * @param playerColor the color of the player to orient the board
      */
-    @Override
     public void draw(GameColor playerColor) {
         drawStrategy.draw(this, playerColor);
     }
@@ -164,7 +162,6 @@ public class Board implements BoardIF {
      *
      * @param d the BoardStrategy object that defines the drawing strategy to use.
      */
-    @Override
     public void setDrawStrategy(BoardStrategy d) {
         drawStrategy = d;
     }
@@ -175,7 +172,7 @@ public class Board implements BoardIF {
      * @return the width of the game board in squares.
      */
     @Override
-    public int getWidth() {
+    public int getBoardWidth() {
         return width;
     }
 
@@ -185,7 +182,7 @@ public class Board implements BoardIF {
      * @return the height of the game board in squares.
      */
     @Override
-    public int getHeight() {
+    public int getBoardHeight() {
         return height;
     }
 
@@ -222,7 +219,7 @@ public class Board implements BoardIF {
     public String getState() {
         return this.state;
     }
-
+    //Board memento start for the board class.
     /**
      * Adds the move to the boards state that it holds in a field.
      *
