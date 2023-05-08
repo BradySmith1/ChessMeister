@@ -6,6 +6,7 @@
  */
 package gui.gameboard;
 
+import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
 import enums.Rank;
@@ -13,6 +14,7 @@ import gui_backend.PieceGUI;
 import gui_backend.SquareGUI;
 import gui_backend.StateValidation;
 import interfaces.BoardIF;
+import interfaces.FirstMoveIF;
 import interfaces.PieceIF;
 import interfaces.PlayerIF;
 import javafx.event.ActionEvent;
@@ -40,6 +42,8 @@ import java.util.List;
 import java.util.Optional;
 
 import model.Position;
+import movements.KingMovement;
+import movements.RookMovement;
 
 public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent>,
                                       BoardIF, CenterPaneObserver {
@@ -234,29 +238,35 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     /**
      * Enables user to click to move a piece on the chess board.
      *
-     * @param mouse The mouse event
+     * @param event The mouse event
      */
-    private void clickMove(MouseEvent mouse) {
+    private void clickMove(Event event) {
         if(clicked == null){
-            clicked = (SquareGUI) mouse.getSource();
-            popup = new Stage();
-            popup.initStyle(StageStyle.UNDECORATED);
-            VBox box = new VBox();
-            Label moveLabel = new Label("Move Piece");
-            box.getChildren().add(moveLabel);
-            Scene stageScene = new Scene(box, 70, 20);
-            popup.setScene(stageScene);
-            popup.setX(mouse.getScreenX() + 10);
-            popup.setY(mouse.getScreenY() + 10);
-            popup.show();
-            root.addEventFilter(MouseEvent.ANY, this);
+            clicked = (SquareGUI) event.getSource();
+            if(event instanceof MouseEvent mouse){
+                popup = new Stage();
+                popup.initStyle(StageStyle.UNDECORATED);
+                VBox box = new VBox();
+                Label moveLabel = new Label("Move Piece");
+                box.getChildren().add(moveLabel);
+                Scene stageScene = new Scene(box, 70, 20);
+                popup.setScene(stageScene);
+                popup.setX(mouse.getScreenX() + 10);
+                popup.setY(mouse.getScreenY() + 10);
+                popup.show();
+                root.addEventFilter(MouseEvent.ANY, this);
+            }
         }else{
             List<Position> validMoves;
             if (clicked.getPiece().getImage() != null) {
                 PieceGUI piece = (PieceGUI) clicked.getPiece();
                 validMoves = piece.getMoveType().getValidMoves(this,
                         clicked.getPosition());
-                SquareGUI newClicked = (SquareGUI) mouse.getSource(); //TODO need to integrate valid moves into here.
+                SquareGUI newClicked = (SquareGUI) event.getSource(); //TODO need to integrate valid moves into here.
+                System.out.println("Clicked: " + clicked.getPosition().getRank());
+                System.out.println("Clicked: " + clicked.getPosition().getFile());
+                System.out.println("New Clicked: " + newClicked.getPosition().getRank());
+                System.out.println("New Clicked: " + newClicked.getPosition().getFile());
                 boolean valid = false;
                 for (Position validMove : validMoves) {
                     if (validMove == null) {
@@ -272,45 +282,44 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                     this.alertPlayerSwitch(this.currentPlayer);
                     // TODO temporary testing purposes
                     if (this.movingOwnPiece()) {
-                        //boolean legalState = this.gameStateCheck();
-                        //boolean legalState = !StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), this.currentPlayer.getKing().getPosition(this), this);
-                       // System.out.println(legalState + " that move will cause you to get in check");
                         Image image;
-                        //if (legalState) {
-                            if (this.determineCapture(newClicked)) {this.capturePiece(newClicked);}
-                            image = clicked.getPiece().getImage();
-                            newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
-                            clicked.getPiece().setPieceImage(null);
 
-                            // FIXME Reassign player pieces b/c after a move is made, the players list needs to update with the new piece
-                            this.player1.assignPieces(this);
-                            this.player2.assignPieces(this);
+                        if (this.determineCapture(newClicked)) {this.capturePiece(newClicked);}
+                        image = clicked.getPiece().getImage();
+                        newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
+                        clicked.getPiece().setPieceImage(null);
 
-                            if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), this.currentPlayer.getKing().getPosition(this), this)) {
-                                // Undo the move
-                                newClicked.getPiece().setPieceImage(null);
-                                clicked.getPiece().setPieceImage(image);
+                        // FIXME Reassign player pieces b/c after a move is made, the players list needs to update with the new piece
+                        this.player1.assignPieces(this);
+                        this.player2.assignPieces(this);
 
-                                this.illegalMoveAlert("Cannot move into check!");
-                            }
-                            else{
-                                this.switchPlayers();   // TODO This is called here when a confirmed move is made
-                                System.out.println(this.currentPlayer.getName());
-                                // TODO call bottom pane and update player display message
-                                this.notifyBottomPane(this.currentPlayer.getName());
-                                this.gameStateCheck();
-                            }
-                        //}
-                        //else{
-                         //   this.illegalMoveAlert("Cannot move into check!");
-                        //}
+                        if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), this.currentPlayer.getKing().getPosition(this), this)) {
+                            // Undo the move
+                            newClicked.getPiece().setPieceImage(null);
+                            clicked.getPiece().setPieceImage(image);
+
+                            this.illegalMoveAlert("Cannot move into check!");
+                        }
+                        else{
+                            this.switchPlayers();   // TODO This is called here when a confirmed move is made
+                            System.out.println(this.currentPlayer.getName());
+                            // TODO call bottom pane and update player display message
+                            this.notifyBottomPane(this.currentPlayer.getName());
+                            this.gameStateCheck();
+                        }
                     }
                 }
+                else{
+                    this.castleLogic(newClicked);
+                }
             }
-            popup.close();
+            if(popup != null){
+                popup.close();
+                popup = null;
+                root.removeEventFilter(MouseEvent.ANY, this);
+            };
             clicked = null;
-            popup = null;
-            root.removeEventFilter(MouseEvent.ANY, this);
+
         }
     }
 
@@ -329,7 +338,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     @Override
     public void notifyLeftClick(Event event) {
         this.notifyPane(true);
-        clickMove((MouseEvent) event);
+        clickMove(event);
     }
 
     /**
@@ -698,5 +707,128 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      */
     public void notifyBottomPane(String currPlayer){
         this.observer.notifyBottomPane(currPlayer);
+    }
+
+    /**
+     * Castling logic
+     */
+    private void castleLogic(SquareGUI target){
+        Position clickedPos = this.clicked.getPosition();
+        Position targetPos = target.getPosition();
+
+        if (this.clicked.getPiece().getType() == ChessPieceType.King && target.getPiece().getImage() != null){
+            if (target.getPiece().getType() == ChessPieceType.Rook){
+                if (canCastle(clickedPos.getFile(), clickedPos.getRank(), targetPos.getFile(), targetPos.getRank())){
+                    PieceIF king = this.clicked.getPiece();
+                    PieceIF rook = target.getPiece();
+                    Image rookImage = rook.getImage();
+                    Image kingImage = king.getImage();
+                    if (clickedPos.getFile().getFileNum() < targetPos.getFile().getFileNum()){
+                        // Set rook at new place, guaranteed to have rook at file F
+                        this.squares[targetPos.getRank().getIndex()][Files.F.getFileNum()].getPiece().setPieceImage(rookImage);
+                        // Clear square from king
+                        this.squares[clickedPos.getRank().getIndex()][clickedPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        // Clear square from rook
+                        this.squares[targetPos.getRank().getIndex()][targetPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        // Set king at new place Guaranteed that the king will be at file G
+                        this.squares[targetPos.getRank().getIndex()][Files.G.getFileNum()].getPiece().setPieceImage(kingImage);
+                    }
+                    else{
+                        // Set rook at new place, guaranteed to have rook at file D
+                        this.squares[targetPos.getRank().getIndex()][Files.D.getFileNum()].getPiece().setPieceImage(rookImage);
+                        // Clear square from king
+                        this.squares[clickedPos.getRank().getIndex()][clickedPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        // Clear square from rook
+                        this.squares[targetPos.getRank().getIndex()][targetPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        // Set king at new place Guaranteed that the king will be at file C
+                        this.squares[targetPos.getRank().getIndex()][Files.C.getFileNum()].getPiece().setPieceImage(kingImage);
+                    }
+
+                    // Set the first move of the king and rook to false
+                    if (king instanceof FirstMoveIF){
+                        ((FirstMoveIF) king).setFirstMove(false);
+                    }
+                    if (rook instanceof FirstMoveIF){
+                        ((FirstMoveIF) rook).setFirstMove(false);
+                    }
+
+                    this.switchPlayers();   // TODO This is called here when a confirmed move is made
+                    System.out.println(this.currentPlayer.getName());
+                    // TODO call bottom pane and update player display message
+                    this.notifyBottomPane(this.currentPlayer.getName());
+                    //this.gameStateCheck();
+
+                }
+            }
+        }
+    }
+
+    private boolean canCastle(Files fromF, Rank fromR, Files toF, Rank toR){
+        // grab the king and rook piece from positions to save keystrokes
+        KingMovement king =
+                (KingMovement) this.squares[fromR.getIndex()]
+                        [fromF.getFileNum()].getPiece().getMoveType();
+        RookMovement rook =
+                (RookMovement) this.squares[toR.getIndex()]
+                        [toF.getFileNum()].getPiece().getMoveType();
+
+        //boolean to return at the end
+        //boolean flag = true;
+        boolean canCastle = true;
+
+        // if either rook or king have moved, castling cannot occur
+        if(!king.getFirstMove() || !rook.getFirstMove()) {
+            canCastle = false;
+            //flag = false;
+        }
+
+        // if king is in check or moves into check, castling cannot occur
+        if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(fromR, fromF), this) ||
+                StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(toR, toF), this)) {
+            canCastle = false;
+            //flag = false;
+        }
+
+        // if king passes through check or a piece is there, castling cannot occur
+
+        // check if king is moving to the right
+        Files tempF = fromF;
+        int cnt = 0;
+        if (tempF.getFileNum() < toF.getFileNum() && canCastle) {
+            tempF = Files.values()[tempF.getFileNum() + 1];
+            while (cnt < 2) {
+                //check if king is ever put into check
+
+                if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(fromR, tempF), this)) {
+                    canCastle = false;
+                    //flag = false;
+                }
+                //check if there is a piece in the way
+                if (this.squares[fromR.getIndex()][tempF.getFileNum()].getPiece().getImage() != null) {
+                    canCastle = false;
+                    //flag = false;
+                }
+                tempF = Files.values()[tempF.getFileNum() + 1];
+                cnt++;
+            }
+        }
+        // check if king is moving to the left
+        else {
+            while (cnt < 2) {
+                tempF = Files.values()[tempF.getFileNum() - 1];
+                //check if king is ever put into check
+                if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(fromR, tempF), this)) {
+                    canCastle = false;
+                }
+                //check if there is a piece in the way
+                if (this.squares[fromR.getIndex()]
+                        [tempF.getFileNum()].getPiece().getImage() != null) {
+                    canCastle = false;
+                }
+                tempF = Files.values()[tempF.getFileNum() - 1];
+                cnt++;
+            }
+        }
+        return canCastle; //true if castling is possible, false if not
     }
 }
