@@ -1,9 +1,3 @@
-/**
- * This class is responsible for creating the view played GUI.
- *
- * @author Zach Eanes (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.viewplayed;
 
 import controller.BoardMementoCaretaker;
@@ -25,6 +19,12 @@ import model.BoardSaverLoader;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * This class is responsible for creating the view played GUI.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class ViewPlayedGUI extends VBox {
     /** Reference to the implementation for the ScreenChangeHandlerIF */
     ScreenChangeHandlerIF screenChanger;
