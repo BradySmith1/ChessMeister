@@ -62,7 +62,7 @@ public class KingMovement extends BlackAndWhite implements MovementIF, FirstMove
 
 
         // TODO pass all fields for castling into canCastle method
-        validMoves.add(canCastle());
+        //validMoves.add(canCastle());
 
         validMoves.removeAll(Collections.singleton(null)); // remove all null values
         return validMoves;

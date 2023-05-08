@@ -61,9 +61,9 @@ public class LeftPaneGUI extends VBox{
      *
      * @param player the player
      */
-    public void makeCaptured(PlayerIF player){
+    public void makeCapturedLeft(PlayerIF player){
         TilePane captured = (TilePane) this.getChildren().get(2);
-        for (int index = 0; index < captured.getChildren().size(); index++){
+        while(captured.getChildren().size() > 0){
             captured.getChildren().remove(0);
         }
 

@@ -173,17 +173,19 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
      */
     public void notifyAddCapturedPiece(PieceIF piece){
         if(piece == null){
-            ((RightPaneGUI) this.getRight()).makeCaptured(player2);
-            ((LeftPaneGUI) this.getLeft()).makeCaptured(player1);
+            RightPaneGUI right = (RightPaneGUI) this.getRight();
+            right.makeCapturedRight(player2);
+            LeftPaneGUI left = (LeftPaneGUI) this.getLeft();
+            left.makeCapturedLeft(player1);
         }else{
             PieceIF pieceCopy = new PieceGUI(piece.getImage());
             if (pieceCopy.getColor() == this.player1.getColor()){
                 this.player2.addCapturedPiece(pieceCopy);
-                ((RightPaneGUI) this.getRight()).makeCaptured(player2);
+                ((RightPaneGUI) this.getRight()).makeCapturedRight(player2);
             }
             else{
                 this.player1.addCapturedPiece(pieceCopy);
-                ((LeftPaneGUI) this.getLeft()).makeCaptured(player1);
+                ((LeftPaneGUI) this.getLeft()).makeCapturedLeft(player1);
             }
         }
         }
