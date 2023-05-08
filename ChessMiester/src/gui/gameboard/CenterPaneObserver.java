@@ -15,7 +15,7 @@ public interface CenterPaneObserver {
     /**
      * Notifies the observer that the pane has been updated.
      */
-    void notifyPane();
+    void notifyPane(boolean notify);
 
     /**
      * Notifies the observer that a piece has been captured.
@@ -23,4 +23,12 @@ public interface CenterPaneObserver {
      * @param piece the piece that was captured.
      */
     void notifyAddCapturedPiece(PieceIF piece);
+
+    /**
+     * Notifies the observer that the bottom pane needs to be updated.
+     *
+     * @param currPlayer the current player
+     */
+    void notifyBottomPane(String currPlayer);
+
 }

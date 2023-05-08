@@ -7,6 +7,7 @@
  */
 package gui_backend;
 
+import enums.ChessPieceType;
 import enums.Files;
 import enums.Rank;
 import gui.gameboard.GameBoardObserver;
@@ -19,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import model.Position;
 import javafx.scene.image.ImageView;
+import model.Square;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -65,7 +67,7 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
                 return;
             }
             Dragboard db = this.startDragAndDrop(TransferMode.MOVE);
-
+            this.notifyLeftClick(event);
             ClipboardContent content = new ClipboardContent();
             content.putImage(imageView.getImage());
             db.setContent(content);
@@ -83,24 +85,34 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
                     break;
                 }
             }
+            if(!valid){
+                SquareGUI source = (SquareGUI) event.getGestureSource();
+                SquareGUI target = (SquareGUI) event.getSource();
+                if(source.getPiece().getType() == ChessPieceType.King && target.getPiece().getType() == ChessPieceType.Rook){
+                    if(source.getPiece().getColor() == target.getPiece().getColor()){
+                        valid = true;
+                    }
+                }
+            }
             if(event.getGestureSource() != this && valid){
                 event.acceptTransferModes(TransferMode.MOVE);
             }
         });
         this.setOnDragDropped(event -> {
-            SquareGUI source = (SquareGUI) event.getGestureSource();
-            if(this.piece.getImage() != null){
-                notifyAddCapturedPiece(this.piece);
-            }
-            this.piece.setPieceImage(source.getPiece().getImage());
+            this.notifyLeftClick(event);
+
+//            SquareGUI source = (SquareGUI) event.getGestureSource();
+//            if(this.piece.getImage() != null){
+//                notifyAddCapturedPiece(this.piece);
+//            }
+//            this.piece.setPieceImage(source.getPiece().getImage());
             event.setDropCompleted(true);
             event.consume();
         });
         this.setOnDragDone(event -> {
-            if (event.getTransferMode() == TransferMode.MOVE){
-                this.piece.setPieceImage(null);
-                notifyBoardLoader(event);
-            }
+//            if (event.getTransferMode() == TransferMode.MOVE){
+//                this.piece.setPieceImage(null);
+//            }
             event.consume();
         });
         /*this.setOnDragEntered(event -> {

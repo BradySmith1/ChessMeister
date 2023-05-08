@@ -53,7 +53,7 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
         //Initialize the Panes.
         this.top = new TopPaneGUI();
         this.top.getRoot().setId("top");
-        this.bottom = new BottomPaneGUI();
+        this.bottom = new BottomPaneGUI("Player 1");
         this.bottom.getRoot().setId("bottom");
         this.center = new CenterPaneGUI();
         this.center.setId("center");
@@ -94,6 +94,9 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
         this.player1.assignPieces(center);
         this.player2.assignPieces(center);
 
+        // sets bottom pane to reflect p1 name
+        this.bottom.updateBottomPane(this.player1.getName());
+
         left = new LeftPaneGUI(this.player1);
         left.getRoot().setId("left");
         right = new RightPaneGUI(this.player2);
@@ -118,10 +121,18 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
 
     }
 
+    /**
+     * getter method for the settings menu.
+     * @return the settings menu
+     */
     private SettingsMenuGUI getSettings(){
         return (SettingsMenuGUI) this.screenChanger.getGuiScene(ToScreen.SETTINGS_MENU);
     }
 
+    /**
+     * getter method for the player names.
+     * @return the player names
+     */
     private PlayerNamesGUI getPlayer(){
         return (PlayerNamesGUI) this.screenChanger.getGuiScene(ToScreen.PLAYER_NAMES);
     }
@@ -146,6 +157,9 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
         updateBoard();
     }
 
+    /**
+     * Updates the board.
+     */
     private void updateBoard(){
         for (int row = 0; row < 8; row++){
             for (int col = 0; col < 8; col++){
@@ -161,10 +175,17 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
 
     /**
      * Notifies the observer that the pane has been updated.
+     *
+     * @param notify true if the pane has been updated, false if wanting to switch to a different pane
      */
     @Override
-    public void notifyPane() {
-        this.screenChanger.notifyBoard();
+    public void notifyPane(boolean notify) {
+        if (notify){
+            this.screenChanger.notifyBoard();
+        }
+        else{
+            this.screenChanger.changeScreen(ToScreen.MAIN_MENU);
+        }
     }
 
     /**
@@ -189,4 +210,14 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
             }
         }
         }
+
+    /**
+     * Notifies the observer that the bottom pane should be updated.
+     *
+     * @param currPlayer the current player
+     */
+    @Override
+    public void notifyBottomPane(String currPlayer) {
+        this.bottom.updateBottomPane(currPlayer);
+    }
 }

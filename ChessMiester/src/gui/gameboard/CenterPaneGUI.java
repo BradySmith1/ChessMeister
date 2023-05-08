@@ -6,6 +6,7 @@
  */
 package gui.gameboard;
 
+import controller.BoardMementoCaretaker;
 import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
@@ -13,20 +14,21 @@ import enums.Rank;
 import gui_backend.PieceGUI;
 import gui_backend.SquareGUI;
 import gui_backend.StateValidation;
-import controller.BoardMementoCaretaker;
 import interfaces.*;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -34,10 +36,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import model.Board;
 import model.Position;
+import movements.KingMovement;
+import movements.RookMovement;
 
 public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventHandler<MouseEvent>,
         BoardIF, CenterPaneObserver {
@@ -90,7 +97,6 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
     private String state;
 
     /**
-     * /**
      * Constructor for the center pane.
      */
     public CenterPaneGUI() {
@@ -276,29 +282,31 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
     /**
      * Enables user to click to move a piece on the chess board.
      *
-     * @param mouse The mouse event
+     * @param event The mouse event
      */
-    private void clickMove(MouseEvent mouse) {
-        if (clicked == null) {
-            clicked = (SquareGUI) mouse.getSource();
-            popup = new Stage();
-            popup.initStyle(StageStyle.UNDECORATED);
-            VBox box = new VBox();
-            Label moveLabel = new Label("Move Piece");
-            box.getChildren().add(moveLabel);
-            Scene stageScene = new Scene(box, 70, 20);
-            popup.setScene(stageScene);
-            popup.setX(mouse.getScreenX() + 10);
-            popup.setY(mouse.getScreenY() + 10);
-            popup.show();
-            this.addEventFilter(MouseEvent.ANY, this);
-        } else {
+    private void clickMove(Event event) {
+        if(clicked == null){
+            clicked = (SquareGUI) event.getSource();
+            if(event instanceof MouseEvent mouse){
+                popup = new Stage();
+                popup.initStyle(StageStyle.UNDECORATED);
+                VBox box = new VBox();
+                Label moveLabel = new Label("Move Piece");
+                box.getChildren().add(moveLabel);
+                Scene stageScene = new Scene(box, 70, 20);
+                popup.setScene(stageScene);
+                popup.setX(mouse.getScreenX() + 10);
+                popup.setY(mouse.getScreenY() + 10);
+                popup.show();
+                this.addEventFilter(MouseEvent.ANY, this);
+            }
+        }else{
             List<Position> validMoves;
             if (clicked.getPiece().getImage() != null) {
                 PieceGUI piece = (PieceGUI) clicked.getPiece();
                 validMoves = piece.getMoveType().getValidMoves(this,
                         clicked.getPosition());
-                SquareGUI newClicked = (SquareGUI) mouse.getSource(); //TODO need to integrate valid moves into here.
+                SquareGUI newClicked = (SquareGUI) event.getSource(); //TODO need to integrate valid moves into here.
                 boolean valid = false;
                 for (Position validMove : validMoves) {
                     if (validMove == null) {
@@ -314,11 +322,10 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                     this.alertPlayerSwitch(this.currentPlayer);
                     // TODO temporary testing purposes
                     if (this.movingOwnPiece()) {
-                        //boolean legalState = this.gameStateCheck();
-                        //if (legalState) {
-                        if (this.determineCapture(newClicked)) {
-                            this.capturePiece(newClicked);
-                        }
+                        Image image;
+
+                        if (this.determineCapture(newClicked)) {this.capturePiece(newClicked);}
+                        image = clicked.getPiece().getImage();
                         newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
                         clicked.getPiece().setPieceImage(null);
 
@@ -326,23 +333,39 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                         this.player1.assignPieces(this);
                         this.player2.assignPieces(this);
 
-                        //Saving to memento.
-                        Position oldPos = clicked.getPosition();
-                        Position newPos = ((SquareGUI) mouse.getSource()).getPosition();
-                        this.addMove(currentPlayer.getColor(), oldPos.getFile(), oldPos.getRank(), newPos.getFile(), newPos.getRank());
-                        caretaker.push(this.createMemento());
+                        if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), this.currentPlayer.getKing().getPosition(this), this)) {
+                            // Undo the move
+                            newClicked.getPiece().setPieceImage(null);
+                            clicked.getPiece().setPieceImage(image);
 
-                        this.switchPlayers();   // TODO This is called here when a confirmed move is made
-                        System.out.println(this.currentPlayer.getName());
-                        this.gameStateCheck();
-                        //}
+                            this.illegalMoveAlert("Cannot move into check!");
+                        }
+                        else{
+                            //Saving to memento.
+                            Position oldPos = clicked.getPosition();
+                            Position newPos = ((SquareGUI) event.getSource()).getPosition();
+                            this.addMove(currentPlayer.getColor(), oldPos.getFile(), oldPos.getRank(), newPos.getFile(), newPos.getRank());
+                            caretaker.push(this.createMemento());
+
+                            this.switchPlayers();   // TODO This is called here when a confirmed move is made
+                            System.out.println(this.currentPlayer.getName());
+                            // TODO call bottom pane and update player display message
+                            this.notifyBottomPane(this.currentPlayer.getName());
+                            this.gameStateCheck();
+                        }
                     }
                 }
+                else{
+                    this.castleLogic(newClicked);
+                }
             }
-            popup.close();
+            if(popup != null){
+                popup.close();
+                popup = null;
+                this.removeEventFilter(MouseEvent.ANY, this);
+            };
             clicked = null;
-            popup = null;
-            this.removeEventFilter(MouseEvent.ANY, this);
+
         }
     }
 
@@ -362,8 +385,8 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
      */
     @Override
     public void notifyLeftClick(Event event) {
-        this.notifyPane();
-        clickMove((MouseEvent) event);
+        this.notifyPane(true);
+        clickMove(event);
     }
 
     /**
@@ -373,13 +396,15 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
      */
     @Override
     public void notifyRightClick(Event event) {
-        this.notifyPane();
+        this.notifyPane(true);
         SquareGUI clickedSquare = (SquareGUI) event.getSource(); //TODO integrate highlighting.
         if (clickedSquare.getPiece().getImage() != null) {
             PieceGUI piece = (PieceGUI) clickedSquare.getPiece();
-            List<Position> validMoves = piece.getMoveType().getValidMoves(this, clickedSquare.getPosition());
+            List<Position> validMoves = piece.getMoveType()
+                    .getValidMoves(this, clickedSquare.getPosition());
             for (Position position : validMoves) {
-                squares[position.getRank().getIndex()][position.getFile().getFileNum()].setColor(this.highlightColor);
+               squares[position.getRank().getIndex()][position.getFile().getFileNum()]
+                       .setColor(this.highlightColor);
             }
 
         }
@@ -415,25 +440,50 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
     }
 
     // TODO Kaushal: This is the method that will return the squares from the center
+
+    /**
+     * Returns the squares of the board.
+     * @return The squares of the board
+     */
     public SquareGUI[][] getSquares() {
         return squares;
     }
 
+    /**
+     * returns the width of the board
+     * @return the width of the board
+     */
     @Override
     public int getBoardWidth() {
         return this.size;
     }
 
+    /**
+     * returns the height of the board
+     * @return the height of the board
+     */
     @Override
     public int getBoardHeight() {
         return this.size;
     }
 
+    /**
+     * gets a piece from a certain position on the board
+     * @param r the rank of the piece.
+     * @param f the file of the piece.
+     * @return the piece at the position.
+     */
     @Override
     public PieceIF getPiece(Rank r, Files f) {
         return squares[r.getIndex()][f.getFileNum()].getPiece();
     }
 
+    /**
+     * gets a piece from a certain position on the board
+     * @param row the row of the piece.
+     * @param col the column of the piece.
+     * @return the piece at the position.
+     */
     @Override
     public PieceIF getPiece(int row, char col) {
         return squares[row][col].getPiece();
@@ -453,8 +503,8 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
      * Notifies the observer that the pane has been updated.
      */
     @Override
-    public void notifyPane() {
-        this.observer.notifyPane();
+    public void notifyPane(boolean notify) {
+       this.observer.notifyPane(notify);
     }
 
     /**
@@ -498,13 +548,16 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         caretaker.push(this.createMemento());
     }
 
+    /**
+     * sets the highlight color
+     * @param color the color to be set
+     */
     public void setHighlightColor(Color color) {
         this.highlightColor = color;
     }
 
     /**
      * Returns the other player based on the current player.
-     *
      * @param player the current player
      * @return the other player
      */
@@ -512,69 +565,110 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         return player == player1 ? player2 : player1;
     }
 
-    private void switchPlayers() {
+    /**
+     * Switches the current player to the other player.
+     */
+    private void switchPlayers(){
         this.currentPlayer = getOtherPlayer(this.currentPlayer);
     }
 
+    /**
+     * sets player 1
+     * @param player1 the player to be set
+     */
     public void setPlayer1(PlayerIF player1) {
         this.player1 = player1;
         this.currentPlayer = player1;
     }
 
+    /**
+     * sets player 2
+     * @param player2 the player to be set
+     */
     public void setPlayer2(PlayerIF player2) {
         this.player2 = player2;
     }
 
-    public void alertPlayerSwitch(PlayerIF player) {
-        System.out.printf("Player %s's turn\n", player.getColor() == GameColor.WHITE ? "White" : "Black");
+    /**
+     * alerts system to switch players
+     * @param player the player whose turn it is
+     */
+    public void alertPlayerSwitch(PlayerIF player){
+        System.out.printf("Player %s's turn\n",
+                    player.getColor() == GameColor.WHITE ? "White" : "Black");
     }
 
     /**
      * Checks to see if the game state is legal before making a move
-     *
      * @return true if a move can be made, false otherwise
      */
     private boolean gameStateCheck() {
         boolean legalState = true;
-        System.out.println("Trying to move : " + clicked.getPiece().getColor() + " Piece --> Current player is : " + this.currentPlayer.getColor());
-        // Check to see if the player wanting to make the move is in check --> isInCheck = true if current player is in check, false otherwise
-        boolean isInCheck = StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), this.currentPlayer.getKing().getPosition(this), this);
+        System.out.println("Trying to move : " + clicked.getPiece().getColor()
+                + " Piece --> Current player is : " + this.currentPlayer.getColor());
+        // Check to see if the player wanting to make the move is in check -->
+        // isInCheck = true if current player is in check, false otherwise
+        boolean isInCheck = StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer),
+                    this.currentPlayer.getKing().getPosition(this), this);
 
-        // If the current player is in check, then check to see if the current player is in checkmate
+        // If the current player is in check, then check to
+        // see if the current player is in checkmate
         if (isInCheck) {
             // Checkmate check: Inside IF STMT when current player is in checkmate
-            if (StateValidation.checkMateCondition(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this)) {
+            if (StateValidation.checkMateCondition(this.currentPlayer,
+                        this.getOtherPlayer(this.currentPlayer), this)) {
                 legalState = false;
-                System.out.println("Checkmate");
+                this.currentPlayer.increaseLosses();
+                this.getOtherPlayer(this.currentPlayer).increaseWins();
+                gameEndAlert("The game has ended by Checkmate. "
+                        + this.getOtherPlayer(this.currentPlayer).getName() + " has won!");
+
             }
-            // If the current player is in check but not checkmate, then the game state is semi-legal
-            else {
-                System.out.println("Check");
+            // If the current player is in check but not checkmate,
+            // then the game state is semi-legal
+            else{
+                this.illegalMoveAlert("You are in check! You must move out of check!");
+                legalState = StateValidation.canMoveOutOfCheck(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this);
             }
         }
-        // If the current player is not in check, then it is possible that the game is stalemate.
-        else if (StateValidation.stalemateCondition(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this)) {
-            System.out.println("Stalemate");
-            legalState = false;
+        // If the current player is not in check,
+        // then it is possible that the game is stalemate.
+        else if (StateValidation.stalemateCondition(this.currentPlayer,
+                    this.getOtherPlayer(this.currentPlayer), this)) {
+                legalState = false;
+                this.currentPlayer.increaseDraws();
+                this.getOtherPlayer(this.currentPlayer).increaseDraws();
+                gameEndAlert("The game has ended by Stalemate. It is a draw!");
         }
         return legalState;
     }
 
     /**
      * Check to see if the piece we are trying to move is our piece
-     *
      * @return True if the piece we are trying to move is ours, false otherwise
      */
-    private boolean movingOwnPiece() {
-        // Check to see if the piece we are trying to move is the current player's piece, if it is then do further checks
+    private boolean movingOwnPiece(){
+        // Check to see if the piece we are trying to move is the current player's
+        // piece, if it is then do further checks
         return this.clicked.getPiece().getColor() == this.currentPlayer.getColor();
     }
 
-    private boolean determineCapture(SquareGUI newClicked) {
+    /**
+     * determines whether a capture occurred or not
+     * @param newClicked the square that was clicked
+     * @return true if a capture occurred, false otherwise
+     */
+    private boolean determineCapture(SquareGUI newClicked){
         return newClicked.getPiece().getImage() != null;
     }
 
-    private void capturePiece(SquareGUI square) {
+    /**
+     * notifies that a piece has been captured
+     * @param square the square that has been captured
+     */
+    private void capturePiece(SquareGUI square){
+        System.out.println("Capturing piece at " + square.getPosition().toString());
+        System.out.println("Captured piece is " + square.getPiece().getType() + " " + square.getPiece().getColor());
         notifyAddCapturedPiece(square.getPiece());
     }
 
@@ -857,4 +951,240 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
      * @param state A string representing the state the board is in
      */
     public record BoardMemento(String state) implements BoardMementoIF{}
+
+    /**
+     * Alerts users game has come to an end
+     * @param message the message to be displayed
+     */
+    private void gameEndAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Game Over");
+        alert.setHeaderText("Game Over");
+
+        // Size the alert window
+        alert.getDialogPane().setMinHeight(800);
+        alert.getDialogPane().setMinWidth(800);
+
+        VBox dialogPaneContent = new VBox();
+        dialogPaneContent.setSpacing(10);
+        dialogPaneContent.setAlignment(Pos.CENTER);
+        dialogPaneContent.setId("main-pane");
+
+        // Add the message and player stats to the VBox
+        Text messageText = new Text(message);
+        Text returnMsg = new Text("Click OK to return to the main menu.");
+        messageText.setId("text");
+        returnMsg.setId("text");
+        messageText.setTextAlignment(TextAlignment.CENTER);
+        returnMsg.setTextAlignment(TextAlignment.CENTER);
+        Text currentPlayerStats = new Text(this.currentPlayer.getName()
+                + "'s Stats: " +
+                "\n  Wins:    " + this.currentPlayer.getWins() +
+                "\n  Losses: " + this.currentPlayer.getLosses() +
+                "\n  Draws:  " + this.currentPlayer.getDraws());
+
+        Text otherPlayerStats = new Text(this.getOtherPlayer(this.currentPlayer).getName()
+                + "'s Stats: " +
+                "\n  Wins:    " + this.getOtherPlayer(this.currentPlayer).getWins() +
+                "\n  Losses: " + this.getOtherPlayer(this.currentPlayer).getLosses() +
+                "\n  Draws:  " + this.getOtherPlayer(this.currentPlayer).getDraws());
+
+        messageText.setId("text");
+        currentPlayerStats.setId("text");
+        otherPlayerStats.setId("text");
+
+        // Add the message and player stats to the VBox
+        dialogPaneContent.getChildren().addAll(messageText, returnMsg,
+                currentPlayerStats, otherPlayerStats);
+
+        // Create the OK button
+        Button okButton = new Button("OK");
+        okButton.setId("bottom-button");
+        okButton.setMaxHeight(50);
+        okButton.setMaxWidth(100);
+
+        // Set the action of the OK button
+        okButton.setOnAction(event -> {
+            alert.close();
+            this.notifyPane(false);
+        });
+
+        // Add the OK button to the VBox and style
+        dialogPaneContent.getChildren().add(okButton);
+        dialogPaneContent.getStylesheets().add(getClass().getResource(
+                "gameBoard.css").toExternalForm());
+
+        // Set the VBox as the content of the dialog pane
+        alert.getDialogPane().setContent(dialogPaneContent);
+
+        // Remove the default OK button
+        alert.getButtonTypes().setAll(ButtonType.CLOSE);
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.CLOSE)).setVisible(false);
+
+        // Add the cancel button
+        alert.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        alert.getDialogPane().lookupButton(ButtonType.CANCEL).setVisible(false);
+
+        alert.showAndWait();
+    }
+
+    /**
+     * Alert the user that the move they are trying to make is illegal
+     * @param message The message to display to the user
+     */
+    private void illegalMoveAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Alert");
+        alert.setHeaderText("Board State");
+        alert.setContentText(message);
+        alert.getDialogPane().getStylesheets().add(getClass().getResource(
+                "gameBoard.css").toExternalForm());
+        alert.showAndWait();
+    }
+
+    /**
+     * notifies bottom pane to update
+     */
+    public void notifyBottomPane(String currPlayer){
+        this.observer.notifyBottomPane(currPlayer);
+    }
+
+    /**
+     * Castling logic
+     */
+    private void castleLogic(SquareGUI target){
+        Position clickedPos = this.clicked.getPosition();
+        Position targetPos = target.getPosition();
+
+        if (this.clicked.getPiece().getType() == ChessPieceType.King && target.getPiece().getImage() != null){
+            if (target.getPiece().getType() == ChessPieceType.Rook){
+                if (canCastle(clickedPos.getFile(), clickedPos.getRank(), targetPos.getFile(), targetPos.getRank())){
+                    PieceIF king = this.clicked.getPiece();
+                    PieceIF rook = target.getPiece();
+                    Image rookImage = rook.getImage();
+                    Image kingImage = king.getImage();
+                    Position kingFrom = clicked.getPosition();
+                    Position kingTo;
+                    Position rookFrom = target.getPosition();
+                    Position rookTo;
+
+                    if (clickedPos.getFile().getFileNum() < targetPos.getFile().getFileNum()){
+                        // Set rook at new place, guaranteed to have rook at file F
+                        this.squares[targetPos.getRank().getIndex()][Files.F.getFileNum()].getPiece().setPieceImage(rookImage);
+                        // Clear square from king
+                        this.squares[clickedPos.getRank().getIndex()][clickedPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        // Clear square from rook
+                        this.squares[targetPos.getRank().getIndex()][targetPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        // Set king at new place Guaranteed that the king will be at file G
+                        this.squares[targetPos.getRank().getIndex()][Files.G.getFileNum()].getPiece().setPieceImage(kingImage);
+
+                        kingTo = new Position(targetPos.getRank(), Files.G);
+                        rookTo = new Position(targetPos.getRank(), Files.F);
+                    }
+                    else{
+                        // Set rook at new place, guaranteed to have rook at file D
+                        this.squares[targetPos.getRank().getIndex()][Files.D.getFileNum()].getPiece().setPieceImage(rookImage);
+                        // Clear square from king
+                        this.squares[clickedPos.getRank().getIndex()][clickedPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        // Clear square from rook
+                        this.squares[targetPos.getRank().getIndex()][targetPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        // Set king at new place Guaranteed that the king will be at file C
+                        this.squares[targetPos.getRank().getIndex()][Files.C.getFileNum()].getPiece().setPieceImage(kingImage);
+
+                        kingTo = new Position(targetPos.getRank(), Files.G);
+                        rookTo = new Position(targetPos.getRank(), Files.D);
+                    }
+
+                    // Set the first move of the king and rook to false
+                    if (king instanceof FirstMoveIF){
+                        ((FirstMoveIF) king).setFirstMove(false);
+                    }
+                    if (rook instanceof FirstMoveIF){
+                        ((FirstMoveIF) rook).setFirstMove(false);
+                    }
+
+                    //Saving to memento.
+                    this.addMove(currentPlayer.getColor(), kingFrom.getFile(), kingFrom.getRank(), kingTo.getFile(), kingTo.getRank());
+                    this.addMove(currentPlayer.getColor(), rookFrom.getFile(), rookFrom.getRank(), rookTo.getFile(), rookTo.getRank());
+                    caretaker.push(this.createMemento());
+
+                    this.switchPlayers();   // TODO This is called here when a confirmed move is made
+                    System.out.println(this.currentPlayer.getName());
+                    // TODO call bottom pane and update player display message
+                    this.notifyBottomPane(this.currentPlayer.getName());
+                    //this.gameStateCheck();
+
+                }
+            }
+        }
+    }
+
+    private boolean canCastle(Files fromF, Rank fromR, Files toF, Rank toR){
+        // grab the king and rook piece from positions to save keystrokes
+        KingMovement king =
+                (KingMovement) this.squares[fromR.getIndex()]
+                        [fromF.getFileNum()].getPiece().getMoveType();
+        RookMovement rook =
+                (RookMovement) this.squares[toR.getIndex()]
+                        [toF.getFileNum()].getPiece().getMoveType();
+
+        //boolean to return at the end
+        //boolean flag = true;
+        boolean canCastle = true;
+
+        // if either rook or king have moved, castling cannot occur
+        if(!king.getFirstMove() || !rook.getFirstMove()) {
+            canCastle = false;
+            //flag = false;
+        }
+
+        // if king is in check or moves into check, castling cannot occur
+        if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(fromR, fromF), this) ||
+                StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(toR, toF), this)) {
+            canCastle = false;
+            //flag = false;
+        }
+
+        // if king passes through check or a piece is there, castling cannot occur
+
+        // check if king is moving to the right
+        Files tempF = fromF;
+        int cnt = 0;
+        if (tempF.getFileNum() < toF.getFileNum() && canCastle) {
+            tempF = Files.values()[tempF.getFileNum() + 1];
+            while (cnt < 2) {
+                //check if king is ever put into check
+
+                if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(fromR, tempF), this)) {
+                    canCastle = false;
+                    //flag = false;
+                }
+                //check if there is a piece in the way
+                if (this.squares[fromR.getIndex()][tempF.getFileNum()].getPiece().getImage() != null) {
+                    canCastle = false;
+                    //flag = false;
+                }
+                tempF = Files.values()[tempF.getFileNum() + 1];
+                cnt++;
+            }
+        }
+        // check if king is moving to the left
+        else {
+            while (cnt < 2) {
+                tempF = Files.values()[tempF.getFileNum() - 1];
+                //check if king is ever put into check
+                if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(fromR, tempF), this)) {
+                    canCastle = false;
+                }
+                //check if there is a piece in the way
+                if (this.squares[fromR.getIndex()]
+                        [tempF.getFileNum()].getPiece().getImage() != null) {
+                    canCastle = false;
+                }
+                tempF = Files.values()[tempF.getFileNum() - 1];
+                cnt++;
+            }
+        }
+        return canCastle; //true if castling is possible, false if not
+    }
 }
