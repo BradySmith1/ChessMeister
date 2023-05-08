@@ -1,10 +1,3 @@
-/**
- * This class is responsible for creating the squares of the chess board. This
- * is then in turn used to create the chess board.
- *
- * @author Brady Smith (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui_backend;
 
 import enums.ChessPieceType;
@@ -20,11 +13,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import model.Position;
 import javafx.scene.image.ImageView;
-import model.Square;
 
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * This class is responsible for creating the squares of the chess board. This
+ * is then in turn used to create the chess board.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF {
 
     /** The position of the square. */
@@ -52,6 +51,7 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
         this.setStyle("-fx-background-color: " + color + ";");
         this.setPrefHeight(50);
         this.setPrefWidth(50);
+        //Listener for mouse click.
         this.setOnMouseClicked(event-> {
             MouseButton temp = event.getButton();
             if(temp == MouseButton.PRIMARY){
@@ -61,6 +61,7 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
                 notifyRightClick(event);
             }
         });
+        //Start of the listener for when a piece is being dragged.
         this.setOnDragDetected(event -> {
             ImageView imageView = (ImageView) this.getChildren().get(0);
             if(imageView.getImage() == null){
@@ -100,33 +101,12 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
         });
         this.setOnDragDropped(event -> {
             this.notifyLeftClick(event);
-
-//            SquareGUI source = (SquareGUI) event.getGestureSource();
-//            if(this.piece.getImage() != null){
-//                notifyAddCapturedPiece(this.piece);
-//            }
-//            this.piece.setPieceImage(source.getPiece().getImage());
             event.setDropCompleted(true);
             event.consume();
         });
         this.setOnDragDone(event -> {
-//            if (event.getTransferMode() == TransferMode.MOVE){
-//                this.piece.setPieceImage(null);
-//            }
             event.consume();
         });
-        /*this.setOnDragEntered(event -> {
-            Dragboard db = event.getDragboard();
-            this.oldImage = this.imageView.getImage();
-            if (event.getGestureSource() != this ) {
-                this.imageView.setImage(db.getImage());
-            }
-            event.consume();
-        });*/
-        /*this.setOnDragExited(event -> {
-            this.imageView.setImage(this.oldImage);
-            event.consume();
-        });*/
     }
 
     /**
@@ -226,25 +206,45 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
         return observer.notifyPieceMoving(event);
     }
 
+    /**
+     * Notifies the observer that a piece has been dropped.
+     *
+     * @param event the event that occurred
+     */
     public void notifyBoardLoader(Event event){
         observer.notifyBoardLoader(event);
     }
 
+    /**
+     * Notifies the observer that the undo button has been clicked.
+     */
     @Override
     public void notifyUndo() {
-
+        //Method not used.
     }
 
+    /**
+     * Notifies the observer that the redo button has been clicked.
+     */
     @Override
     public void notifyRedo() {
-
+        //Method not used.
     }
 
+    /**
+     * Notifies the observer that the save button has been clicked.
+     *
+     * @param writer the writer to be used to save the game
+     */
     @Override
     public void notifySaveGame(PrintWriter writer) {
-
+        //Method not used.
     }
 
+    /**
+     * The set color method for the square.
+     * @param color the color to be set
+     */
     public void setColor(Color color) {
         long alphaRGB = Long.parseLong(color.toString().substring(2), 16);
         this.setStyle("-fx-background-color: " + String.format("#%08X", alphaRGB) + ";");

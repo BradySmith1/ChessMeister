@@ -1,11 +1,5 @@
-/**
- * This class creates the top pane for the chess board GUI.
- *
- * @author Brady Smith (100%)
- * @version 1.0 (done in sprint 3)
- */
-
 package gui.gameboard;
+
 import interfaces.PieceIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.event.ActionEvent;
@@ -24,6 +18,13 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
 
+
+/**
+ * This class creates the top pane for the chess board GUI.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class TopPaneGUI extends GridPane implements GameBoardObserver{
 
     /** The buttons for the pane */
@@ -35,6 +36,7 @@ public class TopPaneGUI extends GridPane implements GameBoardObserver{
     /** Boolean for undo and redo*/
     private boolean undoRedo;
 
+    /** The observer for the game board */
     GameBoardObserver observer;
 
     /**
@@ -105,8 +107,10 @@ public class TopPaneGUI extends GridPane implements GameBoardObserver{
                 Object source = event.getSource();
                 if (source == save) {
                     FileChooser fileChooser = new FileChooser();
-                    fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")  + "/src/SavedGames"));
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
+                    fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")
+                            + "/src/SavedGames"));
+                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter
+                            ("Text Files (*.txt)", "*.txt");
                     fileChooser.getExtensionFilters().add(extFilter);
                     File selectedFile = fileChooser.showSaveDialog(save.getScene().getWindow());
                     if (selectedFile != null) {
@@ -221,6 +225,10 @@ public class TopPaneGUI extends GridPane implements GameBoardObserver{
         observer.notifyRedo();
     }
 
+    /**
+     * Notify the observer to save the game
+     * @param writer the writer
+     */
     public void notifySaveGame(PrintWriter writer) {
         observer.notifySaveGame(writer);
     }

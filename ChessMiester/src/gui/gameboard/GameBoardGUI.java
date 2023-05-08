@@ -1,9 +1,3 @@
-/**
- * This class is responsible for creating the game board GUI.
- *
- * @author Brady Smith (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.gameboard;
 
 import enums.ToScreen;
@@ -15,8 +9,13 @@ import interfaces.PlayerIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
-import model.Player;
 
+/**
+ * This class is responsible for creating the game board GUI.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
 
     /** the top pane */
@@ -37,10 +36,13 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
     /** the screen change handler */
     ScreenChangeHandlerIF screenChanger;
 
+    /** the settings menu */
     private SettingsMenuGUI settings;
 
+    /** player2 name */
     private PlayerIF player1;
 
+    /** player2 name */
     private PlayerIF player2;
 
     /**
@@ -143,16 +145,10 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
      */
     public void updateSettings(){
         this.settings = getSettings();
-//        System.out.println("SHOW MOVES: " + this.settings.getSettings().getShowMoves());
-//        System.out.println("SHOW UNDO/REDO: " + this.settings.getSettings().getUndoRedo());
-//        System.out.println("SHOW THE WHITE: " + this.settings.getSettings().getWhiteSquareColor());
-//        System.out.println("SHOW THE BLACK: " + this.settings.getSettings().getBlackSquareColor());
-//        System.out.println("SHOW THE HIGHLIGHT: " + this.settings.getSettings().getHighlightColor());
 
         this.center.setHighlightColor(this.settings.getSettings().getHighlightColor());
-        //this.top.setShowMoves(this.settings.getSettings().getShowMoves());
-//        System.out.println("UPDATE SETTINGS: " + this.settings.getSettings().getUndoRedo());
         this.top.setShowUndoRedo(this.settings.getSettings().getUndoRedo());
+        this.center.setHighlight(this.settings.getSettings().getShowMoves());
 
         updateBoard();
     }
@@ -164,10 +160,12 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
         for (int row = 0; row < 8; row++){
             for (int col = 0; col < 8; col++){
                 if ((row + col) % 2 == 0){
-                    this.center.getSquares()[row][col].setColor(this.settings.getSettings().getWhiteSquareColor());
+                    this.center.getSquares()[row][col].setColor(this.settings.getSettings()
+                            .getWhiteSquareColor());
                 }
                 else{
-                    this.center.getSquares()[row][col].setColor(this.settings.getSettings().getBlackSquareColor());
+                    this.center.getSquares()[row][col].setColor(this.settings.getSettings()
+                            .getBlackSquareColor());
                 }
             }
         }
@@ -176,7 +174,8 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
     /**
      * Notifies the observer that the pane has been updated.
      *
-     * @param notify true if the pane has been updated, false if wanting to switch to a different pane
+     * @param notify true if the pane has been updated, false if wanting to switch to a
+     *               different pane
      */
     @Override
     public void notifyPane(boolean notify) {
@@ -193,6 +192,7 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
      * @param piece the piece that was captured
      */
     public void notifyAddCapturedPiece(PieceIF piece){
+        //notification to the right and left panes to update there tilepanes with the pieces.
         if(piece == null){
             RightPaneGUI right = (RightPaneGUI) this.getRight();
             right.makeCapturedRight(player2);

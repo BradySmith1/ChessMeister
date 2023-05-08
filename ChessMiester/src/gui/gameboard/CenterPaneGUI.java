@@ -1,9 +1,3 @@
-/**
- * This class is responsible for creating the center pane of the chess board.
- *
- * @author Brady Smith (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.gameboard;
 
 import controller.BoardMementoCaretaker;
@@ -46,6 +40,12 @@ import model.Position;
 import movements.KingMovement;
 import movements.RookMovement;
 
+/**
+ * This class is responsible for creating the center pane of the chess board.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventHandler<MouseEvent>,
         BoardIF, CenterPaneObserver {
 
@@ -97,11 +97,17 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
     private String state;
 
     /**
+     * If highlighting is turned on.
+     */
+    private boolean highlightOn;
+
+    /**
      * Constructor for the center pane.
      */
     public CenterPaneGUI() {
         clicked = null;
         popup = null;
+        //sets up the board.
         initBoard();
         setup();
         setConstraints();
@@ -110,11 +116,15 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         } catch (FileNotFoundException | MalformedURLException fnfe) {
             System.out.println("Error: File not found.");
         }
+        //sets up the saving and loading of the board.
         this.state = "{}#[]#[]#[]";
         this.createState();
         this.caretaker = new BoardMementoCaretaker(this.createMemento());
     }
 
+    /**
+     * Initializes the game board by adding pieces to it.
+     */
     @Override
     public void initBoard() {
         squares = new SquareGUI[size][size];
@@ -148,7 +158,15 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         }
     }
 
-    private void PieceImageFactory(ChessPieceType type,  GameColor color, PieceGUI view) throws MalformedURLException {
+    /**
+     * Populates the pieces with pictures of the pieces.
+     * @param type The type of piece.
+     * @param color The color of the piece.
+     * @param view The view of the piece.
+     * @throws MalformedURLException If the URL is malformed.
+     */
+    private void PieceImageFactory(ChessPieceType type,  GameColor color, PieceGUI view) throws
+            MalformedURLException {
         String url = new File("src/gui/gameboard/images/WhitePawn.png").toURI()
                 .toURL().toExternalForm();
         Image whitePawnImage = new Image(url);
@@ -285,9 +303,10 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
      * @param event The mouse event
      */
     private void clickMove(Event event) {
+        //First if statement is for if the user clicks on a square to move from.
         if(clicked == null){
             clicked = (SquareGUI) event.getSource();
-            if(event instanceof MouseEvent mouse){
+            if(event instanceof MouseEvent mouse) {
                 popup = new Stage();
                 popup.initStyle(StageStyle.UNDECORATED);
                 VBox box = new VBox();
@@ -300,13 +319,15 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                 popup.show();
                 this.addEventFilter(MouseEvent.ANY, this);
             }
+        //Else statement is for if the user clicks on a square to move to.
         }else{
+            //Basic checking if valid moves are possible.
             List<Position> validMoves;
             if (clicked.getPiece().getImage() != null) {
                 PieceGUI piece = (PieceGUI) clicked.getPiece();
                 validMoves = piece.getMoveType().getValidMoves(this,
                         clicked.getPosition());
-                SquareGUI newClicked = (SquareGUI) event.getSource(); //TODO need to integrate valid moves into here.
+                SquareGUI newClicked = (SquareGUI) event.getSource();
                 boolean valid = false;
                 for (Position validMove : validMoves) {
                     if (validMove == null) {
@@ -317,6 +338,7 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                         break;
                     }
                 }
+                //Checks for other possible moves like castling.
                 if (valid) {
                     // TODO Temporary code to test switching players
                     this.alertPlayerSwitch(this.currentPlayer);
@@ -329,11 +351,11 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                         newClicked.getPiece().setPieceImage(clicked.getPiece().getImage());
                         clicked.getPiece().setPieceImage(null);
 
-                        // FIXME Reassign player pieces b/c after a move is made, the players list needs to update with the new piece
                         this.player1.assignPieces(this);
                         this.player2.assignPieces(this);
 
-                        if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), this.currentPlayer.getKing().getPosition(this), this)) {
+                        if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer),
+                                this.currentPlayer.getKing().getPosition(this), this)) {
                             // Undo the move
                             newClicked.getPiece().setPieceImage(null);
                             clicked.getPiece().setPieceImage(image);
@@ -344,12 +366,12 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                             //Saving to memento.
                             Position oldPos = clicked.getPosition();
                             Position newPos = ((SquareGUI) event.getSource()).getPosition();
-                            this.addMove(currentPlayer.getColor(), oldPos.getFile(), oldPos.getRank(), newPos.getFile(), newPos.getRank());
+                            this.addMove(currentPlayer.getColor(), oldPos.getFile(),
+                                    oldPos.getRank(), newPos.getFile(), newPos.getRank());
                             caretaker.push(this.createMemento());
 
-                            this.switchPlayers();   // TODO This is called here when a confirmed move is made
+                            this.switchPlayers();
                             System.out.println(this.currentPlayer.getName());
-                            // TODO call bottom pane and update player display message
                             this.notifyBottomPane(this.currentPlayer.getName());
                             this.gameStateCheck();
                         }
@@ -359,6 +381,7 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                     this.castleLogic(newClicked);
                 }
             }
+            //cleanup of the popup and clicked square.
             if(popup != null){
                 popup.close();
                 popup = null;
@@ -397,8 +420,9 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
     @Override
     public void notifyRightClick(Event event) {
         this.notifyPane(true);
-        SquareGUI clickedSquare = (SquareGUI) event.getSource(); //TODO integrate highlighting.
-        if (clickedSquare.getPiece().getImage() != null) {
+        //This is all the logic for highlighting valid moves.
+        SquareGUI clickedSquare = (SquareGUI) event.getSource();
+        if (clickedSquare.getPiece().getImage() != null && this.highlightOn) {
             PieceGUI piece = (PieceGUI) clickedSquare.getPiece();
             List<Position> validMoves = piece.getMoveType()
                     .getValidMoves(this, clickedSquare.getPosition());
@@ -411,11 +435,21 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
     }
 
     /**
+     * setter for highlight availability.
+     *
+     * @param highlight if highlighting is on or off.
+     */
+    public void setHighlight(boolean highlight){
+        this.highlightOn = highlight;
+    }
+
+    /**
      * Notifies the view that the mouse has moved.
      *
      * @param event The mouse event
      */
     public List<Position> notifyPieceMoving(Event event) {
+        //this is the logic for showing that a piece is being dragged from one square to another.
         DragEvent dragEvent = (DragEvent) event;
         List<Position> validMoves = null;
         SquareGUI clickedSquare = (SquareGUI) dragEvent.getGestureSource();
@@ -438,8 +472,6 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         popup.setX(event.getScreenX() + 10); //700
         popup.setY(event.getScreenY() + 10); //150
     }
-
-    // TODO Kaushal: This is the method that will return the squares from the center
 
     /**
      * Returns the squares of the board.
@@ -515,11 +547,17 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         this.undo();
     }
 
+    /**
+     * Notifies the observer that the redo button has been pressed.
+     */
     @Override
     public void notifyRedo(){
         this.redo();
     }
 
+    /**
+     * Notifies the observer that the save button has been pressed.
+     */
     @Override
     public void notifySaveGame(PrintWriter writer) {
         writer.write(caretaker.topToBottom().state());
@@ -544,7 +582,8 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
     public void notifyBoardLoader(Event event){
         Position oldPos = ((SquareGUI)((DragEvent) event).getGestureSource()).getPosition();
         Position newPos = ((SquareGUI) event.getSource()).getPosition();
-        this.addMove(currentPlayer.getColor(), oldPos.getFile(), oldPos.getRank(), newPos.getFile(), newPos.getRank());
+        this.addMove(currentPlayer.getColor(), oldPos.getFile(), oldPos.getRank(), newPos.getFile(),
+                newPos.getRank());
         caretaker.push(this.createMemento());
     }
 
@@ -628,7 +667,8 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
             // then the game state is semi-legal
             else{
                 this.illegalMoveAlert("You are in check! You must move out of check!");
-                legalState = StateValidation.canMoveOutOfCheck(this.currentPlayer, this.getOtherPlayer(this.currentPlayer), this);
+                legalState = StateValidation.canMoveOutOfCheck(this.currentPlayer,
+                        this.getOtherPlayer(this.currentPlayer), this);
             }
         }
         // If the current player is not in check,
@@ -668,7 +708,8 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
      */
     private void capturePiece(SquareGUI square){
         System.out.println("Capturing piece at " + square.getPosition().toString());
-        System.out.println("Captured piece is " + square.getPiece().getType() + " " + square.getPiece().getColor());
+        System.out.println("Captured piece is " + square.getPiece().getType() + " " +
+                square.getPiece().getColor());
         notifyAddCapturedPiece(square.getPiece());
     }
 
@@ -683,7 +724,7 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
             for (int j = 0; j < getBoardHeight(); j++) {
                 SquareIF square = (squares[i][j]);
                 if (square.getPiece().getImage() != null) {
-
+                    //Records the state of each piece to a string to be written to a file.
                     stateBuilder.append(
                             Character.toUpperCase(square.getPosition().getFile().getFileChar()));
                     stateBuilder.append(square.getPosition().getRank().displayNum);
@@ -698,7 +739,8 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         }
         stateBuilder.append("}");
         this.state =
-                stateBuilder.toString() + "#" + this.state.split("#")[1] + "#" + this.state.split("#")[2] + "#" + this.state.split("#")[3];
+                stateBuilder.toString() + "#" + this.state.split("#")[1] + "#" +
+                        this.state.split("#")[2] + "#" + this.state.split("#")[3];
     }
 
     /**
@@ -712,6 +754,7 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
      */
     @Override
     public void addMove(GameColor color, Files fromF, Rank fromR, Files toF, Rank toR) {
+        //Adds the moves to the state string.
         this.createState();
         StringBuilder stateBuilder = new StringBuilder(this.state.split("#")[1]);
         stateBuilder.deleteCharAt(stateBuilder.length() - 1);
@@ -727,11 +770,13 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         stateBuilder.append(toR.displayNum);
         stateBuilder.append("]");
 
+        //Adds the captured pieces of player1 to the state string.
         StringBuilder stateBuilder2 = new StringBuilder(this.state.split("#")[2]);
         if (player1.getCapturedPieces().size() != 0){
             stateBuilder2.delete(1, stateBuilder2.length());
             for(int i = 0; i < player1.getCapturedPieces().size(); i++){
-                stateBuilder2.append(player1.getCapturedPieces().get(i).getColor().toString().charAt(0));
+                stateBuilder2.append(player1.getCapturedPieces().get(i).getColor().toString()
+                        .charAt(0));
                 stateBuilder2.append("_");
                 stateBuilder2.append(player1.getCapturedPieces().get(i).getType().letter);
                 if(i != player1.getCapturedPieces().size() - 1){
@@ -740,11 +785,14 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
             }
             stateBuilder2.append("]");
         }
+
+        //Adds the captured pieces of player2 to the state string.
         StringBuilder stateBuilder3 = new StringBuilder(this.state.split("#")[3]);
         if (player2.getCapturedPieces().size() != 0){
             stateBuilder3.delete(1, stateBuilder3.length());
             for(int i = 0; i < player2.getCapturedPieces().size(); i++){
-                stateBuilder3.append(player2.getCapturedPieces().get(i).getColor().toString().charAt(0));
+                stateBuilder3.append(player2.getCapturedPieces().get(i).getColor().toString()
+                        .charAt(0));
                 stateBuilder3.append("_");
                 stateBuilder3.append(player2.getCapturedPieces().get(i).getType().letter);
                 if(i != player2.getCapturedPieces().size() - 1){
@@ -754,7 +802,9 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
             stateBuilder3.append("]");
         }
 
-        this.state = this.state.split("#")[0] + "#" + stateBuilder.toString() + "#" + stateBuilder2.toString() + "#" + stateBuilder3.toString();
+        //Adds the moves and captured pieces to the state string.
+        this.state = this.state.split("#")[0] + "#" + stateBuilder.toString() + "#" +
+                stateBuilder2.toString() + "#" + stateBuilder3.toString();
     }
 
     /**
@@ -814,6 +864,7 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
      */
     @Override
     public void loadFromMemento(BoardMementoIF boardMemento) {
+        //parses the file and loads everything to the memento
         String[] contents = boardMemento.state().split("#");
         String[] pieces = contents[0].substring(1, contents[0].length() - 1).split(",");
         String[] movesForward = contents[1].substring(1, contents[1].length() - 1).split(",");
@@ -828,13 +879,16 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         if (!moves[0].equals("")) {
             setFirstMovesFromMemento(moves);
         }
+        //choosing what player is the current player to move.
         if(movesForward[movesForward.length - 1].substring(0, 1).equals("W")){
             this.currentPlayer = player2;
         }
         else{
             this.currentPlayer = player1;
         }
+        //changes the bottom pane to the current player.
         this.notifyBottomPane(this.currentPlayer.getName());
+        //sets the captured pieces of the players and shows them on the left and right panes.
         setCapturedPiecesFromMemento(capturedPiecesPlayer1, capturedPiecesPlayer2);
         this.notifyAddCapturedPiece(null);
         this.state = boardMemento.state();
@@ -845,6 +899,7 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         this.player2.getCapturedPieces().clear();
         String[] empty = new String[1];
         empty[0] = "";
+        //setting player 1 captured pieces
         if(!Arrays.equals(player1Pieces, empty)){
             for (String piece : player1Pieces){
                 GameColor color = null;
@@ -867,6 +922,7 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                 this.player1.addCapturedPiece(pieceGUI);
             }
         }
+        //setting player 2 captured pieces
         if(!Arrays.equals(player2Pieces, empty)){
             for (String piece : player2Pieces){
                 GameColor color = null;
@@ -913,7 +969,8 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                 case "W" -> color = GameColor.WHITE;
                 case "B" -> color = GameColor.BLACK;
             }
-            PieceGUI view = (PieceGUI) squares[newRank.getIndex()][newFile.getFileNum()].getPiece();
+            PieceGUI view = (PieceGUI) squares[newRank.getIndex()][newFile.getFileNum()]
+                    .getPiece();
             try{
                 PieceImageFactory(pieceType, color, view);
             }catch (Exception e){
@@ -1057,15 +1114,18 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
     }
 
     /**
-     * Castling logic
+     * Method to start checking for if castling is valid or not.
+     * @param target the square that the piece is being moved to
      */
     private void castleLogic(SquareGUI target){
         Position clickedPos = this.clicked.getPosition();
         Position targetPos = target.getPosition();
 
-        if (this.clicked.getPiece().getType() == ChessPieceType.King && target.getPiece().getImage() != null){
+        if (this.clicked.getPiece().getType() == ChessPieceType.King && target.getPiece()
+                .getImage() != null){
             if (target.getPiece().getType() == ChessPieceType.Rook){
-                if (canCastle(clickedPos.getFile(), clickedPos.getRank(), targetPos.getFile(), targetPos.getRank())){
+                if (canCastle(clickedPos.getFile(), clickedPos.getRank(), targetPos.getFile(),
+                        targetPos.getRank())){
                     PieceIF king = this.clicked.getPiece();
                     PieceIF rook = target.getPiece();
                     Image rookImage = rook.getImage();
@@ -1077,26 +1137,34 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
 
                     if (clickedPos.getFile().getFileNum() < targetPos.getFile().getFileNum()){
                         // Set rook at new place, guaranteed to have rook at file F
-                        this.squares[targetPos.getRank().getIndex()][Files.F.getFileNum()].getPiece().setPieceImage(rookImage);
+                        this.squares[targetPos.getRank().getIndex()][Files.F.getFileNum()]
+                                .getPiece().setPieceImage(rookImage);
                         // Clear square from king
-                        this.squares[clickedPos.getRank().getIndex()][clickedPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        this.squares[clickedPos.getRank().getIndex()][clickedPos.getFile()
+                                .getFileNum()].getPiece().setPieceImage(null);
                         // Clear square from rook
-                        this.squares[targetPos.getRank().getIndex()][targetPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        this.squares[targetPos.getRank().getIndex()][targetPos.getFile()
+                                .getFileNum()].getPiece().setPieceImage(null);
                         // Set king at new place Guaranteed that the king will be at file G
-                        this.squares[targetPos.getRank().getIndex()][Files.G.getFileNum()].getPiece().setPieceImage(kingImage);
+                        this.squares[targetPos.getRank().getIndex()][Files.G.getFileNum()]
+                                .getPiece().setPieceImage(kingImage);
 
                         kingTo = new Position(targetPos.getRank(), Files.G);
                         rookTo = new Position(targetPos.getRank(), Files.F);
                     }
                     else{
                         // Set rook at new place, guaranteed to have rook at file D
-                        this.squares[targetPos.getRank().getIndex()][Files.D.getFileNum()].getPiece().setPieceImage(rookImage);
+                        this.squares[targetPos.getRank().getIndex()][Files.D.getFileNum()]
+                                .getPiece().setPieceImage(rookImage);
                         // Clear square from king
-                        this.squares[clickedPos.getRank().getIndex()][clickedPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        this.squares[clickedPos.getRank().getIndex()][clickedPos.getFile()
+                                .getFileNum()].getPiece().setPieceImage(null);
                         // Clear square from rook
-                        this.squares[targetPos.getRank().getIndex()][targetPos.getFile().getFileNum()].getPiece().setPieceImage(null);
+                        this.squares[targetPos.getRank().getIndex()][targetPos.getFile()
+                                .getFileNum()].getPiece().setPieceImage(null);
                         // Set king at new place Guaranteed that the king will be at file C
-                        this.squares[targetPos.getRank().getIndex()][Files.C.getFileNum()].getPiece().setPieceImage(kingImage);
+                        this.squares[targetPos.getRank().getIndex()][Files.C.getFileNum()]
+                                .getPiece().setPieceImage(kingImage);
 
                         kingTo = new Position(targetPos.getRank(), Files.G);
                         rookTo = new Position(targetPos.getRank(), Files.D);
@@ -1111,13 +1179,14 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                     }
 
                     //Saving to memento.
-                    this.addMove(currentPlayer.getColor(), kingFrom.getFile(), kingFrom.getRank(), kingTo.getFile(), kingTo.getRank());
-                    this.addMove(currentPlayer.getColor(), rookFrom.getFile(), rookFrom.getRank(), rookTo.getFile(), rookTo.getRank());
+                    this.addMove(currentPlayer.getColor(), kingFrom.getFile(), kingFrom.getRank(),
+                            kingTo.getFile(), kingTo.getRank());
+                    this.addMove(currentPlayer.getColor(), rookFrom.getFile(), rookFrom.getRank(),
+                            rookTo.getFile(), rookTo.getRank());
                     caretaker.push(this.createMemento());
 
-                    this.switchPlayers();   // TODO This is called here when a confirmed move is made
+                    this.switchPlayers();
                     System.out.println(this.currentPlayer.getName());
-                    // TODO call bottom pane and update player display message
                     this.notifyBottomPane(this.currentPlayer.getName());
                     //this.gameStateCheck();
 
@@ -1126,6 +1195,14 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         }
     }
 
+    /**
+     * Checks if the king and rook can castle
+     * @param fromF the file the king is moving from
+     * @param fromR the rank the king is moving from
+     * @param toF the file the king is moving to
+     * @param toR the rank the king is moving to
+     * @return true if the king and rook can castle, false otherwise
+     */
     private boolean canCastle(Files fromF, Rank fromR, Files toF, Rank toR){
         // grab the king and rook piece from positions to save keystrokes
         KingMovement king =
@@ -1146,8 +1223,10 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         }
 
         // if king is in check or moves into check, castling cannot occur
-        if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(fromR, fromF), this) ||
-                StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(toR, toF), this)) {
+        if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer),
+                new Position(fromR, fromF), this) ||
+                StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer),
+                        new Position(toR, toF), this)) {
             canCastle = false;
             //flag = false;
         }
@@ -1162,12 +1241,14 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
             while (cnt < 2) {
                 //check if king is ever put into check
 
-                if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(fromR, tempF), this)) {
+                if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer),
+                        new Position(fromR, tempF), this)) {
                     canCastle = false;
                     //flag = false;
                 }
                 //check if there is a piece in the way
-                if (this.squares[fromR.getIndex()][tempF.getFileNum()].getPiece().getImage() != null) {
+                if (this.squares[fromR.getIndex()][tempF.getFileNum()].getPiece().getImage()
+                        != null) {
                     canCastle = false;
                     //flag = false;
                 }
@@ -1180,7 +1261,8 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
             while (cnt < 2) {
                 tempF = Files.values()[tempF.getFileNum() - 1];
                 //check if king is ever put into check
-                if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer), new Position(fromR, tempF), this)) {
+                if (StateValidation.checkCondition(this.getOtherPlayer(this.currentPlayer),
+                        new Position(fromR, tempF), this)) {
                     canCastle = false;
                 }
                 //check if there is a piece in the way

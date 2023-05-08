@@ -1,9 +1,3 @@
-/**
- * This class creates the bottom pane for the chess board GUI.
- *
- * @author Brady Smith 100%
- * @version 1.0 (done in sprint 3)
- */
 package gui.gameboard;
 
 import enums.ToScreen;
@@ -14,6 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+/**
+ * This class creates the bottom pane for the chess board GUI.
+ *
+ * @author Brady Smith 100%
+ * @version 1.0 (done in sprint 3)
+ */
 
 public class BottomPaneGUI extends AnchorPane {
     /** Label for the pane */
@@ -25,6 +25,10 @@ public class BottomPaneGUI extends AnchorPane {
     /** Reference to the implementation for the ScreenChangeHandlerIF **/
     ScreenChangeHandlerIF screenChanger;
 
+    /**
+     * The bottom pane of the game board.
+     * @param name the name of the player
+     */
     public BottomPaneGUI(String name){
         this.playerSelect = new Label(name + "'s turn!");
         playerSelect.setId("topLabel");
@@ -37,10 +41,12 @@ public class BottomPaneGUI extends AnchorPane {
         exitButton = new Button("Exit");
         exitButton.setId("bottom-button");
 
+        //Setting the values of the anchors.
         AnchorPane.setBottomAnchor(settings, 0.0);
         AnchorPane.setLeftAnchor(settings, 0.0);
         AnchorPane.setBottomAnchor(exitButton, 0.0);
         AnchorPane.setRightAnchor(exitButton, 0.0);
+
         // Set the action for the buttons
         this.settings.setOnAction(buttonHandler);
         this.exitButton.setOnAction(buttonHandler);

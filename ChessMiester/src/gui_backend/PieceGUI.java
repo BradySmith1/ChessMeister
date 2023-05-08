@@ -1,10 +1,3 @@
-/**
- * This class is responsible for creating the graphical implementation and logic
- * for a piece in the chess board.
- *
- * @author Brady Smith (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui_backend;
 
 import enums.ChessPieceType;
@@ -19,6 +12,13 @@ import movements.*;
 
 import java.util.List;
 
+/**
+ * This class is responsible for creating the graphical implementation and logic
+ * for a piece in the chess board.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class PieceGUI extends ImageView implements PieceIF {
     /** the image of the piece */
     private Image image;

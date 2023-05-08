@@ -1,25 +1,22 @@
-/**
- * This class is responsible for creating the left pane of the chess board.
- *
- * @author Brady Smith (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.gameboard;
 
-import gui.playernames.PlayerNamesGUI;
 import interfaces.PieceIF;
 import interfaces.PlayerIF;
-import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import model.Piece;
 
 import java.util.ArrayList;
 
+/**
+ * This class is responsible for creating the left pane of the chess board.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class LeftPaneGUI extends VBox{
 
     /** The label for player 1. */
@@ -44,7 +41,7 @@ public class LeftPaneGUI extends VBox{
         captured.setPrefColumns(2);
         captured.setPrefRows(8);
         captured.setMaxSize(300, 800);
-        captured.setMinSize(300, 400); //TODO this is a temporary fix for the resizing issue
+        captured.setMinSize(300, 400);
         captured.setId("main-pain");
         capturedPieces.setId("topLabel");
 

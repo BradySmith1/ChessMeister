@@ -3,15 +3,25 @@ package gui_backend;
 import interfaces.BoardIF;
 import interfaces.PieceIF;
 import interfaces.PlayerIF;
-import model.Board;
-import model.Piece;
 import model.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is responsible for the GUI implementation for the state validation
+ * for the chess game.
+ * @author Kaushal Patel 100%
+ */
 public class StateValidation {
 
+    /**
+     * Checks to see if the king is in check.
+     * @param otherPlayer the other player
+     * @param position the position of the king
+     * @param board the board
+     * @return true if the king is in check, false otherwise
+     */
     public static boolean checkCondition(PlayerIF otherPlayer, Position position, BoardIF board) {
         boolean isCheck = false;
 
@@ -32,6 +42,13 @@ public class StateValidation {
     }
 
 
+    /**
+     * Checks to see if the king is in checkmate.
+     * @param player the player
+     * @param playerOther the other player
+     * @param board the board
+     * @return true if the king is in checkmate, false otherwise
+     */
     public static boolean checkMateCondition(PlayerIF player, PlayerIF playerOther, BoardIF board) {
         // Check to see if the king is in check.
         boolean checkmate = false;
@@ -62,6 +79,13 @@ public class StateValidation {
             return checkmate;
     }
 
+    /**
+     * Checks to see if the game is in stalemate.
+     * @param currentPlayer the current player
+     * @param otherPlayer the other player
+     * @param board the board
+     * @return true if the game is in stalemate, false otherwise
+     */
     public static boolean stalemateCondition(PlayerIF currentPlayer, PlayerIF otherPlayer, BoardIF board) {
         // A draw should be declared if the king is not in check and there are no valid moves for the player
         boolean inCheck = checkCondition(otherPlayer, currentPlayer.getKing().getPosition(board), board);
@@ -84,6 +108,13 @@ public class StateValidation {
         return !inCheck && stalemate;
     }
 
+    /**
+     * Checks to see if the king can move out of check.
+     * @param player the player
+     * @param playerOther the other player
+     * @param board the board
+     * @return true if the king can move out of check, false otherwise
+     */
     public static boolean canMoveOutOfCheck(PlayerIF player, PlayerIF playerOther, BoardIF board) {
         // Check to see if the king can move to a position where it is not in check.
         boolean canMoveOutOfCheck = false;

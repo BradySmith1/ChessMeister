@@ -1,10 +1,3 @@
-/**
- * This is an interface used to observe the game board and notify the
- * necessary components.
- *
- * @author Brady Smith (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.gameboard;
 
 import interfaces.PieceIF;
@@ -14,6 +7,13 @@ import model.Position;
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * This is an interface used to observe the game board and notify the
+ * necessary components.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public interface GameBoardObserver {
 
     /**
@@ -59,5 +59,8 @@ public interface GameBoardObserver {
      */
     void notifyRedo();
 
+    /**
+     * Notifies the observer that the save button has been pressed.
+     */
     void notifySaveGame(PrintWriter writer);
 }

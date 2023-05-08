@@ -1,3 +1,9 @@
+package gui_backend;
+
+import enums.GameColor;
+import interfaces.PlayerIF;
+import model.Player;
+
 /**
  * This class is responsible for the GUI implementation for the defining
  * players for the chess game.
@@ -5,12 +11,6 @@
  * @author Kaushal Patel (100%)
  * @version 1.0 (done in sprint 3)
  */
-package gui_backend;
-
-import enums.GameColor;
-import interfaces.PlayerIF;
-import model.Player;
-
 public class DefinePlayersGUI {
 
     /** Player 1 */

@@ -1,14 +1,7 @@
-/**
- * This class creates the right pane for the chess board GUI.
- *
- * @author Brady Smith (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.gameboard;
 
 import interfaces.PieceIF;
 import interfaces.PlayerIF;
-import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +11,12 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
+/**
+ * This class creates the right pane for the chess board GUI.
+ *
+ * @author Brady Smith (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class RightPaneGUI extends VBox{
 
     /** The label for player 2. */
@@ -26,6 +25,7 @@ public class RightPaneGUI extends VBox{
     /** The label for the captured pieces. */
     Label capturedPieces;
 
+    /** The captured pieces pane. */
     private TilePane captured;
 
     /**
