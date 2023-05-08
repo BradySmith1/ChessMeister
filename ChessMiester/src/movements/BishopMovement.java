@@ -10,10 +10,10 @@ package movements;
 import enums.GameColor;
 import interfaces.BoardIF;
 import interfaces.MovementIF;
+import interfaces.PieceIF;
 import model.BlackAndWhite;
-import model.Piece;
 import model.Position;
-import model.Square;
+import interfaces.SquareIF;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,13 +76,15 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
         boolean pieceHit = false; // Whether a piece has been hit or not
 
-        while(!pieceHit && currentRank < board.getHeight() && currentFile < board.getWidth()) {
+        while(!pieceHit && currentRank < board.getBoardHeight() && currentFile < board.getBoardWidth()) {
             // get current square on board
-            Square currSquare = (Square) board.getSquares()[currentRank][currentFile];
+            SquareIF currSquare = board.getSquares()[currentRank][currentFile];
 
-            Piece currPiece = (Piece) currSquare.getPiece(); // get piece on current square
+            PieceIF currPiece = currSquare.getPiece(); // get piece on current square
 
-            if(currSquare.getPiece() == null){ // if the square is empty
+            if(currSquare.getPiece() == null || currSquare.getPiece().getImage() == null){ // if
+                // the square is
+                // empty
                 validMovesUpRight.add(currSquare.getPosition());
             }
             else if(!currPiece.getColor().equals(getColor())){ // if the piece is an enemy piece
@@ -114,13 +116,13 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
         boolean pieceHit = false; // Whether a piece has been hit or not
 
-        while (!pieceHit && currentRank < board.getHeight() && currentFile >= 0) {
+        while (!pieceHit && currentRank < board.getBoardHeight() && currentFile >= 0) {
             // get current square on board
-            Square currSquare = (Square) board.getSquares()[currentRank][currentFile];
+            SquareIF currSquare = board.getSquares()[currentRank][currentFile];
 
-            Piece currPiece = (Piece) currSquare.getPiece(); // get piece on current square
+            PieceIF currPiece =  currSquare.getPiece(); // get piece on current square
 
-            if (currSquare.getPiece() == null) { // if the square is empty
+            if (currSquare.getPiece() == null || currSquare.getPiece().getImage() == null) { // if the square is empty
                 validMovesUpLeft.add(currSquare.getPosition());
             } else if (!currPiece.getColor().equals(getColor())) {
                 validMovesUpLeft.add(currSquare.getPosition());
@@ -150,13 +152,13 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
         boolean pieceHit = false; // Whether a piece has been hit or not
 
-        while (!pieceHit && currentRank >= 0 && currentFile < board.getWidth()) {
+        while (!pieceHit && currentRank >= 0 && currentFile < board.getBoardWidth()) {
             // get current square on board
-            Square currSquare = (Square) board.getSquares()[currentRank][currentFile];
+            SquareIF currSquare = board.getSquares()[currentRank][currentFile];
 
-            Piece currPiece = (Piece) currSquare.getPiece(); // get piece on current square
+            PieceIF currPiece = currSquare.getPiece(); // get piece on current square
 
-            if (currSquare.getPiece() == null) { // if the square is empty
+            if (currSquare.getPiece() == null || currSquare.getPiece().getImage() == null) { // if the square is empty
                 validMovesDownRight.add(currSquare.getPosition());
             } else if (!currPiece.getColor().equals(getColor())) { // if the piece is enemy piece
                 validMovesDownRight.add(currSquare.getPosition());
@@ -188,11 +190,11 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
         while(!pieceHit && currentRank >= 0 && currentFile >= 0){
             // get current square on board
-            Square currSquare = (Square) board.getSquares()[currentRank][currentFile];
+            SquareIF currSquare = board.getSquares()[currentRank][currentFile];
 
-            Piece currPiece = (Piece) currSquare.getPiece(); // get piece on current square
+            PieceIF currPiece = currSquare.getPiece(); // get piece on current square
 
-            if(currSquare.getPiece() == null){ // if the square is empty
+            if(currSquare.getPiece() == null || currSquare.getPiece().getImage() == null){ // if the square is empty
                 validMovesDownLeft.add(currSquare.getPosition());
             }
             else if(!currPiece.getColor().equals(getColor())){ // if the piece is an enemy piece

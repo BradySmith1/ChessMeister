@@ -3,3 +3,9 @@
 ./ChessMiester/ChessMiester.iml
 ./idea/b_orange.iml
 ./idea/misc.xml
+*.iml
+misc.xml
+modules.xml
+vcs.xml
+./ChessMiester/.idea/.gitignore
+ChessMiester/.idea/.gitignore

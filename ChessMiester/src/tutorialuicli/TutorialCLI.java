@@ -7,6 +7,7 @@ import enums.GameColor;
 import enums.Rank;
 import interfaces.BoardIF;
 import interfaces.FirstMoveIF;
+import interfaces.PieceIF;
 import interfaces.SettingsIF;
 import model.Board;
 import model.BoardSaverLoader;
@@ -59,15 +60,15 @@ public class TutorialCLI {
 
         // set the board color based on settings
         if(color.equals("Mono")){
-            this.board.setDrawStrategy(new BoardMonoCLI());
+            ((Board)this.board).setDrawStrategy(new BoardMonoCLI());
         } else {
-            this.board.setDrawStrategy(new BoardColorCLI());
+            ((Board)this.board).setDrawStrategy(new BoardColorCLI());
         }
 
         String input = "1"; // basic string for user input
 
         while (!input.equals("0")) { // loop game until user wants to quit
-            this.board.draw(GameColor.WHITE); // draw board
+            ((Board)this.board).draw(GameColor.WHITE); // draw board
 
             List<Position> moves = piece.getValidMoves(this.board, pos); // get valid moves for bishop
             System.out.print("Enter a move (Enter 0 to quit, " +
@@ -170,7 +171,9 @@ public class TutorialCLI {
             Files randFile = getRandomFile(); // get random file
             Rank randRank = getRandomRank(); // get random rank
             // check to make sure it's a dark tile and it's empty
-            if(board.getSquares()[randRank.getIndex()][randFile.getFileNum()].getPiece() == null){
+            PieceIF temp =
+                    board.getSquares()[randRank.getIndex()][randFile.getFileNum()].getPiece();
+            if(temp == null || temp.getImage() == null){
                 //wlog, a1, a3, a5, a7 are dark tiles
                 if ((randFile.equals(Files.A) || randFile.equals(Files.C) ||
                         randFile.equals(Files.E) || randFile.equals(Files.G))){

@@ -220,8 +220,8 @@ public class Player implements PlayerIF {
     public void assignPieces(BoardIF board){
         this.pieces.clear();
         SquareIF[][] squares = board.getSquares();
-        for (int i = 0; i < board.getWidth(); i++) {
-            for (int j = 0; j < board.getHeight(); j++) {
+        for (int i = 0; i < board.getBoardWidth(); i++) {
+            for (int j = 0; j < board.getBoardHeight(); j++) {
                 if(squares[i][j].getPiece() != null){
                     if(squares[i][j].getPiece().getColor() == this.getColor()){
                         this.addPiece(squares[i][j].getPiece());

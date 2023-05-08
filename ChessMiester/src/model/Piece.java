@@ -6,6 +6,7 @@ import interfaces.BoardIF;
 import interfaces.MovementIF;
 import interfaces.PieceIF;
 import interfaces.SquareIF;
+import javafx.scene.image.Image;
 import movements.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 public class Piece extends BlackAndWhite implements PieceIF{
 
     /** The type of the piece. */
-    private ChessPieceType type;
+    private final ChessPieceType type;
 
     /** The movement type of the piece. */
     private MovementIF moveType;
@@ -61,16 +62,6 @@ public class Piece extends BlackAndWhite implements PieceIF{
     }
 
     /**
-     * Sets the type of the piece.
-     *
-     * @param type the type of the piece.
-     */
-    @Override
-    public void setType(ChessPieceType type) {
-        this.type = type;
-    }
-
-    /**
      * Method that gets the valid moves for the piece.
      *
      * @param board           The game board that the piece moves on.
@@ -83,33 +74,21 @@ public class Piece extends BlackAndWhite implements PieceIF{
     }
 
     /**
-     * Gets the position of the piece on the board.
-     *
-     * @param board The board that the piece is on.
-     * @return the position of the piece on the board.
-     */
-    public Position getPosition(BoardIF board){
-        Position position = null;
-        SquareIF[][] squares = board.getSquares();
-        PieceIF temp;
-        for(int i = 0; i < squares.length; i++) {
-            for (int j = 0; j < squares[i].length; j++) {
-                temp = squares[i][j].getPiece();
-                if (temp == this) {
-                    Square square = (Square) squares[i][j];
-                    position = square.getPosition();
-                }
-            }
-        }
-        return position;
-    }
-
-    /**
      * Gets the movement type of the piece.
      *
      * @return the movement type of the piece.
      */
     public MovementIF getMoveType() {
         return moveType;
+    }
+
+    @Override
+    public Image getImage() {
+        return null;
+    }
+
+    @Override
+    public void setPieceImage(Image image) {
+        return;
     }
 }

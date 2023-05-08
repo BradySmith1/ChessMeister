@@ -1,7 +1,7 @@
 CS364: ChessMeister
 Team: B_Orange
 Authors: Brady Smith, Kaushal Patel, Zachary Eanes, and Colton Brooks.
-Version: 2.0 (April 20, 2023)
+Version: 3.0 (May 7, 2023)
 
                        ************   IMPORTANT NOTE   ************
 In order for saving, loading, and some other features to work, this program must be opened in
@@ -11,38 +11,53 @@ will work as intended. If you open it in the src folder, it will not work as int
 
 
 DESCRIPTION:
-This is a basic implementation of Chess, done through the command line. The board
-itself is printed to the terminal, user input is taken in through command line, and
-we are able to use the basic functions of chess. For this version, we have created a 
-basic display of the board, and gave the user basic interactions in order to 
-move pieces based on if the move itself is valid or not. User's will have a collection
-of taken pieces displayed as well, making sure that the user is full caught up. 
+    This is a basic implementation of Chess, with both a working GUI and a working text-based
+    command line version. The GUI is built using JavaFX, and the command line version is built
+    using Java. The GUI is the main way to play the game, but the command line version is there
+    as well to play.
 
 PIECES: 
-K - King
-Q - Queen
-R - Rook
-N - Knight
-B - Bishop
-P - Pawn
+    K - King
+    Q - Queen
+    R - Rook
+    N - Knight
+    B - Bishop
+    P - Pawn
 
 HOW TO RUN:
-In order to run this program, first open the folder "ChessMiester" as the project, and then
-create a new configuration in IntelliJ and set the build and run to Java Azul and target file
-as ./controller/Driver.java. Then, you're able to run the program and play chess.
+    In order to run this program, first open the folder "ChessMiester" as the project, and then
+    create a new configuration in IntelliJ:
+    For command line:
+        Set the build and run to Java Azul and target file as ./controller/Driver.java.
+        Then, you're able to run the program and play chess.
+    For GUI:
+        Set the build and run to JavaFX and target file as ./gui/controller/Main.java.
+        Then, you're able to run the program and play chess.
 
 HOW TO PLAY:
-In order to play this game, the user will be prompted to enter in a move. The user will enter
-the file and rank of the piece they want to move, following by the file and rank of the
-destination. The user will then be told if the move is valid or not, and if it is valid, the
-board is updated and the next player's turn begins. This is repeated until the game meets an
-ending condition, such as draw.
+    For command line:
+        In order to play this game, the user will be prompted to enter in a move. A user will enter
+        the file and rank of the piece they want to move, following by the file and rank of the
+        destination. The user will then be told if the move is valid or not, and if it is valid, the
+        board is updated and the next player's turn begins. This is repeated until the game meets an
+        ending condition, such as draw.
+    For GUI:
+        In order to play this game, the user will be able to click on a piece, and then click on a
+        destination, or drag the piece to their desired location. Users can also right-click to
+        highlight valid moves for a piece. If the move is valid, the board will be updated and the
+        next player's turn will begin. This is repeated until the game meets an ending condition,
+        such as checkmate.
 
 SAVING:
-After the user ends the program, the states of the game are saved in the file the user gave. These
-are all strings representing each piece on the board, and the moves that occurred. This is
-done in order to make sure that the game can be loaded and played again.
+    After the user ends the program, the states of the game are saved in the file user gave. These
+    are all strings representing each piece on the board, and the moves that occurred. This is
+    done in order to make sure that the game can be loaded and played again.
 
-Along with this, there are many navigable features in the menu, including a functional saving
-and loading of the game, tutorials in order to learn basic chess, and many more. Feel free to
-explore the menu and see what you can find!
+    Along with this, there are many navigable features in the menu, including a functional saving
+    and loading of the game, tutorials in order to learn basic chess, and many more. Feel free to
+    explore the menu and see what you can find!
+
+NOTE:
+    This program is not perfect, and there are some bugs that we were not able to fix.
+    Simply put, we were at a disadvantage during this sprint and eventually hit a point
+    where we all needed to focus on finals, unable to do everything we wanted to.

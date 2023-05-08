@@ -4,10 +4,6 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 import model.Board;
-import model.Position;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This interface defines the basic functionality of a game board object.
@@ -28,13 +24,6 @@ public interface BoardIF{
     void setup();
 
     /**
-     * Draws the game board.
-     *
-     * @param playerColor the color of the player.
-     */
-    public void draw(GameColor playerColor);
-
-    /**
      * Returns a 2D array of squares on the game board.
      *
      * @return a 2D array of SquareIF objects representing the squares on the board.
@@ -42,25 +31,18 @@ public interface BoardIF{
     SquareIF[][] getSquares();
 
     /**
-     * Sets the drawing strategy for the game board.
-     *
-     * @param d the BoardStrategy object that defines the drawing strategy to use.
-     */
-    void setDrawStrategy(BoardStrategy d);
-
-    /**
      * Returns the width of the game board.
      *
      * @return the width of the game board in squares.
      */
-    int getWidth();
+    int getBoardWidth();
 
     /**
      * Returns the height of the game board.
      *
      * @return the height of the game board in squares.
      */
-    int getHeight();
+    int getBoardHeight();
 
     /**
      * Returns the piece at the specified rank and file on the game board.
@@ -112,21 +94,6 @@ public interface BoardIF{
      */
     void loadFromMemento(Board.BoardMementoIF boardMemento);
 
-    /**
-     * Highlights the given arraylist of positions on the board.
-     *
-     * @param board the board to highlight
-     * @param array the arraylist of positions to highlight
-     * @param color the color of the orientation of the board
-     */
-    void highlight(BoardIF board, ArrayList<Position> array, GameColor color);
-
-    /**
-     * Returns the draw strategy.
-     *
-     * @return the draw strategy
-     */
-    BoardStrategy getDrawStrategy();
     /**
      * Interface for the memento.
      */

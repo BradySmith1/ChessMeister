@@ -1,8 +1,6 @@
 package interfaces;
 
-import model.Piece;
 import model.Position;
-import model.Square;
 
 import java.util.List;
 
@@ -41,14 +39,14 @@ public interface MovementIF extends BlackAndWhiteIF{
         int currentFile = currentPosition.getFile().getFileNum(); //current file of piece
 
         //check for the specified movement direction
-        if (currentRank + rank < board.getHeight() && currentFile + file < board.getWidth() &&
+        if (currentRank + rank < board.getBoardHeight() && currentFile + file < board.getBoardWidth() &&
                 currentRank + rank >= 0 && currentFile + file >= 0){
             //get the square of the move and the piece in the square
-            Square currentSquare = (Square) board.getSquares()[currentRank + rank]
+            SquareIF currentSquare = board.getSquares()[currentRank + rank]
                     [currentFile + file];
-            Piece currentPiece = (Piece) currentSquare.getPiece();
+            PieceIF currentPiece = currentSquare.getPiece();
             //check if there is an empty square or an enemy piece1
-            if (currentPiece == null || capture && !currentPiece.getColor().equals(getColor())) {
+            if (currentPiece == null || currentPiece.getImage() == null || capture && !currentPiece.getColor().equals(getColor())) {
                 //the move is possible so add it
                 movePossible = currentSquare.getPosition();
             }

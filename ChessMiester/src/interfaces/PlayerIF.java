@@ -109,4 +109,29 @@ public interface PlayerIF {
      * @return The number of moves the player has made.
      */
     public int getMoveCount();
+
+    /**
+     * Getter for the captured pieces.
+     *
+     * @return the captured pieces
+     */
+    public ArrayList<PieceIF> getCapturedPieces();
+
+    /**
+     * Getter for the number of wins.
+     * @return the number of wins
+     */
+    public int getWins();
+
+    /**
+     * Getter for the number of losses.
+     * @return the number of losses
+     */
+    public int getLosses();
+
+    /**
+     * Getter for the number of draws.
+     * @return the number of draws
+     */
+    public int getDraws();
 }
