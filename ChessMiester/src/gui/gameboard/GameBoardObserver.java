@@ -42,4 +42,19 @@ public interface GameBoardObserver {
      * @param piece the piece that was captured.
      */
     void notifyAddCapturedPiece(PieceIF piece);
+
+    /**
+     * Notifies the observer that the board has been altered and needs to be saved.
+     */
+    void notifyBoardLoader(Event event);
+
+    /**
+     * Notifies the observer that the undo button has been pressed.
+     */
+    void notifyUndo();
+
+    /**
+     * Notifies the observer that the redo button has been pressed.
+     */
+    void notifyRedo();
 }

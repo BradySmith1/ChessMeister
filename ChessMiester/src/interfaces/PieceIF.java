@@ -72,7 +72,7 @@ public interface PieceIF extends BlackAndWhiteIF {
             for (int j = 0; j < squares[i].length; j++) {
                 temp = squares[i][j].getPiece();
                 if (temp == this) {
-                    SquareGUI square = (SquareGUI) squares[i][j];
+                    SquareIF square = squares[i][j];
                     position = square.getPosition();
                 }
             }

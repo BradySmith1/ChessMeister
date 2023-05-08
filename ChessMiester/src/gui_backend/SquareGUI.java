@@ -9,7 +9,6 @@ package gui_backend;
 
 import enums.Files;
 import enums.Rank;
-import gui.gameboard.CenterPaneObserver;
 import gui.gameboard.GameBoardObserver;
 import interfaces.PieceIF;
 import interfaces.SquareIF;
@@ -20,7 +19,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import model.Position;
 import javafx.scene.image.ImageView;
-import model.Square;
 
 import java.util.List;
 
@@ -100,6 +98,7 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
         this.setOnDragDone(event -> {
             if (event.getTransferMode() == TransferMode.MOVE){
                 this.piece.setPieceImage(null);
+                notifyBoardLoader(event);
             }
             event.consume();
         });
@@ -212,6 +211,20 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
     @Override
     public List<Position> notifyPieceMoving(Event event) {
         return observer.notifyPieceMoving(event);
+    }
+
+    public void notifyBoardLoader(Event event){
+        observer.notifyBoardLoader(event);
+    }
+
+    @Override
+    public void notifyUndo() {
+
+    }
+
+    @Override
+    public void notifyRedo() {
+
     }
 
     public void setColor(Color color) {

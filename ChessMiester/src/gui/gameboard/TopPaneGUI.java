@@ -6,8 +6,10 @@
  */
 
 package gui.gameboard;
+import interfaces.PieceIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -15,12 +17,14 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import model.Position;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.List;
 
-public class TopPaneGUI extends GridPane{
+public class TopPaneGUI extends GridPane implements GameBoardObserver{
 
     /** The buttons for the pane */
     Button save, undo, redo;
@@ -30,6 +34,8 @@ public class TopPaneGUI extends GridPane{
 
     /** Boolean for undo and redo*/
     private boolean undoRedo;
+
+    GameBoardObserver observer;
 
     /**
      * Constructor for the right pane.
@@ -115,15 +121,19 @@ public class TopPaneGUI extends GridPane{
                         }
                     }
                 } else if (source == undo && undoRedo) {
-                    System.out.println("Undo");
+                    notifyUndo();
                 } else if (source == redo && undoRedo) {
-                    System.out.println("Redo");
+                    notifyRedo();
                 } else if (source == undo || source == redo && !undoRedo) {
                     createAlert("Undo/Redo");
                 }
             }
         }
     };
+
+    public void addObserver(GameBoardObserver observer) {
+        this.observer = observer;
+    }
 
     public void setShowUndoRedo(boolean undoRedo) {
         this.undoRedo = undoRedo;
@@ -135,5 +145,40 @@ public class TopPaneGUI extends GridPane{
         alert.setHeaderText(title + " is not available");
         alert.setContentText(title + " is disable in settings");
         alert.showAndWait();
+    }
+
+    @Override
+    public void notifyLeftClick(Event event) {
+
+    }
+
+    @Override
+    public void notifyRightClick(Event event) {
+
+    }
+
+    @Override
+    public List<Position> notifyPieceMoving(Event event) {
+        return null;
+    }
+
+    @Override
+    public void notifyAddCapturedPiece(PieceIF piece) {
+
+    }
+
+    @Override
+    public void notifyBoardLoader(Event event) {
+
+    }
+
+    @Override
+    public void notifyUndo() {
+        observer.notifyUndo();
+    }
+
+    @Override
+    public void notifyRedo() {
+        observer.notifyRedo();
     }
 }

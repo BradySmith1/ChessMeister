@@ -220,7 +220,7 @@ public class Board implements BoardIF {
     public String getState() {
         return this.state;
     }
-
+    //Board memento start for the board class.
     /**
      * Adds the move to the boards state that it holds in a field.
      *

@@ -53,21 +53,22 @@ public class RightPaneGUI extends VBox{
      */
     public void makeCaptured(PlayerIF player){
         TilePane captured = (TilePane) this.getChildren().get(2);
-        captured.setPrefColumns(2);
-        captured.setPrefRows(8);
-        captured.setMaxSize(300, 800);
-        captured.setMinSize(300, 400); //TODO this is a temporary fix for the resizing issue
-        captured.setId("main-pain");
+        for (int index = 0; index < captured.getChildren().size(); index++){
+            captured.getChildren().remove(0);
+        }
 
         ArrayList<PieceIF> pieces = player.getCapturedPieces();
-        Image piece = pieces.get(pieces.size() - 1).getImage();
-        // TOOD Testing why it is not displaying the captured pieces
-        ImageView imageView = new ImageView(piece);
-        imageView.setFitWidth(50);
-        imageView.setFitHeight(50);
-        imageView.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
+        for(int index = 0; index < pieces.size(); index++){
+            Image piece = pieces.get(index).getImage();
+            // TOOD Testing why it is not displaying the captured pieces
+            ImageView imageView = new ImageView(piece);
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
+            imageView.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
 
-        captured.getChildren().add(imageView);
+            captured.getChildren().add(imageView);
+        }
+
 
         // TODO Testing why it is not displaying the captured pieces
         captured.setStyle("-fx-border-color: red; -fx-border-width: 5px;");

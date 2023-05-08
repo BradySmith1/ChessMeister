@@ -273,5 +273,19 @@ public class NotationQuizGUI implements GameBoardObserver {
         return;
     }
 
+    @Override
+    public void notifyBoardLoader(Event event) {
+    }
+
+    @Override
+    public void notifyUndo() {
+
+    }
+
+    @Override
+    public void notifyRedo() {
+
+    }
+
 
 }
