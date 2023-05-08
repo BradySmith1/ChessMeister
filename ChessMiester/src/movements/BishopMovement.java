@@ -12,7 +12,6 @@ import interfaces.BoardIF;
 import interfaces.MovementIF;
 import interfaces.PieceIF;
 import model.BlackAndWhite;
-import model.Piece;
 import model.Position;
 import interfaces.SquareIF;
 import java.util.ArrayList;
@@ -77,7 +76,7 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
         boolean pieceHit = false; // Whether a piece has been hit or not
 
-        while(!pieceHit && currentRank < board.getHeight() && currentFile < board.getWidth()) {
+        while(!pieceHit && currentRank < board.getBoardHeight() && currentFile < board.getBoardWidth()) {
             // get current square on board
             SquareIF currSquare = board.getSquares()[currentRank][currentFile];
 
@@ -117,7 +116,7 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
         boolean pieceHit = false; // Whether a piece has been hit or not
 
-        while (!pieceHit && currentRank < board.getHeight() && currentFile >= 0) {
+        while (!pieceHit && currentRank < board.getBoardHeight() && currentFile >= 0) {
             // get current square on board
             SquareIF currSquare = board.getSquares()[currentRank][currentFile];
 
@@ -153,7 +152,7 @@ public class BishopMovement extends BlackAndWhite implements MovementIF{
 
         boolean pieceHit = false; // Whether a piece has been hit or not
 
-        while (!pieceHit && currentRank >= 0 && currentFile < board.getWidth()) {
+        while (!pieceHit && currentRank >= 0 && currentFile < board.getBoardWidth()) {
             // get current square on board
             SquareIF currSquare = board.getSquares()[currentRank][currentFile];
 

@@ -78,10 +78,10 @@ public class BoardColorCLI implements BoardStrategy {
         String temp_background = background;
         boolean squareHighlighted = false;
         //draws the board
-        for(int height = 0; height < board.getHeight(); height++){
+        for(int height = 0; height < board.getBoardHeight(); height++){
             System.out.print(number + " ");
             //draws the squares
-            for(int width = 0; width < board.getWidth(); width++){
+            for(int width = 0; width < board.getBoardWidth(); width++){
                 SquareIF square = (SquareIF) squares[height][width];
                 if(highlight){
                     squareHighlighted = checkHighlight(square);
@@ -115,10 +115,10 @@ public class BoardColorCLI implements BoardStrategy {
         int number = 1;
         String temp_background = background;
         boolean squareHighlighted = false;
-        for(int height = board.getHeight() - 1; height >= 0; height--){
-            System.out.print((board.getHeight() - height) + " "); // wrong
+        for(int height = board.getBoardHeight() - 1; height >= 0; height--){
+            System.out.print((board.getBoardHeight() - height) + " "); // wrong
             //draws the squares
-            for(int width = board.getWidth() - 1; width >= 0; width--){
+            for(int width = board.getBoardWidth() - 1; width >= 0; width--){
                 SquareIF square = (SquareIF) squares[height][width];
                 if(highlight){
                     squareHighlighted = checkHighlight(square);

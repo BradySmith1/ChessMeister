@@ -5,7 +5,6 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 import interfaces.*;
-import movements.PawnMovement;
 import uicli.BoardMonoCLI;
 
 import java.util.ArrayList;
@@ -90,8 +89,8 @@ public class Board implements BoardIF {
      */
     public void createState() {
         StringBuilder stateBuilder = new StringBuilder("{");
-        for (int i = 0; i < getWidth(); i++) {
-            for (int j = 0; j < getHeight(); j++) {
+        for (int i = 0; i < getBoardWidth(); i++) {
+            for (int j = 0; j < getBoardHeight(); j++) {
                 Square square = ((Square) squares[i][j]);
                 if (square.getPiece() != null) {
 
@@ -101,7 +100,7 @@ public class Board implements BoardIF {
                     stateBuilder.append(":");
                     stateBuilder.append(square.getPiece().getType().letter);
                     stateBuilder.append(square.getPiece().getColor().toString().charAt(0));
-                    if (i != getWidth() - 1 || j != getHeight() - 1) {
+                    if (i != getBoardWidth() - 1 || j != getBoardHeight() - 1) {
                         stateBuilder.append(",");   // comma after every piece other than last
                     }
                 }
@@ -173,7 +172,7 @@ public class Board implements BoardIF {
      * @return the width of the game board in squares.
      */
     @Override
-    public int getWidth() {
+    public int getBoardWidth() {
         return width;
     }
 
@@ -183,7 +182,7 @@ public class Board implements BoardIF {
      * @return the height of the game board in squares.
      */
     @Override
-    public int getHeight() {
+    public int getBoardHeight() {
         return height;
     }
 

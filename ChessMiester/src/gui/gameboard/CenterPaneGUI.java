@@ -6,7 +6,6 @@
  */
 package gui.gameboard;
 
-import controller.Chess;
 import enums.ChessPieceType;
 import enums.Files;
 import enums.GameColor;
@@ -33,18 +32,15 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.util.*;
 
 import model.Board;
-import model.Piece;
 import model.Position;
 
-public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent>, BoardIF, CenterPaneObserver {
-    /**
-     * The root pane.
-     */
-    private GridPane root;
+public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventHandler<MouseEvent>,
+        BoardIF, CenterPaneObserver {
 
     /**
      * The squares on the board.
@@ -86,7 +82,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      */
     private PlayerIF currentPlayer;
 
-    private final BoardMementoCaretaker caretaker;
+    private BoardMementoCaretaker caretaker;
 
     /**
      * The state of the board.
@@ -98,7 +94,6 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      * Constructor for the center pane.
      */
     public CenterPaneGUI() {
-        root = new GridPane();
         clicked = null;
         popup = null;
         initBoard();
@@ -127,7 +122,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             for (int col = 0; col < size; col++) {
                 SquareGUI square = new SquareGUI(row, col);
                 square.addObserver(this);
-                root.add(square, col, row, 1, 1);
+                this.add(square, col, row, 1, 1);
                 squares[row][col] = square;
             }
         }
@@ -138,10 +133,10 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      */
     private void setConstraints() {
         for (int i = 0; i < size; i++) {
-            root.getColumnConstraints().add(new ColumnConstraints(5,
+            this.getColumnConstraints().add(new ColumnConstraints(5,
                     Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS,
                     HPos.CENTER, true));
-            root.getRowConstraints().add(new RowConstraints(5,
+            this.getRowConstraints().add(new RowConstraints(5,
                     Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS,
                     VPos.CENTER, true));
         }
@@ -296,7 +291,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             popup.setX(mouse.getScreenX() + 10);
             popup.setY(mouse.getScreenY() + 10);
             popup.show();
-            root.addEventFilter(MouseEvent.ANY, this);
+            this.addEventFilter(MouseEvent.ANY, this);
         } else {
             List<Position> validMoves;
             if (clicked.getPiece().getImage() != null) {
@@ -347,7 +342,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
             popup.close();
             clicked = null;
             popup = null;
-            root.removeEventFilter(MouseEvent.ANY, this);
+            this.removeEventFilter(MouseEvent.ANY, this);
         }
     }
 
@@ -357,7 +352,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      * @return The root of the game board
      */
     public Pane getRoot() {
-        return root;
+        return this;
     }
 
     /**
@@ -425,12 +420,12 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     }
 
     @Override
-    public int getWidth() {
+    public int getBoardWidth() {
         return this.size;
     }
 
     @Override
-    public int getHeight() {
+    public int getBoardHeight() {
         return this.size;
     }
 
@@ -473,6 +468,15 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
     @Override
     public void notifyRedo(){
         this.redo();
+    }
+
+    @Override
+    public void notifySaveGame(PrintWriter writer) {
+        writer.write(caretaker.topToBottom().state());
+        while(caretaker.up() != null) {
+            writer.write("\n" + caretaker.peek().state());
+        }
+        writer.write("\n" + player1.getName() + "\n" + player2.getName());
     }
 
     /**
@@ -581,8 +585,8 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
      */
     public void createState() {
         StringBuilder stateBuilder = new StringBuilder("{");
-        for (int i = 0; i < getWidth(); i++) {
-            for (int j = 0; j < getHeight(); j++) {
+        for (int i = 0; i < getBoardWidth(); i++) {
+            for (int j = 0; j < getBoardHeight(); j++) {
                 SquareIF square = (squares[i][j]);
                 if (square.getPiece().getImage() != null) {
 
@@ -592,7 +596,7 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
                     stateBuilder.append(":");
                     stateBuilder.append(square.getPiece().getType().letter);
                     stateBuilder.append(square.getPiece().getColor().toString().charAt(0));
-                    if (i != getWidth() - 1 || j != getHeight() - 1) {
+                    if (i != getBoardWidth() - 1 || j != getBoardHeight() - 1) {
                         stateBuilder.append(",");   // comma after every piece other than last
                     }
                 }
@@ -841,6 +845,10 @@ public class CenterPaneGUI implements GameBoardObserver, EventHandler<MouseEvent
 
     public BoardMementoCaretaker getBoardMementoCaretaker() {
         return caretaker;
+    }
+
+    public BoardMementoCaretaker setBoardMementoCaretaker(BoardMementoCaretaker caretaker) {
+        return this.caretaker = caretaker;
     }
 
     /**

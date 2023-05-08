@@ -11,6 +11,7 @@ import interfaces.PieceIF;
 import javafx.event.Event;
 import model.Position;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 public interface GameBoardObserver {
@@ -57,4 +58,6 @@ public interface GameBoardObserver {
      * Notifies the observer that the redo button has been pressed.
      */
     void notifyRedo();
+
+    void notifySaveGame(PrintWriter writer);
 }

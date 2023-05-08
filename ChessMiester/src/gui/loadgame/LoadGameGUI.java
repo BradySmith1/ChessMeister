@@ -7,7 +7,13 @@
 
 package gui.loadgame;
 
+import controller.BoardMementoCaretaker;
 import enums.ToScreen;
+import gui.gameboard.CenterPaneGUI;
+import gui.gameboard.GameBoardGUI;
+import gui.playernames.PlayerNamesGUI;
+import gui_backend.DefinePlayersGUI;
+import interfaces.DefinePlayersIF;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,13 +21,18 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import model.BoardSaverLoader;
+import model.Player;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class LoadGameGUI extends VBox {
     /** The LoadGameGUI pane. */
@@ -35,6 +46,9 @@ public class LoadGameGUI extends VBox {
 
     /** TextField for the menu. */
     TextField file;
+
+    /** File selected in the menu. */
+    File selectedFile;
 
     /** Buttons for the menu. */
     Button load, returnToMain, play;
@@ -129,7 +143,7 @@ public class LoadGameGUI extends VBox {
                     fileChooser.getExtensionFilters().add(extFilter);
 
                     // Show the file chooser
-                    File selectedFile = fileChooser.showOpenDialog(load.getScene().getWindow());
+                    selectedFile = fileChooser.showOpenDialog(load.getScene().getWindow());
 
                     // Check if a file was selected, if so, set the text field
                     if (selectedFile != null) {
@@ -140,7 +154,25 @@ public class LoadGameGUI extends VBox {
                 } else if (source == returnToMain) {
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
                 } else if (source == play) {
-                    screenChanger.changeScreen(ToScreen.GAME_BOARD);
+                    BoardSaverLoader loader = new BoardSaverLoader(); // obj to load file
+                    // caretaker that is a stack of all states of the game
+                    if (selectedFile != null) {
+                        ArrayList<Object> list = loader.loadGameFromFile(selectedFile);
+                        BoardMementoCaretaker caretaker = (BoardMementoCaretaker) list.get(0);
+                        String player1 = (String) list.get(1);
+                        String player2 = (String) list.get(2);
+                        screenChanger.changeScreen(ToScreen.PLAYER_NAMES);
+                        PlayerNamesGUI players = (PlayerNamesGUI) screenChanger.getGuiScene(ToScreen.PLAYER_NAMES);
+                        players.getPlayer().setPlayer1Name(player1);
+                        players.getPlayer().setPlayer2Name(player2);
+                        screenChanger.changeScreen(ToScreen.GAME_BOARD);
+                        CenterPaneGUI center =
+                                ((CenterPaneGUI)((GameBoardGUI)screenChanger.getGuiScene(ToScreen.GAME_BOARD)).getCenter());
+                        center.setBoardMementoCaretaker(caretaker);
+                        center.loadFromMemento(caretaker.peek());
+                    }else{
+                        file.setText(selectedFile.getName());
+                    }
                 }
             }
         }

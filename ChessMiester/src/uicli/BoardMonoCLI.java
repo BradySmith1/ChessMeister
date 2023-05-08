@@ -68,7 +68,7 @@ public class BoardMonoCLI implements BoardStrategy {
      */
     private void populateRow(BoardIF board, int height) {
         interfaces.SquareIF[][] squares = board.getSquares();
-        for (int width = 0; width < board.getWidth(); width++) {
+        for (int width = 0; width < board.getBoardWidth(); width++) {
             SquareIF square = (SquareIF) squares[height][width];
             printPiece(square, width);
         }
@@ -105,7 +105,7 @@ public class BoardMonoCLI implements BoardStrategy {
         System.out.println("   --------------------------------" +
                 "-----------------------------------------");
         // Print the board.
-        for (int height = 0; height < board.getHeight(); height++) {
+        for (int height = 0; height < board.getBoardHeight(); height++) {
             populateRow(board, height);
             System.out.print("  | ");
             printLine(false);
@@ -136,8 +136,8 @@ public class BoardMonoCLI implements BoardStrategy {
         System.out.println("   --------------------------------" +
                 "-----------------------------------------");
         // Print the board.
-        for (int height = 0; height < board.getHeight(); height++) {
-            populateRow(board, (board.getHeight() - height) - 1);
+        for (int height = 0; height < board.getBoardHeight(); height++) {
+            populateRow(board, (board.getBoardHeight() - height) - 1);
             System.out.print("  | ");
             printLine(true);
             System.out.println("|");

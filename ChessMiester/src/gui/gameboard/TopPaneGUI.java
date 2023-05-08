@@ -113,7 +113,7 @@ public class TopPaneGUI extends GridPane implements GameBoardObserver{
                         // PrintWriter to write to the file
                         try {
                             PrintWriter writer = new PrintWriter(selectedFile);
-                            writer.println("This is some text that will be written to the file.");
+                            notifySaveGame(writer);
                             writer.close();
                             System.out.println("File saved: " + selectedFile.getAbsolutePath());
                         } catch (FileNotFoundException e) {
@@ -131,14 +131,26 @@ public class TopPaneGUI extends GridPane implements GameBoardObserver{
         }
     };
 
+    /**
+     * Add a observer
+     * @param observer the observer
+     */
     public void addObserver(GameBoardObserver observer) {
         this.observer = observer;
     }
 
+    /**
+     * Sets the status of undo and redo.
+     * @param undoRedo the status of undo and redo
+     */
     public void setShowUndoRedo(boolean undoRedo) {
         this.undoRedo = undoRedo;
     }
 
+    /**
+     * Creates an alert for the user
+     * @param title the title of the alert
+     */
     private void createAlert(String title){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
@@ -147,38 +159,69 @@ public class TopPaneGUI extends GridPane implements GameBoardObserver{
         alert.showAndWait();
     }
 
+    /**
+     * Notify the observer to left click
+     * @param event the event that occurred
+     */
     @Override
     public void notifyLeftClick(Event event) {
 
     }
 
+    /**
+     * Notify the observer to right click
+     * @param event the event that occurred
+     */
     @Override
     public void notifyRightClick(Event event) {
 
     }
 
+    /**
+     * Notify the observer to move the piece
+     * @param event the event that occurred
+     * @return the list of positions
+     */
     @Override
     public List<Position> notifyPieceMoving(Event event) {
         return null;
     }
 
+    /**
+     * Notify the observer to add a captured piece
+     * @param piece the piece that was captured.
+     */
     @Override
     public void notifyAddCapturedPiece(PieceIF piece) {
 
     }
 
+    /**
+     * Notify the observer to load the board
+     * @param event the event
+     */
     @Override
     public void notifyBoardLoader(Event event) {
 
     }
 
+    /**
+     * Notify the observer to undo the move
+     */
     @Override
     public void notifyUndo() {
         observer.notifyUndo();
     }
 
+    /**
+     * Notify the observer to redo the move
+     */
     @Override
     public void notifyRedo() {
         observer.notifyRedo();
+    }
+
+    public void notifySaveGame(PrintWriter writer) {
+        observer.notifySaveGame(writer);
     }
 }

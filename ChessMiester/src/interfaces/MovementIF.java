@@ -39,7 +39,7 @@ public interface MovementIF extends BlackAndWhiteIF{
         int currentFile = currentPosition.getFile().getFileNum(); //current file of piece
 
         //check for the specified movement direction
-        if (currentRank + rank < board.getHeight() && currentFile + file < board.getWidth() &&
+        if (currentRank + rank < board.getBoardHeight() && currentFile + file < board.getBoardWidth() &&
                 currentRank + rank >= 0 && currentFile + file >= 0){
             //get the square of the move and the piece in the square
             SquareIF currentSquare = board.getSquares()[currentRank + rank]

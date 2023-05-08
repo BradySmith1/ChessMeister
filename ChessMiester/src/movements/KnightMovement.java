@@ -11,7 +11,6 @@ import interfaces.BoardIF;
 import interfaces.MovementIF;
 import interfaces.PieceIF;
 import model.BlackAndWhite;
-import model.Piece;
 import model.Position;
 import interfaces.SquareIF;
 
@@ -75,7 +74,7 @@ public class KnightMovement extends BlackAndWhite implements MovementIF {
         int currentFile = currentPosition.getFile().getFileNum(); //current file of piece
 
         //check for knight move up 1, right 2
-        if (currentRank + rank < board.getHeight() && currentFile + file < board.getWidth() &&
+        if (currentRank + rank < board.getBoardHeight() && currentFile + file < board.getBoardWidth() &&
             currentRank + rank >= 0 && currentFile + file >= 0) {
             //get the square of the move and the piece in the square
             SquareIF currentSquare = board.getSquares()[currentRank + rank]

@@ -5,6 +5,8 @@ import interfaces.BoardIF;
 import interfaces.BoardSaverLoaderIF;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -69,6 +71,43 @@ public class BoardSaverLoader implements BoardSaverLoaderIF {
         }
         // establish memento and load from memento
         return caretaker;
+    }
+
+    /**
+     * Method to load a game from a file
+     *
+     * @param file the name of the file to load from
+     * @return the board that you have loaded
+     */
+    public ArrayList<Object> loadGameFromFile(File file) {
+        FileReader reader; // initialize reader
+        BoardMementoCaretaker caretaker = null;
+        BoardIF.BoardMementoIF memento;
+        //must be in chessmeister for this to work
+        String player1 = "";
+        String player2 = "";
+        try {
+            reader = new FileReader(file); // open reader from the file path
+            Scanner scan = new Scanner(reader); // create scanner from reader
+            memento = new Board.BoardMemento(scan.nextLine());
+            caretaker = new BoardMementoCaretaker(memento);
+            while(scan.hasNext()) {
+                memento = new Board.BoardMemento(scan.nextLine());
+                caretaker.push(memento);
+            }
+            player2 = caretaker.pop().state();
+            player1 = caretaker.pop().state();
+            scan.close(); // close scanner
+        }
+        catch(FileNotFoundException ignore){
+            System.out.println("\nFile could not be located. Please enter a different name.\n");
+        }
+        // establish memento and load from memento
+        ArrayList<Object> array = new ArrayList<>();
+        array.add(caretaker);
+        array.add(player1);
+        array.add(player2);
+        return array;
     }
 
     /**

@@ -4,10 +4,6 @@ import enums.Files;
 import enums.GameColor;
 import enums.Rank;
 import model.Board;
-import model.Position;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This interface defines the basic functionality of a game board object.
@@ -39,14 +35,14 @@ public interface BoardIF{
      *
      * @return the width of the game board in squares.
      */
-    int getWidth();
+    int getBoardWidth();
 
     /**
      * Returns the height of the game board.
      *
      * @return the height of the game board in squares.
      */
-    int getHeight();
+    int getBoardHeight();
 
     /**
      * Returns the piece at the specified rank and file on the game board.

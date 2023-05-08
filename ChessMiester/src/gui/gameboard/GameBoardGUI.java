@@ -56,7 +56,7 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
         this.bottom = new BottomPaneGUI();
         this.bottom.getRoot().setId("bottom");
         this.center = new CenterPaneGUI();
-        this.center.getRoot().setId("center");
+        this.center.setId("center");
 
         // Add the observers
         center.addObserver(this);
@@ -65,7 +65,7 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
         //add the panes to the root
         this.setTop(top.getRoot());
         this.setBottom(bottom.getRoot());
-        this.setCenter(center.getRoot());
+        this.setCenter(center);
 
         // add the stylesheet and images
         this.getStylesheets().add(getClass().getResource("gameBoard.css").toExternalForm());

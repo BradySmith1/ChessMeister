@@ -26,6 +26,7 @@ import javafx.scene.layout.VBox;
 import model.Position;
 import tutorialuicli.NotationCLI;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 public class NotationQuizGUI implements GameBoardObserver {
@@ -284,6 +285,11 @@ public class NotationQuizGUI implements GameBoardObserver {
 
     @Override
     public void notifyRedo() {
+
+    }
+
+    @Override
+    public void notifySaveGame(PrintWriter writer) {
 
     }
 

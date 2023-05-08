@@ -74,14 +74,9 @@ public class LeftPaneGUI extends VBox{
             ImageView imageView = new ImageView(piece);
             imageView.setFitWidth(50);
             imageView.setFitHeight(50);
-            imageView.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
 
             captured.getChildren().add(imageView);
         }
-
-
-        // TODO Testing why it is not displaying the captured pieces
-        captured.setStyle("-fx-border-color: red; -fx-border-width: 5px;");
     }
 
     /**

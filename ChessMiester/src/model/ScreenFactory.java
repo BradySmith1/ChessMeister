@@ -339,6 +339,8 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
             returnScreen = settingsMenuScreen;
         } else if (screenChoice == ToScreen.PLAYER_NAMES) {
             returnScreen = definePlayerNamesScreen;
+        } else if (screenChoice == ToScreen.GAME_BOARD){
+            returnScreen = gameBoardScreen;
         }
         return returnScreen;
     }

@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import model.Position;
 import javafx.scene.image.ImageView;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF {
@@ -224,6 +225,11 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
 
     @Override
     public void notifyRedo() {
+
+    }
+
+    @Override
+    public void notifySaveGame(PrintWriter writer) {
 
     }
 
