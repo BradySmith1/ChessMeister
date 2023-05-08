@@ -1,9 +1,3 @@
-/**
- * This class is the GUI implementation for the board organization tutorial.
- *
- * @author Zach Eanes (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.tutorial;
 
 import enums.ToScreen;
@@ -16,6 +10,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
+
+/**
+ * This class is the GUI implementation for the board organization tutorial.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class BoardOrganizationGUI {
     /**
      * The board organization pane.
@@ -65,7 +66,10 @@ public class BoardOrganizationGUI {
                 Each of these pieces have their own respective tutorial, so feel free to try them\s
                 out and learn more about them.\s\s
                 """);
+
+        // set the id of the text
         text.setId("tutorialText");
+        // add the text to the hbox
         hb.getChildren().add(text);
         hb.setAlignment(Pos.CENTER);
 
@@ -85,7 +89,7 @@ public class BoardOrganizationGUI {
         boardOrganizationPane.setSpacing(20);
         boardOrganizationPane.setId("main-pane");
 
-
+        // add the css file
         this.boardOrganizationPane.getStylesheets().add(
                 getClass().getResource("TutorialMenu.css").toExternalForm());
     }

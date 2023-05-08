@@ -1,9 +1,3 @@
-/**
- * This class is the main file used to create our GUI implementation
- * of chess.
- *
- * @author Zach Eanes (50%), Kaushal Patel (50%)
- */
 package gui.controller;
 
 import javafx.application.Application;
@@ -12,6 +6,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.ScreenFactory;
 
+/**
+ * This class is the main file used to create our GUI implementation
+ * of chess.
+ *
+ * @author Zach Eanes (50%), Kaushal Patel (50%)
+ */
 public class Main extends Application {
 
     /** The current stage for the application **/

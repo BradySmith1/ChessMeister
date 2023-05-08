@@ -1,9 +1,3 @@
-/**
- * This class is responsible for the GUI implementation for the pawn tutorial.
- *
- * @author Zach Eanes (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.tutorial;
 
 import enums.ToScreen;
@@ -17,6 +11,12 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 
+/**
+ * This class is responsible for the GUI implementation for the pawn tutorial.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class PawnTutorialGUI {
     /** The pawn tutorial pane. */
     VBox pawnPane;
@@ -92,6 +92,9 @@ public class PawnTutorialGUI {
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch) { this.screenChanger = sch; }
 
+    /**
+     * Adds the pawn image to the pane.
+     */
     public void addImage(){
         // get pawn image and add to pane
         try{

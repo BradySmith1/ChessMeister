@@ -1,10 +1,3 @@
-/**
- * This class is responsible for creating the load game GUI.
- *
- * @author Zach Eanes (100%)
- * @version 1.0 (done in sprint 3)
- */
-
 package gui.loadgame;
 
 import controller.BoardMementoCaretaker;
@@ -34,6 +27,13 @@ import model.Player;
 import java.io.File;
 import java.util.ArrayList;
 
+
+/**
+ * This class is responsible for creating the load game GUI.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class LoadGameGUI extends VBox {
     /** The LoadGameGUI pane. */
     VBox LoadGamePane;
@@ -91,7 +91,8 @@ public class LoadGameGUI extends VBox {
         this.returnToMain.setOnAction(buttonHandler);
 
         // add all elements to the VBox
-        this.LoadGamePane.getChildren().addAll(title, this.file, this.load, this.play, this.returnToMain);
+        this.LoadGamePane.getChildren().addAll
+                (title, this.file, this.load, this.play, this.returnToMain);
         this.LoadGamePane.setSpacing(20);
         this.LoadGamePane.setAlignment(Pos.CENTER);
         this.LoadGamePane.setId("main-pane");
@@ -151,23 +152,36 @@ public class LoadGameGUI extends VBox {
                         file.setText(selectedFile.getName());
 
                     }
-                } else if (source == returnToMain) {
+                }
+                // Check if the source was the return to main menu button
+                else if (source == returnToMain) {
+                    // Change the screen to the main menu
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
-                } else if (source == play) {
+                }
+                // Check if the source was the play button
+                else if (source == play) {
                     BoardSaverLoader loader = new BoardSaverLoader(); // obj to load file
                     // caretaker that is a stack of all states of the game
                     if (selectedFile != null) {
+                        // load the game from the file
                         ArrayList<Object> list = loader.loadGameFromFile(selectedFile);
+
+                        // get the caretaker and the player names
                         BoardMementoCaretaker caretaker = (BoardMementoCaretaker) list.get(0);
                         String player1 = (String) list.get(1);
                         String player2 = (String) list.get(2);
+
+                        // change the screen to the player names screen
                         screenChanger.changeScreen(ToScreen.PLAYER_NAMES);
-                        PlayerNamesGUI players = (PlayerNamesGUI) screenChanger.getGuiScene(ToScreen.PLAYER_NAMES);
+                        // set the player names
+                        PlayerNamesGUI players = (PlayerNamesGUI) screenChanger.getGuiScene
+                                (ToScreen.PLAYER_NAMES);
                         players.getPlayer().setPlayer1Name(player1);
                         players.getPlayer().setPlayer2Name(player2);
                         screenChanger.changeScreen(ToScreen.GAME_BOARD);
                         CenterPaneGUI center =
-                                ((CenterPaneGUI)((GameBoardGUI)screenChanger.getGuiScene(ToScreen.GAME_BOARD)).getCenter());
+                                ((CenterPaneGUI)((GameBoardGUI)screenChanger.getGuiScene
+                                        (ToScreen.GAME_BOARD)).getCenter());
                         center.setBoardMementoCaretaker(caretaker);
                         center.loadFromMemento(caretaker.peek());
                     }else{

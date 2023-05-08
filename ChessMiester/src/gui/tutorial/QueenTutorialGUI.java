@@ -1,9 +1,3 @@
-/**
- * This class is responsible for the GUI implementation for the queen tutorial.
- *
- * @author Zach Eanes (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.tutorial;
 
 import enums.ToScreen;
@@ -17,6 +11,12 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 
+/**
+ * This class is responsible for the GUI implementation for the queen tutorial.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class QueenTutorialGUI {
     /** The queen tutorial pane. */
     VBox queenPane;
@@ -35,6 +35,7 @@ public class QueenTutorialGUI {
         queenPane = new VBox();
         queenPane.setId("main-pane");
 
+        // get queen image and add to pane
         try{
             Image queen = new Image(new FileInputStream(
                     "src/gui/gameboard/images/WhiteKing.png"));

@@ -17,6 +17,14 @@ import javafx.scene.paint.Color;
 import gui.colourselector.components.SliderPane;
 import javafx.stage.Stage;
 
+/**
+ * This class is the GUI implementation for the colour selector.
+ * It allows the user to select a colour using RGB sliders.
+ * The user can then select the colour or cancel the selection.
+ * The selected colour is returned as a hex value.
+ *
+ * @version 1.0
+ */
 public class ColourSelectorGUI extends GridPane implements SliderChangeListener {
 
     /** The selected colour as a hex value (RGB) **/
@@ -83,6 +91,7 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         RowConstraints row2 = new RowConstraints();
         RowConstraints row3 = new RowConstraints();
 
+        // Set the row heights
         row0.setPercentHeight(10);
         row1.setPercentHeight(40);
         row2.setPercentHeight(40);
@@ -92,6 +101,7 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         ColumnConstraints col0 = new ColumnConstraints();
         ColumnConstraints col1 = new ColumnConstraints();
 
+        // Set the column widths
         col0.setPercentWidth(50);
         col1.setPercentWidth(50);
 
@@ -110,9 +120,11 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         this.colour = new StackPane();
         colour.getStylesheets().add("colour");
 
+        // Create Label for Colour
         this.hexColour = new Label();
         this.hexColour.getStylesheets().add("colour_text");
 
+        // Add Label to Colour Panel
         colour.getChildren().add(this.hexColour);
         this.setBackground(0,0,0);   // Set to black
 
@@ -179,18 +191,21 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         // Invalid value check
         if (r > 255 || g > 255 || b > 255) return;
 
+        // Convert to string
         String redHex = Integer.toHexString(r);
         String greenHex = Integer.toHexString(g);
         String blueHex = Integer.toHexString(b);
 
+        // Set text colour based on background
         if (r + g + b / 3 > 127){
             this.hexColour.setTextFill(Color.BLACK);
         }
+        // Darker background
         else{
             this.hexColour.setTextFill(Color.WHITE);
         }
 
-        // Add preceeding 0 if only 1 char
+        // Add preceding 0 if only 1 char
         if (redHex.length() == 1)
             redHex = 0 + redHex;
         if (greenHex.length() == 1)
@@ -198,10 +213,13 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         if (blueHex.length() == 1)
             blueHex = 0 + blueHex;
 
+        // Set the selected colour
         this.selectedColor = redHex + greenHex + blueHex;
 
+        // Set the background colour
         this.colour.setStyle("-fx-background-color: #" + this.selectedColor);
 
+        // Set the text
         this.hexColour.setText("#" + this.selectedColor);
 
     }
@@ -214,6 +232,7 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
      */
     @Override
     public void sliderChanged(SliderPane sliderPane, int newValue) {
+        // Set the background based on the slider
         if (sliderPane == red){
             this.redColour = newValue;
         }
@@ -239,12 +258,13 @@ public class ColourSelectorGUI extends GridPane implements SliderChangeListener 
         @Override
         public void handle(ActionEvent event) {
             Object source = event.getSource();
-
+            // Close the window if the select button is pressed
             if (source == selectButton){
                 Stage stage = (Stage) selectButton.getScene().getWindow();
                 stage.close();
             } else if (source == exitButton) {
-                System.out.println("Exit button pressed");
+                Stage stage = (Stage) exitButton.getScene().getWindow();
+                stage.close();
             }
         }
     };

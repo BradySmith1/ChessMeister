@@ -1,9 +1,3 @@
-/**
- * This class is responsible for creating the player names GUI.
- *
- * @author Zach Eanes (60%), Kaushal Patel (40%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.playernames;
 
 import enums.ToScreen;
@@ -18,6 +12,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
+/**
+ * This class is responsible for creating the player names GUI.
+ *
+ * @author Zach Eanes (60%), Kaushal Patel (40%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class PlayerNamesGUI extends BorderPane {
 
     /** The playerNamesPane pane. */
@@ -144,9 +144,13 @@ public class PlayerNamesGUI extends BorderPane {
             if (screenChanger != null){
                 Object source = event.getSource();
 
+                // If the exit button is pressed, go back to the main menu
                 if (source == exit) {
                     screenChanger.changeScreen(ToScreen.MAIN_MENU);
-                } else if (source == play) {
+                }
+                // If the play button is pressed, go to the game board
+                else if (source == play) {
+                    // Set the player names
                     if(!player1Name.getText().isEmpty()){
                         definePlayersGUI.setPlayer1Name(player1Name.getText());
                     }
@@ -165,6 +169,9 @@ public class PlayerNamesGUI extends BorderPane {
         }
     };
 
+    /**
+     * Creates the player name text fields.
+     */
     private void createPlayerFields(){
         this.player1Name = new TextField();
         this.player2Name = new TextField();

@@ -1,9 +1,3 @@
-/**
- * This class is responsible for the GUI implementation for the king tutorial.
- *
- * @author Zach Eanes (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.tutorial;
 
 import enums.ToScreen;
@@ -17,6 +11,12 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 
+/**
+ * This class is responsible for the GUI implementation for the king tutorial.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class KingTutorialGUI {
     /** The king tutorial pane. */
     VBox kingPane;
@@ -45,7 +45,7 @@ public class KingTutorialGUI {
                 as long as there are no pieces in the way. Kings can capture pieces by \s
                 moving to the square that the opposing piece is on.\s\s
                             
-                Kings are the life of the game, and if they are captured or placed into checkmate,\s
+               Kings are the life of the game, and if they are captured or placed into checkmate,\s
                 which is explained in another section of the tutorial, the game is over.\s
                 Kings can be put into check by an opposing piece, which another rule also \s
                 explained in another section of the tutorial.\s\s
@@ -91,6 +91,9 @@ public class KingTutorialGUI {
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch) { this.screenChanger = sch; }
 
+    /**
+     * Adds the king image to the pane.
+     */
     private void addImage() {
         try{
             Image king = new Image(new FileInputStream(

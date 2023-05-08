@@ -17,6 +17,11 @@ import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.event.EventHandler;
 
+/**
+ * This class is the GUI implementation for the main menu.
+ *
+ * @author Zach Eanes (50%), Kaushal Patel (50%)
+ */
 public class MainMenuGUI extends BorderPane {
 
     /** Reference to the implementation for the ScreenChangeHandlerIF **/
@@ -38,7 +43,7 @@ public class MainMenuGUI extends BorderPane {
         // Create a border pane
         this.mainMenuPane = new BorderPane();
 
-        // set parts of the pane
+        // Set the top, center, left, right, and bottom components
         HBox top = makeTop();
         top.setId("main-pane");
         this.mainMenuPane.setTop(top);
@@ -178,6 +183,7 @@ public class MainMenuGUI extends BorderPane {
             if (screenChanger != null){
                 Object source = event.getSource();
 
+                // Change screen based on button pressed
                 if (source == versusPlayer){
                     screenChanger.changeScreen(ToScreen.PLAYER_NAMES);
                 } else if (source == loadGame) {
@@ -187,7 +193,6 @@ public class MainMenuGUI extends BorderPane {
                 } else if (source == tutorial) {
                     screenChanger.changeScreen(ToScreen.TUTORIAL_MENU);
                 } else if (source == settings) {
-                    System.out.println();
                     screenChanger.changeScreen(ToScreen.SETTINGS_MENU, ToScreen.MAIN_MENU);
                 } else if (source == exit) {
                     System.exit(1);
@@ -196,6 +201,9 @@ public class MainMenuGUI extends BorderPane {
         }
     };
 
+    /**
+     * Method that creates the buttons for the center of the main menu
+     */
     private void createCenterButtons(){
         this.versusPlayer = new Button("Play Chess");
         this.loadGame = new Button("Load Game");
@@ -203,6 +211,9 @@ public class MainMenuGUI extends BorderPane {
         this.tutorial = new Button("View Tutorials");
     }
 
+    /**
+     * Method that sets the ids for the center buttons
+     */
     private void setCenterButtonIds(){
         this.versusPlayer.setId("menu-button");
         this.loadGame.setId("menu-button");
@@ -210,6 +221,9 @@ public class MainMenuGUI extends BorderPane {
         this.tutorial.setId("menu-button");
     }
 
+    /**
+     * Method that sets the actions for the center buttons
+     */
     private void setCenterButtonActions(){
         this.versusPlayer.setOnAction(buttonHandler);
         this.loadGame.setOnAction(buttonHandler);
@@ -217,16 +231,25 @@ public class MainMenuGUI extends BorderPane {
         this.tutorial.setOnAction(buttonHandler);
     }
 
+    /**
+     * Method that creates the buttons for the bottom of the main menu
+     */
     private void createBottomButtons(){
         this.settings = new Button("Settings");
         this.exit = new Button("Exit");
     }
 
+    /**
+     * Method that sets the ids for the bottom buttons
+     */
     private void setBottomButtonsIds(){
         this.settings.setId("bottom-button");
         this.exit.setId("bottom-button");
     }
 
+    /**
+     * Method that sets the actions for the bottom buttons
+     */
     private void setBottomButtonActions(){
         this.settings.setOnAction(buttonHandler);
         this.exit.setOnAction(buttonHandler);

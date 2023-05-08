@@ -1,9 +1,3 @@
-/**
- * This class is responsible for the GUI implementation for the bishop tutorial.
- *
- * @author Zach Eanes (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.tutorial;
 
 import enums.ToScreen;
@@ -17,6 +11,12 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 
+/**
+ * This class is responsible for the GUI implementation for the bishop tutorial.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class BishopTutorialGUI {
     /** The bishop tutorial pane. */
     VBox bishopPane;
@@ -47,7 +47,10 @@ public class BishopTutorialGUI {
                                 
                 Click continue whenever you're ready to try it out!\s\s
                 """);
+        // set text id
         text.setId("tutorialText");
+
+        // add text to pane
         bishopPane.setAlignment(Pos.CENTER);
         bishopPane.getChildren().add(text);
 
@@ -84,6 +87,9 @@ public class BishopTutorialGUI {
      */
     public void setScreenChangeHandler(ScreenChangeHandlerIF sch) { this.screenChanger = sch; }
 
+    /**
+     * Adds the bishop image to the pane.
+     */
     private void addImage(){
         try{
             Image bishop = new Image(new FileInputStream(

@@ -1,8 +1,3 @@
-/**
- * This class is the GUI implementation for the tutorial menu.
- *
- * @author Zach Eanes (100%)
- */
 package gui.tutorial;
 
 import enums.ToScreen;
@@ -16,6 +11,11 @@ import javafx.geometry.Pos;
 import interfaces.ScreenChangeHandlerIF;
 import javafx.scene.text.Text;
 
+/**
+ * This class is the GUI implementation for the tutorial menu.
+ *
+ * @author Zach Eanes (100%)
+ */
 public class TutorialMenuGUI extends BorderPane {
     /** The main menu pane. */
     BorderPane tutorialPane;
@@ -42,6 +42,7 @@ public class TutorialMenuGUI extends BorderPane {
         this.tutorialPane.setCenter(center);
         this.tutorialPane.setId("main-pane");
 
+        // Add CSS
         this.tutorialPane.getStylesheets().add(
                    getClass().getResource("TutorialMenu.css").toExternalForm());
     }
@@ -154,6 +155,7 @@ public class TutorialMenuGUI extends BorderPane {
             if (screenChanger != null){
                 Object source = event.getSource();
 
+                // Change screen based on button pressed
                 if (source == setup) {
                     screenChanger.changeScreen(ToScreen.BOARD_SETUP);
                 } else if (source == notation) {

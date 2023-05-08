@@ -1,13 +1,13 @@
+package gui.colourselector;
+
+import gui.colourselector.components.SliderPane;
+
 /**
  * Interface for listening to slider changes
  *
  * @author Kaushal Patel (100%)
  * @version 1.0 (done in sprint 3)
  */
-package gui.colourselector;
-
-import gui.colourselector.components.SliderPane;
-
 public interface SliderChangeListener {
 
     /**

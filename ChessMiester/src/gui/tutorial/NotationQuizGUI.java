@@ -1,10 +1,3 @@
-/**
- * This is responsible for creating the loop to let a player take a quiz
- * about the chess notation.
- *
- * @author Zach Eanes (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.tutorial;
 
 import enums.Files;
@@ -29,6 +22,13 @@ import tutorialuicli.NotationCLI;
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * This is responsible for creating the loop to let a player take a quiz
+ * about the chess notation.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class NotationQuizGUI implements GameBoardObserver {
     /** Pane for the quiz tutorial gui */
     BorderPane quizPane;
@@ -235,6 +235,7 @@ public class NotationQuizGUI implements GameBoardObserver {
         String clicked = square.getPosition().getFile().toString() +
                          square.getPosition().getRank().toString().substring(1);
 
+        // check if the user clicked on the correct square
         if (clicked.equals(location)){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Correct!");
@@ -244,6 +245,7 @@ public class NotationQuizGUI implements GameBoardObserver {
             screenChanger.changeScreen(ToScreen.NOTATION_QUIZ);
             this.quizPane.setTop(makeTop());
         }
+        // if the user clicked on the wrong square, tell them
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Incorrect!");
@@ -264,30 +266,52 @@ public class NotationQuizGUI implements GameBoardObserver {
         // ignore
     }
 
+    /**
+     * This method is called when the user hovers over a square.
+     * @param event the event that occurred
+     * @return a list of positions to highlight
+     */
     @Override
     public List<Position> notifyPieceMoving(Event event) {
         return null;
     }
 
+    /**
+     * This method is called to add captured pieces to the gui.
+     * @param piece the piece that was captured.
+     */
     @Override
     public void notifyAddCapturedPiece(PieceIF piece) {
-        return;
     }
 
+    /**
+     * This method is called to notify the gui that the board has been reset.
+     * @param event the event that was fired
+     */
     @Override
     public void notifyBoardLoader(Event event) {
     }
 
+    /**
+     * This method is called to notify the gui that undo has been pressed.
+     */
     @Override
     public void notifyUndo() {
 
     }
 
+    /**
+     * This method is called to notify the gui that redo has been pressed.
+     */
     @Override
     public void notifyRedo() {
 
     }
 
+    /**
+     * This method is called to notify the gui that the game has been saved.
+     * @param writer the writer to write to
+     */
     @Override
     public void notifySaveGame(PrintWriter writer) {
 

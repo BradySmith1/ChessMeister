@@ -111,13 +111,6 @@ public class GameBoardGUI extends BorderPane implements CenterPaneObserver{
         this.setLeft(left.getRoot());
         this.setRight(right.getRoot());
 
-        // Set the constraints of the left and right panes
-
-        System.out.println(this.settings.getSettings().getShowMoves());
-        System.out.println(this.settings.getSettings().getUndoRedo());
-        System.out.println(this.player1.getName());
-        System.out.println(this.player2.getName());
-
         this.screenChanger.notifyBoard();
 
 

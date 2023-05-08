@@ -1,7 +1,3 @@
-/**
- * This is responsible for creating the loop to let a player move a single
- * piece around the board. They are also allowed to spawn a piece.
- */
 package gui.tutorial;
 
 import enums.ToScreen;
@@ -11,6 +7,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
+/**
+ * This is responsible for creating the loop to let a player move a single
+ * piece around the board. They are also allowed to spawn a piece.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class PieceTutorialGUI {
     /** Pane for the piece tutorial gui */
     BorderPane piecePane;

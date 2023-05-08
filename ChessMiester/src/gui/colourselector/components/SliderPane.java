@@ -10,6 +10,10 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+
+/**
+ * A pane that contains a slider and a text field to display the value of the slider
+ */
 public class SliderPane extends VBox{
 
     /** The label of the control **/
@@ -71,25 +75,51 @@ public class SliderPane extends VBox{
         this.slider.setMinorTickCount(5);
         this.slider.setBlockIncrement(10);
 
+        // Listen for changes to the slider
         this.slider.valueProperty().addListener(new ChangeListener<Number>() {
+            /**
+             * Called when the value of the slider changes
+             * @param observableValue
+             *            The {@code ObservableValue} which value changed
+             * @param oldValue
+             *            The old value
+             * @param newValue
+             *            The new value
+             */
             @Override
             public void changed(ObservableValue<? extends Number> observableValue,
                     Number oldValue, Number newValue) {
+                // If the value has changed, update the text field
                 if(!oldValue.equals(newValue))
                     set(newValue.intValue());
             }
         });
 
+        // Listen for changes to the value text field
         this.value.textProperty().addListener(new ChangeListener<String>() {
+            /**
+             * Called when the value of the text field changes
+             * @param observableValue
+             *            The {@code ObservableValue} which value changed
+             * @param oldValue
+             *            The old value
+             * @param newValue
+             *            The new value
+             * @throws NumberFormatException If the new value is not an integer
+             */
             @Override
             public void changed(ObservableValue<? extends String> observableValue,
                     String oldValue, String newValue) {
+                // If the value has changed, update the text field
                 if(!oldValue.equals(newValue)){
                     try{
+                        // Try to parse the new value as an integer
                         int valueToSet = Integer.parseInt(newValue);
                         set(valueToSet);
+                        // Notify the observer of the change
                         notifyObserver(valueToSet);
                     }
+                    // If the value is not an integer, ignore the change
                     catch (NumberFormatException ignored){
 
                     }
@@ -115,10 +145,19 @@ public class SliderPane extends VBox{
         return (int) this.slider.getValue();
     }
 
+
+    /**
+     * Sets the listener for the slider
+     * @param scl The slider change listener
+     */
     public void setListener(SliderChangeListener scl){
         this.sliderListener = scl;
     }
 
+    /**
+     * Notifies the observer of a change to the slider
+     * @param newValue The new value of the slider
+     */
     public void notifyObserver(int newValue){
         this.sliderListener.sliderChanged(this, newValue);
     }

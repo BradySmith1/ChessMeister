@@ -1,9 +1,3 @@
-/**
- * This class is responsible for the GUI implementation for the draw tutorial.
- *
- * @author Zach Eanes (100%)
- * @version 1.0 (done in sprint 3)
- */
 package gui.tutorial;
 
 import enums.ToScreen;
@@ -14,6 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * This class is responsible for the GUI implementation for the draw tutorial.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 public class DrawGUI {
     /** The draw pane. */
     VBox drawPane;

@@ -1,10 +1,3 @@
-/**
- * This class is responsible for displaying the chess notation tutorial.
- *
- * @author Zach Eanes (100%)
- * @version 1.0 (done in sprint 3)
- */
-
 package gui.tutorial;
 
 import enums.ToScreen;
@@ -19,6 +12,13 @@ import javafx.scene.text.Text;
 import javafx.geometry.Pos;
 
 import java.io.FileInputStream;
+
+/**
+ * This class is responsible for displaying the chess notation tutorial.
+ *
+ * @author Zach Eanes (100%)
+ * @version 1.0 (done in sprint 3)
+ */
 
 public class ChessNotationGUI {
     /** the chess notation pane */
@@ -110,6 +110,10 @@ public class ChessNotationGUI {
      */
     public VBox getRoot() { return chessNotationPane; }
 
+    /**
+     * Adds the image to the HBox.
+     * @param hb the HBox
+     */
     private void addImage(HBox hb){
         try{
             ImageView img = new ImageView(new Image(

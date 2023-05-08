@@ -1,8 +1,3 @@
-/**
- * This class is the GUI implementation for the main menu.
- *
- * @author Kaushal Patel (70%), Zach Eanes (30%)
- */
 package gui.settingsmenu;
 
 import enums.ToScreen;
@@ -23,6 +18,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+/**
+ * This class is the GUI implementation for the main menu.
+ *
+ * @author Kaushal Patel (70%), Zach Eanes (30%)
+ */
 public class SettingsMenuGUI extends VBox {
 
     /** The main menu pane. */
@@ -72,9 +72,9 @@ public class SettingsMenuGUI extends VBox {
         this.whiteColorBox = new Rectangle(50, 20, Color.WHITE);
 
         // Handle Event for the black square
-        this.handleBlackSquareEvent(highlightColorBox);
-        this.handleBlackSquareEvent(blackColorBox);
-        this.handleBlackSquareEvent(whiteColorBox);
+        this.handleSquareColorEvent(highlightColorBox);
+        this.handleSquareColorEvent(blackColorBox);
+        this.handleSquareColorEvent(whiteColorBox);
 
         // Checkboxes for the settings menu
         this.showMoves = new CheckBox("Enabled");
@@ -143,10 +143,13 @@ public class SettingsMenuGUI extends VBox {
             if (screenChanger != null){
                 Object source = event.getSource();
 
+                // If the source is the exit button, go back to the main menu
                 if (source == exitButton) {
+                    // If the previous screen was the main menu, go back to the main menu
                     if (screenChanger.getPreviousScreen() == ToScreen.MAIN_MENU) {
                         screenChanger.changeScreen(ToScreen.MAIN_MENU);
                     }
+                    // If the previous screen was the game board, go back to the game board
                     else if (screenChanger.getPreviousScreen() == ToScreen.GAME_BOARD){
                         screenChanger.changeScreen(ToScreen.GAME_BOARD, ToScreen.SETTINGS_MENU);
                     }
@@ -159,22 +162,29 @@ public class SettingsMenuGUI extends VBox {
      * Event Handler for the checkboxes
      */
     EventHandler<ActionEvent> checkBoxHandler = new EventHandler<ActionEvent>() {
+        /**
+         * Handle the button clicks
+         *
+         * @param event The event that triggered the handler
+         */
         @Override
         public void handle(ActionEvent event) {
             Object source = event.getSource();
 
+            // If the source is the show moves checkbox, set the show moves setting
             if (source == showMoves) {
                 settings.setShowMoves(showMoves.isSelected());
             }
+            // If the source is the undo/redo checkbox, set the undo/redo setting
             else if (source == enableUndo){
                 settings.setUndoRedo(enableUndo.isSelected());
             }
-
-            System.out.println("Show Moves: " + settings.getShowMoves());
-            System.out.println("Undo/Redo: " + settings.getUndoRedo());
         }
     };
 
+    /**
+     * Create the exit button for the settings menu
+     */
     private void createExitButton(){
         // Buttons for the settings menu
         this.exitButton = new Button("Return");
@@ -185,13 +195,23 @@ public class SettingsMenuGUI extends VBox {
         this.exitButton.setOnAction(buttonHandler);
     }
 
+    /**
+     * Create a label
+     * @param text The text for the label
+     * @param id The id for the label
+     * @return The label
+     */
     private Label createLabel(String text, String id){
         Label label = new Label(text);
         label.setId(id);
         return label;
     }
 
-    private void handleBlackSquareEvent(Rectangle colorBox){
+    /**
+     * Handle the event for the black square
+     * @param colorBox The black square
+     */
+    private void handleSquareColorEvent(Rectangle colorBox){
         colorBox.setOnMouseClicked(event -> {
             // Instantiate the ColourSelectorGUI class
             ColourSelectorGUI colourSelectorGUI = new ColourSelectorGUI();
@@ -209,17 +229,25 @@ public class SettingsMenuGUI extends VBox {
             // Set the color of the black square to the selected color
             colorBox.setFill(colourSelectorGUI.getSelectedColor());
 
+            // Set the color of the black square in the settings
             if (colorBox == blackColorBox){
                 settings.setBlackSquareColor(colourSelectorGUI.getSelectedColor());
             }
+            // Set the color of the white square in the settings
             else if (colorBox == whiteColorBox){
                 settings.setWhiteSquareColor(colourSelectorGUI.getSelectedColor());
-            } else if(colorBox == highlightColorBox){
+            }
+            // Set the color of the highlight square in the settings
+            else if(colorBox == highlightColorBox){
                 settings.setHighlightColor(colourSelectorGUI.getSelectedColor());
             }
         });
     }
 
+    /**
+     * Get the settings
+     * @return The settings
+     */
     public SettingsGUI getSettings() {
         return settings;
     }
