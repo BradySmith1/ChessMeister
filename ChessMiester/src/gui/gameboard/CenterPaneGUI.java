@@ -743,11 +743,11 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         StringBuilder stateBuilder3 = new StringBuilder(this.state.split("#")[3]);
         if (player2.getCapturedPieces().size() != 0){
             stateBuilder3.delete(1, stateBuilder3.length());
-            for(int i = 0; i < player1.getCapturedPieces().size(); i++){
-                stateBuilder3.append(player1.getCapturedPieces().get(i).getColor().toString().charAt(0));
+            for(int i = 0; i < player2.getCapturedPieces().size(); i++){
+                stateBuilder3.append(player2.getCapturedPieces().get(i).getColor().toString().charAt(0));
                 stateBuilder3.append("_");
-                stateBuilder3.append(player1.getCapturedPieces().get(i).getType().letter);
-                if(i != player1.getCapturedPieces().size() - 1){
+                stateBuilder3.append(player2.getCapturedPieces().get(i).getType().letter);
+                if(i != player2.getCapturedPieces().size() - 1){
                     stateBuilder3.append(",");
                 }
             }
@@ -828,6 +828,13 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
         if (!moves[0].equals("")) {
             setFirstMovesFromMemento(moves);
         }
+        if(movesForward[movesForward.length - 1].substring(0, 1).equals("W")){
+            this.currentPlayer = player2;
+        }
+        else{
+            this.currentPlayer = player1;
+        }
+        this.notifyBottomPane(this.currentPlayer.getName());
         setCapturedPiecesFromMemento(capturedPiecesPlayer1, capturedPiecesPlayer2);
         this.notifyAddCapturedPiece(null);
         this.state = boardMemento.state();
@@ -879,7 +886,7 @@ public class CenterPaneGUI extends GridPane implements GameBoardObserver, EventH
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                this.player1.addCapturedPiece(pieceGUI);
+                this.player2.addCapturedPiece(pieceGUI);
             }
         }
 

@@ -16,11 +16,12 @@ public class StateValidation {
         boolean isCheck = false;
 
         // Get the list of valid moves for all the enemy pieces on the board.
-        for (PieceIF piece : otherPlayer.getPieces()) {
+        //for (PieceIF piece : otherPlayer.getPieces()) {
+        for (int i = 0; i < otherPlayer.getPieces().size(); i++) {
             // Cast the piece to a Piece object.
-            PieceGUI p = (PieceGUI) piece;
+            PieceGUI p = (PieceGUI) otherPlayer.getPieces().get(i);
             // Get the list of valid moves for the piece.
-            List<Position> validMoves = p.getValidMoves(board, piece.getPosition(board));
+            List<Position> validMoves = p.getValidMoves(board, otherPlayer.getPieces().get(i).getPosition(board));
 
             // Check to see if the king's position is in the list of valid moves.
             if (validMoves.contains(position)) {

@@ -130,6 +130,7 @@ public final class ScreenFactory implements ScreenChangeHandlerIF {
                     mainMenuScreen = new MainMenuGUI();
                     mainMenuScreen.setScreenChangeHandler(this);
                 }
+                definePlayerNamesScreen = null;
                 screen = mainMenuScreen.getRoot();
                 break;
             case PLAYER_NAMES :

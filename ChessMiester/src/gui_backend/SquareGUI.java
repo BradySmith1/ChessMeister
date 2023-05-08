@@ -175,7 +175,7 @@ public class SquareGUI extends StackPane implements GameBoardObserver, SquareIF 
      * @return the piece on the square
      */
     public PieceIF getPiece(){
-        return piece;
+        return (PieceIF) this.getChildren().get(0);
     }
 
     /**
