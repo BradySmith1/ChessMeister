@@ -17,15 +17,8 @@ In order to support use for this program:
             Set the build and run to JavaFX and target the file as ./gui/controller/Main.java.
             Then, you're able to run the program and play chess.
 
-## Authors and acknowledgment
-Authors:
-    Brady Smith
-    Zachary Eanes
-    Kaushal Patel
-    Colton Brooks
 
-## Important Notes
-# HOW TO PLAY:
+## How to Play:
     For command line:
         In order to play this game, the user will be prompted to enter in a move. A user will enter
         the file and rank of the piece they want to move, following by the file and rank of the
@@ -39,7 +32,7 @@ Authors:
         next player's turn will begin. This is repeated until the game meets an ending condition,
         such as checkmate.
 
-# SAVING:
+# Saving:
     After the user ends the program, the states of the game are saved in the file user gave. These
     are all strings representing each piece on the board, and the moves that occurred. This is
     done in order to make sure that the game can be loaded and played again.
@@ -48,7 +41,14 @@ Authors:
     and loading of the game, tutorials in order to learn basic chess, and many more. Feel free to
     explore the menu and see what you can find!
 
-# NOTE:
+## Note:
     This program is not perfect, and there are some bugs that we were not able to fix.
     Simply put, we were at a disadvantage during this sprint and eventually hit a point
     where we all needed to focus on finals, unable to do everything we wanted to.
+
+## Authors and acknowledgment
+Authors:
+    Brady Smith
+    Zachary Eanes
+    Kaushal Patel
+    Colton Brooks
