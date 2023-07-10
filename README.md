@@ -55,7 +55,7 @@ where we all needed to focus on finals, unable to do everything we wanted to.
 
 ## Authors and acknowledgment
 Authors:
-    Brady Smith
-    Zachary Eanes
-    Kaushal Patel
-    Colton Brooks
+Brady Smith
+Zachary Eanes
+Kaushal Patel
+Colton Brooks
