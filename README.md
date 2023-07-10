@@ -13,27 +13,31 @@ In order to support use for this program:
 First, open the folder "ChessMiester" as the project and then using IntelliJ creat a new configuration:
 
 For command line experience:
-    Set the build and run to Java Azul and target file as ./controller/Driver.java.
-    Then, you're able to hit the run button and play chess.
+Set the build and run to Java Azul and target file as ./controller/Driver.java.
+Then, you're able to hit the run button and play chess.
         
 For GUI:
-    Set the build and run to JavaFX and target the file as ./gui/controller/Main.java.
-    Then, you're able to run the program and play chess.
+Set the build and run to JavaFX and target the file as ./gui/controller/Main.java.
+Then, you're able to run the program and play chess.
 
 
 ## How to Play:
 For command line:
-    In order to play this game, the user will be prompted to enter in a move. A user will enter
-    the file and rank of the piece they want to move, following by the file and rank of the
-    destination. The user will then be told if the move is valid or not, and if it is valid, the
-    board is updated and the next player's turn begins. This is repeated until the game meets an
-    ending condition, such as draw.
+    
+In order to play this game, the user will be prompted to enter in a move. A user will enter
+the file and rank of the piece they want to move, following by the file and rank of the
+destination. The user will then be told if the move is valid or not, and if it is valid, the
+board is updated and the next player's turn begins. This is repeated until the game meets an
+ending condition, such as draw.
+
+
 For GUI:
-    In order to play this game, the user will be able to click on a piece, and then click on a
-    destination, or drag the piece to their desired location. Users can also right-click to
-    highlight valid moves for a piece. If the move is valid, the board will be updated and the
-    next player's turn will begin. This is repeated until the game meets an ending condition,
-    such as checkmate.
+
+In order to play this game, the user will be able to click on a piece, and then click on a
+destination, or drag the piece to their desired location. Users can also right-click to
+highlight valid moves for a piece. If the move is valid, the board will be updated and the
+next player's turn will begin. This is repeated until the game meets an ending condition,
+such as checkmate.
 
 # Saving:
 After the user ends the program, the states of the game are saved in the file user gave. These
