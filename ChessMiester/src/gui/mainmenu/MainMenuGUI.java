@@ -30,8 +30,6 @@ public class MainMenuGUI extends BorderPane {
     /** The main menu pane. */
     BorderPane mainMenuPane;
 
-    /** Scene for the main menu. */
-    private Scene scene;
 
     /** Buttons for the menu **/
     Button versusPlayer, loadGame, playedGames, tutorial, exit, settings;
@@ -86,7 +84,7 @@ public class MainMenuGUI extends BorderPane {
      */
     private HBox makeTop(){
         HBox top = new HBox();
-        Label topLabel = new Label("Welcome to Chess Meister!");
+        Label topLabel = new Label("Welcome to ChessMeister!");
         topLabel.setId("topLabel");
         top.getChildren().add(topLabel);
         top.setAlignment(Pos.CENTER);
